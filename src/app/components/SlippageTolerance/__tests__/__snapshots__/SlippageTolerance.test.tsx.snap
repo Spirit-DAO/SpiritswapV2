@@ -1,0 +1,536 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SlippageTolerance-Component Matches SnapShot With Values, disabled = false Prop 1`] = `
+Array [
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding: 0.25rem;
+  border: 1px solid #1F2937;
+  box-sizing: border-box;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  opacity: 1;
+  width: auto;
+  white-space: nowrap;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-right: 0.25rem;
+  background: rgba(100,221,192,0.15);
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+}
+
+.c2,
+.c2 > * {
+  color: #60E6C5;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-right: 0.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+}
+
+.c3,
+.c3 > * {
+  color: #FFFFFF;
+}
+
+.c3:hover {
+  background: #374151;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+}
+
+.c4,
+.c4 > * {
+  color: #FFFFFF;
+}
+
+.c4:hover {
+  background: #374151;
+}
+
+.c1 {
+  width: 100%;
+}
+
+.c1 h4,
+.c1 input {
+  height: 36px;
+  width: 70px;
+  padding: 0px;
+}
+
+.c1 h4 {
+  margin-right: 0.5rem;
+}
+
+.c5 {
+  background-color: #1F2937;
+  color: #9CA3AF;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  outline: none;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+  height: 34px;
+  text-align: center;
+}
+
+.c5:focus {
+  color: #60E6C5;
+  border: 1px solid #1D9384;
+}
+
+@media (min-width:320px) {
+  .c0 {
+    width: 100%;
+  }
+}
+
+@media (min-width:768px) {
+  .c0 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+
+<div
+    className="c0 c1"
+    data-testid="SlippageTolerance"
+    disabled={false}
+  >
+    <h4
+      className="c2 css-1qkyk1j"
+      disabled={false}
+      onClick={[Function]}
+    >
+      0.1%
+    </h4>
+    <h4
+      className="c3 css-1qkyk1j"
+      disabled={false}
+      onClick={[Function]}
+    >
+      0.5%
+    </h4>
+    <h4
+      className="c3 css-1qkyk1j"
+      disabled={false}
+      onClick={[Function]}
+    >
+      1%
+    </h4>
+    <h4
+      className="c4 css-1qkyk1j"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Auto
+    </h4>
+    <input
+      className="c5"
+      data-testid="slippage-tolerance-custom"
+      onChange={[Function]}
+      onClick={[Function]}
+      placeholder="Custom"
+      value=""
+    />
+  </div>,
+  @media (min-width:320px) {
+
+}
+
+@media (min-width:768px) {
+
+}
+
+<span />,
+]
+`;
+
+exports[`SlippageTolerance-Component Matches SnapShot With values,disabled = true Prop 1`] = `
+Array [
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding: 0.25rem;
+  border: 1px solid #1F2937;
+  box-sizing: border-box;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  opacity: 0.6;
+  width: auto;
+  white-space: nowrap;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-right: 0.25rem;
+  background: rgba(100,221,192,0.15);
+  border-radius: 4px;
+  cursor: not-allowed;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+}
+
+.c2,
+.c2 > * {
+  color: #60E6C5;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-right: 0.25rem;
+  border-radius: 4px;
+  cursor: not-allowed;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+}
+
+.c3,
+.c3 > * {
+  color: #FFFFFF;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: not-allowed;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.25rem 0.75rem;
+}
+
+.c4,
+.c4 > * {
+  color: #FFFFFF;
+}
+
+.c1 {
+  width: 100%;
+}
+
+.c1 h4,
+.c1 input {
+  height: 36px;
+  width: 70px;
+  padding: 0px;
+}
+
+.c1 h4 {
+  margin-right: 0.5rem;
+}
+
+.c5 {
+  background-color: #1F2937;
+  color: #9CA3AF;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  outline: none;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+  height: 34px;
+  text-align: center;
+}
+
+.c5:focus {
+  color: #60E6C5;
+  border: 1px solid #1D9384;
+}
+
+@media (min-width:320px) {
+  .c0 {
+    width: 100%;
+  }
+}
+
+@media (min-width:768px) {
+  .c0 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+
+<div
+    className="c0 c1"
+    data-testid="SlippageTolerance"
+    disabled={true}
+  >
+    <h4
+      className="c2 css-1qkyk1j"
+      disabled={true}
+      onClick={[Function]}
+    >
+      0.1%
+    </h4>
+    <h4
+      className="c3 css-1qkyk1j"
+      disabled={true}
+      onClick={[Function]}
+    >
+      0.5%
+    </h4>
+    <h4
+      className="c3 css-1qkyk1j"
+      disabled={true}
+      onClick={[Function]}
+    >
+      1%
+    </h4>
+    <h4
+      className="c4 css-1qkyk1j"
+      disabled={true}
+      onClick={[Function]}
+    >
+      Auto
+    </h4>
+    <input
+      className="c5"
+      data-testid="slippage-tolerance-custom"
+      onChange={[Function]}
+      onClick={[Function]}
+      placeholder="Custom"
+      value=""
+    />
+  </div>,
+  @media (min-width:320px) {
+
+}
+
+@media (min-width:768px) {
+
+}
+
+<span />,
+]
+`;
+
+exports[`SlippageTolerance-Component Matches SnapShot without Values 1`] = `
+Array [
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding: 0.25rem;
+  border: 1px solid #1F2937;
+  box-sizing: border-box;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  opacity: 1;
+  width: auto;
+  white-space: nowrap;
+}
+
+.c1 {
+  width: 100%;
+}
+
+.c1 h4,
+.c1 input {
+  height: 36px;
+  width: 70px;
+  padding: 0px;
+}
+
+.c1 h4 {
+  margin-right: 0.5rem;
+}
+
+.c2 {
+  background-color: #1F2937;
+  color: #9CA3AF;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  outline: none;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+  height: 34px;
+  text-align: center;
+}
+
+.c2:focus {
+  color: #60E6C5;
+  border: 1px solid #1D9384;
+}
+
+@media (min-width:320px) {
+  .c0 {
+    width: 100%;
+  }
+}
+
+@media (min-width:768px) {
+  .c0 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+
+<div
+    className="c0 c1"
+    data-testid="SlippageTolerance"
+    disabled={false}
+  >
+    <input
+      className="c2"
+      data-testid="slippage-tolerance-custom"
+      onChange={[Function]}
+      onClick={[Function]}
+      placeholder="Custom"
+      value=""
+    />
+  </div>,
+  @media (min-width:320px) {
+
+}
+
+@media (min-width:768px) {
+
+}
+
+<span />,
+]
+`;

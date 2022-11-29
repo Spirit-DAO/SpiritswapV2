@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IconToInput component with custom icon: <svg>lock.svg</svg> 1`] = `
+<svg>
+  lock.svg
+</svg>
+`;

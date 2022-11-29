@@ -1,0 +1,544 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SettingsModal /> should render and match snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": .c0 {
+  border: 1px solid #374151;
+  border-radius: 8px;
+  background-color: #101726;
+  color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.c5 {
+  background: rgba(100,221,192,0.15);
+  color: #60E6C5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5rem;
+  padding: 0.5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.c5:hover {
+  opacity: 0.8;
+}
+
+.c5:active {
+  border: 1px solid #60E6C5;
+  opacity: 1;
+}
+
+.c5,
+.c5 > * {
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding: 7px;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c8,
+.c8 > div,
+.c8 > svg,
+.c8 > img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.c1 {
+  padding: 1rem;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c4 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #FFFFFF;
+}
+
+.c7 {
+  background: transparent;
+  padding: 0;
+}
+
+.c7:active {
+  border-color: transparent;
+}
+
+.c9 {
+  margin-top: 0.5rem;
+}
+
+.c10 {
+  margin-right: 0.5rem;
+}
+
+.c11 {
+  position: relative;
+  display: inline-block;
+  width: 2.5rem;
+  height: 1.5rem;
+}
+
+.c14 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(100,221,192,0.15);
+  border-radius: 4px;
+  -webkit-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.c14:before {
+  position: absolute;
+  content: '';
+  left: 0.25rem;
+  bottom: 0.25rem;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  height: 1rem;
+  width: 1rem;
+  -webkit-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.c12 {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  z-index: 1;
+}
+
+.c12:checked + .c13:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+  background-color: #60E6C5;
+}
+
+<body
+    class="chakra-ui-dark"
+  >
+    <div
+      id="chakra-toast-portal"
+    >
+      <ul
+        id="chakra-toast-manager-top"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-top-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-top-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+    </div>
+    <div>
+      <div
+        class="css-0"
+      >
+        <div
+          class="c0 c1"
+        >
+          <div
+            class="c2"
+          >
+            <div
+              class="c3"
+            >
+              <label
+                class="c4"
+              >
+                common.settingsModal.title
+              </label>
+              <button
+                class="c5 c6 c7"
+                data-testid="close-action"
+              >
+                <div
+                  class="c8"
+                >
+                  <svg>
+                    close.svg
+                  </svg>
+                </div>
+              </button>
+            </div>
+            <div
+              class="c9"
+            >
+              <div
+                class="css-1ncxu6o"
+              >
+                <div
+                  class="css-75k6qf"
+                >
+                  <label
+                    class="css-zikit0"
+                  >
+                    common.settingsModal.notifications
+                  </label>
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <h5
+                      class="c10 css-16rknt3"
+                    >
+                      <p
+                        class="chakra-text css-mo8nyq"
+                      />
+                    </h5>
+                    <div
+                      class="c11"
+                    >
+                      <input
+                        checked=""
+                        class="c12"
+                        id="switch-checkbox"
+                        name="switch-checkbox"
+                        type="checkbox"
+                      />
+                      <span
+                        class="c13 c14"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="css-75k6qf"
+                >
+                  <label
+                    class="css-zikit0"
+                  >
+                    common.settingsModal.pushNotifications
+                  </label>
+                  <button
+                    class="chakra-button css-1jwiul3"
+                    type="button"
+                  >
+                    Set up
+                  </button>
+                </div>
+                <div
+                  class="css-75k6qf"
+                >
+                  <label
+                    class="css-zikit0"
+                  >
+                    Suggestions
+                  </label>
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <h5
+                      class="c10 css-16rknt3"
+                    >
+                      <p
+                        class="chakra-text css-mo8nyq"
+                      />
+                    </h5>
+                    <div
+                      class="c11"
+                    >
+                      <input
+                        checked=""
+                        class="c12"
+                        id="switch-checkbox"
+                        name="switch-checkbox"
+                        type="checkbox"
+                      />
+                      <span
+                        class="c13 c14"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="chakra-button css-3wygne"
+                  type="button"
+                >
+                  common.topBar.switchV1
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="css-0"
+    >
+      <div
+        class="sc-bdvvtL bOMpBT sc-gKclnd cykDNW"
+      >
+        <div
+          class="sc-gsDKAQ fygyjZ"
+        >
+          <div
+            class="sc-iCfMLu dsWAqZ"
+          >
+            <label
+              class="sc-furwcr eFdRYk"
+            >
+              common.settingsModal.title
+            </label>
+            <button
+              class="sc-hKwDye dieRQQ sc-eCImPb eVsMxS sc-pVTFL kJIdgd"
+              data-testid="close-action"
+            >
+              <div
+                class="sc-jRQBWg egHUCV"
+              >
+                <svg>
+                  close.svg
+                </svg>
+              </div>
+            </button>
+          </div>
+          <div
+            class="sc-jrQzAO eYeYAJ"
+          >
+            <div
+              class="css-1ncxu6o"
+            >
+              <div
+                class="css-75k6qf"
+              >
+                <label
+                  class="css-zikit0"
+                >
+                  common.settingsModal.notifications
+                </label>
+                <div
+                  class="css-70qvj9"
+                >
+                  <h5
+                    class="sc-egiyK elcDFO css-16rknt3"
+                  >
+                    <p
+                      class="chakra-text css-mo8nyq"
+                    />
+                  </h5>
+                  <div
+                    class="sc-bqiRlB iTnSQx"
+                  >
+                    <input
+                      checked=""
+                      class="sc-hBUSln gWDRpa"
+                      id="switch-checkbox"
+                      name="switch-checkbox"
+                      type="checkbox"
+                    />
+                    <span
+                      class="sc-ksdxgE fUCEhB"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="css-75k6qf"
+              >
+                <label
+                  class="css-zikit0"
+                >
+                  common.settingsModal.pushNotifications
+                </label>
+                <button
+                  class="chakra-button css-1jwiul3"
+                  type="button"
+                >
+                  Set up
+                </button>
+              </div>
+              <div
+                class="css-75k6qf"
+              >
+                <label
+                  class="css-zikit0"
+                >
+                  Suggestions
+                </label>
+                <div
+                  class="css-70qvj9"
+                >
+                  <h5
+                    class="sc-egiyK elcDFO css-16rknt3"
+                  >
+                    <p
+                      class="chakra-text css-mo8nyq"
+                    />
+                  </h5>
+                  <div
+                    class="sc-bqiRlB iTnSQx"
+                  >
+                    <input
+                      checked=""
+                      class="sc-hBUSln gWDRpa"
+                      id="switch-checkbox"
+                      name="switch-checkbox"
+                      type="checkbox"
+                    />
+                    <span
+                      class="sc-ksdxgE fUCEhB"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                class="chakra-button css-3wygne"
+                type="button"
+              >
+                common.topBar.switchV1
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

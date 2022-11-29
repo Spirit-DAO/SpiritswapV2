@@ -1,0 +1,733 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TokenAmountPanel-Componenet Matches SnapShot with Values 1`] = `
+.c16 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 7px;
+  color: #9CA3AF;
+  cursor: pointer;
+}
+
+.c16:hover {
+  color: #60E6C5;
+}
+
+.c3 {
+  border: 1px solid #374151;
+  background-color: #1F2937;
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3:focus-within {
+  border-color: #1D9384;
+}
+
+.c3 > svg {
+  color: #FFFFFF;
+}
+
+.c3 > input {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  height: 36px;
+  width: 100%;
+  padding: 0;
+  padding-left: calc((40px - 1rem) / 2);
+  padding-right: calc( (40px - 1rem) / 2 );
+}
+
+.c3 > input:active,
+.c3 > input:focus {
+  outline: none;
+}
+
+.c3 > input::-webkit-input-placeholder {
+  color: #9CA3AF;
+}
+
+.c3 > input::-moz-placeholder {
+  color: #9CA3AF;
+}
+
+.c3 > input:-ms-input-placeholder {
+  color: #9CA3AF;
+}
+
+.c3 > input::placeholder {
+  color: #9CA3AF;
+}
+
+.c14 {
+  border: 1px solid #374151;
+  background-color: #1F2937;
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c14:focus-within {
+  border-color: #1D9384;
+}
+
+.c14 > svg {
+  color: #FFFFFF;
+}
+
+.c14 > input {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  height: 36px;
+  width: 100%;
+  padding: 0;
+  padding-right: calc( (40px - 1rem) / 2 );
+}
+
+.c14 > input:active,
+.c14 > input:focus {
+  outline: none;
+}
+
+.c14 > input::-webkit-input-placeholder {
+  color: #9CA3AF;
+}
+
+.c14 > input::-moz-placeholder {
+  color: #9CA3AF;
+}
+
+.c14 > input:-ms-input-placeholder {
+  color: #9CA3AF;
+}
+
+.c14 > input::placeholder {
+  color: #9CA3AF;
+}
+
+.c0 {
+  color: #FFFFFF;
+  padding: 1rem 1.25rem;
+  background-color: #17202F;
+  border-radius: 8px;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0.25rem 0;
+  margin-right: 0.5rem;
+}
+
+.c2 button {
+  margin-right: 6px;
+  padding: 0.125rem 0.5rem;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+.c2:hover {
+  background-color: #1F2937;
+}
+
+.c4 {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  display: block;
+  width: 100%;
+  font-weight: 500;
+  padding: 0 0.5rem;
+  line-height: 1;
+  height: 1.5rem;
+}
+
+.c4:focus {
+  outline: none;
+}
+
+.c4 > input {
+  padding-left: 0;
+  padding-right: 0;
+  line-height: 1;
+  font-size: 24px;
+  height: 1.5rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  color: #D1D5DB;
+  font-size: 12px;
+  padding: 0.25rem 0 0.125rem 0.5rem;
+  line-height: 16px;
+}
+
+.c9 {
+  padding: 0.5rem 1.25rem;
+  margin: 0.5rem -1.25rem -1rem -1.25rem;
+  background-color: #0D1321;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-right: 1rem;
+  min-width: 128px;
+}
+
+.c11 {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.c12 {
+  font-size: 12px;
+  line-height: 16px;
+  color: #F82F2F;
+}
+
+.c13 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+}
+
+.c15 {
+  border: none;
+}
+
+.c15 input {
+  text-align: right;
+}
+
+.c5 {
+  position: relative;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.c6:hover {
+  background-color: #1F2937;
+}
+
+.c6 svg:first-of-type {
+  border-radius: 50%;
+  margin-right: 0.25rem;
+}
+
+.c6 svg:last-child {
+  color: #60E6C5;
+}
+
+.c7 {
+  display: inline-block;
+}
+
+.c7 svg {
+  display: block;
+}
+
+.c7 svg {
+  width: 32px;
+  height: 32px;
+}
+
+@media (max-width:420px) {
+  .c0 {
+    padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width:420px) {
+  .c9 {
+    padding: 0.5rem;
+    margin: 0.5rem -0.5rem -1rem -0.5rem;
+  }
+}
+
+<div
+  className="c0"
+  data-testid="TokenAmountPanel"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="c2"
+    >
+      <div
+        className="c3 c4"
+        disabled={false}
+      >
+        <input
+          autoFocus={true}
+          disabled={false}
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          value="1,234"
+        />
+      </div>
+    </div>
+    <div
+      className="c5"
+    >
+      <div
+        className="c6"
+      >
+        <div
+          className="c7"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<svg width=\\"32\\" height=\\"32\\" viewBox=\\"0 0 32 32\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M15.935 4C9.342 4.001 4 9.347 4 15.94c.001 6.592 5.347 11.936 11.94 11.935 6.592-.002 11.936-5.347 11.935-11.94A11.937 11.937 0 0015.935 4zm-4.847 5.23a.123.123 0 01.125-.12h4.973a6.98 6.98 0 013.027.628c.18.088.357.186.528.292l-3.237 1.853h-1.689a.123.123 0 00-.12.126v.932l-3.607 2.086V9.23zM9.749 19.708l-2.162-2.184 7.12-4.108v2.662a.123.123 0 00.125.12h1.017l-6.093 3.51h-.007zm10.662-2.03c-1.044.872-2.477 1.308-4.299 1.308h-1.297a.123.123 0 00-.123.123v2.688l-1.81 1.042-1.69.977-.107.06v-4.455l5.603-3.224a2.056 2.056 0 001.297-.513 1.74 1.74 0 00.318-.432l3.578-2.071c.06.328.09.66.089.994.004 1.463-.516 2.63-1.56 3.503zm-1.92-3.019c.024-.153.036-.309.037-.464a2.417 2.417 0 00-.563-1.674A1.823 1.823 0 0017.15 12l4.973-2.871 2.182 2.183-5.814 3.347z\\" fill=\\"#f5eb16\\"></path></svg>",
+            }
+          }
+          size={32}
+        />
+        PAC
+      </div>
+    </div>
+  </div>
+  <div
+    className="c8"
+  >
+    <span
+      className=""
+    >
+      ≈
+       
+      $ 5,857.165
+    </span>
+    <span
+      className=""
+    >
+      Balance
+      :
+       
+      123123
+    </span>
+  </div>
+  <div
+    className="c9"
+  >
+    <div
+      className="c10"
+    >
+      <span
+        className="c11"
+      >
+        Set limit sell price
+      </span>
+      <span
+        className="c12"
+      >
+        -0.32 %
+         
+        below market
+      </span>
+    </div>
+    <div
+      className="c13"
+    >
+      <div
+        className="c14 c15"
+        disabled={false}
+      >
+        <div
+          className="c16"
+          disabled={false}
+          onClick={[Function]}
+        >
+          <svg>
+            refresh.svg
+          </svg>
+        </div>
+        <input
+          autoFocus={true}
+          disabled={false}
+          onBlur={[Function]}
+          readOnly={true}
+          value="$ 5,857.165"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TokenAmountPanel-Componenet Matches SnapShot without Values 1`] = `
+.c3 {
+  border: 1px solid #374151;
+  background-color: #1F2937;
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3:focus-within {
+  border-color: #1D9384;
+}
+
+.c3 > svg {
+  color: #FFFFFF;
+}
+
+.c3 > input {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  height: 36px;
+  width: 100%;
+  padding: 0;
+  padding-left: calc((40px - 1rem) / 2);
+  padding-right: calc( (40px - 1rem) / 2 );
+}
+
+.c3 > input:active,
+.c3 > input:focus {
+  outline: none;
+}
+
+.c3 > input::-webkit-input-placeholder {
+  color: #9CA3AF;
+}
+
+.c3 > input::-moz-placeholder {
+  color: #9CA3AF;
+}
+
+.c3 > input:-ms-input-placeholder {
+  color: #9CA3AF;
+}
+
+.c3 > input::placeholder {
+  color: #9CA3AF;
+}
+
+.c0 {
+  color: #FFFFFF;
+  padding: 1rem 1.25rem;
+  background-color: #17202F;
+  border-radius: 8px;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0.25rem 0;
+  margin-right: 0.5rem;
+}
+
+.c2 button {
+  margin-right: 6px;
+  padding: 0.125rem 0.5rem;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+.c2:hover {
+  background-color: #1F2937;
+}
+
+.c4 {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  display: block;
+  width: 100%;
+  font-weight: 500;
+  padding: 0 0.5rem;
+  line-height: 1;
+  height: 1.5rem;
+}
+
+.c4:focus {
+  outline: none;
+}
+
+.c4 > input {
+  padding-left: 0;
+  padding-right: 0;
+  line-height: 1;
+  font-size: 24px;
+  height: 1.5rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  color: #D1D5DB;
+  font-size: 12px;
+  padding: 0.25rem 0 0.125rem 0.5rem;
+  line-height: 16px;
+}
+
+.c5 {
+  position: relative;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.c6:hover {
+  background-color: #1F2937;
+}
+
+.c6 svg:first-of-type {
+  border-radius: 50%;
+  margin-right: 0.25rem;
+}
+
+.c6 svg:last-child {
+  color: #60E6C5;
+}
+
+.c7 {
+  display: inline-block;
+}
+
+.c7 svg {
+  display: block;
+}
+
+.c7 svg {
+  width: 32px;
+  height: 32px;
+}
+
+@media (max-width:420px) {
+  .c0 {
+    padding: 1rem 0.5rem;
+  }
+}
+
+<div
+  className="c0"
+  data-testid="TokenAmountPanel"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="c2"
+    >
+      <div
+        className="c3 c4"
+        disabled={false}
+      >
+        <input
+          autoFocus={true}
+          disabled={false}
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          value="0"
+        />
+      </div>
+    </div>
+    <div
+      className="c5"
+    >
+      <div
+        className="c6"
+      >
+        <div
+          className="c7"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<svg width=\\"32\\" height=\\"32\\" viewBox=\\"0 0 32 32\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M16.5 19.0003C16.5 19.0003 16.7269 18.0185 17 17.5003C17.2624 17.0025 17.6716 16.6616 17.6716 16.6616L18.9433 15.9551C19.5665 15.6089 20.0859 15.1023 20.4474 14.4878C20.809 13.8733 20.9997 13.1733 20.9997 12.4604C20.9275 11.3005 20.3995 10.2162 19.5309 9.44416C18.6623 8.67208 17.5236 8.27483 16.3633 8.33907C15.3171 8.29564 14.2887 8.61896 13.4555 9.25318C12.6224 9.88739 12.0369 10.7927 11.8003 11.8126\\" stroke=\\"#60E6C5\\" stroke-width=\\"2.15611\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/><path d=\\"M18 23.5021C17.9996 23.7982 17.9115 24.088 17.7465 24.3347C17.5816 24.5811 17.3473 24.773 17.0732 24.8861C16.7994 24.9995 16.4979 25.029 16.2068 24.9711C15.9159 24.9131 15.6489 24.7702 15.4392 24.5608C15.2298 24.351 15.0869 24.0841 15.0289 23.7932C14.971 23.5024 15.0005 23.2009 15.1139 22.9268C15.2273 22.6527 15.4189 22.4184 15.6653 22.2535C15.9117 22.0885 16.2014 22.0004 16.4983 22C16.6956 21.9996 16.8911 22.0384 17.0732 22.1138C17.2555 22.1891 17.4212 22.2997 17.5609 22.4391C17.7003 22.5788 17.8109 22.7445 17.8862 22.9268C17.9616 23.1092 18.0004 23.3048 18 23.5021Z\\" fill=\\"#60E6C5\\"/></svg>",
+            }
+          }
+          size={32}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="c8"
+  >
+    <span
+      className=""
+    >
+      ≈
+       
+      $ 0
+    </span>
+    <span
+      className=""
+    >
+      Not connected
+    </span>
+  </div>
+</div>
+`;

@@ -1,0 +1,458 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TokenPairMaxValue-Component Matches SnapShot with Values 1`] = `
+Array [
+  .c6 {
+  background: #374151;
+  color: #FFFFFF;
+  border: 1px solid #374151;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 6px 0.5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.c6:hover {
+  opacity: 0.8;
+}
+
+.c6:active {
+  border: 1px solid #9CA3AF;
+  opacity: 1;
+}
+
+.c6,
+.c6 > * {
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #1F2937;
+  gap: 0.75rem;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+  gap: 0.125rem;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  line-height: 1;
+  text-align: right;
+  word-break: normal;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: right;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  gap: 0.5rem;
+  height: 2.5rem;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+}
+
+.c5 button {
+  background: transparent;
+  padding: 0;
+  border: none;
+  color: #60E6C5;
+  margin: auto;
+}
+
+.c5 button:active {
+  border: none;
+}
+
+.c2 {
+  text-align: left;
+  font-size: 14px;
+}
+
+.c8 {
+  text-align: right;
+  font-size: 14px;
+}
+
+<div
+    className="c0"
+    data-testid="TokenPairMaxValue"
+  >
+    <div
+      className="c1"
+    >
+      <div
+        className="chakra-form-control css-1kxonj9"
+        role="group"
+      >
+        <div
+          className="chakra-numberinput css-4s4p7m"
+          placeholder="Enter amount"
+          value="2,000.0"
+        >
+          <input
+            aria-valuemax={9007199254740991}
+            aria-valuemin={0}
+            aria-valuenow={2000}
+            aria-valuetext="2,000.0"
+            autoComplete="off"
+            autoCorrect="off"
+            className="chakra-numberinput__field css-l5do3w"
+            inputMode="decimal"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            pattern="[0-9]*(.[0-9]+)?"
+            role="spinbutton"
+            type="text"
+            value="2,000.0"
+          />
+        </div>
+      </div>
+      <p
+        alignment="left"
+        className="chakra-text c2 css-fzhz6b"
+        sub="true"
+      >
+        ≈ $3,540.32
+      </p>
+      
+    </div>
+    <div
+      className="c3"
+    >
+      <div
+        className="c4"
+      >
+        <div
+          className="c5"
+        >
+          <button
+            className="c6"
+            disabled={false}
+            onClick={[Function]}
+            size="default"
+          >
+            Max
+          </button>
+        </div>
+        <h2
+          className="c7 css-1io1c3r"
+        >
+          BTC
+          <br />
+          ETH
+        </h2>
+      </div>
+      <p
+        alignment="right"
+        className="chakra-text c8 css-fzhz6b"
+        sub="true"
+      >
+        Balance: 262.34
+      </p>
+    </div>
+  </div>,
+  <span />,
+]
+`;
+
+exports[`TokenPairMaxValue-Component Matches Snapshot without Values 1`] = `<span />`;
+
+exports[`TokenPairMaxValue-Component render TokenPairMaxValue with tokens Props and Translated Values 1`] = `
+Array [
+  .c6 {
+  background: #374151;
+  color: #FFFFFF;
+  border: 1px solid #374151;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 6px 0.5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.c6:hover {
+  opacity: 0.8;
+}
+
+.c6:active {
+  border: 1px solid #9CA3AF;
+  opacity: 1;
+}
+
+.c6,
+.c6 > * {
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #1F2937;
+  gap: 0.75rem;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+  gap: 0.125rem;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  line-height: 1;
+  text-align: right;
+  word-break: normal;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: right;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  gap: 0.5rem;
+  height: 2.5rem;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+}
+
+.c5 button {
+  background: transparent;
+  padding: 0;
+  border: none;
+  color: #60E6C5;
+  margin: auto;
+}
+
+.c5 button:active {
+  border: none;
+}
+
+.c2 {
+  text-align: left;
+  font-size: 14px;
+}
+
+<div
+    className="c0"
+    data-testid="TokenPairMaxValue"
+  >
+    <div
+      className="c1"
+    >
+      <div
+        className="chakra-form-control css-1kxonj9"
+        role="group"
+      >
+        <div
+          className="chakra-numberinput css-4s4p7m"
+          placeholder="Enter amount"
+          value=""
+        >
+          <input
+            aria-invalid={true}
+            aria-valuemax={9007199254740991}
+            aria-valuemin={0}
+            autoComplete="off"
+            autoCorrect="off"
+            className="chakra-numberinput__field css-l5do3w"
+            inputMode="decimal"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            pattern="[0-9]*(.[0-9]+)?"
+            role="spinbutton"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <p
+        alignment="left"
+        className="chakra-text c2 css-fzhz6b"
+        sub="true"
+      />
+      <p
+        className="chakra-text css-xchqnm"
+      >
+        Set an amount please.
+      </p>
+    </div>
+    <div
+      className="c3"
+    >
+      <div
+        className="c4"
+      >
+        <div
+          className="c5"
+        >
+          <button
+            className="c6"
+            disabled={false}
+            onClick={[Function]}
+            size="default"
+          >
+            Max
+          </button>
+        </div>
+        <h2
+          className="c7 css-1io1c3r"
+        >
+          BTC
+          <br />
+          ETH
+        </h2>
+      </div>
+    </div>
+  </div>,
+  <span />,
+]
+`;

@@ -1,0 +1,31 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "emmet.triggerExpansionOnTab": true,
+  "cSpell.words": [
+    "ARROWBACK",
+    "chakra",
+    "hidebackground",
+    "INITIALBRIDGE",
+    "Jost",
+    "testid"
+  ]
+}

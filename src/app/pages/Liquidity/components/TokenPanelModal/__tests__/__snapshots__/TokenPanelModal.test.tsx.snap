@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OptionsDropdown component should render and match snapshot 1`] = `
+.c0 {
+  display: inline-grid;
+  grid-auto-flow: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+<div>
+  <div
+    class="chakra-stack css-19p7apo"
+  >
+    <div
+      class="chakra-stack css-1rngsr6"
+    >
+      <p
+        class="chakra-text css-1ylkl1b"
+      >
+        1,000
+      </p>
+      <div
+        class="c0"
+      >
+        <div
+          class="css-k008qs"
+        >
+          <img
+            alt="SPIRIT logo"
+            class="chakra-image__placeholder css-18pkb04"
+            fallbackstrategy="onError"
+            src="/images/tokens/default.png"
+          />
+        </div>
+        <p
+          class="chakra-text css-1xbhoz2"
+        >
+          SPIRIT
+        </p>
+      </div>
+    </div>
+    <div
+      class="chakra-stack css-1vjp4pi"
+    >
+      <div
+        class="css-k008qs"
+      >
+        <p
+          class="chakra-text css-dferxh"
+        >
+          ≈ 
+          4,000
+        </p>
+        <p
+          class="chakra-text css-14edhu4"
+        >
+          ( -0.1 )%
+        </p>
+      </div>
+      <p
+        class="chakra-text css-0"
+      >
+        common.tokenAmountPanel.balance: $1.97
+      </p>
+    </div>
+  </div>
+</div>
+`;

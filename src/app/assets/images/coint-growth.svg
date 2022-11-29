@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.0005 8.99902C13.0005 10.1045 10.7615 10.9999 7.9994 10.9999C5.23625 10.9999 2.99731 10.1045 2.99731 8.99902" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.9984 15.0018C5.23625 15.0018 2.99731 14.1064 2.99731 13.001" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.9995 4.99707H13.0005V10.9996" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.0009 15.0018C21.0029 13.8963 18.762 13.001 16.0008 13.001C13.2397 13.001 10.9988 13.8963 10.9998 15.0018C10.9998 16.1073 13.2387 17.0026 16.0018 17.0026C18.765 17.0026 21.0039 16.1073 21.0039 15.0018" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.0029 15.001V19.0026C21.0029 20.1081 18.764 21.0035 16.0018 21.0035C13.2387 21.0035 10.9998 20.1081 10.9998 19.0026V15.001" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.99842 19.0028C5.23627 19.0028 2.99634 18.1074 2.99634 17.002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="7.99842" cy="4.99693" rx="5.00208" ry="2.00083" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.9963 4.99707V17.0021" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.0026 4.99707V9.99915" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.0034 6.9979L18.0025 4.99707L16.0017 6.9979" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

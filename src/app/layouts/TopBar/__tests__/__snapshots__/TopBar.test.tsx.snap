@@ -1,0 +1,672 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TopBar /> should render and match snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-top: 5px;
+  width: 1280px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: end;
+  -ms-flex-pack: end;
+  justify-content: end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 8px;
+  margin-right: 4px;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 11px;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c6 {
+  background: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border: none;
+  gap: 0.25rem;
+  color: #FFFFFF;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 18px;
+  line-height: 26px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.c7 {
+  position: relative;
+}
+
+.c8 {
+  background: transparent;
+  border-radius: 4px;
+  border: none;
+  color: #FFFFFF;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 18px;
+  line-height: 26px;
+  padding: 4px 8px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c9 {
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+}
+
+.c10 {
+  position: absolute;
+  right: 0;
+  top: 40px;
+}
+
+.c10 > div {
+  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+}
+
+.c5 {
+  margin-right: 8px;
+  background: transparent;
+  border-radius: 4px;
+}
+
+@media (max-width:768px) {
+  .c0 {
+    padding: 5px;
+  }
+}
+
+@media (max-width:1280px) {
+  .c0 {
+    padding-top: 5px;
+    width: 100%;
+  }
+}
+
+@media (max-width:768px) {
+  .c2:nth-of-type(n + 3) {
+    display: none;
+  }
+}
+
+@media (max-width:768px) {
+  .c4 {
+    display: none;
+  }
+}
+
+<body
+    class="chakra-ui-dark"
+  >
+    <div
+      id="chakra-toast-portal"
+    >
+      <ul
+        id="chakra-toast-manager-top"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-top-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-top-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+    </div>
+    <div>
+      <div
+        class="Header css-1tmrtyn"
+        id="top-bar"
+      >
+        <div
+          class="c0"
+        >
+          <div
+            class="c1"
+          >
+            <div
+              class="c2 css-1y36syk"
+            >
+              <div
+                class="css-1wtwqvk"
+              >
+                FTM
+              </div>
+              <div
+                class="chakra-skeleton css-9zrjag"
+              />
+            </div>
+            <div
+              class="c2 css-1y36syk"
+            >
+              <div
+                class="css-1wtwqvk"
+              >
+                TVL
+              </div>
+              <div
+                class="chakra-skeleton css-10n5lx1"
+              />
+            </div>
+            <div
+              class="c2 css-1y36syk"
+            >
+              <div
+                class="css-1wtwqvk"
+              >
+                MARKET CAP
+              </div>
+              <div
+                class="chakra-skeleton css-1y5b7w2"
+              />
+            </div>
+            <button
+              class="chakra-button css-1e91mz9"
+              type="button"
+            >
+              common.topBar.switchV1
+            </button>
+          </div>
+          <div
+            class="c3"
+          >
+            <div
+              class="css-e8l2pc"
+            >
+              <img
+                class="chakra-image css-11kq4ng"
+                src="spiritswap.png"
+              />
+            </div>
+            <div
+              class="c4"
+            >
+              <a
+                class="c5"
+                href="/home"
+              >
+                <button
+                  class="c6"
+                >
+                  common.menu.home
+                </button>
+              </a>
+              <a
+                class="c5"
+                href="/swap"
+              >
+                <button
+                  class="c6"
+                >
+                  common.menu.swap
+                </button>
+              </a>
+              <a
+                class="c5"
+                href="/bridge"
+              >
+                <button
+                  class="c6"
+                >
+                  common.menu.bridge
+                </button>
+              </a>
+              <a
+                class="c5"
+                href="/liquidity"
+              >
+                <button
+                  class="c6"
+                >
+                  common.menu.liquidity
+                </button>
+              </a>
+              <a
+                class="c5"
+                href="/farms"
+              >
+                <button
+                  class="c6"
+                >
+                  common.menu.farms
+                </button>
+              </a>
+              <a
+                class="c5"
+                href="/inspirit"
+              >
+                <button
+                  class="c6"
+                >
+                  common.menu.inSpirit
+                </button>
+              </a>
+              <a
+                class="c5"
+                href="/spiritwars"
+              >
+                <button
+                  class="c6"
+                >
+                  common.menu.spiritwars
+                </button>
+              </a>
+              <div
+                class="c7"
+              >
+                <button
+                  class="c8"
+                >
+                  common.menu.more
+                  <svg
+                    class="c9"
+                  >
+                    caret-down.svg
+                  </svg>
+                </button>
+                <div
+                  class="c10"
+                />
+              </div>
+            </div>
+            <div
+              class="chakra-stack css-1x01mcn"
+            >
+              <a
+                class="c5"
+                href="/swap"
+              >
+                <button
+                  class="chakra-button css-f2nodp"
+                  type="button"
+                >
+                  <img
+                    class="chakra-image css-9uy14h"
+                    src="soully-logo.png"
+                  />
+                  <div
+                    class="chakra-skeleton css-1ucjcg0"
+                  >
+                    <p
+                      class="chakra-text css-0"
+                    >
+                      $
+                      0.000
+                    </p>
+                  </div>
+                </button>
+              </a>
+              <button
+                class="chakra-button css-dzrhig"
+                type="button"
+              >
+                <svg
+                  class="chakra-icon css-1mdjnso"
+                  focusable="false"
+                >
+                  wallet-input.svg
+                </svg>
+                common.topBar.connect
+              </button>
+              <button
+                class="chakra-button css-1rl093l"
+                type="button"
+              >
+                <svg
+                  class="chakra-icon css-jt7sc4"
+                  focusable="false"
+                >
+                  settings.svg
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="Header css-1tmrtyn"
+      id="top-bar"
+    >
+      <div
+        class="sc-iwjdpV dgtpPY"
+      >
+        <div
+          class="sc-cxpSdN goOeuS"
+        >
+          <div
+            class="sc-ikJyIC fbtoRr css-1y36syk"
+          >
+            <div
+              class="css-1wtwqvk"
+            >
+              FTM
+            </div>
+            <div
+              class="chakra-skeleton css-9zrjag"
+            />
+          </div>
+          <div
+            class="sc-ikJyIC fbtoRr css-1y36syk"
+          >
+            <div
+              class="css-1wtwqvk"
+            >
+              TVL
+            </div>
+            <div
+              class="chakra-skeleton css-10n5lx1"
+            />
+          </div>
+          <div
+            class="sc-ikJyIC fbtoRr css-1y36syk"
+          >
+            <div
+              class="css-1wtwqvk"
+            >
+              MARKET CAP
+            </div>
+            <div
+              class="chakra-skeleton css-1y5b7w2"
+            />
+          </div>
+          <button
+            class="chakra-button css-1e91mz9"
+            type="button"
+          >
+            common.topBar.switchV1
+          </button>
+        </div>
+        <div
+          class="sc-jJoQJp dikIme"
+        >
+          <div
+            class="css-e8l2pc"
+          >
+            <img
+              class="chakra-image css-11kq4ng"
+              src="spiritswap.png"
+            />
+          </div>
+          <div
+            class="sc-cCcXHH fAORBl"
+          >
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/home"
+            >
+              <button
+                class="sc-cidDSM jxdIHb"
+              >
+                common.menu.home
+              </button>
+            </a>
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/swap"
+            >
+              <button
+                class="sc-cidDSM jxdIHb"
+              >
+                common.menu.swap
+              </button>
+            </a>
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/bridge"
+            >
+              <button
+                class="sc-cidDSM jxdIHb"
+              >
+                common.menu.bridge
+              </button>
+            </a>
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/liquidity"
+            >
+              <button
+                class="sc-cidDSM jxdIHb"
+              >
+                common.menu.liquidity
+              </button>
+            </a>
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/farms"
+            >
+              <button
+                class="sc-cidDSM jxdIHb"
+              >
+                common.menu.farms
+              </button>
+            </a>
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/inspirit"
+            >
+              <button
+                class="sc-cidDSM jxdIHb"
+              >
+                common.menu.inSpirit
+              </button>
+            </a>
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/spiritwars"
+            >
+              <button
+                class="sc-cidDSM jxdIHb"
+              >
+                common.menu.spiritwars
+              </button>
+            </a>
+            <div
+              class="sc-jcFjpl dAcTIq"
+            >
+              <button
+                class="sc-caiLqq EoRih"
+              >
+                common.menu.more
+                <svg
+                  class="sc-iUKqMP bwrxKS"
+                >
+                  caret-down.svg
+                </svg>
+              </button>
+              <div
+                class="sc-iAKWXU bDtpGN"
+              />
+            </div>
+          </div>
+          <div
+            class="chakra-stack css-1x01mcn"
+          >
+            <a
+              class="sc-efQSVx brGHgr"
+              href="/swap"
+            >
+              <button
+                class="chakra-button css-f2nodp"
+                type="button"
+              >
+                <img
+                  class="chakra-image css-9uy14h"
+                  src="soully-logo.png"
+                />
+                <div
+                  class="chakra-skeleton css-1ucjcg0"
+                >
+                  <p
+                    class="chakra-text css-0"
+                  >
+                    $
+                    0.000
+                  </p>
+                </div>
+              </button>
+            </a>
+            <button
+              class="chakra-button css-dzrhig"
+              type="button"
+            >
+              <svg
+                class="chakra-icon css-1mdjnso"
+                focusable="false"
+              >
+                wallet-input.svg
+              </svg>
+              common.topBar.connect
+            </button>
+            <button
+              class="chakra-button css-1rl093l"
+              type="button"
+            >
+              <svg
+                class="chakra-icon css-jt7sc4"
+                focusable="false"
+              >
+                settings.svg
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -1,0 +1,1368 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Inspirit /> should render and match snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": .c0 {
+  display: inline-grid;
+  grid-auto-flow: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.c1 {
+  color: #FFFFFF;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.c3 {
+  color: #D1D5DB;
+}
+
+.c4 {
+  margin-top: 0.25rem;
+}
+
+<body
+    class="chakra-ui-dark"
+  >
+    <div
+      id="chakra-toast-portal"
+    >
+      <ul
+        id="chakra-toast-manager-top"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-top-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-top-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+    </div>
+    <div>
+      <div
+        class="css-1muu6f7"
+        ismobile="0"
+      >
+        <div
+          class="css-1artoct"
+        >
+          <div
+            class="css-1y0eixf"
+          >
+            <div
+              class="chakra-stack css-bd1wo4"
+            >
+              <div
+                class="css-1smztca"
+              >
+                <svg
+                  class="chakra-icon css-1i1tpcd"
+                  focusable="false"
+                >
+                  menu-inspirit.svg
+                </svg>
+                <div
+                  class="css-9p2eg5"
+                >
+                  <div
+                    class="c0"
+                  >
+                    <h2
+                      class="chakra-heading css-1ohte0q"
+                    >
+                      inSpirit.help.inspirit
+                    </h2>
+                    <svg>
+                      question-circle.svg
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="css-1smztca"
+              >
+                <svg
+                  class="chakra-icon css-1omlkfi"
+                  focusable="false"
+                >
+                  clock-coins.svg
+                </svg>
+                <div>
+                  <h4
+                    class="chakra-heading css-88i3dm"
+                  >
+                    inSpirit.help.inspiritQuestion
+                  </h4>
+                  <p
+                    class="chakra-text css-6t48qw"
+                  >
+                    inSpirit.help.inspiritExplanation
+                  </p>
+                </div>
+              </div>
+              <div
+                class="css-1smztca"
+              >
+                <svg
+                  class="chakra-icon css-1omlkfi"
+                  focusable="false"
+                >
+                  locking.svg
+                </svg>
+                <div>
+                  <h4
+                    class="chakra-heading css-88i3dm"
+                  >
+                    inSpirit.help.voteLockingQuestion
+                  </h4>
+                  <p
+                    class="chakra-text css-6t48qw"
+                  >
+                    inSpirit.help.votelockingExplanation
+                  </p>
+                </div>
+              </div>
+              <div
+                class="css-1smztca"
+              >
+                <svg
+                  class="chakra-icon css-dq23e0"
+                  focusable="false"
+                >
+                  sparkles.svg
+                </svg>
+                <div>
+                  <h4
+                    class="chakra-heading css-88i3dm"
+                  >
+                    inSpirit.help.lockSpiritQuestion
+                  </h4>
+                  <p
+                    class="chakra-text css-6t48qw"
+                  >
+                    inSpirit.help.lockspiritExplanation
+                  </p>
+                </div>
+              </div>
+              <div
+                class="css-1smztca"
+              >
+                <svg
+                  class="chakra-icon css-1omlkfi"
+                  focusable="false"
+                >
+                  business-bars.svg
+                </svg>
+                <div>
+                  <h4
+                    class="chakra-heading css-88i3dm"
+                  >
+                    inSpirit.help.endPeriodQuestion
+                  </h4>
+                  <p
+                    class="chakra-text css-6t48qw"
+                  >
+                    inSpirit.help.endPeriodExplanation
+                  </p>
+                </div>
+              </div>
+              <div
+                class="chakra-button__group css-l2hksq"
+                role="group"
+              >
+                <button
+                  class="chakra-button css-19b6psm"
+                  type="button"
+                >
+                  <button
+                    class="chakra-button css-cgab85"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </button>
+                <button
+                  class="chakra-button css-cwozz8"
+                  type="button"
+                >
+                  inSpirit.help.generateInspirit
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-1y0eixf"
+          >
+            <div
+              class="css-o2j9ze"
+            >
+              <div
+                class="css-1ui6izz"
+              >
+                <button
+                  class="chakra-button css-97pn7e"
+                  type="button"
+                >
+                  <svg
+                    class="chakra-icon css-18w02b3"
+                    focusable="false"
+                  >
+                    bar-chart.svg
+                  </svg>
+                </button>
+                <h2
+                  class="css-1io1c3r"
+                >
+                  inSpirit.stats.title
+                </h2>
+                <div>
+                  <button
+                    class="chakra-button css-hrhwgv"
+                    data-testid="open-modal-button"
+                    type="button"
+                  >
+                    <svg
+                      class="chakra-icon css-a3dk5y"
+                      focusable="false"
+                    >
+                      question-3-circle.svg
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="css-1q8ro35"
+            >
+              <div
+                class="chakra-stack css-1h4ws66"
+              >
+                <div
+                  class="css-0"
+                >
+                  Total SPIRIT Locked
+                </div>
+                <div
+                  class="css-1qjvioo"
+                >
+                  0
+                   SPIRIT
+                </div>
+                <div
+                  class="css-0"
+                >
+                  $0
+                </div>
+              </div>
+              <div
+                class="chakra-stack css-1h4ws66"
+              >
+                <div
+                  class="css-0"
+                >
+                  Average unlock time
+                </div>
+                <div
+                  class="css-1qjvioo"
+                >
+                  0
+                   Days
+                </div>
+              </div>
+            </div>
+            <div
+              class="css-ig654o"
+            >
+              Last week's stats
+            </div>
+            <div
+              class="chakra-stack css-134svv6"
+              isteal="true"
+            >
+              <div
+                class="css-gmuxg9"
+              >
+                inSpirit.stats.apr
+              </div>
+              <div
+                class="css-by3ysm"
+                primary="true"
+              >
+                0.00
+                %
+              </div>
+            </div>
+            <div
+              class="chakra-stack css-1bk4pz4"
+            >
+              <div
+                class="css-gmuxg9"
+              >
+                inSpirit.stats.totalDistribution
+              </div>
+              <div
+                class="css-csh4ms"
+              >
+                0
+                 SPIRIT
+              </div>
+              <div
+                class="css-gmuxg9"
+              />
+            </div>
+            <div
+              class="chakra-stack css-1bk4pz4"
+            >
+              <div
+                class="css-gmuxg9"
+              >
+                inSpirit.stats.nextDistribution
+              </div>
+              <div
+                class="css-csh4ms"
+              >
+                <time
+                  class="c1"
+                  datetime="31 Dec 1969"
+                >
+                  31 December 1969
+                </time>
+              </div>
+            </div>
+            <div
+              class="chakra-stack css-1bk4pz4"
+            >
+              <div
+                class="css-gmuxg9"
+              >
+                inSpirit.stats.spiritPerInspirit
+              </div>
+              <div
+                class="css-csh4ms"
+              >
+                0.000
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="css-14x23pb"
+        >
+          <div
+            class="css-22zxpx"
+          >
+            <div
+              class="css-1ui6izz"
+            >
+              <button
+                class="chakra-button css-97pn7e"
+                type="button"
+              >
+                <svg
+                  class="chakra-icon css-18w02b3"
+                  focusable="false"
+                >
+                  inSPIRIT-dashboard.svg
+                </svg>
+              </button>
+              <h2
+                class="css-1io1c3r"
+              >
+                inSpirit.modalHelper.yourDashboard
+              </h2>
+              <div>
+                <button
+                  class="chakra-button css-hrhwgv"
+                  data-testid="open-modal-button"
+                  type="button"
+                >
+                  <svg
+                    class="chakra-icon css-a3dk5y"
+                    focusable="false"
+                  >
+                    question-3-circle.svg
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div
+              class="css-147z228"
+            >
+              <div
+                class="css-edvjm0"
+              >
+                <div
+                  class="chakra-stack css-owjkmg"
+                >
+                  <div
+                    class="css-hcuhqq"
+                  >
+                    <div
+                      class="css-1w6p6ke"
+                    >
+                      inSpirit.modalHelper.currentInSpiritBalance
+                    </div>
+                    <div
+                      class="css-13pzl38"
+                    >
+                      0 inSPIRIT
+                    </div>
+                  </div>
+                  <div
+                    class="css-hcuhqq"
+                  >
+                    <div
+                      class="css-1w6p6ke"
+                    >
+                      inSpirit.modalHelper.lockedSpirit
+                    </div>
+                    <div
+                      class="css-13pzl38"
+                    >
+                      0 SPIRIT
+                    </div>
+                  </div>
+                  <div
+                    class="css-hcuhqq"
+                  >
+                    <div
+                      class="css-1w6p6ke"
+                    >
+                      inSpirit.modalHelper.inspiritUnlockDate
+                    </div>
+                    <div
+                      class="css-13pzl38"
+                    >
+                      inSpirit.modalHelper.noLock
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="chakra-stack css-1485kjp"
+              >
+                <div
+                  class="css-u4hwmo"
+                >
+                  <div
+                    class="css-1j955z8"
+                  >
+                    <div
+                      class="chakra-stack css-1jxjhsf"
+                    >
+                      <div
+                        class="css-1w6p6ke"
+                      >
+                        <div
+                          class="css-gmuwbf"
+                        >
+                          inSpirit.modalHelper.nextDistributionBlock
+                        </div>
+                      </div>
+                      <div
+                        class="css-13pzl38"
+                      >
+                        <div
+                          class="css-gmuwbf"
+                        >
+                          1st Jan 1970
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="chakra-stack css-ceeqhh"
+                      style="align-items: center;"
+                    >
+                      <div
+                        class="css-1q2lbmy"
+                      >
+                        <div
+                          class="css-ab6uec"
+                          style="margin-right: 12px;"
+                        >
+                          <div
+                            class="css-1q2lbmy"
+                          >
+                            <div
+                              class="css-hcm2m0"
+                            >
+                              -
+                            </div>
+                            <div
+                              class="css-hcm2m0"
+                            >
+                              4
+                            </div>
+                          </div>
+                          <p>
+                            Days
+                          </p>
+                        </div>
+                        <div
+                          class="css-ab6uec"
+                          style="margin-right: 12px;"
+                        >
+                          <div
+                            class="css-1q2lbmy"
+                          >
+                            <div
+                              class="css-1xassfa"
+                            >
+                              -
+                            </div>
+                            <div
+                              class="css-1xassfa"
+                            >
+                              1
+                            </div>
+                          </div>
+                          <p>
+                            Hours
+                          </p>
+                        </div>
+                        <div
+                          class="css-ab6uec"
+                          style="margin-right: 12px;"
+                        >
+                          <div
+                            class="css-1q2lbmy"
+                          >
+                            <div
+                              class="css-1xassfa"
+                            >
+                              5
+                            </div>
+                            <div
+                              class="css-1xassfa"
+                            >
+                              -
+                            </div>
+                          </div>
+                          <p>
+                            Minutes
+                          </p>
+                        </div>
+                        <div
+                          class="css-ab6uec"
+                          style="margin-right: 0px;"
+                        >
+                          <div
+                            class="css-1q2lbmy"
+                          >
+                            <div
+                              class="css-1xassfa"
+                            >
+                              2
+                            </div>
+                            <div
+                              class="css-1xassfa"
+                            >
+                              9
+                            </div>
+                          </div>
+                          <p>
+                            Seconds
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="css-10w00qa"
+                >
+                  <div
+                    class="chakra-stack css-1ddb7p0"
+                  >
+                    <p
+                      class="chakra-text css-gdpom5"
+                    >
+                      inSpirit.modalHelper.butSpiritToGenerateInSpirit
+                    </p>
+                    <button
+                      class="chakra-button css-1v02wz"
+                      type="button"
+                    >
+                      <div
+                        class="css-6abks0"
+                      >
+                        <img
+                          class="chakra-image css-yikrym"
+                          src="soully-logo.png"
+                        />
+                        inSpirit.modalHelper.buySpirit
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-vqj8vj"
+            id="voting_section"
+          >
+            <div
+              class="css-1y0eixf"
+            >
+              <div
+                class="c2"
+              >
+                <div
+                  class="css-1ofqig9"
+                >
+                  <div
+                    class="chakra-stack css-1cqqob7"
+                  >
+                    <div
+                      class="css-1ui6izz"
+                    >
+                      <button
+                        class="chakra-button css-97pn7e"
+                        type="button"
+                      >
+                        <svg
+                          class="chakra-icon css-18w02b3"
+                          focusable="false"
+                        >
+                          voting.svg
+                        </svg>
+                      </button>
+                      <h2
+                        class="css-1io1c3r"
+                      >
+                        inSpirit.voting.title
+                      </h2>
+                      <div>
+                        <button
+                          class="chakra-button css-hrhwgv"
+                          data-testid="open-modal-button"
+                          type="button"
+                        >
+                          <svg
+                            class="chakra-icon css-a3dk5y"
+                            focusable="false"
+                          >
+                            question-3-circle.svg
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <p
+                    class="chakra-text c3 c4 css-fzhz6b"
+                    sub="false"
+                  >
+                    inSpirit.voting.notconnected
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="css-1muu6f7"
+      ismobile="0"
+    >
+      <div
+        class="css-1artoct"
+      >
+        <div
+          class="css-1y0eixf"
+        >
+          <div
+            class="chakra-stack css-bd1wo4"
+          >
+            <div
+              class="css-1smztca"
+            >
+              <svg
+                class="chakra-icon css-1i1tpcd"
+                focusable="false"
+              >
+                menu-inspirit.svg
+              </svg>
+              <div
+                class="css-9p2eg5"
+              >
+                <div
+                  class="sc-ksdxgE gFbAov"
+                >
+                  <h2
+                    class="chakra-heading css-1ohte0q"
+                  >
+                    inSpirit.help.inspirit
+                  </h2>
+                  <svg>
+                    question-circle.svg
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="css-1smztca"
+            >
+              <svg
+                class="chakra-icon css-1omlkfi"
+                focusable="false"
+              >
+                clock-coins.svg
+              </svg>
+              <div>
+                <h4
+                  class="chakra-heading css-88i3dm"
+                >
+                  inSpirit.help.inspiritQuestion
+                </h4>
+                <p
+                  class="chakra-text css-6t48qw"
+                >
+                  inSpirit.help.inspiritExplanation
+                </p>
+              </div>
+            </div>
+            <div
+              class="css-1smztca"
+            >
+              <svg
+                class="chakra-icon css-1omlkfi"
+                focusable="false"
+              >
+                locking.svg
+              </svg>
+              <div>
+                <h4
+                  class="chakra-heading css-88i3dm"
+                >
+                  inSpirit.help.voteLockingQuestion
+                </h4>
+                <p
+                  class="chakra-text css-6t48qw"
+                >
+                  inSpirit.help.votelockingExplanation
+                </p>
+              </div>
+            </div>
+            <div
+              class="css-1smztca"
+            >
+              <svg
+                class="chakra-icon css-dq23e0"
+                focusable="false"
+              >
+                sparkles.svg
+              </svg>
+              <div>
+                <h4
+                  class="chakra-heading css-88i3dm"
+                >
+                  inSpirit.help.lockSpiritQuestion
+                </h4>
+                <p
+                  class="chakra-text css-6t48qw"
+                >
+                  inSpirit.help.lockspiritExplanation
+                </p>
+              </div>
+            </div>
+            <div
+              class="css-1smztca"
+            >
+              <svg
+                class="chakra-icon css-1omlkfi"
+                focusable="false"
+              >
+                business-bars.svg
+              </svg>
+              <div>
+                <h4
+                  class="chakra-heading css-88i3dm"
+                >
+                  inSpirit.help.endPeriodQuestion
+                </h4>
+                <p
+                  class="chakra-text css-6t48qw"
+                >
+                  inSpirit.help.endPeriodExplanation
+                </p>
+              </div>
+            </div>
+            <div
+              class="chakra-button__group css-l2hksq"
+              role="group"
+            >
+              <button
+                class="chakra-button css-19b6psm"
+                type="button"
+              >
+                <button
+                  class="chakra-button css-cgab85"
+                  type="button"
+                >
+                  home.common.learnMore
+                </button>
+              </button>
+              <button
+                class="chakra-button css-cwozz8"
+                type="button"
+              >
+                inSpirit.help.generateInspirit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="css-1y0eixf"
+        >
+          <div
+            class="css-o2j9ze"
+          >
+            <div
+              class="css-1ui6izz"
+            >
+              <button
+                class="chakra-button css-97pn7e"
+                type="button"
+              >
+                <svg
+                  class="chakra-icon css-18w02b3"
+                  focusable="false"
+                >
+                  bar-chart.svg
+                </svg>
+              </button>
+              <h2
+                class="css-1io1c3r"
+              >
+                inSpirit.stats.title
+              </h2>
+              <div>
+                <button
+                  class="chakra-button css-hrhwgv"
+                  data-testid="open-modal-button"
+                  type="button"
+                >
+                  <svg
+                    class="chakra-icon css-a3dk5y"
+                    focusable="false"
+                  >
+                    question-3-circle.svg
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-1q8ro35"
+          >
+            <div
+              class="chakra-stack css-1h4ws66"
+            >
+              <div
+                class="css-0"
+              >
+                Total SPIRIT Locked
+              </div>
+              <div
+                class="css-1qjvioo"
+              >
+                0
+                 SPIRIT
+              </div>
+              <div
+                class="css-0"
+              >
+                $0
+              </div>
+            </div>
+            <div
+              class="chakra-stack css-1h4ws66"
+            >
+              <div
+                class="css-0"
+              >
+                Average unlock time
+              </div>
+              <div
+                class="css-1qjvioo"
+              >
+                0
+                 Days
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-ig654o"
+          >
+            Last week's stats
+          </div>
+          <div
+            class="chakra-stack css-134svv6"
+            isteal="true"
+          >
+            <div
+              class="css-gmuxg9"
+            >
+              inSpirit.stats.apr
+            </div>
+            <div
+              class="css-by3ysm"
+              primary="true"
+            >
+              0.00
+              %
+            </div>
+          </div>
+          <div
+            class="chakra-stack css-1bk4pz4"
+          >
+            <div
+              class="css-gmuxg9"
+            >
+              inSpirit.stats.totalDistribution
+            </div>
+            <div
+              class="css-csh4ms"
+            >
+              0
+               SPIRIT
+            </div>
+            <div
+              class="css-gmuxg9"
+            />
+          </div>
+          <div
+            class="chakra-stack css-1bk4pz4"
+          >
+            <div
+              class="css-gmuxg9"
+            >
+              inSpirit.stats.nextDistribution
+            </div>
+            <div
+              class="css-csh4ms"
+            >
+              <time
+                class="sc-hBUSln jocExJ"
+                datetime="31 Dec 1969"
+              >
+                31 December 1969
+              </time>
+            </div>
+          </div>
+          <div
+            class="chakra-stack css-1bk4pz4"
+          >
+            <div
+              class="css-gmuxg9"
+            >
+              inSpirit.stats.spiritPerInspirit
+            </div>
+            <div
+              class="css-csh4ms"
+            >
+              0.000
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="css-14x23pb"
+      >
+        <div
+          class="css-22zxpx"
+        >
+          <div
+            class="css-1ui6izz"
+          >
+            <button
+              class="chakra-button css-97pn7e"
+              type="button"
+            >
+              <svg
+                class="chakra-icon css-18w02b3"
+                focusable="false"
+              >
+                inSPIRIT-dashboard.svg
+              </svg>
+            </button>
+            <h2
+              class="css-1io1c3r"
+            >
+              inSpirit.modalHelper.yourDashboard
+            </h2>
+            <div>
+              <button
+                class="chakra-button css-hrhwgv"
+                data-testid="open-modal-button"
+                type="button"
+              >
+                <svg
+                  class="chakra-icon css-a3dk5y"
+                  focusable="false"
+                >
+                  question-3-circle.svg
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="css-147z228"
+          >
+            <div
+              class="css-edvjm0"
+            >
+              <div
+                class="chakra-stack css-owjkmg"
+              >
+                <div
+                  class="css-hcuhqq"
+                >
+                  <div
+                    class="css-1w6p6ke"
+                  >
+                    inSpirit.modalHelper.currentInSpiritBalance
+                  </div>
+                  <div
+                    class="css-13pzl38"
+                  >
+                    0 inSPIRIT
+                  </div>
+                </div>
+                <div
+                  class="css-hcuhqq"
+                >
+                  <div
+                    class="css-1w6p6ke"
+                  >
+                    inSpirit.modalHelper.lockedSpirit
+                  </div>
+                  <div
+                    class="css-13pzl38"
+                  >
+                    0 SPIRIT
+                  </div>
+                </div>
+                <div
+                  class="css-hcuhqq"
+                >
+                  <div
+                    class="css-1w6p6ke"
+                  >
+                    inSpirit.modalHelper.inspiritUnlockDate
+                  </div>
+                  <div
+                    class="css-13pzl38"
+                  >
+                    inSpirit.modalHelper.noLock
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="chakra-stack css-1485kjp"
+            >
+              <div
+                class="css-u4hwmo"
+              >
+                <div
+                  class="css-1j955z8"
+                >
+                  <div
+                    class="chakra-stack css-1jxjhsf"
+                  >
+                    <div
+                      class="css-1w6p6ke"
+                    >
+                      <div
+                        class="css-gmuwbf"
+                      >
+                        inSpirit.modalHelper.nextDistributionBlock
+                      </div>
+                    </div>
+                    <div
+                      class="css-13pzl38"
+                    >
+                      <div
+                        class="css-gmuwbf"
+                      >
+                        1st Jan 1970
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="chakra-stack css-ceeqhh"
+                    style="align-items: center;"
+                  >
+                    <div
+                      class="css-1q2lbmy"
+                    >
+                      <div
+                        class="css-ab6uec"
+                        style="margin-right: 12px;"
+                      >
+                        <div
+                          class="css-1q2lbmy"
+                        >
+                          <div
+                            class="css-hcm2m0"
+                          >
+                            -
+                          </div>
+                          <div
+                            class="css-hcm2m0"
+                          >
+                            4
+                          </div>
+                        </div>
+                        <p>
+                          Days
+                        </p>
+                      </div>
+                      <div
+                        class="css-ab6uec"
+                        style="margin-right: 12px;"
+                      >
+                        <div
+                          class="css-1q2lbmy"
+                        >
+                          <div
+                            class="css-1xassfa"
+                          >
+                            -
+                          </div>
+                          <div
+                            class="css-1xassfa"
+                          >
+                            1
+                          </div>
+                        </div>
+                        <p>
+                          Hours
+                        </p>
+                      </div>
+                      <div
+                        class="css-ab6uec"
+                        style="margin-right: 12px;"
+                      >
+                        <div
+                          class="css-1q2lbmy"
+                        >
+                          <div
+                            class="css-1xassfa"
+                          >
+                            5
+                          </div>
+                          <div
+                            class="css-1xassfa"
+                          >
+                            -
+                          </div>
+                        </div>
+                        <p>
+                          Minutes
+                        </p>
+                      </div>
+                      <div
+                        class="css-ab6uec"
+                        style="margin-right: 0px;"
+                      >
+                        <div
+                          class="css-1q2lbmy"
+                        >
+                          <div
+                            class="css-1xassfa"
+                          >
+                            2
+                          </div>
+                          <div
+                            class="css-1xassfa"
+                          >
+                            9
+                          </div>
+                        </div>
+                        <p>
+                          Seconds
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="css-10w00qa"
+              >
+                <div
+                  class="chakra-stack css-1ddb7p0"
+                >
+                  <p
+                    class="chakra-text css-gdpom5"
+                  >
+                    inSpirit.modalHelper.butSpiritToGenerateInSpirit
+                  </p>
+                  <button
+                    class="chakra-button css-1v02wz"
+                    type="button"
+                  >
+                    <div
+                      class="css-6abks0"
+                    >
+                      <img
+                        class="chakra-image css-yikrym"
+                        src="soully-logo.png"
+                      />
+                      inSpirit.modalHelper.buySpirit
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="css-vqj8vj"
+          id="voting_section"
+        >
+          <div
+            class="css-1y0eixf"
+          >
+            <div
+              class="sc-fotOHu knhmg"
+            >
+              <div
+                class="css-1ofqig9"
+              >
+                <div
+                  class="chakra-stack css-1cqqob7"
+                >
+                  <div
+                    class="css-1ui6izz"
+                  >
+                    <button
+                      class="chakra-button css-97pn7e"
+                      type="button"
+                    >
+                      <svg
+                        class="chakra-icon css-18w02b3"
+                        focusable="false"
+                      >
+                        voting.svg
+                      </svg>
+                    </button>
+                    <h2
+                      class="css-1io1c3r"
+                    >
+                      inSpirit.voting.title
+                    </h2>
+                    <div>
+                      <button
+                        class="chakra-button css-hrhwgv"
+                        data-testid="open-modal-button"
+                        type="button"
+                      >
+                        <svg
+                          class="chakra-icon css-a3dk5y"
+                          focusable="false"
+                        >
+                          question-3-circle.svg
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <p
+                  class="chakra-text sc-fFeiMQ sc-bkkeKt iKggJx leSWlG css-fzhz6b"
+                  sub="false"
+                >
+                  inSpirit.voting.notconnected
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

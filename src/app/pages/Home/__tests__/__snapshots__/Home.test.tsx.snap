@@ -1,0 +1,2430 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> should render and match snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": .c17 {
+  background: #1D9384;
+  color: #FFFFFF;
+  border: 1px solid rgba(100,221,192,0.15);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 0.25rem 0.5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.c17:hover {
+  opacity: 0.8;
+}
+
+.c17:active {
+  border: 1px solid #60E6C5;
+  opacity: 1;
+}
+
+.c17,
+.c17 > * {
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+}
+
+.c16 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: default;
+}
+
+.c16,
+.c16 > div,
+.c16 > svg,
+.c16 > img {
+  width: 40px;
+  height: 40px;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 0;
+  width: 1280px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 16px;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 100vh;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding-top: 240px;
+}
+
+.c3 > * {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  margin: auto;
+  margin-top: 40px;
+  max-width: 500px;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-top: -32px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+}
+
+.c8 img {
+  width: 500px;
+  min-width: 330px;
+}
+
+.c5 {
+  margin-top: 36px;
+  white-space: nowrap;
+}
+
+.c6 {
+  margin-top: 24px;
+  color: #D1D5DB;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 64px;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 16px;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c15 .aboutSectionItem {
+  margin-top: 96px;
+}
+
+.c11 {
+  height: 24px;
+}
+
+.c9 a {
+  padding: 16px;
+  display: inline-block;
+}
+
+.c9 a svg {
+  display: block;
+  color: #fff;
+}
+
+.c9 a:hover svg {
+  color: #60E6C5;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  margin-left: 15px;
+}
+
+.c10 span {
+  font-weight: 500;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.c12 {
+  margin-inline: auto;
+  margin-top: 96px;
+  width: 100%;
+}
+
+.c13 {
+  background-color: #60E6C5;
+  height: 4px;
+  border-radius: 4px;
+}
+
+.c14 {
+  background: rgb(100,221,192,0.15);
+  border-radius: 16px;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+}
+
+@media (max-width:640px) {
+  .c0 {
+    padding: 0 8px;
+  }
+}
+
+@media (max-width:420px) {
+  .c0 {
+    padding: 0;
+  }
+}
+
+@media (max-width:1280px) {
+  .c1 {
+    width: 100%;
+  }
+}
+
+@media (max-width:768px) {
+  .c2 {
+    height: auto;
+  }
+}
+
+@media (max-width:1024px) {
+  .c3 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-top: 60px;
+  }
+}
+
+@media (min-width:1024px) {
+  .c4 {
+    display: none;
+  }
+}
+
+@media (max-width:1024px) {
+  .c8 {
+    display: none;
+  }
+}
+
+@media (min-width:768px) {
+  .c5 {
+    font-size: 56px;
+    line-height: 64px;
+    margin-top: 0;
+  }
+}
+
+@media (max-width:768px) {
+  .c6 {
+    font-size: 14px;
+    line-height: 20px;
+    padding-right: 32px;
+  }
+}
+
+@media (max-width:768px) {
+  .c7 {
+    display: inline-grid;
+    grid-template-columns: repeat(2,1fr);
+    width: 100%;
+    margin-top: 32px;
+  }
+}
+
+@media (max-width:320px) {
+  .c9 a {
+    padding: 6px;
+  }
+}
+
+<body
+    class="chakra-ui-dark"
+  >
+    <div
+      id="chakra-toast-portal"
+    >
+      <ul
+        id="chakra-toast-manager-top"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-top-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-top-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+    </div>
+    <div>
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            class="c2"
+          >
+            <div
+              class="c3"
+            >
+              <div
+                class="c4"
+              >
+                <iframe
+                  height="250"
+                  src="https://rive.app/s/-Y32kBhitEilOPZITv9ung/embed"
+                  title="Spirit"
+                  width="650"
+                />
+              </div>
+              <div
+                class="css-j7qwjs"
+              >
+                <h1
+                  class="c5 css-ygu4w7"
+                >
+                  <div>
+                    home.common.header
+                  </div>
+                </h1>
+                <h3
+                  class="c6 css-1mvjgxh"
+                >
+                  <div>
+                    home.common.descriptionFull
+                  </div>
+                </h3>
+                <div
+                  class="c7"
+                >
+                  <button
+                    class="chakra-button css-1v02wz"
+                    type="button"
+                  >
+                    home.common.connectWallet
+                    <span
+                      class="chakra-button__icon css-1hzyiq5"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="chakra-icon css-2mwrac"
+                        focusable="false"
+                      >
+                        arrow-right.svg
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="chakra-button css-1u5yhfm"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </div>
+              </div>
+              <div
+                class="c8"
+              >
+                <iframe
+                  height="500"
+                  src="https://rive.app/s/-Y32kBhitEilOPZITv9ung/embed"
+                  title="Spirit"
+                  width="650"
+                />
+              </div>
+            </div>
+            <div
+              class="css-1jx7use"
+            >
+              <div
+                class="css-0"
+              >
+                <div
+                  class="c9"
+                >
+                  <a
+                    href="https://discord.gg/8FGd4nFQdT"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <svg>
+                      discord.svg
+                    </svg>
+                  </a>
+                  <a
+                    href="https://twitter.com/Spirit_Swap"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <svg>
+                      twitter.svg
+                    </svg>
+                  </a>
+                  <a
+                    href="https://github.com/Layer3Org/spiritswap-core/"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <svg>
+                      github.svg
+                    </svg>
+                  </a>
+                  <a
+                    href="https://spiritswap.medium.com/"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <svg>
+                      medium.svg
+                    </svg>
+                  </a>
+                  <a
+                    href="https://www.youtube.com/channel/UCrKLtNctO0obN4-bDMGlFuQ"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <svg>
+                      youtube.svg
+                    </svg>
+                  </a>
+                  <a
+                    href="https://t.me/spirit_swap"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <svg>
+                      telegram.svg
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <span
+                class="c10"
+              >
+                <p
+                  class="chakra-text css-1m8iww1"
+                >
+                  common.footer.auditedBy
+                </p>
+                <img
+                  alt="hour-glass Img"
+                  class="c11"
+                  src="hour-glass.png"
+                />
+              </span>
+            </div>
+          </div>
+          <div
+            class="c12"
+          >
+            <div
+              class="css-svp3u8"
+            >
+              <div
+                class="css-70qvj9"
+              >
+                <span
+                  class="chakra-text css-szlsa3"
+                >
+                  Trusted by 
+                </span>
+                <span
+                  class="chakra-text css-szlsa3"
+                >
+                  <p
+                    class="chakra-text css-0"
+                  >
+                    over 60k users
+                  </p>
+                  <div
+                    class="c13"
+                  />
+                </span>
+              </div>
+              <div
+                class="c14"
+              >
+                <div
+                  class="css-xjcvql"
+                >
+                  <div
+                    class="chakra-skeleton css-1622hux"
+                  >
+                    <div
+                      class="css-ryermd"
+                    >
+                      <p
+                        class="chakra-text css-w4c9rw"
+                      >
+                        0
+                      </p>
+                      <p
+                        class="chakra-text css-s5perm"
+                      >
+                        home.dexStatistics.totalVolume
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1622hux"
+                  >
+                    <div
+                      class="css-xi606m"
+                    >
+                      <p
+                        class="chakra-text css-w4c9rw"
+                      >
+                        0
+                      </p>
+                      <p
+                        class="chakra-text css-s5perm"
+                      >
+                        home.dexStatistics.totalLiquidity
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="chakra-skeleton css-1622hux"
+                  >
+                    <div
+                      class="css-xi606m"
+                    >
+                      <p
+                        class="chakra-text css-w4c9rw"
+                      >
+                        0
+                      </p>
+                      <p
+                        class="chakra-text css-s5perm"
+                      >
+                        home.dexStatistics.totalinSpiritRewards
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c15"
+            id="about_section_home"
+          >
+            <div>
+              <div
+                class="aboutSectionItem css-1rjl09v"
+              >
+                <div
+                  class="css-1bku0gi"
+                >
+                  <div
+                    class="css-1eiaatl"
+                  >
+                    <div
+                      class="c16 css-1gdwmq6"
+                      size="40"
+                    >
+                      <svg>
+                        menu-swap.svg
+                      </svg>
+                    </div>
+                    <span
+                      class="css-hts0wa"
+                    >
+                      home.about.swap.title
+                    </span>
+                  </div>
+                  <h4
+                    class="c6 css-1qkyk1j"
+                    style="font-weight: 400; line-height: 23.12px;"
+                  >
+                    <div>
+                      home.about.swap.description
+                    </div>
+                  </h4>
+                  <div
+                    class="css-1x6ucga"
+                  >
+                    <button
+                      class="c17"
+                    >
+                      home.about.swap.button
+                    </button>
+                    <button
+                      class="chakra-button css-1u5yhfm"
+                      type="button"
+                    >
+                      home.common.learnMore
+                    </button>
+                  </div>
+                </div>
+                <img
+                  alt="about-image-0"
+                  class="css-s6e1fh"
+                  src="landing-swap.png"
+                />
+              </div>
+            </div>
+            <div>
+              <div
+                class="aboutSectionItem css-1rjl09v"
+              >
+                <img
+                  alt="about-image-1"
+                  class="css-s6e1fh"
+                  src="landing-earn.png"
+                />
+                <div
+                  class="css-1bku0gi"
+                >
+                  <div
+                    class="css-1eiaatl"
+                  >
+                    <div
+                      class="c16 css-1gdwmq6"
+                      size="40"
+                    >
+                      <svg>
+                        coint-growth.svg
+                      </svg>
+                    </div>
+                    <span
+                      class="css-hts0wa"
+                    >
+                      home.about.farms.title
+                    </span>
+                  </div>
+                  <h4
+                    class="c6 css-1qkyk1j"
+                    style="font-weight: 400; line-height: 23.12px;"
+                  >
+                    <div>
+                      home.about.farms.description
+                    </div>
+                  </h4>
+                  <div
+                    class="css-1x6ucga"
+                  >
+                    <button
+                      class="c17"
+                    >
+                      home.about.farms.button
+                    </button>
+                    <button
+                      class="chakra-button css-1u5yhfm"
+                      type="button"
+                    >
+                      home.common.learnMore
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="aboutSectionItem css-1rjl09v"
+              >
+                <div
+                  class="css-1bku0gi"
+                >
+                  <div
+                    class="css-1eiaatl"
+                  >
+                    <div
+                      class="c16 css-1gdwmq6"
+                      size="40"
+                    >
+                      <svg>
+                        bridge.svg
+                      </svg>
+                    </div>
+                    <span
+                      class="css-hts0wa"
+                    >
+                      home.about.bridge.title
+                    </span>
+                  </div>
+                  <h4
+                    class="c6 css-1qkyk1j"
+                    style="font-weight: 400; line-height: 23.12px;"
+                  >
+                    <div>
+                      home.about.bridge.description
+                    </div>
+                  </h4>
+                  <div
+                    class="css-1x6ucga"
+                  >
+                    <button
+                      class="c17"
+                    >
+                      home.about.bridge.button
+                    </button>
+                    <button
+                      class="chakra-button css-1u5yhfm"
+                      type="button"
+                    >
+                      home.common.learnMore
+                    </button>
+                  </div>
+                </div>
+                <img
+                  alt="about-image-2"
+                  class="css-s6e1fh"
+                  src="landing-bridge.png"
+                />
+              </div>
+            </div>
+            <div>
+              <div
+                class="aboutSectionItem css-1rjl09v"
+              >
+                <img
+                  alt="about-image-3"
+                  class="css-s6e1fh"
+                  src="landing-inspirit.png"
+                />
+                <div
+                  class="css-1bku0gi"
+                >
+                  <div
+                    class="css-1eiaatl"
+                  >
+                    <div
+                      class="c16 css-1gdwmq6"
+                      size="40"
+                    >
+                      <svg>
+                        invoice-hand.svg
+                      </svg>
+                    </div>
+                    <span
+                      class="css-hts0wa"
+                    >
+                      home.about.inspirit.title
+                    </span>
+                  </div>
+                  <h4
+                    class="c6 css-1qkyk1j"
+                    style="font-weight: 400; line-height: 23.12px;"
+                  >
+                    <div>
+                      home.about.inspirit.description
+                    </div>
+                  </h4>
+                  <div
+                    class="css-1x6ucga"
+                  >
+                    <button
+                      class="c17"
+                    >
+                      home.about.inspirit.button
+                    </button>
+                    <button
+                      class="chakra-button css-1u5yhfm"
+                      type="button"
+                    >
+                      home.common.learnMore
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="aboutSectionItem css-1rjl09v"
+              >
+                <div
+                  class="css-1bku0gi"
+                >
+                  <div
+                    class="css-1eiaatl"
+                  >
+                    <div
+                      class="c16 css-1gdwmq6"
+                      size="40"
+                    >
+                      <svg
+                        class="chakra-icon css-18w02b3"
+                        focusable="false"
+                      >
+                        apemode.svg
+                      </svg>
+                    </div>
+                    <span
+                      class="css-hts0wa"
+                    >
+                      home.about.leverage.title
+                    </span>
+                  </div>
+                  <h4
+                    class="c6 css-1qkyk1j"
+                    style="font-weight: 400; line-height: 23.12px;"
+                  >
+                    <div>
+                      home.about.leverage.description
+                    </div>
+                  </h4>
+                  <div
+                    class="css-1x6ucga"
+                  >
+                    <button
+                      class="c17"
+                    >
+                      home.about.leverage.button
+                    </button>
+                    <button
+                      class="chakra-button css-1u5yhfm"
+                      type="button"
+                    >
+                      home.common.learnMore
+                    </button>
+                  </div>
+                </div>
+                <img
+                  alt="about-image-4"
+                  class="css-s6e1fh"
+                  src="landing-ape.png"
+                />
+              </div>
+            </div>
+            <div>
+              <div
+                class="aboutSectionItem css-1rjl09v"
+              >
+                <img
+                  alt="about-image-5"
+                  class="css-s6e1fh"
+                  src="landing-share.png"
+                />
+                <div
+                  class="css-1bku0gi"
+                >
+                  <div
+                    class="css-1eiaatl"
+                  >
+                    <div
+                      class="c16 css-1gdwmq6"
+                      size="40"
+                    >
+                      <svg
+                        class="chakra-icon css-d2pjoa"
+                        focusable="false"
+                      >
+                        lend-and-borrow.svg
+                      </svg>
+                    </div>
+                    <span
+                      class="css-hts0wa"
+                    >
+                      home.about.lend.title
+                    </span>
+                  </div>
+                  <h4
+                    class="c6 css-1qkyk1j"
+                    style="font-weight: 400; line-height: 23.12px;"
+                  >
+                    <div>
+                      home.about.lend.description
+                    </div>
+                  </h4>
+                  <div
+                    class="css-1x6ucga"
+                  >
+                    <button
+                      class="c17"
+                    >
+                      home.about.lend.button
+                    </button>
+                    <button
+                      class="chakra-button css-1u5yhfm"
+                      type="button"
+                    >
+                      home.common.learnMore
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="css-1upp58m"
+            >
+              <div
+                class="css-1ta4ju4"
+              >
+                <svg
+                  class="chakra-icon css-1qzx1ti"
+                  focusable="false"
+                >
+                  partnersIcon.svg
+                </svg>
+                <span
+                  class="css-hts0wa"
+                >
+                  home.partner.partners
+                </span>
+              </div>
+              <div
+                class="chakra-collapse"
+                style="overflow: hidden; display: block; opacity: 1; height: 208px;"
+              >
+                <div
+                  class="css-1trvyxx"
+                >
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://www.liquiddriver.finance/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="liquidDriver.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://ola.finance/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="olaFinance.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://www.covalenthq.com/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="covalent.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://kek.tools/t/0x5Cc61A78F164885776AA610fb0FE1257df78E59B"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="kekTools.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://unidex.exchange/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="unidex.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://beefy.finance/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="beefy.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://li.fi/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="li_finance.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://www.gelato.network/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="gelato.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://yearn.finance/#/home"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="yearn.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://www.market.xyz/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="marketXyz.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://abracadabra.money/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="abracadabra.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://hedgey.finance/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="hedgey.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://www.grim.finance/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="grim.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://www.reaper.farm/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="reaper.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://balancer.fi/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="balancer.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://cre8r.vip/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="cre8r.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://thereadingape.substack.com/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="bow-tied.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://alchemix.fi/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="alchemix.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://nftgarage.world/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="nftgarage.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <div
+                      class="css-1l4w6pd"
+                    >
+                      <a
+                        class="chakra-link css-1rsf7it"
+                        href="https://revest.finance/"
+                        target="_blank"
+                      >
+                        <img
+                          class="chakra-image css-p8k5v7"
+                          src="revestLogo.png"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="css-1b3wyb7"
+              >
+                <button
+                  class="chakra-button css-1u5yhfm"
+                  type="button"
+                >
+                  home.partner.showMore
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sc-fnVZcZ bfuPYM"
+    >
+      <div
+        class="sc-fFSPTT caOaju"
+      >
+        <div
+          class="sc-bkbkJK bTPszr"
+        >
+          <div
+            class="sc-iemWCZ enaBFY"
+          >
+            <div
+              class="sc-dIvrsQ euXAFR"
+            >
+              <iframe
+                height="250"
+                src="https://rive.app/s/-Y32kBhitEilOPZITv9ung/embed"
+                title="Spirit"
+                width="650"
+              />
+            </div>
+            <div
+              class="css-j7qwjs"
+            >
+              <h1
+                class="sc-dlMDgC epoKjM css-ygu4w7"
+              >
+                <div>
+                  home.common.header
+                </div>
+              </h1>
+              <h3
+                class="sc-kfYoZR iqxfrC css-1mvjgxh"
+              >
+                <div>
+                  home.common.descriptionFull
+                </div>
+              </h3>
+              <div
+                class="sc-fKgJPI fHCLxE"
+              >
+                <button
+                  class="chakra-button css-1v02wz"
+                  type="button"
+                >
+                  home.common.connectWallet
+                  <span
+                    class="chakra-button__icon css-1hzyiq5"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="chakra-icon css-2mwrac"
+                      focusable="false"
+                    >
+                      arrow-right.svg
+                    </svg>
+                  </span>
+                </button>
+                <button
+                  class="chakra-button css-1u5yhfm"
+                  type="button"
+                >
+                  home.common.learnMore
+                </button>
+              </div>
+            </div>
+            <div
+              class="sc-hHEiqL lcVYgX"
+            >
+              <iframe
+                height="500"
+                src="https://rive.app/s/-Y32kBhitEilOPZITv9ung/embed"
+                title="Spirit"
+                width="650"
+              />
+            </div>
+          </div>
+          <div
+            class="css-1jx7use"
+          >
+            <div
+              class="css-0"
+            >
+              <div
+<<<<<<< HEAD
+                class="sc-jUfyBS bQhuPu"
+=======
+                class="sc-kHWWYL fdkjGj"
+>>>>>>> a22b3d7bdef168fd0e23b5131e7d737c8ba7fca9
+              >
+                <a
+                  href="https://discord.gg/8FGd4nFQdT"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg>
+                    discord.svg
+                  </svg>
+                </a>
+                <a
+                  href="https://twitter.com/Spirit_Swap"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg>
+                    twitter.svg
+                  </svg>
+                </a>
+                <a
+                  href="https://github.com/Layer3Org/spiritswap-core/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg>
+                    github.svg
+                  </svg>
+                </a>
+                <a
+                  href="https://spiritswap.medium.com/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg>
+                    medium.svg
+                  </svg>
+                </a>
+                <a
+                  href="https://www.youtube.com/channel/UCrKLtNctO0obN4-bDMGlFuQ"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg>
+                    youtube.svg
+                  </svg>
+                </a>
+                <a
+                  href="https://t.me/spirit_swap"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg>
+                    telegram.svg
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <span
+<<<<<<< HEAD
+              class="sc-jQAxuV bbYzCq"
+=======
+              class="sc-hOPeYd jQTgUg"
+>>>>>>> a22b3d7bdef168fd0e23b5131e7d737c8ba7fca9
+            >
+              <p
+                class="chakra-text css-1m8iww1"
+              >
+                common.footer.auditedBy
+              </p>
+              <img
+                alt="hour-glass Img"
+<<<<<<< HEAD
+                class="sc-daBunf uqoVO"
+=======
+                class="sc-bTDOke gagxQf"
+>>>>>>> a22b3d7bdef168fd0e23b5131e7d737c8ba7fca9
+                src="hour-glass.png"
+              />
+            </span>
+          </div>
+        </div>
+        <div
+          class="sc-euEtCV gLCxZN"
+        >
+          <div
+            class="css-svp3u8"
+          >
+            <div
+              class="css-70qvj9"
+            >
+              <span
+                class="chakra-text css-szlsa3"
+              >
+                Trusted by 
+              </span>
+              <span
+                class="chakra-text css-szlsa3"
+              >
+                <p
+                  class="chakra-text css-0"
+                >
+                  over 60k users
+                </p>
+                <div
+                  class="sc-fHCHyC epacqB"
+                />
+              </span>
+            </div>
+            <div
+              class="sc-dtLLSn iOorUg"
+            >
+              <div
+                class="css-xjcvql"
+              >
+                <div
+                  class="chakra-skeleton css-1622hux"
+                >
+                  <div
+                    class="css-ryermd"
+                  >
+                    <p
+                      class="chakra-text css-w4c9rw"
+                    >
+                      0
+                    </p>
+                    <p
+                      class="chakra-text css-s5perm"
+                    >
+                      home.dexStatistics.totalVolume
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="chakra-skeleton css-1622hux"
+                >
+                  <div
+                    class="css-xi606m"
+                  >
+                    <p
+                      class="chakra-text css-w4c9rw"
+                    >
+                      0
+                    </p>
+                    <p
+                      class="chakra-text css-s5perm"
+                    >
+                      home.dexStatistics.totalLiquidity
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="chakra-skeleton css-1622hux"
+                >
+                  <div
+                    class="css-xi606m"
+                  >
+                    <p
+                      class="chakra-text css-w4c9rw"
+                    >
+                      0
+                    </p>
+                    <p
+                      class="chakra-text css-s5perm"
+                    >
+                      home.dexStatistics.totalinSpiritRewards
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-iwajpm FjGiw"
+          id="about_section_home"
+        >
+          <div>
+            <div
+              class="aboutSectionItem css-1rjl09v"
+            >
+              <div
+                class="css-1bku0gi"
+              >
+                <div
+                  class="css-1eiaatl"
+                >
+                  <div
+                    class="sc-gtsrHT kQrMrk css-1gdwmq6"
+                    size="40"
+                  >
+                    <svg>
+                      menu-swap.svg
+                    </svg>
+                  </div>
+                  <span
+                    class="css-hts0wa"
+                  >
+                    home.about.swap.title
+                  </span>
+                </div>
+                <h4
+                  class="sc-kfYoZR iqxfrC css-1qkyk1j"
+                  style="font-weight: 400; line-height: 23.12px;"
+                >
+                  <div>
+                    home.about.swap.description
+                  </div>
+                </h4>
+                <div
+                  class="css-1x6ucga"
+                >
+                  <button
+                    class="sc-bdnxRM llspLU"
+                  >
+                    home.about.swap.button
+                  </button>
+                  <button
+                    class="chakra-button css-1u5yhfm"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </div>
+              </div>
+              <img
+                alt="about-image-0"
+                class="css-s6e1fh"
+                src="landing-swap.png"
+              />
+            </div>
+          </div>
+          <div>
+            <div
+              class="aboutSectionItem css-1rjl09v"
+            >
+              <img
+                alt="about-image-1"
+                class="css-s6e1fh"
+                src="landing-earn.png"
+              />
+              <div
+                class="css-1bku0gi"
+              >
+                <div
+                  class="css-1eiaatl"
+                >
+                  <div
+                    class="sc-gtsrHT kQrMrk css-1gdwmq6"
+                    size="40"
+                  >
+                    <svg>
+                      coint-growth.svg
+                    </svg>
+                  </div>
+                  <span
+                    class="css-hts0wa"
+                  >
+                    home.about.farms.title
+                  </span>
+                </div>
+                <h4
+                  class="sc-kfYoZR iqxfrC css-1qkyk1j"
+                  style="font-weight: 400; line-height: 23.12px;"
+                >
+                  <div>
+                    home.about.farms.description
+                  </div>
+                </h4>
+                <div
+                  class="css-1x6ucga"
+                >
+                  <button
+                    class="sc-bdnxRM llspLU"
+                  >
+                    home.about.farms.button
+                  </button>
+                  <button
+                    class="chakra-button css-1u5yhfm"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="aboutSectionItem css-1rjl09v"
+            >
+              <div
+                class="css-1bku0gi"
+              >
+                <div
+                  class="css-1eiaatl"
+                >
+                  <div
+                    class="sc-gtsrHT kQrMrk css-1gdwmq6"
+                    size="40"
+                  >
+                    <svg>
+                      bridge.svg
+                    </svg>
+                  </div>
+                  <span
+                    class="css-hts0wa"
+                  >
+                    home.about.bridge.title
+                  </span>
+                </div>
+                <h4
+                  class="sc-kfYoZR iqxfrC css-1qkyk1j"
+                  style="font-weight: 400; line-height: 23.12px;"
+                >
+                  <div>
+                    home.about.bridge.description
+                  </div>
+                </h4>
+                <div
+                  class="css-1x6ucga"
+                >
+                  <button
+                    class="sc-bdnxRM llspLU"
+                  >
+                    home.about.bridge.button
+                  </button>
+                  <button
+                    class="chakra-button css-1u5yhfm"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </div>
+              </div>
+              <img
+                alt="about-image-2"
+                class="css-s6e1fh"
+                src="landing-bridge.png"
+              />
+            </div>
+          </div>
+          <div>
+            <div
+              class="aboutSectionItem css-1rjl09v"
+            >
+              <img
+                alt="about-image-3"
+                class="css-s6e1fh"
+                src="landing-inspirit.png"
+              />
+              <div
+                class="css-1bku0gi"
+              >
+                <div
+                  class="css-1eiaatl"
+                >
+                  <div
+                    class="sc-gtsrHT kQrMrk css-1gdwmq6"
+                    size="40"
+                  >
+                    <svg>
+                      invoice-hand.svg
+                    </svg>
+                  </div>
+                  <span
+                    class="css-hts0wa"
+                  >
+                    home.about.inspirit.title
+                  </span>
+                </div>
+                <h4
+                  class="sc-kfYoZR iqxfrC css-1qkyk1j"
+                  style="font-weight: 400; line-height: 23.12px;"
+                >
+                  <div>
+                    home.about.inspirit.description
+                  </div>
+                </h4>
+                <div
+                  class="css-1x6ucga"
+                >
+                  <button
+                    class="sc-bdnxRM llspLU"
+                  >
+                    home.about.inspirit.button
+                  </button>
+                  <button
+                    class="chakra-button css-1u5yhfm"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="aboutSectionItem css-1rjl09v"
+            >
+              <div
+                class="css-1bku0gi"
+              >
+                <div
+                  class="css-1eiaatl"
+                >
+                  <div
+                    class="sc-gtsrHT kQrMrk css-1gdwmq6"
+                    size="40"
+                  >
+                    <svg
+                      class="chakra-icon css-18w02b3"
+                      focusable="false"
+                    >
+                      apemode.svg
+                    </svg>
+                  </div>
+                  <span
+                    class="css-hts0wa"
+                  >
+                    home.about.leverage.title
+                  </span>
+                </div>
+                <h4
+                  class="sc-kfYoZR iqxfrC css-1qkyk1j"
+                  style="font-weight: 400; line-height: 23.12px;"
+                >
+                  <div>
+                    home.about.leverage.description
+                  </div>
+                </h4>
+                <div
+                  class="css-1x6ucga"
+                >
+                  <button
+                    class="sc-bdnxRM llspLU"
+                  >
+                    home.about.leverage.button
+                  </button>
+                  <button
+                    class="chakra-button css-1u5yhfm"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </div>
+              </div>
+              <img
+                alt="about-image-4"
+                class="css-s6e1fh"
+                src="landing-ape.png"
+              />
+            </div>
+          </div>
+          <div>
+            <div
+              class="aboutSectionItem css-1rjl09v"
+            >
+              <img
+                alt="about-image-5"
+                class="css-s6e1fh"
+                src="landing-share.png"
+              />
+              <div
+                class="css-1bku0gi"
+              >
+                <div
+                  class="css-1eiaatl"
+                >
+                  <div
+                    class="sc-gtsrHT kQrMrk css-1gdwmq6"
+                    size="40"
+                  >
+                    <svg
+                      class="chakra-icon css-d2pjoa"
+                      focusable="false"
+                    >
+                      lend-and-borrow.svg
+                    </svg>
+                  </div>
+                  <span
+                    class="css-hts0wa"
+                  >
+                    home.about.lend.title
+                  </span>
+                </div>
+                <h4
+                  class="sc-kfYoZR iqxfrC css-1qkyk1j"
+                  style="font-weight: 400; line-height: 23.12px;"
+                >
+                  <div>
+                    home.about.lend.description
+                  </div>
+                </h4>
+                <div
+                  class="css-1x6ucga"
+                >
+                  <button
+                    class="sc-bdnxRM llspLU"
+                  >
+                    home.about.lend.button
+                  </button>
+                  <button
+                    class="chakra-button css-1u5yhfm"
+                    type="button"
+                  >
+                    home.common.learnMore
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-1upp58m"
+          >
+            <div
+              class="css-1ta4ju4"
+            >
+              <svg
+                class="chakra-icon css-1qzx1ti"
+                focusable="false"
+              >
+                partnersIcon.svg
+              </svg>
+              <span
+                class="css-hts0wa"
+              >
+                home.partner.partners
+              </span>
+            </div>
+            <div
+              class="chakra-collapse"
+              style="overflow: hidden; display: block; opacity: 1; height: 208px;"
+            >
+              <div
+                class="css-1trvyxx"
+              >
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://www.liquiddriver.finance/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="liquidDriver.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://ola.finance/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="olaFinance.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://www.covalenthq.com/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="covalent.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://kek.tools/t/0x5Cc61A78F164885776AA610fb0FE1257df78E59B"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="kekTools.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://unidex.exchange/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="unidex.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://beefy.finance/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="beefy.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://li.fi/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="li_finance.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://www.gelato.network/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="gelato.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://yearn.finance/#/home"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="yearn.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://www.market.xyz/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="marketXyz.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://abracadabra.money/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="abracadabra.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://hedgey.finance/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="hedgey.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://www.grim.finance/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="grim.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://www.reaper.farm/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="reaper.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://balancer.fi/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="balancer.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://cre8r.vip/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="cre8r.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://thereadingape.substack.com/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="bow-tied.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://alchemix.fi/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="alchemix.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://nftgarage.world/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="nftgarage.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="css-0"
+                >
+                  <div
+                    class="css-1l4w6pd"
+                  >
+                    <a
+                      class="chakra-link css-1rsf7it"
+                      href="https://revest.finance/"
+                      target="_blank"
+                    >
+                      <img
+                        class="chakra-image css-p8k5v7"
+                        src="revestLogo.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="css-1b3wyb7"
+            >
+              <button
+                class="chakra-button css-1u5yhfm"
+                type="button"
+              >
+                home.partner.showMore
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

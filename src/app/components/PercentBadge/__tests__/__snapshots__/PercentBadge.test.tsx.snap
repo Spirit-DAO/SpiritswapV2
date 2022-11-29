@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PercentBadge component icon negative: <svg>chevron-down.svg</svg> 1`] = `
+<svg>
+  chevron-down.svg
+</svg>
+`;
+
+exports[`PercentBadge component icon neutral: <svg>chevron-side.svg</svg> 1`] = `
+<svg>
+  chevron-side.svg
+</svg>
+`;
+
+exports[`PercentBadge component icon positive: <svg>chevron-up.svg</svg> 1`] = `
+<svg>
+  chevron-up.svg
+</svg>
+`;

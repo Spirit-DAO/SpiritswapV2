@@ -1,0 +1,379 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem-Component Matches SnapShot with Empty Values 1`] = `
+Array [
+  <div
+    className="css-15nwh8t"
+    data-testid="ListItem"
+  >
+    <div
+      className="css-70qvj9"
+    >
+      <div
+        className="css-1e7o9jt"
+      >
+        <div
+          className="css-k008qs"
+        >
+          <img
+            alt=" logo"
+            className="chakra-image__placeholder css-120tod0"
+            fallbackStrategy="onError"
+            src="/images/tokens/default.png"
+          />
+        </div>
+      </div>
+      <p
+        className="chakra-text css-g4p9of"
+      >
+        
+      </p>
+    </div>
+    <div
+      className="css-70qvj9"
+    >
+      <div
+        className="css-qfdd9t"
+      >
+        <p
+          className="chakra-text css-0"
+        >
+          0.00
+        </p>
+        <p
+          className="chakra-text css-15e15uw"
+        >
+          $0.00
+        </p>
+      </div>
+      <button
+        aria-controls="menu-list-4"
+        aria-expanded={false}
+        aria-haspopup="menu"
+        aria-label="Options"
+        className="chakra-button chakra-menu__menu-button css-129vlsj"
+        id="menu-button-4"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        type="button"
+      >
+        <svg
+          aria-hidden={true}
+          className="chakra-icon css-69nngz"
+          focusable={false}
+        >
+          dots-outline.svg
+        </svg>
+      </button>
+      <div
+        className="css-r6z5ec"
+        style={
+          Object {
+            "inset": "0 auto auto 0",
+            "minWidth": "max-content",
+            "position": "absolute",
+            "visibility": "hidden",
+          }
+        }
+      >
+        <div
+          aria-orientation="vertical"
+          className="chakra-menu__menu-list css-7zx23t"
+          id="menu-list-4"
+          onKeyDown={[Function]}
+          role="menu"
+          style={
+            Object {
+              "opacity": 0,
+              "transform": "scale(0.8) translateZ(0)",
+              "transformOrigin": "var(--popper-transform-origin)",
+              "visibility": "hidden",
+            }
+          }
+          tabIndex={-1}
+        >
+          <button
+            className="chakra-menu__menuitem css-inosk3"
+            id="menu-list-4-menuitem-1"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            role="menuitem"
+            tabIndex={0}
+            type="button"
+          >
+            Swap
+          </button>
+          <button
+            className="chakra-menu__menuitem css-inosk3"
+            id="menu-list-4-menuitem-2"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            role="menuitem"
+            tabIndex={0}
+            type="button"
+          >
+            View on Ftmscan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <span />,
+]
+`;
+
+exports[`ListItem-Component Matches SnapShot with Values and singal Token 1`] = `
+Array [
+  <div
+    className="css-15nwh8t"
+    data-testid="ListItem"
+  >
+    <div
+      className="css-70qvj9"
+    >
+      <div
+        className="css-1e7o9jt"
+      >
+        <div
+          className="css-k008qs"
+        >
+          <img
+            alt="DAI logo"
+            className="chakra-image__placeholder css-120tod0"
+            fallbackStrategy="onError"
+            src="/images/tokens/default.png"
+          />
+        </div>
+      </div>
+      <p
+        className="chakra-text css-g4p9of"
+      >
+        DAI
+      </p>
+    </div>
+    <div
+      className="css-70qvj9"
+    >
+      <div
+        className="css-qfdd9t"
+      >
+        <p
+          className="chakra-text css-0"
+        >
+          0.00
+        </p>
+        <p
+          className="chakra-text css-15e15uw"
+        >
+          $0.00
+        </p>
+      </div>
+      <button
+        aria-controls="menu-list-4"
+        aria-expanded={false}
+        aria-haspopup="menu"
+        aria-label="Options"
+        className="chakra-button chakra-menu__menu-button css-129vlsj"
+        id="menu-button-4"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        type="button"
+      >
+        <svg
+          aria-hidden={true}
+          className="chakra-icon css-69nngz"
+          focusable={false}
+        >
+          dots-outline.svg
+        </svg>
+      </button>
+      <div
+        className="css-r6z5ec"
+        style={
+          Object {
+            "inset": "0 auto auto 0",
+            "minWidth": "max-content",
+            "position": "absolute",
+            "visibility": "hidden",
+          }
+        }
+      >
+        <div
+          aria-orientation="vertical"
+          className="chakra-menu__menu-list css-7zx23t"
+          id="menu-list-4"
+          onKeyDown={[Function]}
+          role="menu"
+          style={
+            Object {
+              "opacity": 0,
+              "transform": "scale(0.8) translateZ(0)",
+              "transformOrigin": "var(--popper-transform-origin)",
+              "visibility": "hidden",
+            }
+          }
+          tabIndex={-1}
+        >
+          <button
+            className="chakra-menu__menuitem css-inosk3"
+            id="menu-list-4-menuitem-1"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            role="menuitem"
+            tabIndex={0}
+            type="button"
+          >
+            Swap
+          </button>
+          <button
+            className="chakra-menu__menuitem css-inosk3"
+            id="menu-list-4-menuitem-2"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            role="menuitem"
+            tabIndex={0}
+            type="button"
+          >
+            View on Ftmscan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <span />,
+]
+`;
+
+exports[`ListItem-Component Matches SnapShot with Values with Double Token 1`] = `
+Array [
+  <div
+    className="css-15nwh8t"
+    data-testid="ListItem"
+  >
+    <div
+      className="css-70qvj9"
+    >
+      <div
+        className="css-1e7o9jt"
+      >
+        <div
+          className="css-k008qs"
+        >
+          <img
+            alt="DAI logo"
+            className="chakra-image__placeholder css-120tod0"
+            fallbackStrategy="onError"
+            src="/images/tokens/default.png"
+          />
+        </div>
+      </div>
+      <p
+        className="chakra-text css-g4p9of"
+      >
+        DAI
+      </p>
+    </div>
+    <div
+      className="css-70qvj9"
+    >
+      <div
+        className="css-qfdd9t"
+      >
+        <p
+          className="chakra-text css-0"
+        >
+          0.00
+        </p>
+        <p
+          className="chakra-text css-15e15uw"
+        >
+          $0.00
+        </p>
+      </div>
+      <button
+        aria-controls="menu-list-4"
+        aria-expanded={false}
+        aria-haspopup="menu"
+        aria-label="Options"
+        className="chakra-button chakra-menu__menu-button css-129vlsj"
+        id="menu-button-4"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        type="button"
+      >
+        <svg
+          aria-hidden={true}
+          className="chakra-icon css-69nngz"
+          focusable={false}
+        >
+          dots-outline.svg
+        </svg>
+      </button>
+      <div
+        className="css-r6z5ec"
+        style={
+          Object {
+            "inset": "0 auto auto 0",
+            "minWidth": "max-content",
+            "position": "absolute",
+            "visibility": "hidden",
+          }
+        }
+      >
+        <div
+          aria-orientation="vertical"
+          className="chakra-menu__menu-list css-7zx23t"
+          id="menu-list-4"
+          onKeyDown={[Function]}
+          role="menu"
+          style={
+            Object {
+              "opacity": 0,
+              "transform": "scale(0.8) translateZ(0)",
+              "transformOrigin": "var(--popper-transform-origin)",
+              "visibility": "hidden",
+            }
+          }
+          tabIndex={-1}
+        >
+          <button
+            className="chakra-menu__menuitem css-inosk3"
+            id="menu-list-4-menuitem-1"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            role="menuitem"
+            tabIndex={0}
+            type="button"
+          >
+            Swap
+          </button>
+          <button
+            className="chakra-menu__menuitem css-inosk3"
+            id="menu-list-4-menuitem-2"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            role="menuitem"
+            tabIndex={0}
+            type="button"
+          >
+            View on Ftmscan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <span />,
+]
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon component icon: <svg>ghost.svg</svg> 1`] = `
+NodeList [
+  <svg>
+    ghost.svg
+  </svg>,
+]
+`;

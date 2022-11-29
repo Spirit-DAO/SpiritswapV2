@@ -1,0 +1,38 @@
+name: v2-deploy-s3-production
+
+on:
+  push:
+    paths:
+      - '**'
+    branches:
+      - production
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REACT_APP_QUEUE_FAUCET: ${{ secrets.REACT_APP_QUEUE_FAUCET }}
+      REACT_APP_COVALENT_API_KEY: ${{ secrets.REACT_APP_COVALENT_API_KEY }}
+      REACT_APP_FAUCET_ACCESS_KEY: ${{ secrets.REACT_APP_FAUCET_ACCESS_KEY }}
+      REACT_APP_FAUCET_SECRET_KEY: ${{ secrets.REACT_APP_FAUCET_SECRET_KEY }}
+    steps:
+        - uses: actions/checkout@v2
+
+        - name: Install dependencies
+          run: yarn
+
+        - name: Build
+          run: npm run build
+
+        - name: Deploy
+          uses: reggionick/s3-deploy@v3
+          with:
+            folder: build
+            bucket: ${{ secrets.S3_V2_PROD_BUCKET_NAME }}
+            bucket-region: ${{ secrets.AWS_REGION }}
+            invalidation: /
+            delete-removed: true
+            no-cache: true
+            private: true

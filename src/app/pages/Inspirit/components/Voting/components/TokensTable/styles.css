@@ -1,0 +1,6 @@
+thead tr:first-child th {
+  position: sticky;
+  top: 0;
+  background: #17202f;
+  z-index: 999;
+}

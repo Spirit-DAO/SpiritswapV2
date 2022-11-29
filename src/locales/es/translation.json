@@ -1,0 +1,903 @@
+{
+  "common": {
+    "menu": {
+      "home": "Casa",
+      "swap": "Intercambio",
+      "liquidity": "Liquidez",
+      "farms": "Granjas",
+      "inSpirit": "animar",
+      "bridge": "Puente",
+      "lendBorrow": "Prestar/Tomar prestado",
+      "staking": "Replanteo",
+      "store": "Tienda",
+      "analytics": "Analítica",
+      "ido": "IDO",
+      "nfts": "NFT",
+      "docs": "Docs",
+      "apemode": "Ape Mode",
+      "governance": "Governance",
+      "more": "Más",
+      "dsynths": "Registrador de comercio",
+      "buyftm": "Comprar FTM",
+      "error": {
+        "non_zero": "Por favor, ingrese un monto.",
+        "not_enough_funds": "Fondos insuficientes.",
+        "not_enough_funds_from_inputs": "Fondos insuficientes"
+      }
+    },
+    "helperModal": {
+      "readDocs": "Leer docs",
+      "understood": "Entiendo"
+    },
+    "topBar": {
+      "buy": "Comprar token de $SPIRIT",
+      "connect": "Conectar billetera",
+      "switchV1": "Cambiar a V1"
+    },
+    "footer": {
+      "auditedBy": "Auditado por",
+      "goToLandingPage": "Ir a la página de destino"
+    },
+    "selectTokenPopup": {
+      "title": "Seleccione un token",
+      "placeholder": "Buscar por nombre o pegar dirección"
+    },
+    "settingsModal": {
+      "title": "Ajustes",
+      "language": "Idioma",
+      "notifications": "Notificaciones",
+      "pushNotifications": "Push notifications"
+    },
+    "tokenAmountPanel": {
+      "max": "Max",
+      "balance": "Equilibrio",
+      "priceDiff": "Diferencia vs precio de mercado del token",
+      "notConnected": "No conectado",
+      "setLimit": {
+        "buy": "Establecer precio límite de compra",
+        "sell": "Establecer precio de venta límite"
+      },
+      "market": {
+        "above": "por encima del mercado",
+        "below": "por debajo del mercado"
+      }
+    },
+    "tokenPairMaxValue": {
+      "balance": "Balance",
+      "staked": "Staked",
+      "max": "Max",
+      "enterAmount": "Ingrese cantidad"
+    },
+    "per": "por cada",
+    "tokenModal": {
+      "select": "Selecciona un token",
+      "placeholder": "Busca por nombre o direccion",
+      "noToken": "Tokens no disponibles",
+      "commomTokens": "Token más utilizados"
+    },
+    "connectWalletModal": {
+      "title": "Conectar billetera",
+      "footer": "Aprende a conectar una billetera"
+    },
+    "button": {
+      "loading": "Cargando",
+      "approving": "Aprobando",
+      "confirm": "Confirmar"
+    },
+    "errors": {
+      "404": {
+        "message": "La pagina no existe o fue removida. <br/> Recomendamos regresar a la pagina principal.",
+        "buttons": {
+          "back": "Pagina principal"
+        }
+      },
+      "500": {
+        "message": "Estamos tratando de revivir a Soully. <br/> Por favor, intente otra petición.",
+        "buttons": {
+          "back": "Pagina principal",
+          "retry": "Reintentar"
+        }
+      }
+    }
+  },
+  "home": {
+    "common": {
+      "header": "Abraza tu <b style='color: #60E6C5'>DeFi SPIRIT</b>",
+      "description": "El protocolo SpiritSwap captura la esencia de todo Defi 2.0 en la red Fantom, ofreciendo un centro completo para <b style='color: white'>comercio</b>, <b style='color: white'>préstamos</b > y <b style='color: white'>tomar prestado</b>, <b style='color: white'>compartir recompensas</b>, <b style='color: white'>asignar delegaciones</b > y <b style='color: white'>agricultura</b>.<br/><br/>Desplácese hacia abajo y haga clic en <b style='color: white'>“Más información”</b> para obtener más información sobre las características únicas de SpiritSwap y las lucrativas opciones de inversión.",
+      "descriptionFull": "El protocolo SpiritSwap captura la esencia de todo Defi 2.0 en la red Fantom, ofreciendo un centro completo para <b style='color: white'>comercio</b>, <b style='color: white'>préstamos</b > y <b style='color: white'>tomar prestado</b>, <b style='color: white'>compartir recompensas</b>, <b style='color: white'>asignar delegaciones</b > y <b style='color: white'>agricultura</b>.<br/><br/>Desplácese hacia abajo y haga clic en <b style='color: white'>“Más información”</b> para obtener más información sobre las características únicas de SpiritSwap y las lucrativas opciones de inversión.",
+      "showPortfolio": "Mostrar cartera",
+      "connectWallet": "Conectar billetera",
+      "howTo": "Cómo",
+      "learnMore": "Aprende Más",
+      "walletBalance": "Saldo de billetera",
+      "bridgeTokens": "Fichas de puente",
+      "farmRewards": "Recompensas de la granja",
+      "showFarms": "Mostrar granjas"
+    },
+    "about": {
+      "swap": {
+        "title": "Cambia tus tokens favoritos",
+        "description": "SpiritSwap es un intercambio descentralizado (DEX) en Fantom Opera Chain.</br></br>Nuestra arquitectura AMM actual es patentada y combina nuestro AMM uniV2 actualizado con nuestro nuevo intercambio estable. Esta combinación ofrece la capacidad única de lograr intercambios ultrarrápidos a las mejores tasas que ofrece el mercado.",
+        "button": "Intercambio",
+        "trading": {
+          "max": "Max",
+          "balance": "Equilibrio",
+          "totalTrading": { "YouWillReceive": "Usted recibirá: " }
+        }
+      },
+      "farms": {
+        "title": "Gana pasivamente cultivando",
+        "description": "La agricultura es el proceso de prestar sus activos a nuestra AMM. Estos activos se utilizan para crear fondos de liquidez, lo que permite a las personas intercambiar y comerciar.</br></br>A cambio de proporcionar liquidez a SpiritSwap, se le recompensa con tokens SPIRIT. Estos se pueden usar para invertir más, votar, aumentar las recompensas de su granja y más.",
+        "button": "Granjas"
+      },
+      "bridge": {
+        "title": "Puentea tus tokens",
+        "description": "Nuestro agregador de puentes es el primero de su tipo en Fantom. Ahora puede puentear tokens de otras cadenas como Ethereum, Avalanche, Terra y Arbitrum, por nombrar algunas.</br></br>Al utilizar nuestro “SpiritBridge“, tiene la capacidad de transferir activos y capital de otras cadenas, para que pueda disfrutar de la velocidad y eficiencia que ofrece SpiritSwap en la cadena Fantom Opera.",
+        "button": "Puente"
+      },
+      "inspirit": {
+        "title": "Benefíciese de inSPIRIT",
+        "description": "Al bloquear SPIRIT para inSPIRIT, los participantes reciben tres propuestas de valor.</br></br>1. inSPIRIT le permite aumentar sus emisiones agrícolas</br></br>2. Reciba una parte de los ingresos de los intercambios DEX</br></br>3. Participar en la gobernanza votando sobre las emisiones de las granjas y las propuestas de la comunidad a través de nuestro foro DAO.",
+        "button": "InSPIRIT",
+
+        "buySpirit": "Compra SPIRIT",
+        "buySpiritText": "Compra SPIRIT para generar inSPIRIT",
+        "lockSpirit": "Bloquear SPIRIT",
+        "lockSpiritText": "Generar inSPIRIT para ganar recompensas",
+        "inSpiritReward": "Su recompensa será reclamable en",
+        "claimReward": "Recompensas SPIRIT reclamables",
+        "day": "día",
+        "days": "dias",
+        "hours": "horas",
+        "minutes": "minutos"
+      },
+      "leverage": {
+        "title": "Aproveche sus operaciones",
+        "description": "<b style='color:#60E6C5'>Próximamente:</b> Ape Mode es una función de negociación de apalancamiento, exclusiva de SpiritSwap y la primera de su tipo en el ecosistema DeFi de Fantom. Ape Mode brinda a los usuarios una oportunidad comercial de apalancamiento simplificada con un solo clic, que ofrece un apalancamiento de hasta 3x en activos como FTM, SPIRIT, TAROT, LQDR e ICE.",
+        "button": "Ape Mode"
+      }
+    },
+    "partner": {
+      "showMore": "Mostrar mas",
+      "showLess": "Mostrar menos",
+      "partners": "Socios",
+      "farms": "Granjas",
+      "vaults": "Bóvedas",
+      "covalent": "Covalente",
+      "graviton": "Graviton",
+      "gelato": "Helado",
+      "popsicleFinance": "Finanzas de paletas",
+      "hedgey": "Hedgey"
+    },
+    "portfolio": {
+      "title": "Tu portfolio",
+      "goToLandingPage": "Ir a la página de destino"
+    }
+  },
+  "portfolio": {
+    "common": {
+      "totalValue": "Valor total",
+      "lastChange": "Cambio 24hs",
+
+      "verifiedDropdown": {
+        "allTokens": "Todos los tokens",
+        "verified": "Tokens verificados",
+        "unverified": "Tokens no verificados"
+      }
+    },
+    "tokensPanel": {
+      "title": "Tokens",
+      "tokensNotFound": "Tokens no encontrados",
+      "helper": "Los tokens que se muestran son tokens de activos únicos que se encuentran en su billetera y que actualmente no están en posiciones de rendimiento. Esto se considera capital inactivo.",
+      "noTokens": {
+        "message": {
+          "ALL": "Actualmente no posee ningun token",
+          "VERIFIED": "Actualemente no posee ningun token verificado",
+          "UNVERIFIED": "Actualemente no posee ningun token no verificado"
+        },
+        "action": "Bridge tokens"
+      },
+      "noResults": {
+        "message": "¿Token no encontrado?",
+        "action": "Agregar token a través de la dirección"
+      },
+      "tokens": "Token(s)",
+      "totalValue": "Valor total",
+      "lastChange": "Cambio 24h",
+      "searchResults": "Resultado(s) de búsqueda",
+      "footer": {
+        "bridge": "Puente",
+        "swap": "Intercambio"
+      }
+    },
+    "liquidityPanel": {
+      "noFarms": [
+        {
+          "message": "Actualmente no proporciona liquidez",
+          "action": "Agregar liquidez"
+        },
+        {
+          "message": "Actualmente no tienes granjas activas",
+          "action": "Empezar a cultivar"
+        }
+      ],
+      "noResults": [
+        "No se encontró ningún token LP",
+        "No se encontró ninguna granja activa"
+      ],
+      "sub": [
+        {
+          "title": "Liquidez",
+          "unit": "Ficha(s) LP",
+          "helper1": "Fichas de LP = posiciones de LP que no están actualmente en las granjas (es posible que desee agregarlas a las granjas para obtener recompensas)",
+          "helper2": "Granjas = posiciones de LP que actualmente están generando recompensas a través de las emisiones de las granjas."
+        },
+        {
+          "title": "Granjas",
+          "unit": "Granja(s) activa(s)"
+        }
+      ],
+      "footer": {
+        "harvest": "Recompensas de cosecha",
+        "add": "Agregar liquidez"
+      }
+    },
+    "migrate": {
+      "headingFarms": "Migre sus granjas v1",
+      "headingLPs": "Migre sus LP tokens",
+      "confirmAllTransactions": "Confirme todas las transacciones para terminar la migración.",
+      "description": "SpiritSwap v2 utiliza nuevos contratos para LP tokens. Termine este proceso para migrar sus LP tokens desde v1 hacia v2.",
+      "farmsLeft": "granjas faltantes para migrar",
+      "lpsLeft": "LP tokens faltantes para migrar"
+    }
+  },
+  "swap": {
+    "common": {},
+    "panels": {
+      "swap": {
+        "confirmSwap": "Confirmar intercambio",
+        "confirmLimitOrder": "Confirmar orden de límite",
+        "youPay": "Tú pagas",
+        "youReceive": "Tú recibes",
+        "youReceiveOnceOrderTriggers": "Recibirás una vez que la orden sea activada",
+        "rate": "Rango",
+        "priceImpact": "Precio de Impacto Estimado",
+        "priceImpactExpaination": "La diferencia entre el precio de mercado y el precio estimado segun el tamano de la operacion.",
+        "liquidityProviderFee": "Tarifa del proveedor de liquidez",
+        "minimumReceived": "Mínimo recibido",
+        "outputIsEstimated": "La salida es estimada",
+        "outputDescription_start": "Recibirás por lo menos",
+        "outputDescription_end": "o la transacción se revertira.",
+        "insufficientOf": "Balance insuficiente de"
+      },
+      "limit": {
+        "setPriceBuy": "Establecer precio de compra limite",
+        "setPriceSell": "Establecer precio de venta limite",
+        "above": "por arriba del mercado",
+        "below": "por debajo del mercado",
+        "receive": "Cumplida la orden recibiras:",
+        "placeOrder": "Colocar orden",
+        "approveBuyOrder": "Aprobar orden de compra",
+        "approveSellOrder": "Aprobar orden de venta",
+        "placeBuyOrder": "Realizar orden de compra",
+        "placeSellOrder": "Realizar pedido de venta",
+        "rate": "Rate",
+        "inverseRate": "Inverse rate",
+        "liquidityProviderFee": "Liquidity Provider Fee",
+        "gelatoProviderFee": "Gelato Provider Fee",
+        "tokensLabel": "Tokens",
+        "createdLabel": "Creado",
+        "inputLabel": "Aporte",
+        "priceLabel": "Precio",
+        "total": "Total",
+        "actions": "Acciones"
+      }
+    },
+    "settings": {
+      "title": "Ajustes",
+      "reset": "Restablecer",
+      "slippageToleranceLabel": "Tolerancia al deslizamiento",
+      "slippageExplanation": "Puede establecer el porcentaje máximo de movimiento de precios con el que puede vivir.",
+      "transactionDeadlineLabel": "Plazo de transacción en minutos",
+      "approveMaxLabel": "Establecer aprobaciones en infinito",
+      "approveMaxExplaination": "Las transacciones de aprobación se establecerán en infinito. Esto le permitirá omitir los pasos de aprobación en el futuro.",
+      "transactionDeadlineExplanation": "La cantidad de tiempo que desea que la transacción permanezca pendiente antes de fallar.",
+      "chartModeLabel": "Modo gráfico",
+      "chartExplanation": "Aquí puede activar/desactivar el gráfico.",
+      "tradeModeLabel": "Modo de comercio",
+      "tradeModeExplanation": "Aquí puede seleccionar su modo de comercio",
+      "transactionSpeed": "Velocidad de Transacción",
+      "helperTitle": "Configuración, te permite ajustar los parámetros de tu swap",
+      "helperP1": "Tolerancia al deslizamiento = Podés setear el máximo movimiento de precio que aceptás",
+      "helperP2": "Velocidad de transacción = El precio de gas que estás dispuesto a pagar. Cuanto mayor es el precio, más rápidas las transacciones.",
+      "helperP3": "Plazo de transacción = La cantidad de tiempo con la que estás feliz de esperar, hasta hacer fallar la transacción.",
+      "helperP4": "Aprobar Max = Las transacciones de aprobación se establecerán en infinito. Esto le permitirá omitir los pasos de aprobación en el futuro.",
+      "warningMessage": "Precaución, tu deslizamiento es alto. Tu trade puede ser inmediato."
+    },
+    "questionHelper": {
+      "swap": "Intercambio",
+      "limitBuy": "Límite de compra",
+      "limitSell": "Límite de venta",
+      "route": "Rutas",
+      "routeExplanation": "La ruta son los fondos de liquidez por los que debe pasar la operación para poder ejecutarse.",
+      "swapExplanation": "Aquí es donde puedes intercambiar tus tokens.",
+      "limitBuyExplanation": "Las compras limitadas son donde puede colocar una orden para ejecutar en una zona de compra específica.",
+      "limitSellExplanation": "Las ventas limitadas son donde puede colocar una orden para ejecutar en una zona de venta específica",
+      "liquidityProviderFee": "Tarifa del proveedor de liquidez",
+      "liquidityProviderFeeExplanation": "La tarifa que recibirán los proveedores de liquidez de este grupo por esta operación.",
+      "gelatoProviderFee": "Tarifa del proveedor Gelato",
+      "gelatoProviderFeeExplanation": "La tarifa que impone Gelato por proporcionar el servicio de orden limitada."
+    },
+    "helperModal": {
+      "positionsExplanation": "Las posiciones muestran qué posiciones tiene actualmente abiertas. Puede cerrar una posición por ganancias o pérdidas realizadas haciendo clic en el botón cerrar."
+    }
+  },
+  "liquidity": {
+    "helperModal": {
+      "addLiquidity": "Agregar liquidez es donde puede suministrar liquidez a nuestro DEX para obtener recompensas.",
+      "yourLiquidity": "Su liquidez muestra cuáles son sus posiciones de liquidez actualmente. Aquí es donde puede realizar un seguimiento de todas las posiciones de su fondo de liquidez."
+    },
+    "confirmPanel": {
+      "ConfirmAddingLiquidity": "Confirmar adición de liquidez",
+      "youPay": "Pagaras",
+      "youWillReceive": "Recibiras",
+      "alert": "La salida es estimada. Si el precio cambia en más del 0,1%, su transacción se revertirá.",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar",
+      "shareOfPool": "Parte de la pisina"
+    },
+    "common": {
+      "addLiquidity": "Agregar liquidez",
+      "farm": "Granja",
+      "connectText": "Conecta tu billetera para ver tus tokens LP",
+      "yourLiquidity": "Tu Liquidez",
+      "removeLiquidityMobile": "Remover",
+      "removeLiquidity": "Remover",
+      "connectWallet": "Conectar Billetera",
+      "poolShare": "Participación en el Pool",
+      "poolValue": "Valor del Pool",
+      "APR": "APR",
+      "slippageTolerance": "Tolerancia al deslizamiento",
+      "selectPool": "Selecciona un Pool",
+      "selectStablePool": "Selecciona estable pool",
+      "selectWeightedPool": "Selecciona un Weighted Pool",
+      "approveTokens": "Aprobar Tokens",
+      "cancelTransactionProcess": "Cancelar proceso de transacción",
+      "confirmCancelTransactionProcess": "¿Está seguro de que desea cancelar el proceso de transacción?",
+      "confirmAllTransactions": "Confirme todas las transacciones para agregar liquidez",
+      "confirmAllTransactionsDelete": "Confirme todas las transacciones para remover liquidez",
+      "goBack": "Volver",
+      "addLiquidity1": "Agregar liquidez",
+      "investProportionally": "Invierte proporcionalmente",
+      "toast": {
+        "loading": "Cargando..."
+      },
+      "firstLiquidityProvider": "Usted es el primer proveedor de liquidez. La proporción de tokens que agregue establecerá el precio de esta pool. Una vez que esté satisfecho con la tasa, haga clic en suministro para revisar."
+    },
+    "removeLiquidity": {
+      "title": "Remover liquidez"
+    }
+  },
+  "farms": {
+    "backToAllFarms": "Volver a todas las granjas",
+    "helperModal": {
+      "farmExplanation": "Las granjas son donde proporciona sus tokens LP para recibir recompensas por suministrar liquidez a nuestro DEX."
+    },
+    "common": {
+      "title": "Granjas",
+      "farmRewards": "Recompensas de la granja",
+      "harvestRewards": "Cosechar recompensas",
+      "claimAllRewards": "Cosechar todas las recompensas",
+      "classicFarm": "Clásica",
+      "boostedFarm": "Aumentada",
+      "ecosystemFarm": "Ecosistema",
+      "connectWallet": "Conectar Billetera",
+      "withdraw": "Retirar",
+      "addLiquidity": "Agregar liquidez",
+      "confirmWithdraw": "Confirmar",
+      "deposit": "Depositar",
+      "approve": "Aprobar",
+      "cancel": "Cancelar",
+      "hide": "Muestra menos",
+      "show": "Mostrar más",
+      "claim": "Reclamar",
+      "claimRewards": "Reclamar",
+      "lpTokens": "Tokens LP",
+      "stakedLPTokens": "Staked LP Tokens",
+      "stakedLPTokensMoney": "Valor USD",
+      "yourApr": "Tu APR",
+      "maxApr": "APR máximo",
+      "all": "Todos",
+      "classic": "Clásicas",
+      "stable": "Estables",
+      "weighted": "Pesadas",
+      "ecosystem": "Eco",
+      "spiritEarned": "SPIRIT recompensas"
+    },
+    "aprPopover": {
+      "header": "Desglose de APR",
+      "type": "Los Tipos",
+      "apr": "APR",
+      "emissions": "Spirit Emisiones",
+      "fees": "Tarifas de Intercambio"
+    },
+    "boostInfoPanel": {
+      "holdLabel": "Retenga <b>{{ value }}</b> <mark>inSpirit</mark> para un aumento del {{ boostFactor }}x",
+      "yourBoostFactor": "Factor de inSPIRIT",
+      "boostfactorExplanation": "Su factor de impulso indica qué tipo de impulso está recibiendo para esta granja según la cantidad de inSPIRIT que tenga. Más inSPIRIT = Más impulso = Más recompensas.",
+      "holdForMaxBoost": "mantenga <strong>{{amount}} inSPIRIT</strong> para un impulso máximo",
+      "maxBoostAchieved": "Tienes el impulso máximo",
+      "noBoostTokens": "No has depositado en esta granja",
+      "of": "de"
+    },
+    "yourApr": "Tu APR",
+    "iconTooltipPanel": {
+      "totalLiquidity": "Liquidez total",
+      "aprRange": "Rango APR",
+      "APR": "APR",
+      "aprRangeExplanation": "El rango de APR indica cuál será su APR (rendimiento anual) en función del impulso que está recibiendo su granja",
+      "aprExplanation": "La APR indica cuáles serán sus rendimientos anuales. Esta granja no está impulsada y no tiene un rango de APR.",
+      "votingWeight": "Peso de voto",
+      "votingWeightExplanation": "El peso de la votación indica qué porcentaje de emisiones recibe este indicador esta semana de acuerdo con los votos de emisiones globales.",
+      "spiritEarned": "SPIRIT recompensas",
+      "legend": "SPIRIT obtenidos",
+      "status": "Estado",
+      "verified": "Verificado",
+      "unverified": "No verificados"
+    },
+    "farmTransaction": {
+      "amountStaked": "Cantidad bloqueada",
+      "get": "Obtener"
+    },
+    "filter": {
+      "show": "filtros",
+      "hide": "Ocultar filtros",
+      "verified": "Verificado",
+      "staked": "Apostado",
+      "inactive": "Inactivo"
+    },
+    "sort": {
+      "label": "Orden",
+      "apr": "APR",
+      "earned": "Ganancias",
+      "liquidity": "Liquidez",
+      "emissions": "Emisiones"
+    },
+    "ecosystem": {
+      "create": "Crear granja de ecosistemas",
+      "disclaimer": "Las granjas de ecosistemas no tienen permiso y cualquiera puede crearlas. Para su seguridad, SpiritSwap recomienda hacer su propia investigación antes de usar estos protocolos.<0/>Las granjas de ecosistemas constan de dos tipos: las granjas verificadas están marcadas con un<1/>o un<2/>y las granjas que no están verificadas están marcadas con un <3/>.",
+      "rewardToken": "Ficha de recompensa",
+      "close": "Cerrar",
+      "next": "Siguiente",
+      "back": "Volver",
+      "cancel": "Cancelar",
+      "createFarm": "Crear granja",
+      "requirements": {
+        "title": "Requerimientos",
+        "liquidity": "Crear un par de liquidez para tu granja de ecosistema planeada en SpiritSwap",
+        "emissionToken": "Provee un token de emision",
+        "farmFee": "50 FTM de tarifa por granja de ecosystema"
+      },
+      "tokensInLP": {
+        "title": "Tokens en LP",
+        "legend": "Agregar las direcciones de los tokens de cual el pool de liquidez esta basado.",
+        "token1": "Token 1",
+        "token1Placeholder": "Pega la direccion del token 1",
+        "token2": "Token 2",
+        "token2Placeholder": "Pega la direccion del token 2",
+        "alertMessage": "Ingresaste tokens que requieren un par de liquidez en SpiritSwap. Asegurate que esa liquidez este disponible."
+      },
+      "emissionSettings": {
+        "title": "Emisión",
+        "legend": "Configura tu token de emisión y la cantidad, esos stakers se recibirán como recompensa de granja. Necesita estar bloqueado por al menos un mes.",
+        "emissionTokenAddress": "Dirección del token del emisión",
+        "emissionAmount": "Cantidad de emisión",
+        "emissionAmountPlaceholder": "Número de cantidad de tokens",
+        "emissionSchedule": "Calendario de emisiones",
+        "emissionRate": "Tasa de emisión",
+        "tokensEmittedPerDay": "Tokens emitidos por día",
+        "calculatedAutomatically": "Calculado automáticamente",
+        "14days": "14 dias",
+        "1month": "1 mes",
+        "3month": "3 meses"
+      },
+      "review": {
+        "title": "Revisar",
+        "legend": "Revisa tus detalles"
+      }
+    },
+    "roiCalculator": {
+      "amount": "Cantidad",
+      "timeFrame": "Período de tiempo",
+      "estimatedRewards": "Recompensas estimadas",
+      "legend": "Calculado en base a las tasas vigentes. Compuesto una vez al día. Las tarifas son estimaciones proporcionadas solo para su conveniencia y de ninguna manera representan rendimientos garantizados."
+    }
+  },
+  "inSpirit": {
+    "common": {},
+    "modalHelper": {
+      "voting": "Votación",
+      "votingExplanation": "La votación le permite votar sobre cuántas emisiones semanales recibirá cada indicador/granja.",
+      "yourDashboard": "Tu panel",
+      "dashboardExplanation": "Su tablero indica todas las métricas clave que rodean su posición en inSPIRIT. Cada semana recibes recompensas de las tasas de protocolo. Puede reclamarlos aquí todos los miércoles a las 4 p. m. PST. El reloj de cuenta regresiva indicará cuándo puede reclamar su recompensa.",
+      "inspirit": "inSPIRIT",
+      "inspiritExplanation": "inSPIRIT es nuestro token de gobernanza. Ofrece varias fuentes de ingresos y recompensas para las personas que participan en nuestro protocolo. Consulte nuestros documentos para obtener más información sobre los beneficios de inSPIRIT.",
+      "inpiritStats": "inSPIRIT stats",
+      "inpiritStatsExplanation": "Este tablero le brinda una descripción general de las estadísticas de inSPIRIT de cada semana / mes según los parámetros descritos en el tablero. Puede personalizar los puntos de datos por semana o mes para obtener una mayor descripción analítica.",
+      "inspiritUnlockDate": "Fecha de desbloqueo",
+      "noLock": "No posee SPIRIT bloqueados",
+      "claimSpiritRewards": "Recompensas reclamables"
+    },
+    "stats": {
+      "title": "Estadísticas de inSPIRIT",
+      "totalSpiritLocked": "",
+      "totalDistribution": "",
+      "averageUnlockTime": "",
+      "apr": "APR",
+      "spiritPerInspirit": "",
+      "nextDistribution": "",
+      "selectLabels": {
+        "week": "S",
+        "month": "M",
+        "year": "A",
+        "all": "Todo"
+      }
+    },
+    "help": {
+      "inspirit": "inSpirit",
+      "inspiritQuestion": "¿Qué es inSPIRIT?",
+      "inspiritExplanation": "inSPIRIT es el token de gobernanza de SpiritSwap que se basa en un modelo de bloqueo de votos.",
+      "voteLockingQuestion": "¿Qué es el bloqueo de votos?",
+      "votelockingExplanation": "Para recibir inSPIRIT, debe bloquear tokens SPIRIT durante el período de tiempo que elija. No puede desbloquear sus tokens SPIRIT en este período.",
+      "lockSpiritQuestion": "¿Por qué debo encerrar mi ESPÍRITU?",
+      "lockspiritExplanation": "Al ser propietario de inSPIRIT, obtiene poder de voto para granjas impulsadas, multiplicadores de granjas, recibe recompensas de participación y distribuciones semanales.",
+      "endPeriodQuestion": "¿Qué sucede al final de un período?",
+      "endPeriodExplanation": "Si no elige extender su delegación, una vez que finaliza el período de delegación, puede desbloquear su SPIRIT. Por diseño, su saldo de inSPIRIT se reducirá con el tiempo. Piense en esto como un reloj de cuenta regresiva para desbloquear su delegación SPIRIT inicial.",
+      "howTo": "Cómo",
+      "generateInspirit": "Generar inSPIRIT"
+    },
+    "getInSpirit": {},
+    "voting": {
+      "title": "Votación",
+      "votesNotAdding": "Votos tienen que sumar 100% pero estan sumando ",
+      "subtitle": "Vota con tus inSPIRIT recibidos",
+      "notconnected": "No Conectado",
+      "globalVoting": "Votación global",
+      "votingPanel": "Panel de votación",
+      "generateButton": "Generar inSPIRIT para votar por una granja aumentada",
+      "confirmVote": "Confirmar voto",
+      "resetVoting": "Reiniciar voto",
+      "farms": "granjas",
+      "yourShare": "Tu parte",
+      "myFarms": "Mis granjas",
+      "others": "Otros",
+      "voteSum100": "Por favor, asegurese que sus votos suman el 100%",
+      "inputGreaterThanBribeLeft": "Por favor ingrese un monto mayor que la cantidad restante del soborno en curso",
+      "farmType": {
+        "label": "Tipos de granjas",
+        "options": {
+          "classic": "Clasicas",
+          "stable": "Estables"
+        }
+      },
+      "table": {
+        "boostedFarms": "Granjas aumentadas",
+        "totalLiquidity": "Liquidez total",
+        "globalVoting": "Votación global en %",
+        "yourVote": "Tu voto",
+        "newResult": "Nuevo resultado",
+        "change": "Cambio",
+        "bribes": "Recompensas / 10k inSPIRIT"
+      },
+      "bribes": {
+        "newBribe": "Nuevo Soborno",
+        "selectFarmToBribe": "Elija la granja a sobornar",
+        "selectTokenAndAmount": "Elija el token y la cantidad",
+        "confirmBribe": "Confirmar Soborno",
+        "cancel": "Cancelar",
+        "close": "Cerrar"
+      }
+    }
+  },
+  "bridge": {
+    "common": {
+      "title": "Puente de Tokens",
+      "confirm": "Confirmar Transacción",
+      "description": "Bridge es donde puede traer sus activos a Fantom / SpiritSwap desde otras cadenas. Si tiene activos en BSC, puede unirlos a Fantom y participar en las recompensas de SpiritSwap.",
+      "estimatedToken": "Monto Estimado",
+      "estimatedResult": "Resultado Estimado",
+      "estimatedGas": "Gas Estimado",
+      "swap": "Intercambiar",
+      "transfer": "Transferir",
+      "stepTitle": "La transación incluye",
+      "transactions": "Historial de Transacciones",
+      "route": "Ruta del Puente",
+      "amount": "Monto no permitido",
+      "insufficient": "Monto Insuficiente",
+      "custom": "Dirección de destino personalizada"
+    },
+    "help": {
+      "title": "Dirección Personalizada",
+      "description": "Personaliza la dirección donde se recibiran los fondos.",
+      "warning": "Por favor ingrese una direccion válida"
+    },
+    "label": {
+      "from": "Desde",
+      "to": "Hacia",
+      "pay": "Pagas",
+      "recieve": "Recibes"
+    },
+    "transaction": {
+      "searching": "Buscando ruta",
+      "claim": "Reclamar",
+      "claimed": "Reclamado",
+      "pending": "Pendiente",
+      "loading": "Cargando",
+      "claiming": "Reclamando",
+      "sign": "Getting Sign",
+      "signing": "Signing",
+      "get_claim": "Getting Claim"
+    }
+  },
+  "apeMode": {
+    "common": {
+      "connect": "Connect Wallet",
+      "risk": {
+        "entry": "from entry",
+        "low": "Low Risk"
+      },
+      "price": "Price",
+      "per": "per",
+      "slippageToleranceLabel": "Tolerancia de pérdida",
+      "borrow": "Prestamo APY",
+      "left": "restantes para tomar prestados",
+      "deposit": "Despositar en la bóveda de MIM",
+      "laveraged": "posición de apalancamiento",
+      "Label": "Token",
+      "positionSizeLabel": "Tamaño de la posición",
+      "positionValueLabel": "Valor de la posición",
+      "liquidationLabel": "Precio de liquidación",
+      "adjustLeverage": "Ajustar apalancamiento",
+      "actionLabel": "Acción",
+      "youPay": "Tú pagas"
+    },
+    "helperModal": {
+      "apeModeExplanation": "El modo Ape es un producto que permite operaciones apalancadas, selecciona tu garantía, selecciona tu apalancamiento y coloca en posición larga ciertos activos.",
+      "positionsExplanation": "Las posiciones muestran qué posiciones tiene actualmente abiertas. Puede cerrar una posición por ganancias o pérdidas realizadas haciendo clic en el botón cerrar."
+    },
+    "wip": {
+      "title": "Ape Mode v2 esta en progreso",
+      "text": "Los simios se han vuelto salvajes. Tenga paciencia mientras los llevamos de regreso al zoológico.<br> Y pensó que podría domar a los simios...",
+      "buttons": {
+        "back": "Regresar a la pagina principal",
+        "v1": "Ir a intercambiar"
+      }
+    }
+  },
+  "notifications": {
+    "general": {
+      "approve": {
+        "pending": "Aprobacion pendiente",
+        "success": "Aprobacion exitosa",
+        "error": "Aprobacion fallida"
+      }
+    },
+    "swap": {
+      "approve": {
+        "pending": "Aprovando intercambio de tokens",
+        "success": "Intercambio de tokens aprovado",
+        "error": "Error aprovando intercambio de tokens"
+      },
+      "process": {
+        "pending": "Procesando intercambio de tokens",
+        "success": "Intercambio de tokens completado",
+        "error": "Error procesando intercambio de tokens"
+      }
+    },
+    "limitOrder": {
+      "place": {
+        "pending": "Procesando orden de límite",
+        "success": "Orden de límite procesada",
+        "error": "Error procesando order de límite"
+      },
+      "cancel": {
+        "pending": "Cancelando orden de límite",
+        "success": "Orden de límite cancelada",
+        "error": "Error cancelling limit order"
+      }
+    },
+    "liquidity": {
+      "removeApprove": {
+        "pending": "Aprovando retiro de liquidez",
+        "success": "Retiro de liquidez aprovado",
+        "error": "Error aprovando retiro de liquidez"
+      },
+      "remove": {
+        "pending": "Procesando retiro de liquidez",
+        "success": "Retiro de liquidez procesado",
+        "error": "Error procesando retiro de liquidez"
+      },
+      "add": {
+        "pending": "Procesando deposito de liquidez",
+        "success": "Deposito de liquidez procesado",
+        "error": "Error procesando deposito de liquidez"
+      }
+    },
+    "inspirit": {
+      "allowance": {
+        "pending": "Approvando bloqueo de SPIRIT",
+        "success": "Bloqueo de SPIRIT aprovado",
+        "error": "Error processing SPIRIT allowance"
+      },
+      "lock": {
+        "pending": "Bloqueando SPIRIT",
+        "success": "SPIRIT bloqueado",
+        "error": "Error bloqueando SPIRIT"
+      },
+      "additional": {
+        "pending": "Bloqueando SPIRIT adicional",
+        "success": "SPIRIT adicional bloqueado",
+        "error": "Error bloqueando SPIRIT adicional"
+      },
+      "extend": {
+        "pending": "Extendiendo tiempo de bloqueo de SPIRIT",
+        "success": "Tiempo de bloqueo de SPIRIT extendido",
+        "error": "Error extendiendo tiempo de bloqueo"
+      },
+      "claim": {
+        "title": "Reclamando recompensas",
+        "pending": "Reclamando SPIRIT",
+        "success": "SPIRIT reclamado",
+        "error": "Error procesando reclamo de SPIRIT"
+      },
+      "unlock": {
+        "pending": "Desbloqueando SPIRIT",
+        "success": "SPIRIT Desbloqueado",
+        "error": "Error procesando Desbloqueo de SPIRIT"
+      },
+      "vote": {
+        "pending": "Enviando votos",
+        "success": "Votos procesados",
+        "error": "Error enviando votos"
+      },
+      "bribe": {
+        "pending": "Soborno pendiente",
+        "success": "Soborno exitoso",
+        "error": "Error creado soborno"
+      },
+      "claimBribeRewards": {
+        "pending": "Reclamo de recompensas pendiente",
+        "success": "Reclamo de recompensas exitoso",
+        "error": "Error reclamando recompensas"
+      }
+    },
+    "farm": {
+      "claim": {
+        "pending": "Reclamando recompensas",
+        "success": "Reclamo de recompensas exitoso",
+        "error": "Reclamo de recompensas fallido"
+      },
+      "deposit": {
+        "pending": "Deposito de  LP pendiente",
+        "success": "Deposito de LP exitoso",
+        "error": "Error depositando LP "
+      },
+      "withdraw": {
+        "pending": "Retiro de LP pendiente",
+        "success": "Retiro de LP exitoso",
+        "error": "Error al retirar LP"
+      }
+    },
+    "bridge": {
+      "approve": {
+        "pending": "Aprovando intercambio de tokens",
+        "success": "Intercambio de tokens aprovado",
+        "error": "Error aprovando intercambio de tokens"
+      },
+      "process": {
+        "pending": "Procesando Puente de tokens",
+        "success": "Puente de tokens completado",
+        "error": "Error procesando intercambio de tokens"
+      },
+      "bridge": "Puente"
+    }
+  },
+  "suggestions": {
+    "buttons": {
+      "farms": "Granjas",
+      "swap": "Intercambio",
+      "inSpirit": "inSPIRIT",
+      "vote": "Votar",
+      "LockSpirit": "Lockear SPIRIT",
+      "liquidity": "Agregar liquidex",
+      "portfolio": "Portafolio",
+      "apeMode": "Ape mode",
+      "disclaimer": {
+        "1": "Mantener sugerencias",
+        "2": "No mostrarlas mas"
+      }
+    },
+    "content": {
+      "swap": {
+        "1": "Acabas de cambiar a SPIRIT. ¿Que sigue?",
+        "2": "You just swapped to",
+        "3": "¿Que sigue?"
+      },
+      "farms": {
+        "1": "Acabas de reclamar SPIRIT. ¿Que sigue?",
+        "2": "Acabas de reclamar. Intenta intercambiar",
+        "3": "Acabas de depositar LPs. Mira tu granja en el portafolio."
+      },
+      "liquidity": {
+        "1": "Acabas de agregar liquidez. ¿Que sigue?",
+        "2": "Acabas de agregar liquidez. Miralo en tu portafolio"
+      },
+      "bridge": {
+        "1": "Acabas de unirte a Fantom. ¿Que sigue?",
+        "2": "Acabas de unirte a Fantom. Try swapping",
+        "3": "Acabas de irte de Fantom. Vuelve pronto!"
+      },
+      "inSpirit": {
+        "1": "Acabas de reclamar SPIRIT. ¿Que sigue?",
+        "2": "Acabas de lockear SPIRIT. Intenta votar con tus inSPIRIT"
+      },
+      "disclaimer": {
+        "1": "¿Quieres volver a recibir sugerencias? Puedes administrar mostrar sugerencias en la configuración en cualquier momento.",
+        "2": "Mantener sugerencias?"
+      }
+    }
+  },
+  "lendBorrow": {
+    "common": {}
+  },
+  "staking": {
+    "common": {}
+  },
+  "analytics": {
+    "common": {}
+  },
+  "ido": {
+    "common": {}
+  },
+  "nfts": {
+    "common": {}
+  },
+  "docs": {
+    "common": {}
+  },
+  "spiritWars": {
+    "description": "Con Curve Wars completamente en movimiento en la cadena de bloques de Ethereum, el espíritu de lucha ahora también se ha extendido a Fantom. El protocolo central de esta batalla es SpiritSwap.",
+    "helper": {
+      "title": "Spirit Wars",
+      "text": "SpiritWars proporciona una descripción general de todos los datos relacionados con los pares winSPIRIT, su dominio y la situación actual de paridad."
+    },
+    "statistics": {
+      "helper": {
+        "title": "Spirit Wars Estadísticas",
+        "text": "Este gráfico circular visualizará el predominio de la propiedad de inSPIRIT por cada protocolo respectivo."
+      },
+      "totalInSPIRITSupply": "Suministro total de inSPIRIT",
+      "circulatingSpirit": {
+        "text": "ESPÍRITU circulante",
+        "helper": {
+          "title": "ESPÍRITU circulante",
+          "text": "= Total acuñado - fondo de equipo - fondo DAO - tokens quemados - SPIRIT bloqueado."
+        }
+      },
+      "averagePeg": "Clavija promedio",
+      "projects": "Proyectos",
+      "dataProvidedBy": "Datos proporcionados por",
+      "defiwars": "defiwars.xyz"
+    },
+    "tableHeading": {
+      "projects": "Proyectos",
+      "holdings": "inSPIRIT Holdings",
+      "peg": "Clavija por 100k",
+      "holder": "Poseedor",
+      "token": "Token",
+      "supply": "Suministro",
+      "farm": "Granja"
+    },
+    "chartTitle": "Distribución inSPIRIT"
+  }
+}

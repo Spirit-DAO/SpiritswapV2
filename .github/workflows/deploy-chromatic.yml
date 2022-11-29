@@ -1,0 +1,28 @@
+# Workflow name
+name: 'Run all tests'
+
+# Event for the workflow
+on: push
+
+# List of jobs
+jobs:
+  test:
+    # Operating System
+    runs-on: ubuntu-latest
+    # Job steps
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v1
+      - name: Install dependencies
+        run: yarn
+      - name: Check for linter errors
+        run: yarn lint
+      - name: Run tests
+        run: yarn test
+#      - name: Deploy on Chromatic
+#        uses: chromaui/action@v1
+#        # Options required for Chromatic's GitHub Action
+#        with:
+#          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/intro-to-storybook/react/en/deploy/ to obtain it
+#          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+#          token: ${{ secrets.CHROMATIC_GITHUB_TOKEN }}

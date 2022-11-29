@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBar-Componenet Matches SnapShot with Default Value Prop 1`] = `
+.c0 {
+  height: 8px;
+  background-image: linear-gradient( 90deg, rgba(19,181,236,0.25), rgba(0,189,116,0.25) );
+  border-radius: 4px;
+  position: relative;
+  -webkit-filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
+  filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
+}
+
+.c1 {
+  height: 100%;
+  width: 40%;
+  border-radius: 4px 0px 0px 4px;
+  -webkit-mask: linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0);
+}
+
+.c1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(90deg,#13b5ec,#00bd74);
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    value={40}
+  />
+</div>
+`;
+
+exports[`ProgressBar-Componenet Matches SnapShot with Empty Value Prop 1`] = `
+.c0 {
+  height: 8px;
+  background-image: linear-gradient( 90deg, rgba(19,181,236,0.25), rgba(0,189,116,0.25) );
+  border-radius: 4px;
+  position: relative;
+  -webkit-filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
+  filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
+}
+
+.c1 {
+  height: 100%;
+  width: 0%;
+  border-radius: 4px 0px 0px 4px;
+  -webkit-mask: linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0);
+}
+
+.c1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(90deg,#13b5ec,#00bd74);
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    value={0}
+  />
+</div>
+`;
+
+exports[`ProgressBar-Componenet Matches SnapShot with Full Value Prop 1`] = `
+.c0 {
+  height: 8px;
+  background-image: linear-gradient( 90deg, rgba(19,181,236,0.25), rgba(0,189,116,0.25) );
+  border-radius: 4px;
+  position: relative;
+  -webkit-filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
+  filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
+}
+
+.c1 {
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  -webkit-mask: linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0);
+}
+
+.c1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(90deg,#13b5ec,#00bd74);
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    value={100}
+  />
+</div>
+`;

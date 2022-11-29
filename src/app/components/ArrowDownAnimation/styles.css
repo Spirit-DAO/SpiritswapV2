@@ -1,0 +1,100 @@
+.ico {
+  margin: 0 auto;
+  text-align: center;
+  width: 48px;
+  height: 48px;
+  position: relative;
+  top: 50%;
+  filter: url('#goo');
+  cursor: pointer;
+}
+
+.ico .circle {
+  background: #1d353d;
+  border-radius: 50%;
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  transform-origin: 0%;
+}
+
+.ico .circle.circle-top {
+  height: 16px;
+  width: 20px;
+  animation: blob-1-anim 3s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  z-index: 0;
+  top: 0;
+}
+
+.ico .circle.circle-bottom {
+  height: 16px;
+  width: 20px;
+  animation: blob-2-anim 3s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  z-index: 9;
+  bottom: 0;
+}
+
+.ico .st-arrow {
+  fill: #60e6c5;
+  animation: scrolly 3s cubic-bezier(0.77, 0, 0.175, 1) forwards infinite;
+  perspective: 9000px;
+  transform: translateZ(0);
+  transform-origin: bottom;
+}
+.svg {
+  z-index: 9;
+  position: relative;
+}
+
+@keyframes blob-1-anim {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+  14% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+  24% {
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+@keyframes blob-2-anim {
+  0% {
+    transform: scale(1) translate(-50%, 5px);
+  }
+  30% {
+    transform: scale(1) translate(-50%, 5px);
+  }
+  70% {
+    transform: scale(1) translate(-50%, 5px);
+  }
+  90% {
+    transform: scale(1) translate(-50%, 15px);
+  }
+  100% {
+    transform: scale(1) translate(-50%, 5px);
+  }
+}
+@keyframes scrolly {
+  0% {
+    transform: translate3d(0, -150%, 0) rotateX(90deg) scale(0.5) skewX(3deg);
+  }
+  30% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) scale(1) skewX(0deg);
+  }
+  70% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) scale(1) skewX(0deg);
+  }
+  95% {
+    transform: translate3d(0, 50%, 0) rotateX(-90deg) scale(0.5) skewX(-3deg);
+  }
+  100% {
+    transform: translate3d(0, 50%, 0) rotateX(-90deg) scale(0.5) skewX(-3deg);
+  }
+}

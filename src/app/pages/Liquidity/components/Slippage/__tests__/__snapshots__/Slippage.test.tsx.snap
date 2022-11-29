@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slippage-Component Matches SnapShot with Values 1`] = `
+Array [
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+  margin: 2px 0px 0px 0px;
+}
+
+.c1 {
+  font-size: 14px;
+  line-height: 18px;
+  color: #D1D5DB;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 svg {
+  margin-top: -15px;
+  margin-left: 5px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #D1D5DB;
+}
+
+.c2 svg {
+  margin: 0px 0px 0px 4px;
+}
+
+<div
+    className="c0"
+    data-testid="Slippage"
+  >
+    <div
+      className="c1"
+    >
+      Max Bridge Amount
+      <svg>
+        question-3-circle.svg
+      </svg>
+    </div>
+    <div
+      className="c2"
+    >
+      <div
+        className="chakra-skeleton css-cdkrf0"
+      >
+        10,000,000 FTM
+      </div>
+      <svg>
+        question-3-circle.svg
+      </svg>
+    </div>
+  </div>,
+  <span />,
+]
+`;
+
+exports[`Slippage-Component Matches SnapShot without Values 1`] = `
+Array [
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+  margin: 2px 0px 0px 0px;
+}
+
+.c1 {
+  font-size: 14px;
+  line-height: 18px;
+  color: #D1D5DB;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 svg {
+  margin-top: -15px;
+  margin-left: 5px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #D1D5DB;
+}
+
+.c2 svg {
+  margin: 0px 0px 0px 4px;
+}
+
+<div
+    className="c0"
+    data-testid="Slippage"
+  >
+    <div
+      className="c1"
+    >
+      
+    </div>
+    <div
+      className="c2"
+    >
+      <div
+        className="chakra-skeleton css-cdkrf0"
+      >
+        
+      </div>
+    </div>
+  </div>,
+  <span />,
+]
+`;

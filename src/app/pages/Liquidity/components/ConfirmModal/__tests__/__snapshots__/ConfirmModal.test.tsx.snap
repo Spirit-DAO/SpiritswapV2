@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Confirm Modal component should render and match snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+}
+
+.c0,
+.c0 > div,
+.c0 > svg,
+.c0 > img {
+  width: xl;
+  height: xl;
+}
+
+<div>
+  <div
+    class="css-1kq59qq"
+  >
+    <div
+      class="css-1ui6izz"
+    >
+      <button
+        class="chakra-button css-ftvr69"
+        type="button"
+      >
+        <div
+          class="c0 css-2q6ptx"
+        >
+          <svg
+            class="chakra-icon css-18w02b3"
+            focusable="false"
+          >
+            back.svg
+          </svg>
+        </div>
+      </button>
+      <h2
+        class="css-1io1c3r"
+      >
+        liquidity.confirmPanel.confirmAddingLiquidity
+      </h2>
+    </div>
+    <div
+      class="css-1ia939w"
+    >
+      <p
+        class="chakra-text css-0"
+      >
+        liquidity.confirmPanel.youPay
+      </p>
+    </div>
+    <div
+      class="css-j7qwjs"
+    >
+      <p
+        class="chakra-text css-xlrm81"
+      >
+        liquidity.common.youWillReceive
+      </p>
+      <div
+        class="css-clmqzu"
+      />
+      <p
+        class="chakra-text css-mlm88v"
+      >
+        4000
+         
+      </p>
+      <div
+        class="css-f808a9"
+      >
+        <svg
+          class="chakra-icon css-1tcckqc"
+          focusable="false"
+        >
+          danger.svg
+        </svg>
+        <p
+          class="chakra-text css-1cpcgfy"
+        >
+          liquidity.confirmPanel.alert
+        </p>
+      </div>
+    </div>
+    <div
+      class="css-1uzrj0v"
+    >
+      <div
+        class="css-z7mtfw"
+      >
+        <p
+          class="chakra-text css-nfvc7l"
+        >
+          liquidity.confirmPanel.shareOfPool
+        </p>
+        <p
+          class="chakra-text css-1wuxeh2"
+        >
+          &lt;0.01
+        </p>
+      </div>
+      <div
+        class="chakra-stack css-p7rcp5"
+      >
+        <button
+          class="chakra-button css-8hre7r"
+          type="button"
+        >
+          liquidity.common.cancel
+        </button>
+        <button
+          class="chakra-button css-tdyi57"
+          type="button"
+        >
+          liquidity.common.confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,2294 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModalToken /> should render and match the snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body
+    class="chakra-ui-dark"
+  >
+    <div
+      id="chakra-toast-portal"
+    >
+      <ul
+        id="chakra-toast-manager-top"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-top-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-top-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+    </div>
+    <div>
+      <div
+        class="chakra-modal__overlay css-148tlcz"
+        style="opacity: 0;"
+      />
+      <div
+        data-focus-guard="true"
+        style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+        tabindex="0"
+      />
+      <div
+        data-focus-guard="true"
+        style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+        tabindex="1"
+      />
+      <div
+        data-focus-lock-disabled="false"
+      >
+        <div
+          class="chakra-modal__content-container css-n26eha"
+          tabindex="-1"
+        >
+          <section
+            aria-describedby="chakra-modal--body-1"
+            aria-labelledby="chakra-modal--header-1"
+            aria-modal="true"
+            class="chakra-modal__content css-1loesaj"
+            id="chakra-modal-1"
+            role="dialog"
+            style="opacity: 0; transform: scale(0.95) translateZ(0);"
+            tabindex="-1"
+          >
+            <header
+              class="chakra-modal__header css-1ybzmrl"
+              id="chakra-modal--header-1"
+            >
+              common.tokenModal.select
+            </header>
+            <div
+              class="chakra-input__group css-1l1ex6j"
+            >
+              <div
+                class="chakra-input__left-element css-1ry1b9m"
+              >
+                <svg
+                  class="chakra-icon css-teiph8"
+                  focusable="false"
+                >
+                  search-loupe.svg
+                </svg>
+              </div>
+              <input
+                aria-label="search-input"
+                class="chakra-input css-1kqh7z7"
+                placeholder="Search by name"
+                value=""
+              />
+              <div
+                class="chakra-input__right-element css-1vc44hy"
+              >
+                <button
+                  aria-label="Delete"
+                  class="chakra-button css-ln4yzw"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    backspace-delete-button.svg
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <button
+              aria-label="Close"
+              class="chakra-modal__close-btn css-4mkhvz"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="chakra-icon css-onkibi"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+            <div
+              class="chakra-modal__body css-ebumqv"
+              id="chakra-modal--body-1"
+            >
+              <p
+                class="chakra-text css-dv0alm"
+              >
+                77
+                 Tokens
+              </p>
+              <p
+                class="chakra-text css-1sh23od"
+              >
+                USD Value
+              </p>
+              <p
+                class="chakra-text css-dv0alm"
+              >
+                77
+                 Tokens
+              </p>
+              <div
+                aria-label="grid"
+                aria-readonly="true"
+                class="ReactVirtualized__Grid ReactVirtualized__List"
+                role="grid"
+                style="box-sizing: border-box; direction: ltr; height: 400px; position: relative; width: 400px; will-change: transform; overflow-x: hidden; overflow-y: auto;"
+                tabindex="0"
+              >
+                <div
+                  class="ReactVirtualized__Grid__innerScrollContainer"
+                  role="rowgroup"
+                  style="width: auto; height: 4081px; max-width: 400px; max-height: 4081px; overflow: hidden; position: relative;"
+                >
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 0px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="FTM logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Fantom
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            FTM
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 53px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="SPIRIT logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          SpiritSwap Token
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            SPIRIT
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 106px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="WFTM logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Wrapped Fantom
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            WFTM
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 159px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="WBTC logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Wrapped BTC
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            WBTC
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 212px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="WETH logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Wrapped ETH
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            WETH
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 265px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="CRV logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Curve DAO
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            CRV
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 318px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="SUSHI logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Sushi
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            SUSHI
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 371px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="SNX logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Synthetix Network
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            SNX
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 424px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="LINK logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          ChainLink
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            LINK
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 477px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="YFI logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          yearn.finance
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            YFI
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 530px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="ICE logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          IceToken
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            ICE
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 583px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="FXS logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Frax Share
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            FXS
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 636px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="BNB logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Binance
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            BNB
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 689px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="BUSD logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Binance USD
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            BUSD
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 742px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="BIFI logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Beefy.Finance
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            BIFI
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 795px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="JUST logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Just Yours
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            JUST
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 848px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="LQDR logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Liquid Driver
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            LQDR
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 901px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="SHADE logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          Shade Cash
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            SHADE
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        data-focus-guard="true"
+        style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+        tabindex="0"
+      />
+    </div>
+    <div
+      class="chakra-portal"
+    />
+  </body>,
+  "container": <div>
+    <div
+      class="chakra-modal__overlay css-148tlcz"
+      style="opacity: 0;"
+    />
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="1"
+    />
+    <div
+      data-focus-lock-disabled="false"
+    >
+      <div
+        class="chakra-modal__content-container css-n26eha"
+        tabindex="-1"
+      >
+        <section
+          aria-describedby="chakra-modal--body-1"
+          aria-labelledby="chakra-modal--header-1"
+          aria-modal="true"
+          class="chakra-modal__content css-1loesaj"
+          id="chakra-modal-1"
+          role="dialog"
+          style="opacity: 0; transform: scale(0.95) translateZ(0);"
+          tabindex="-1"
+        >
+          <header
+            class="chakra-modal__header css-1ybzmrl"
+            id="chakra-modal--header-1"
+          >
+            common.tokenModal.select
+          </header>
+          <div
+            class="chakra-input__group css-1l1ex6j"
+          >
+            <div
+              class="chakra-input__left-element css-1ry1b9m"
+            >
+              <svg
+                class="chakra-icon css-teiph8"
+                focusable="false"
+              >
+                search-loupe.svg
+              </svg>
+            </div>
+            <input
+              aria-label="search-input"
+              class="chakra-input css-1kqh7z7"
+              placeholder="Search by name"
+              value=""
+            />
+            <div
+              class="chakra-input__right-element css-1vc44hy"
+            >
+              <button
+                aria-label="Delete"
+                class="chakra-button css-ln4yzw"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  backspace-delete-button.svg
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button
+            aria-label="Close"
+            class="chakra-modal__close-btn css-4mkhvz"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="chakra-icon css-onkibi"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+          <div
+            class="chakra-modal__body css-ebumqv"
+            id="chakra-modal--body-1"
+          >
+            <p
+              class="chakra-text css-dv0alm"
+            >
+              77
+               Tokens
+            </p>
+            <p
+              class="chakra-text css-1sh23od"
+            >
+              USD Value
+            </p>
+            <p
+              class="chakra-text css-dv0alm"
+            >
+              77
+               Tokens
+            </p>
+            <div
+              aria-label="grid"
+              aria-readonly="true"
+              class="ReactVirtualized__Grid ReactVirtualized__List"
+              role="grid"
+              style="box-sizing: border-box; direction: ltr; height: 400px; position: relative; width: 400px; will-change: transform; overflow-x: hidden; overflow-y: auto;"
+              tabindex="0"
+            >
+              <div
+                class="ReactVirtualized__Grid__innerScrollContainer"
+                role="rowgroup"
+                style="width: auto; height: 4081px; max-width: 400px; max-height: 4081px; overflow: hidden; position: relative;"
+              >
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 0px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="FTM logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Fantom
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          FTM
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 53px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="SPIRIT logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        SpiritSwap Token
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          SPIRIT
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 106px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="WFTM logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Wrapped Fantom
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          WFTM
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 159px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="WBTC logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Wrapped BTC
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          WBTC
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 212px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="WETH logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Wrapped ETH
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          WETH
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 265px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="CRV logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Curve DAO
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          CRV
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 318px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="SUSHI logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Sushi
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          SUSHI
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 371px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="SNX logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Synthetix Network
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          SNX
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 424px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="LINK logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        ChainLink
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          LINK
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 477px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="YFI logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        yearn.finance
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          YFI
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 530px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="ICE logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        IceToken
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          ICE
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 583px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="FXS logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Frax Share
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          FXS
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 636px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="BNB logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Binance
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          BNB
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 689px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="BUSD logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Binance USD
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          BUSD
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 742px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="BIFI logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Beefy.Finance
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          BIFI
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 795px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="JUST logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Just Yours
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          JUST
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 848px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="LQDR logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Liquid Driver
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          LQDR
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 901px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="SHADE logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        Shade Cash
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          SHADE
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`<ModalToken /> should render even is there is not token list 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body
+    class="chakra-ui-dark"
+  >
+    <div
+      id="chakra-toast-portal"
+    >
+      <ul
+        id="chakra-toast-manager-top"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-top-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-top-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-left"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <ul
+        id="chakra-toast-manager-bottom-right"
+        style="position: fixed; z-index: 5500; pointer-events: none; display: flex; flex-direction: column;"
+      />
+    </div>
+    <div />
+  </body>,
+  "container": <div />,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

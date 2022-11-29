@@ -1,0 +1,380 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "contract OTokenForOlaLenLensInterface",
+        "name": "market",
+        "type": "address"
+      }
+    ],
+    "name": "getUnderlyingPriceForMarket",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "contract OTokenForOlaLenLensInterface",
+        "name": "market",
+        "type": "address"
+      }
+    ],
+    "name": "isMarketForNative",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "underlyingDecimals",
+        "type": "uint256"
+      }
+    ],
+    "name": "underlyingAmountToScale",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      { "internalType": "uint256", "name": "scaledAmount", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "underlyingDecimals",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "underlyingPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "unitsToUsdValue",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "contract ComptrollerOlaLeNLensInterface",
+        "name": "unitroller",
+        "type": "address"
+      },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "viewActiveRainBalances",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "balance", "type": "uint256" },
+          { "internalType": "uint256", "name": "allocated", "type": "uint256" }
+        ],
+        "internalType": "struct OlaLeNLens.RainBalances",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "contract ComptrollerOlaLeNLensInterface",
+        "name": "unitroller",
+        "type": "address"
+      }
+    ],
+    "name": "viewLendingNetwork",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "totalSupply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalBorrows",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct OlaLeNLens.LendingNetworkView",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "contract OTokenForOlaLenLensInterface",
+        "name": "market",
+        "type": "address"
+      }
+    ],
+    "name": "viewMarket",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "supplyUnits",
+            "type": "uint256"
+          },
+          { "internalType": "uint256", "name": "supplyUsd", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "borrowsUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowsUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reserveFactor",
+            "type": "uint256"
+          },
+          { "internalType": "uint256", "name": "borrowRate", "type": "uint256" }
+        ],
+        "internalType": "struct OlaLeNLens.MarketView",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "contract OTokenForOlaLenLensInterface",
+        "name": "market",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "viewMarketBalances",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "oToken", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "underlying",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowBalanceInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyBalanceInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountOTokenBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountUnderlyingBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marketAllowance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct OlaLeNLens.OMarketBalances",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "contract ComptrollerOlaLeNLensInterface",
+        "name": "unitroller",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "viewMarketBalancesInLeN",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "oToken", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "underlying",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowBalanceInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyBalanceInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountOTokenBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountUnderlyingBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marketAllowance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct OlaLeNLens.OMarketBalances[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "contract OTokenForOlaLenLensInterface[]",
+        "name": "oMarkets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address payable",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "viewMarketsBalances",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "oToken", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "underlying",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowBalanceInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyBalanceInUsd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountOTokenBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountUnderlyingBalanceInUnits",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marketAllowance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct OlaLeNLens.OMarketBalances[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

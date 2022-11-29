@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TotalTrading-Component Matches SnapShot with Values 1`] = `
+Array [
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 8px;
+  margin: 16px 0px 0px 0px;
+  color: #FFFFFF;
+  font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  margin: 0px 8px;
+}
+
+.c2 {
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  color: #9CA3AF;
+  margin: 0px;
+}
+
+<div
+    className="c0"
+    data-testid="TotalTrading"
+  >
+    You will receive:
+    <div
+      className="c1"
+    >
+      <h4
+        className="css-1qkyk1j"
+      >
+        9,850.341 FTM/SPIRIT LP
+      </h4>
+      <div
+        className="c2"
+      >
+        ≈ $7,072.43
+      </div>
+    </div>
+  </div>,
+  <span />,
+]
+`;
