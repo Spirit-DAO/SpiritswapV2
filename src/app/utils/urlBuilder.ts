@@ -32,6 +32,7 @@ export const UrlTailTemplates = {
   balance: createTemplateUrl`/${'_chainId'}/address/${'_address'}/balances_v2/`,
   pools: createTemplateUrl`/${'chainId'}/xy=k/spiritswap/pools/`,
   poolsV2: createTemplateUrl`/${'chainId'}/spiritswap_v2/pools/`,
+  spiritV2Pairs: createTemplateUrl`/${'chainId'}/spiritswap_v2/tokens/address/${'_tokenAddress'}/`,
   poolsAddress: createTemplateUrl`/${'chainId'}/xy=k/spiritswap/pools/address/${'_lpAddress'}/`,
   poolsAddressV2: createTemplateUrl`/${'chainId'}/spiritswap_v2/pools/address/${'_lpAddress'}/`,
   tokensAddress: createTemplateUrl`/${'chainId'}/xy=k/spiritswap/tokens/address/${'_tokenAddress'}/`,
