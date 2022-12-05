@@ -37,7 +37,7 @@ yarn storybook
 >
 > You can add or remove literally anything and use whichever library or tools you prefer.
 
-<dl>
+<dl> 
 
   <dt>Predictable state management</dt>
   <dd>Unidirectional data flow allows for change logging and time travel debugging.</dd>
