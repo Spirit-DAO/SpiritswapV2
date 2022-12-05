@@ -67,7 +67,7 @@ yarn storybook
   <dd>We support SEO (document head tags management) for search engines that support indexing of JavaScript content. (eg. Google)</dd>
 </dl>
 
-But wait... there's more!
+But wait... there's more!  
 
 - _The best test setup:_ Automatically guarantee code quality and non-breaking
   changes. (Seen a react app with 100% test coverage before?)
