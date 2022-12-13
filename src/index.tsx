@@ -26,6 +26,8 @@ import { DataContextProvider } from 'contexts/DataContext';
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 const root = createRoot(MOUNT_NODE);
 
+// Test heesh
+
 declare global {
   interface Window {
     ethereum: any;
