@@ -42,3 +42,7 @@ export const selectMarketCap = (state: RootState) => state.general.marketCap;
 export const selectTVL = (state: RootState) => state.general.tvl;
 export const selectFtmInfo = (state: RootState) => state.general.ftmInfo;
 export const selectLpPrices = (state: RootState) => state.general.lp_prices;
+export const selectSpiritPerBlock = (state: RootState) =>
+  state.general.spiritperblock;
+export const selectSpiritTotalSupply = (state: RootState) =>
+  state.general.spiritssupply;

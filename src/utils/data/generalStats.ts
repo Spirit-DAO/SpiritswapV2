@@ -74,9 +74,11 @@ export const getMarketCap = async (
         .sub(vestingFund),
     );
 
+    const spiritTotalSupply = getBalanceNumber(totalSupply, 18);
+
     const marketCap = spiritPrice * (marketCapSupply - spiritLocked);
 
-    return marketCap;
+    return { marketCap, spiritTotalSupply };
   } catch (err) {
     throw new Error(`${err}`);
   }

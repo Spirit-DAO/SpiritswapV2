@@ -2,7 +2,14 @@ import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
 import { convertTokenPrice } from 'app/utils';
 import { ReactChild, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { selectTVL } from 'store/general/selectors';
+import {
+  selectMarketCap,
+  selectSpiritInfo,
+  selectSpiritPerBlock,
+  selectSpiritTotalSupply,
+  selectTotalSpiritLocked,
+  selectTVL,
+} from 'store/general/selectors';
 import { useAppSelector } from 'store/hooks';
 import { client, clientV2 } from 'utils/apollo/client';
 import {
@@ -15,6 +22,12 @@ import { Wrapper, StyledBottom, StyledInfoTab } from './style';
 const DexStatistics = () => {
   const { t } = useTranslation();
   const [totalVolumen, setTotalVolume] = useState(0);
+  const spiritPriceData = useAppSelector(selectSpiritInfo);
+  const marketCap = useAppSelector(selectMarketCap);
+  const spiritPerBlock = useAppSelector(selectSpiritPerBlock);
+  const totalSupply = useAppSelector(selectSpiritTotalSupply);
+  const spiritLocked = useAppSelector(selectTotalSpiritLocked);
+
   const translationPath = 'home.dexStatistics';
   const isMobile = useMobile('425px');
   const isDesktop = !useMobile('1024px');
@@ -103,7 +116,7 @@ const DexStatistics = () => {
           >
             {loaderManager(
               <Box alignContent="center" textAlign="center">
-                {titles(convertTokenPrice(+totalVolumen, 1))}
+                {titles(`$${convertTokenPrice(+totalVolumen, 1)}`)}
                 {subTitles(t(`${translationPath}.totalVolume`))}
               </Box>,
               !!totalVolumen,
@@ -111,7 +124,7 @@ const DexStatistics = () => {
 
             {loaderManager(
               <Box textAlign="center">
-                {titles(convertTokenPrice(TVL, 1))}
+                {titles(`$${convertTokenPrice(TVL, 1)}`)}
                 {subTitles(t(`${translationPath}.totalLiquidity`))}
               </Box>,
 
@@ -120,8 +133,58 @@ const DexStatistics = () => {
 
             {loaderManager(
               <Box textAlign="center">
-                {titles(convertTokenPrice(totalInspiritRewards, 1))}
+                {titles(`$${convertTokenPrice(totalInspiritRewards, 1)}`)}
                 {subTitles(t(`${translationPath}.totalinSpiritRewards`))}
+              </Box>,
+              !!totalVolumen,
+            )}
+            {loaderManager(
+              <Box textAlign="center">
+                {titles(
+                  `$${
+                    spiritPriceData ? spiritPriceData.price.toFixed(3) : '0'
+                  }`,
+                )}
+                {subTitles('Spirit Price')}
+              </Box>,
+              !!totalVolumen,
+            )}
+          </Flex>
+          <Flex
+            justifyContent="space-around"
+            alignItems="center"
+            gap="16px"
+            py="16px"
+            flexDirection={isMobile ? 'column' : 'row'}
+          >
+            {loaderManager(
+              <Box alignContent="center" textAlign="center">
+                {titles(`$${convertTokenPrice(marketCap, 1)}`)}
+                {subTitles('Market Cap')}
+              </Box>,
+              !!totalVolumen,
+            )}
+            {loaderManager(
+              <Box alignContent="center" textAlign="center">
+                {titles(`${convertTokenPrice(totalSupply, 1)}`)}
+                {subTitles('Total minted')}
+              </Box>,
+              !!totalVolumen,
+            )}
+
+            {loaderManager(
+              <Box textAlign="center">
+                {titles(`${convertTokenPrice(spiritLocked, 1)}`)}
+                {subTitles('Total SPIRIT locked')}
+              </Box>,
+
+              !!TVL,
+            )}
+
+            {loaderManager(
+              <Box textAlign="center">
+                {titles(spiritPerBlock)}
+                {subTitles('New SPIRIT/block')}
               </Box>,
               !!totalVolumen,
             )}

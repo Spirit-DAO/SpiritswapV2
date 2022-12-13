@@ -516,63 +516,28 @@ export const getLpTokenPrices = async (
   return data;
 };
 
-export const getMasterChefPoolInfoWithMultiCall = async (
-  _provider = null,
-): Promise<FarmChainData> => {
-  const masterChefCalls: Call[] = [];
-  const masterchefERC20Calls: Call[] = [];
-
+export const getMasterChefPoolInfoWithMultiCall = async (_provider = null) => {
   const masterChefAddress = Contracts.masterchef[CHAIN_ID];
 
   const masterChefContract = await Contract(
     masterChefAddress,
-    'masterchef',
+    'masterchef2',
     undefined,
     undefined,
     _provider,
   );
 
-  const [totalAllocPoint, spiritPerBlockResponse] = await Promise.all([
-    masterChefContract.totalAllocPoint(),
+  const [spiritPerBlockResponse] = await Promise.all([
     masterChefContract.spiritPerBlock(),
   ]);
 
   // APR Calculations
-  const spiritPerBlock = new BigNumber(spiritPerBlockResponse._hex);
-  const spiritPerSecond = parseUnits(spiritPerBlock.toString(), 18);
-
-  farms.forEach(farm => {
-    const lpAddress = farm.lpAddresses[CHAIN_ID];
-    const pid = farm.pid;
-    masterChefCalls.push(
-      // MasterChef pool information
-      {
-        address: masterChefAddress,
-        name: 'poolInfo',
-        params: [pid],
-      },
-    );
-
-    masterchefERC20Calls.push(
-      // ERC20 pool information
-      {
-        address: lpAddress,
-        name: 'balanceOf',
-        params: [masterChefAddress],
-      },
-    );
-  });
-
-  const [masterChefResponse, masterchefERC20Response] = await Promise.all([
-    Multicall(masterChefCalls, 'masterchef', CHAIN_ID, 'rpc', _provider),
-    Multicall(masterchefERC20Calls, 'erc20', CHAIN_ID, 'rpc', _provider),
-  ]);
+  const spiritPerBlock = new BigNumber(spiritPerBlockResponse._hex)
+    .div(new BigNumber(10).pow(18))
+    .toNumber();
 
   return {
-    masterChefResponse,
-    masterchefERC20Response,
-    spiritPerSecond,
-    totalAllocPoint,
+    spiritPerBlock,
   };
 };
 
