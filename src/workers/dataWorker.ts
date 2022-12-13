@@ -76,12 +76,16 @@ export async function getSpiritStatistics(provider) {
 
   // new BigNumber(spiritPerBlock).toNumber()
   const { totalLocked, spiritInfo, totalLockedValue } = data;
-  const marketCap = await getMarketCap(+totalLocked, spiritInfo.price);
+  const { marketCap, spiritTotalSupply: totalSupply } = await getMarketCap(
+    +totalLocked,
+    spiritInfo.price,
+  );
   const TVL = await getTVL(totalLockedValue);
 
   data['marketCap'] = marketCap;
   data['tvl'] = TVL;
   data['spiritperblock'] = spiritPerBlock;
+  data['spiritssupply'] = totalSupply;
 
   self.postMessage({
     type: 'setSpiritStatistics',

@@ -6,8 +6,8 @@ import {
   selectMarketCap,
   selectSpiritInfo,
   selectSpiritPerBlock,
+  selectSpiritTotalSupply,
   selectTotalSpiritLocked,
-  selectTotalSpiritSupply,
   selectTVL,
 } from 'store/general/selectors';
 import { useAppSelector } from 'store/hooks';
@@ -25,7 +25,7 @@ const DexStatistics = () => {
   const spiritPriceData = useAppSelector(selectSpiritInfo);
   const marketCap = useAppSelector(selectMarketCap);
   const spiritPerBlock = useAppSelector(selectSpiritPerBlock);
-  const totalSupply = useAppSelector(selectTotalSpiritSupply);
+  const totalSupply = useAppSelector(selectSpiritTotalSupply);
   const spiritLocked = useAppSelector(selectTotalSpiritLocked);
 
   const translationPath = 'home.dexStatistics';
@@ -175,7 +175,7 @@ const DexStatistics = () => {
             {loaderManager(
               <Box textAlign="center">
                 {titles(`${convertTokenPrice(spiritLocked, 1)}`)}
-                {subTitles('Spirit locked')}
+                {subTitles('Total SPIRIT locked')}
               </Box>,
 
               !!TVL,

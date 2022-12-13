@@ -34,6 +34,7 @@ const initialState: {
   spiritWarsData: Token[];
   lp_prices: {};
   spiritperblock: number;
+  spiritssupply: number;
 } = {
   spiritInfo: {
     price: 0,
@@ -66,6 +67,7 @@ const initialState: {
   spiritWarsData: [],
   lp_prices: {},
   spiritperblock: 0,
+  spiritssupply: 0,
 };
 
 export const generalReducer = createSlice({
@@ -152,6 +154,9 @@ export const generalReducer = createSlice({
     setSpiritPerBlock: (state, action) => {
       state.spiritperblock = action.payload;
     },
+    setSpiritTotalSupply: (state, action) => {
+      state.spiritssupply = action.payload;
+    },
   },
 });
 
@@ -183,6 +188,7 @@ export const {
   setFtmInfo,
   setLpPrices,
   setSpiritPerBlock,
+  setSpiritTotalSupply,
 } = generalReducer.actions;
 
 export default generalReducer.reducer;
