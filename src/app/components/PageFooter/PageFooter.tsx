@@ -97,7 +97,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://github.com/Layer3Org/spiritswap-core/"
+                  href="https://github.com/Spirit-DAO/"
                   _hover={{ color: 'ci' }}
                 >
                   <GitHubSvg />

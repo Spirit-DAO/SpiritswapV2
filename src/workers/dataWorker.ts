@@ -13,6 +13,7 @@ import {
   CHAIN_ID,
   BASE_TOKEN_ADDRESS,
   ONE_HOUR,
+  SPIRIT,
 } from 'constants/index';
 import {
   getGaugeBasicInfo,
@@ -21,6 +22,8 @@ import {
   getLpTokenPrices,
   getMappedTokens,
   getMarketCap,
+  getMasterChefPoolInfoWithMultiCall,
+  getTokenPoolInfo,
   getTokenUsdPrice,
   getTVL,
   loadFarmsList,
@@ -69,12 +72,16 @@ onmessage = ({ data: { type, provider, isLoggedIn } }) => {
 
 export async function getSpiritStatistics(provider) {
   const data = await getInspiritStatistics(provider);
+  const { spiritPerBlock } = await getMasterChefPoolInfoWithMultiCall(provider);
+
+  // new BigNumber(spiritPerBlock).toNumber()
   const { totalLocked, spiritInfo, totalLockedValue } = data;
   const marketCap = await getMarketCap(+totalLocked, spiritInfo.price);
   const TVL = await getTVL(totalLockedValue);
 
   data['marketCap'] = marketCap;
   data['tvl'] = TVL;
+  data['spiritperblock'] = spiritPerBlock;
 
   self.postMessage({
     type: 'setSpiritStatistics',

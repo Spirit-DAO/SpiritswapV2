@@ -21,6 +21,7 @@ import {
   setTVL,
   setLpPrices,
   setSaturatedGauges,
+  setSpiritPerBlock,
 } from 'store/general';
 import {
   addNewLiquidity,
@@ -86,6 +87,7 @@ export const listenToAppWorker = (
         dispatch(setAprPercentage(payload.aprLDbased));
         dispatch(setStatisticsFrom(payload.beginningPeriod));
         dispatch(setInSpiritPerSpirit(payload.inspiritPerSpirit));
+        dispatch(setSpiritPerBlock(payload.spiritperblock));
         break;
       case 'setSaturatedGauges':
         if (!isLoggedIn) break;
