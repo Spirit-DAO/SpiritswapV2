@@ -205,6 +205,19 @@ export const getTokensDetails = async (
       format: 'JSON',
     },
   });
+  const sourceSpiritPairs = getApiUrl({
+    apiName: 'covalent',
+    pathName: 'spiritV2Pairs',
+    innerParams: {
+      chainId,
+      _addresses: '0x5Cc61A78F164885776AA610fb0FE1257df78E59B',
+    },
+    queryParams: {
+      key: COVALENT_API_KEY,
+
+      format: 'JSON',
+    },
+  });
 
   const { data } = await request(source);
 

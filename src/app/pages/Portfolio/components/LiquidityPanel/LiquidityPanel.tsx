@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Skeleton, useDisclosure } from '@chakra-ui/react';
-import { getSign } from 'app/utils';
+import { checkAddress, getSign } from 'app/utils';
 import { TokenOptions } from 'app/utils/tokenOptions';
 import { Heading, Paragraph } from 'app/components/Typography';
 import { PercentBadge } from 'app/components/PercentBadge';
@@ -81,7 +81,8 @@ const LiquidityPanel = ({
   const stakeData = stakeList ? stakeList : [];
 
   const farmListWV1 = [...farmData, ...stakeData].map(farm => {
-    const rate = lpTokensPrices[farm.address.toLowerCase()];
+    let rate = lpTokensPrices[farm.address.toLowerCase()];
+
     const usd = (parseFloat(farm.amount) * parseFloat(rate)).toFixed(2);
     let newFarm;
     if (farm.address) {

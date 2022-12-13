@@ -25,13 +25,19 @@ const ListLiquidityItem = ({
     amount: tokenAmount,
     staked,
   } = farmData;
+
   const { tokensPrices } = useGetTokensPrices({
     tokenAddresses: [tokenAddress],
   });
 
-  const pairRate = checkInvalidValue(
-    `${Object.values(tokensPrices || {})[0]?.rate}`,
-  );
+  const pairRate = () => {
+    const pairPriceRate = checkInvalidValue(
+      `${Object.values(tokensPrices || {})[0]?.rate}`,
+    );
+    if (pairPriceRate !== '0') return pairPriceRate;
+    if (pairPriceRate === '0' && farmData?.rate) return farmData.rate;
+    return pairPriceRate;
+  };
 
   const tokenArray = Array.isArray(tokenName) ? tokenName : [tokenName];
   const isLP = tokenArray[0] ? tokenArray[0].includes('/') : false;
@@ -85,7 +91,7 @@ const ListLiquidityItem = ({
         <Flex direction="column" align="flex-end">
           <Text>{truncateTokenValue(tokenAmount)}</Text>
           <Text fontSize="sm" color="grayDarker">
-            ${truncateTokenValue(tokenAmount * parseFloat(pairRate))}
+            ${truncateTokenValue(tokenAmount * parseFloat(pairRate()))}
           </Text>
         </Flex>
         <NewDropdown
