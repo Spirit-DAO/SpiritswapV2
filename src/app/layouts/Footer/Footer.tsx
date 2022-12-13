@@ -159,7 +159,7 @@ const Footer = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://github.com/Layer3Org/spiritswap-core/"
+            href="https://github.com/Spirit-DAO/"
           >
             <GitHubSvg />
           </a>
