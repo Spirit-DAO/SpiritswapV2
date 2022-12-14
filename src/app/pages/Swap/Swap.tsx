@@ -55,6 +55,8 @@ import useGetGasPrice from 'app/hooks/useGetGasPrice';
 import useWallets from 'app/hooks/useWallets';
 import useSettings from 'app/hooks/useSettings';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
+import TWAPPanel from 'app/components/TWAP/TWAPPanel';
+import TWAPOrders from 'app/components/TWAP/TWAPOrders';
 
 const SwapPage = () => {
   const { t } = useTranslation();
@@ -639,6 +641,12 @@ const SwapPage = () => {
         text: t(`${translationPath}.limitSellExplanation`),
       };
     }
+    if (mode === 3) {
+      return {
+        title: t(`${translationPath}.twap`),
+        text: t(`${translationPath}.twapExplanation`),
+      };
+    }
   };
 
   const helperContent = getHelperContentSwap(modeIndex);
@@ -711,6 +719,10 @@ const SwapPage = () => {
           isWrapped={isWrapped()}
         />
       ),
+    },
+    {
+      key: 3,
+      children: <TWAPPanel panelProps={panelProps} gasPrice={gasPrice} />,
     },
   ];
 
@@ -804,7 +816,7 @@ const SwapPage = () => {
                           setIndex={setModeIndex}
                           styleIndex={[2]}
                           styleVariant="danger"
-                          names={['Swap', 'Limit Buy', 'Limit Sell']}
+                          names={['Swap', 'Limit Buy', 'Limit Sell', 'TWAP']}
                           panels={panels}
                         />
                       </Stack>
@@ -887,7 +899,11 @@ const SwapPage = () => {
           </GridItem>
           <GridItem rowSpan={1} colSpan={1}>
             {showChart && memorizedChart()}
-            {isLimit && <LimitOrders showChart={showChart} />}
+            {isLimit && modeIndex !== 3 ? (
+              <LimitOrders showChart={showChart} />
+            ) : modeIndex === 3 ? (
+              <TWAPOrders />
+            ) : null}
           </GridItem>
         </Grid>
       </Box>
