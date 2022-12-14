@@ -5496,20 +5496,24 @@
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.8.0.tgz#6854c37df205dd2c056bdfa1b853f5d732109109"
   integrity sha512-AGuwhRRL+NaKx73WKRNzeCxOCOCxpaqF+kp8TJ89QzAipSwZy/NoflkWaL9bywXFRhIzXt8j38sfF7KBKCPWLw==
 
-"@orbs-network/twap-ui-spiritswap@../twap-ui/packages/spiritswap":
-  version "0.3.3"
+"@orbs-network/twap-ui-spiritswap@0.4.x":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@orbs-network/twap-ui-spiritswap/-/twap-ui-spiritswap-0.4.0.tgz#509f8bf4419084d4828b3d30e103c55cab658fcb"
+  integrity sha512-2uMhyIKWTXPKvcolTruBnZZBNSrQH2dStH+u4hu7L+N6tTl3DAYJBIowMBHRrWc42uD3NA1HJN4zTcpnfQgb1A==
   dependencies:
     "@defi.org/web3-candies" "4.x"
     "@mui/material" "5.x"
     "@mui/system" "5.x"
     "@orbs-network/twap" "1.8.x"
-    "@orbs-network/twap-ui" "^0.3.3"
+    "@orbs-network/twap-ui" "^0.4.0"
     lodash "4.x"
     react-icons "4.x"
     web3 "1.x"
 
-"@orbs-network/twap-ui@../twap-ui/packages/lib/", "@orbs-network/twap-ui@^0.3.3":
-  version "0.3.3"
+"@orbs-network/twap-ui@0.4.x", "@orbs-network/twap-ui@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@orbs-network/twap-ui/-/twap-ui-0.4.0.tgz#785b34610b012b8f5a73ca6f4fbd58cad9a98c6d"
+  integrity sha512-YkQqiw8uAAxAYIeHOaBLYvke0c2ykn9RjUhRKunnxqeg8M78VCx/qWz8Dwt3ve+fznZmIrH+ug0cfyehpOIgsQ==
   dependencies:
     "@defi.org/web3-candies" "4.x"
     "@emotion/react" "11.x"
@@ -5518,7 +5522,7 @@
     "@mui/system" "5.x"
     "@open-defi-notification-protocol/widget" "0.0.x"
     "@orbs-network/twap" "1.8.x"
-    "@tanstack/react-query" "^4.19.1"
+    "@tanstack/react-query" "4.x"
     "@types/lodash" "4.x"
     bignumber.js "9.x"
     lodash "4.x"
@@ -6813,17 +6817,17 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tanstack/query-core@4.20.2":
-  version "4.20.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.20.2.tgz#147f7dc7eecd0e21fea4926c0dd16163a8170ef9"
-  integrity sha512-50tydwMY+fZuSPHiW+mdMQHSgjR9+3xXDoLBPt1tJWyF0mZDjMetlBxLWNaFb/Aid/ml0ZE5nRUW7CZCtwzpHQ==
+"@tanstack/query-core@4.20.4":
+  version "4.20.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.20.4.tgz#1f7975a2db26a8bc2f382bad8a44cd422c846b17"
+  integrity sha512-lhLtGVNJDsJ/DyZXrLzekDEywQqRVykgBqTmkv0La32a/RleILXy6JMLBb7UmS3QCatg/F/0N9/5b0i5j6IKcA==
 
-"@tanstack/react-query@^4.19.1":
-  version "4.20.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.20.3.tgz#a076481201b78363b544735535a314e913767427"
-  integrity sha512-vx1cDiod0q80fVG+ZVCmZDE8hTiiosuwJPEKA6o8k1zG+siQXnSE0BTsyXasNhvpXnsbCbWzp8XkCszNw2DHNQ==
+"@tanstack/react-query@4.x":
+  version "4.20.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.20.4.tgz#562b34fb919adea884eccaba2b5be50e8ba7fb16"
+  integrity sha512-SJRxx13k/csb9lXAJfycgVA1N/yU/h3bvRNWP0+aHMfMjmbyX82FdoAcckDBbOdEyAupvb0byelNHNeypCFSyA==
   dependencies:
-    "@tanstack/query-core" "4.20.2"
+    "@tanstack/query-core" "4.20.4"
     use-sync-external-store "^1.2.0"
 
 "@testing-library/dom@^8.0.0":
