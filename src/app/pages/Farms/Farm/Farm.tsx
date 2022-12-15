@@ -71,7 +71,7 @@ export const Farm = ({
     gaugeAddress,
   } = farm;
 
-  const { tokensPrices, loadingPrices } = useGetTokensPrices({
+  const { loadingPrices } = useGetTokensPrices({
     tokenAddresses: [lpAddress],
   });
 
@@ -93,9 +93,7 @@ export const Farm = ({
       checkAddress(item.gaugeAddress, gaugeAddress ?? ''),
     );
 
-  const pairRate = checkInvalidValue(
-    `${Object.values(tokensPrices || {})[0]?.rate}`,
-  );
+  const pairRate = (Number(totalLiquidity) / Number(totalSupply)).toString();
 
   const farmUserData = useMemo(() => {
     const lpFarmId = `${lpAddress?.toLowerCase()}`;
