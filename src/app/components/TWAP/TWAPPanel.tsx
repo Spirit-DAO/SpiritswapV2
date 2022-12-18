@@ -8,11 +8,7 @@ import { ConnectWallet } from 'app/components/ConnectWallet';
 import { useParams } from 'react-router-dom';
 import { Token } from 'app/interfaces/General';
 import { SwapProps } from 'app/pages/Swap/Swap.d';
-
-const getTokenImage = (token: any) => {
-  if (token.symbol) return `/images/tokens/${token.symbol.toUpperCase()}.png`;
-  return token?.logoUrl;
-};
+import { getTokenImageUrl } from '../ImageLogo';
 
 interface TWAPPanelProps {
   gasPrice: string;
@@ -34,7 +30,7 @@ function TWAPPanel({ gasPrice, panelProps }: TWAPPanelProps) {
         dappTokens={tokens}
         account={account}
         getProvider={getProvider}
-        getTokenImage={getTokenImage}
+        getTokenImageUrl={getTokenImageUrl}
         onSrcTokenSelected={(token: Token) =>
           handleChangeToken(token, () => {}, 0)
         }

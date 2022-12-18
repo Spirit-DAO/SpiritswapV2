@@ -3,11 +3,7 @@ import useWallets from 'app/hooks/useWallets';
 import { useTokens } from 'app/hooks/useTokens';
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { LimitOrderContainer } from 'app/pages/Swap/components/LimitOrders/styles';
-
-const getTokenImage = (token: any) => {
-  if (token.symbol) return `/images/tokens/${token.symbol.toUpperCase()}.png`;
-  return token?.logoUrl;
-};
+import { getTokenImageUrl } from '../ImageLogo';
 
 function TWAPOrders() {
   const { account } = useWallets();
@@ -19,7 +15,7 @@ function TWAPOrders() {
         dappTokens={tokens || []}
         account={account}
         getProvider={getProvider}
-        getTokenImage={getTokenImage}
+        getTokenImageUrl={getTokenImageUrl}
       />
     </LimitOrderContainer>
   );
