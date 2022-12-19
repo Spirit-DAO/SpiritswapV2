@@ -30,7 +30,7 @@ export default function ImageLogo({
     if (type === 'network') return `/images/networks/${symbol}.png`;
     if (type === 'languages') return `/images/languages/${upperCaseSymbol}.png`;
 
-    return `/images/tokens/${upperCaseSymbol}.png`;
+    return getTokenImageUrl(upperCaseSymbol);
   }, [upperCaseSymbol, symbol, type]);
 
   return (
@@ -53,3 +53,6 @@ export default function ImageLogo({
     </Flex>
   );
 }
+
+export const getTokenImageUrl = (symbol?: string) =>
+  `/images/tokens/${symbol?.toUpperCase()}.png`;
