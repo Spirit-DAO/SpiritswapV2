@@ -7,7 +7,7 @@ import { SiteRouting } from 'app/router';
 import Layers from './assets/background';
 import { Box } from '@chakra-ui/react';
 import { CHAIN_ID, SPIRIT } from 'constants/index';
-import { getTokensDetails } from 'utils/data';
+import { getTokenUsdPrice } from 'utils/data';
 import { useEffect, useState } from 'react';
 
 const GlobalStyleProxy: any = GlobalStyle;
@@ -17,10 +17,10 @@ export function App() {
   const [spiritPrice, setSpiritPrice] = useState(0);
   useEffect(() => {
     const fetchPrice = async () => {
-      const data = await getTokensDetails([SPIRIT.address], CHAIN_ID);
-      setSpiritPrice(prevPrice =>
-        prevPrice === data[0].rate ? prevPrice : data[0].rate,
-      );
+      const data = await getTokenUsdPrice(SPIRIT.address, CHAIN_ID);
+      if (data) {
+        setSpiritPrice(data);
+      }
     };
 
     fetchPrice();
