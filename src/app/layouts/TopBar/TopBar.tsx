@@ -163,22 +163,22 @@ const TopBar: FC<Props> = () => {
   const tokenInfos = () => {
     let info = [
       {
-        name: 'SPIRIT',
+        name: 'MARKET CAP',
         priceCurrency: '$',
-        price: !spiritPrice ? null : spiritPrice,
-        rate: !percentaje24hsFtm ? null : percentaje24hsSpirit,
+        price: !marketCap ? null : marketCap,
       },
+      { name: 'TVL', priceCurrency: '$', price: TVL ?? 0 },
       {
         name: 'FTM',
         priceCurrency: '$',
         price: !ftmPrice ? null : ftmPrice,
         rate: !percentaje24hsFtm ? null : percentaje24hsFtm,
       },
-      { name: 'TVL', priceCurrency: '$', price: TVL ?? 0 },
       {
-        name: 'MARKET CAP',
+        name: 'SPIRIT',
         priceCurrency: '$',
-        price: !marketCap ? null : marketCap,
+        price: !spiritPrice ? null : spiritPrice,
+        rate: !percentaje24hsFtm ? null : percentaje24hsSpirit,
       },
     ];
 
