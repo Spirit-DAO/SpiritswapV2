@@ -211,10 +211,10 @@ Object {
               <div
                 class="css-1wtwqvk"
               >
-                FTM
+                MARKET CAP
               </div>
               <div
-                class="chakra-skeleton css-9zrjag"
+                class="chakra-skeleton css-1y5b7w2"
               />
             </div>
             <div
@@ -235,14 +235,26 @@ Object {
               <div
                 class="css-1wtwqvk"
               >
-                MARKET CAP
+                FTM
               </div>
               <div
-                class="chakra-skeleton css-1y5b7w2"
+                class="chakra-skeleton css-9zrjag"
+              />
+            </div>
+            <div
+              class="c2 css-1y36syk"
+            >
+              <div
+                class="css-1wtwqvk"
+              >
+                SPIRIT
+              </div>
+              <div
+                class="chakra-skeleton css-y2hzd6"
               />
             </div>
             <button
-              class="chakra-button css-1e91mz9"
+              class="chakra-button css-1mx8n5t"
               type="button"
             >
               common.topBar.switchV1
@@ -358,7 +370,7 @@ Object {
                 href="/swap"
               >
                 <button
-                  class="chakra-button css-f2nodp"
+                  class="chakra-button css-aorjnn"
                   type="button"
                 >
                   <img
@@ -423,10 +435,10 @@ Object {
             <div
               class="css-1wtwqvk"
             >
-              FTM
+              MARKET CAP
             </div>
             <div
-              class="chakra-skeleton css-9zrjag"
+              class="chakra-skeleton css-1y5b7w2"
             />
           </div>
           <div
@@ -447,14 +459,26 @@ Object {
             <div
               class="css-1wtwqvk"
             >
-              MARKET CAP
+              FTM
             </div>
             <div
-              class="chakra-skeleton css-1y5b7w2"
+              class="chakra-skeleton css-9zrjag"
+            />
+          </div>
+          <div
+            class="sc-ikJyIC fbtoRr css-1y36syk"
+          >
+            <div
+              class="css-1wtwqvk"
+            >
+              SPIRIT
+            </div>
+            <div
+              class="chakra-skeleton css-y2hzd6"
             />
           </div>
           <button
-            class="chakra-button css-1e91mz9"
+            class="chakra-button css-1mx8n5t"
             type="button"
           >
             common.topBar.switchV1
@@ -570,7 +594,7 @@ Object {
               href="/swap"
             >
               <button
-                class="chakra-button css-f2nodp"
+                class="chakra-button css-aorjnn"
                 type="button"
               >
                 <img
