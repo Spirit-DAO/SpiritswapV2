@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 import { StyledRateProps } from './TokenInfoBar.d';
 
-export const StyledContainer = styled.div<{ isSpirit: boolean }>`
+export const StyledContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 50%;
   }
-  background-color: ${({ theme, isSpirit }) =>
-    isSpirit ? theme.colors.ciTrans15 : theme.colors.bgBox};
+  background-color: ${({ theme }) => theme.colors.bgBox};
   padding: 4px 8px 4px 8px;
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   display: flex;
@@ -15,9 +14,8 @@ export const StyledContainer = styled.div<{ isSpirit: boolean }>`
   justify-content: center;
 `;
 
-export const StyledNameLabel = styled.div<{ isSpirit: boolean }>`
-  color: ${({ theme, isSpirit }) =>
-    isSpirit ? theme.colors.ci : theme.colors.grayDarker};
+export const StyledNameLabel = styled.div`
+  color: ${({ theme }) => theme.colors.grayDarker};
   font-size: 14px;
   margin-right: 8px;
   font-weight: ${({ theme }) => theme.fontWeights.normal};
