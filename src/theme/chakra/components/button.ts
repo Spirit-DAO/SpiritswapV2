@@ -52,7 +52,7 @@ const Button = {
     topBar: {
       h: '26px',
       p: '4px, 8px, 4px, 8px',
-      bg: colors.bgBox,
+      bg: ciDark,
       border: 'none',
       _active: {
         border: 'none',
