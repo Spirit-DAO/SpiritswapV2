@@ -163,16 +163,22 @@ const TopBar: FC<Props> = () => {
   const tokenInfos = () => {
     let info = [
       {
-        name: 'FTM',
-        priceCurrency: '$',
-        price: !ftmPrice ? null : ftmPrice,
-        rate: !percentaje24hsFtm ? null : percentaje24hsSpirit,
-      },
-      { name: 'TVL', priceCurrency: '$', price: TVL ?? 0 },
-      {
         name: 'MARKET CAP',
         priceCurrency: '$',
         price: !marketCap ? null : marketCap,
+      },
+      { name: 'TVL', priceCurrency: '$', price: TVL ?? 0 },
+      {
+        name: 'FTM',
+        priceCurrency: '$',
+        price: !ftmPrice ? null : ftmPrice,
+        rate: !percentaje24hsFtm ? null : percentaje24hsFtm,
+      },
+      {
+        name: 'SPIRIT',
+        priceCurrency: '$',
+        price: !spiritPrice ? null : spiritPrice,
+        rate: !percentaje24hsFtm ? null : percentaje24hsSpirit,
       },
     ];
 
@@ -398,7 +404,7 @@ const TopBar: FC<Props> = () => {
           <HStack spacing="spacing03" justify="end" flex="1" mr="spacing04">
             {!isMobile && (
               <StyledMenuItem to="/swap" $is_active={false}>
-                <Button variant="inverted" fontSize="base" fontWeight="normal">
+                <Button fontSize="base" fontWeight="normal">
                   <SoullyIcon />
                   <Skeleton
                     isLoaded={Boolean(spiritPrice)}

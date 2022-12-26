@@ -32,8 +32,8 @@ const TokenInfoBar = ({
   };
 
   return (
-    <StyledContainer isSpirit={isSpirit} {...props}>
-      <StyledNameLabel isSpirit={isSpirit}>{tokenName}</StyledNameLabel>
+    <StyledContainer {...props}>
+      <StyledNameLabel>{tokenName}</StyledNameLabel>
       {tokenPrice ? (
         <Flex justifyContent="center">
           <StyledPriceLabel>

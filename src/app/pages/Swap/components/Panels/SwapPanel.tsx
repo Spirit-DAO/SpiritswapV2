@@ -252,6 +252,7 @@ export default function SwapPanel({ panelProps, isWrapped }) {
         setErrorMessage={setErrorMessage}
         isLoading={loadAmountInput1 && isLoading}
         handleCheckBalance={handleCheckBalance}
+        tradeUSD={trade?.priceRoute?.srcUSD}
         errorMessage={
           errorMessage.relevantTokens
             ? errorMessage.relevantTokens.includes(
@@ -279,6 +280,7 @@ export default function SwapPanel({ panelProps, isWrapped }) {
         onSelect={(item: Token, onClose) => handleChangeToken(item, onClose, 1)}
         inputValue={secondToken.value || ''}
         context="token"
+        tradeUSD={trade?.priceRoute?.destUSD}
         showInputInUSD={showInputInUSD}
         setShowInputInUSD={setShowInputInUSD}
         token={secondToken?.tokenSelected || mockInputToken}
