@@ -18,6 +18,7 @@ import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
 import { formatVotes } from 'app/pages/Inspirit/components/Voting/utils/format';
 import { getBribeTokenRewardsPer10k } from './inspirit';
+import { getTokenUsdPrice } from './covalent';
 
 /**
  * Returns formatting for amount that has increased or decreased
@@ -435,17 +436,21 @@ export const formatBribes = async (
       let rewardPer10k = '0';
       let rewardFees = '0';
 
+      const tokenPrice = await getTokenUsdPrice(rewardToken);
+
       if (periodFinish.isGreaterThan(lastUpdate)) {
         rewardPer10k = await getBribeTokenRewardsPer10k(
           bribeRewardDur?.response[0],
           totalSupply,
           rewardToken,
+          tokenPrice,
         );
       }
       rewardFees = await getBribeTokenRewardsPer10k(
         bribeEarns?.response[0],
         totalSupply,
         rewardToken,
+        tokenPrice,
         true,
       );
 
