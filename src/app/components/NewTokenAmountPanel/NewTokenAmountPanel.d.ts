@@ -22,6 +22,7 @@ export interface Props extends FlexProps {
   maxValue?: number;
   isLoading?: boolean;
   isOutput?: boolean;
+  tradeUSD?: string;
   priceDiff?: number | null;
   notSearchToken?: boolean;
   handleCheckBalance?: ({

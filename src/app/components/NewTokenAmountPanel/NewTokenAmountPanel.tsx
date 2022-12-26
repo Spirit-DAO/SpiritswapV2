@@ -60,6 +60,7 @@ const NewTokenAmountPanel = ({
   handleCheckBalance,
   errorMessage,
   setErrorMessage,
+  tradeUSD,
   showNumberInputField = true,
   showBalance = true,
   children,
@@ -149,20 +150,27 @@ const NewTokenAmountPanel = ({
   };
 
   const getBalance = () => {
-    if (
-      fetchedTokenWithBalance &&
-      fetchedTokenWithBalance.amount &&
-      (tokenPrice || fetchedTokenWithBalance.rate)
-    ) {
-      const rateUSD = tokenPrice ? tokenPrice : fetchedTokenWithBalance.rate;
-      const { amount } = fetchedTokenWithBalance;
+    if (fetchedTokenWithBalance) {
+      let rate = 0;
+      let userBalance = '0';
+      let usdValue = '0';
+
+      if (tokenPrice) {
+        rate = tokenPrice;
+      }
+
+      if (fetchedTokenWithBalance.amount) {
+        userBalance = fetchedTokenWithBalance.amount;
+      }
+
+      if (tradeUSD) {
+        usdValue = tradeUSD;
+      }
 
       return {
-        balance: amount,
-        usd: inputValue
-          ? (rateUSD * parseFloat(inputValue)).toString()
-          : '0.00',
-        trunBalance: truncateTokenValue(+amount, +rateUSD),
+        balance: userBalance,
+        usd: usdValue,
+        trunBalance: truncateTokenValue(+userBalance, +rate),
       };
     }
     return {
@@ -253,6 +261,8 @@ const NewTokenAmountPanel = ({
     if (usd && +usd > 0 && +usd < 0.01) return '<$0.01';
     return `≈ $${parseFloat(usd).toFixed(2)}`;
   };
+
+  // console.log(getBalanceValue(), 'getBalanceValue');
 
   return (
     <Flex

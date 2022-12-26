@@ -887,10 +887,9 @@ export const getBribeTokenRewardsPer10k = async (
   rewards,
   totalSupply,
   tokenAddress,
+  tokenPrice,
   isFee = false,
 ) => {
-  const tokenPrice = await getTokenUsdPrice(tokenAddress);
-
   const tokenDecimals = tokens.find(token =>
     checkAddress(token.address, tokenAddress),
   )?.decimals;
