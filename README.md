@@ -58,7 +58,6 @@ yarn start
 
 One actions are added by default:
 
-- `node` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
 
 We use a semantic versioning to update the build or changes that we have on the project. They way to handle this is using a command
 
