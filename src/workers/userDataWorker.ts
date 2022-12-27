@@ -96,39 +96,6 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
 
     getStakedBalance(userWalletAddress, covalentRawDataPromise, provider);
 
-    // const sobLiquidityPromise = getSobOrWeightedData(userWalletAddress);
-    // const weightedLiquidityPromise = getSobOrWeightedData(
-    //   userWalletAddress,
-    //   'weighted',
-    // );
-
-    // const portfolio = await reconciliateBalances(
-    //   userWalletAddress,
-    //   covalentRawData,
-    //   trackedTokens,
-    // );
-
-    // Verifies tracked tokens are part of the portfolio data from covalent
-    // Also multicalls blockchain for balances
-
-    // const stableAndWeighted = async () => {
-    //   if (covalentRawData) {
-    //     const [sobLiquidity, weightedLiquidity] = await Promise.all([
-    //       sobLiquidityPromise,
-    //       weightedLiquidityPromise,
-    //     ]);
-
-    //     self.postMessage({
-    //       type: 'setCovalentData',
-    //       payload: {
-    //         sobLiquidity,
-    //         weightedLiquidity,
-    //       },
-    //       userWalletAddress,
-    //     });
-    //   }
-    // };
-
     const gaugesPromise = getGaugeBasicInfo(provider);
     const stakesAndLiquidity = async () => {
       const covalentData = await covalentRawDataPromise;

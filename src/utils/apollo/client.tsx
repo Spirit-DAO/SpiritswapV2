@@ -5,6 +5,6 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 export const clientV2 = new ApolloClient({
-  uri: 'https://api.thegraph.com/subgraphs/name/layer3org/spiritswap-v2',
+  uri: 'https://api.thegraph.com/subgraphs/name/spirit-dao/spiritswapv2-analytics',
   cache: new InMemoryCache(),
 });

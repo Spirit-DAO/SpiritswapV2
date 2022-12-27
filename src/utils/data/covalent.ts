@@ -1,4 +1,11 @@
-import { CHAIN_ID, COVALENT_API_KEY } from 'constants/index';
+import {
+  CHAIN_ID,
+  COVALENT_API_KEY,
+  SPIRIT,
+  SPIRIT_TOKEN_ADDRESS,
+  USDC,
+  WFTM,
+} from 'constants/index';
 import { Address, QuoteToken } from 'constants/types';
 import { tokenData } from './types';
 import { EcosystemFarmType } from 'app/interfaces/Farm';
@@ -6,6 +13,11 @@ import { getApiUrl } from 'app/utils/urlBuilder';
 import { LpRewardData, Token } from 'app/interfaces/General';
 import { CHART_LABELS_POINTS, formatAmount, isVerifiedToken } from 'app/utils';
 import moment from 'moment';
+import {
+  getFtmPriceByPool,
+  getLpFromApollo,
+  getPricesByPools,
+} from 'utils/apollo/queries';
 
 export const request = async (_url: string, _shouldCache: boolean = true) => {
   try {
@@ -207,32 +219,39 @@ export const getTokensDetails = async (
   });
 
   const { data } = await request(source);
+  const walletItems: tokenData[] = [];
 
   if (data && data.length > 0) {
-    const walletItems: tokenData[] = data.map(tokenData => ({
-      address: tokenData.contract_address,
-      amount: '0',
-      full_name: tokenData.contract_name,
-      liquidity: false,
-      name: tokenData.contract_ticker_symbol,
-      rate: tokenData.items[0]?.price,
-      rate_24: tokenData.items[1]?.price,
-      staked: false,
-      symbol: tokenData.contract_ticker_symbol,
-      title: tokenData.contract_name,
-      tokens: [tokenData.contract_name],
-      usd: '0',
-      usd_24: '0',
-      percentaje_change_24:
-        ((tokenData.items[0]?.price - tokenData.items[1]?.price) /
-          tokenData.items[1]?.price) *
-        100,
-    }));
+    for (const tokenData of data) {
+      let rate = tokenData.items[0]?.price;
 
-    return walletItems;
+      if (!rate) {
+        rate = await getPricesByPools(tokenData.contract_address.toLowerCase());
+      }
+
+      walletItems.push({
+        address: tokenData.contract_address,
+        amount: '0',
+        full_name: tokenData.contract_name,
+        liquidity: false,
+        name: tokenData.contract_ticker_symbol,
+        rate,
+        rate_24: tokenData.items[1]?.price,
+        staked: false,
+        symbol: tokenData.contract_ticker_symbol,
+        title: tokenData.contract_name,
+        tokens: [tokenData.contract_name],
+        usd: 0,
+        usd_24: 0,
+        percentaje_change_24:
+          ((tokenData.items[0]?.price - tokenData.items[1]?.price) /
+            tokenData.items[1]?.price) *
+          100,
+      });
+    }
   }
 
-  return [];
+  return walletItems;
 };
 
 export const getTokenPoolInfo = async (

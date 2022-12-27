@@ -262,8 +262,6 @@ const NewTokenAmountPanel = ({
     return `≈ $${parseFloat(usd).toFixed(2)}`;
   };
 
-  // console.log(getBalanceValue(), 'getBalanceValue');
-
   return (
     <Flex
       bg="bgBoxLighter"
