@@ -1,11 +1,4 @@
-import {
-  CHAIN_ID,
-  COVALENT_API_KEY,
-  SPIRIT,
-  SPIRIT_TOKEN_ADDRESS,
-  USDC,
-  WFTM,
-} from 'constants/index';
+import { CHAIN_ID, COVALENT_API_KEY } from 'constants/index';
 import { Address, QuoteToken } from 'constants/types';
 import { tokenData } from './types';
 import { EcosystemFarmType } from 'app/interfaces/Farm';
@@ -13,11 +6,7 @@ import { getApiUrl } from 'app/utils/urlBuilder';
 import { LpRewardData, Token } from 'app/interfaces/General';
 import { CHART_LABELS_POINTS, formatAmount, isVerifiedToken } from 'app/utils';
 import moment from 'moment';
-import {
-  getFtmPriceByPool,
-  getLpFromApollo,
-  getPricesByPools,
-} from 'utils/apollo/queries';
+import { getPricesByPools } from 'utils/apollo/queries';
 
 export const request = async (_url: string, _shouldCache: boolean = true) => {
   try {
@@ -293,8 +282,12 @@ export const getTokenUsdPrice = async (
 
   if (data && data[0].prices[0]) {
     const response = data[0].prices[0].price;
-    if (response === null) return 0;
-    return response;
+    let price = response;
+    if (!price) {
+      price = await getPricesByPools(tokenAddress);
+    }
+    if (!price) return 0;
+    return price;
   }
 
   return null;
@@ -312,7 +305,7 @@ export const getHistoricalPortfolioValue = async (
     innerParams: { chainId, _addresses },
     queryParams: {
       'quote-currency': 'USD',
-      // '&days': '365',
+
       format: 'JSON',
       key: COVALENT_API_KEY,
     },

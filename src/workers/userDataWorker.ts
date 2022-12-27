@@ -1,6 +1,7 @@
 import { CHAIN_ID, FTM } from 'constants/index';
 import addresses from 'constants/contracts';
 import {
+  CovalentBalanceItem,
   getBoostedFarmVotes,
   getFarmStakes,
   getGaugeBasicInfo,
@@ -15,12 +16,14 @@ import {
   saturateGauges,
 } from 'utils/data';
 import { getLimitOrders } from 'utils/swap/gelato';
-import { checkSpiritAllowance } from 'utils/web3';
+import { checkSpiritAllowance, formatFrom } from 'utils/web3';
 import { UNIDEX_ETH_ADDRESS } from 'utils/swap';
 import { formatUnits } from 'ethers/lib/utils';
 import { getRoundedSFs } from 'app/utils';
 import { LendAndBorrowItem } from 'app/pages/Portfolio/components/LendAndBorrowPanel/LendAndBorrowPanel.d';
 import { getOlaFinanceData } from 'utils/web3/actions/lendandborrow';
+import { getPricesByPools } from 'utils/apollo/queries';
+import { useSelector } from 'react-redux';
 
 onmessage = ({ data: { type, provider, userAddress, signer, params } }) => {
   const loadedProvider = JSON.parse(provider);
@@ -102,7 +105,30 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
 
       if (!covalentData) return;
 
-      const tokens = getTokenGroupStatistics(covalentData.items, 'tokenList');
+      const items = await Promise.all(
+        covalentData.items.map(async item => {
+          let rate = item.quote_rate;
+          let quote = item.quote;
+
+          if (!rate || !quote) {
+            rate = await getPricesByPools(item.contract_address);
+
+            quote =
+              rate *
+              parseFloat(
+                formatFrom(item?.balance || 0, item?.contract_decimals),
+              );
+          }
+
+          return {
+            ...item,
+            quote_rate: rate,
+            quote,
+          };
+        }),
+      );
+
+      const tokens = getTokenGroupStatistics(items, 'tokenList');
 
       self.postMessage({
         type: 'setTokens',

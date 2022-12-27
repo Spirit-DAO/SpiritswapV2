@@ -62,11 +62,11 @@ export const getInspiritStatistics = async (
 
   const spiritInfo = {
     price: spirit ? (spirit.rate ? spirit.rate : 0) : 0,
-    percentajeChange24: spirit.percentaje_change_24 || 0,
+    percentajeChange24: spirit?.percentaje_change_24 || 0,
   };
   const ftmInfo = {
     price: ftm ? (ftm.rate ? ftm.rate : 0) : 0,
-    percentajeChange24: ftm.percentaje_change_24 || 0,
+    percentajeChange24: ftm?.percentaje_change_24 || 0,
   };
 
   const balanceParams: Array<Call> = [
