@@ -13,7 +13,6 @@ import {
   CHAIN_ID,
   BASE_TOKEN_ADDRESS,
   ONE_HOUR,
-  SPIRIT,
 } from 'constants/index';
 import {
   getGaugeBasicInfo,
@@ -23,7 +22,6 @@ import {
   getMappedTokens,
   getMarketCap,
   getMasterChefPoolInfoWithMultiCall,
-  getTokenPoolInfo,
   getTokenUsdPrice,
   getTVL,
   loadFarmsList,
@@ -110,6 +108,7 @@ async function getFarms(provider, gaugesPromise) {
     );
 
     const spiritPricePromise = getTokenUsdPrice(SPIRIT_TOKEN_ADDRESS);
+
     const fullGaugePromise = getGaugesPoolInfoWithMulticall(
       gaugesPromise,
       provider,

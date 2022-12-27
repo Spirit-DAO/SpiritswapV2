@@ -66,7 +66,6 @@ import {
   SwapAnimation,
   BridgeAnimation,
   InspiritAnimation,
-  ApeAnimation,
   LandingAnimation,
   LendingAnimation,
   FarmAnimation,
@@ -208,14 +207,6 @@ const Home = () => {
       image: Inspirit,
       animation: InspiritAnimation,
     },
-    // {
-    //   id: 'leverage',
-    //   titleIcon: <ApeIcon />,
-    //   translationPath: 'home.about.leverage',
-    //   buttonNavPath: { path: '/apemode' },
-    //   image: Ape,
-    //   animation: ApeAnimation,
-    // },
     {
       id: 'lend',
       titleIcon: <LendAndBorrowIcon />,

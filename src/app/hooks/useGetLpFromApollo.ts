@@ -1,7 +1,7 @@
 import { WFTM } from 'constants/tokens';
 import { BASE_TOKEN_ADDRESS } from 'constants/index';
 import { useEffect, useState } from 'react';
-import { getLpFromApollo } from 'utils/apollo/calls';
+import { getLpFromApollo } from 'utils/apollo/queries';
 
 const useGetLpFromApollo = (
   inAddress: string,

@@ -9,7 +9,7 @@ import { ReactComponent as SparklesIcon } from 'app/assets/images/sparkles.svg';
 import { BoostFactor } from '../components/BoostFactor';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { transactionResponse } from 'utils/web3/actions/utils';
-import { checkAddress, checkInvalidValue, getRoundedSFs } from 'app/utils';
+import { checkAddress, getRoundedSFs } from 'app/utils';
 import { SuggestionsTypes } from 'app/hooks/Suggestions/Suggestion';
 import { useNavigate } from 'react-router-dom';
 import {
