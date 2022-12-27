@@ -58,7 +58,6 @@ const Portfolio = ({
 }: PortfolioProps) => {
   const { t } = useTranslation();
   const isMobile = useMobile();
-  const lpPrices = useSelector(selectLpPrices);
 
   const chartDataObject = useAppSelector(selectHistoricalPortfolioValue);
   const chartData = JSON.parse(

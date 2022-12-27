@@ -1,7 +1,6 @@
 import { CHAIN_ID, FTM } from 'constants/index';
 import addresses from 'constants/contracts';
 import {
-  CovalentBalanceItem,
   getBoostedFarmVotes,
   getFarmStakes,
   getGaugeBasicInfo,
@@ -23,7 +22,6 @@ import { getRoundedSFs } from 'app/utils';
 import { LendAndBorrowItem } from 'app/pages/Portfolio/components/LendAndBorrowPanel/LendAndBorrowPanel.d';
 import { getOlaFinanceData } from 'utils/web3/actions/lendandborrow';
 import { getPricesByPools } from 'utils/apollo/queries';
-import { useSelector } from 'react-redux';
 
 onmessage = ({ data: { type, provider, userAddress, signer, params } }) => {
   const loadedProvider = JSON.parse(provider);
@@ -60,6 +58,7 @@ const getStakedBalance = async (
       covalentRawDataPromise,
       provider,
     );
+
     self.postMessage({
       type: 'setLiquidityWallet',
       payload: walletLiquidityArray,
