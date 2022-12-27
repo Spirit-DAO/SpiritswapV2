@@ -8,6 +8,7 @@ import { useAppSelector } from 'store/hooks';
 import {
   selectedWeightedLiquidityWallet,
   selectFarmsStaked,
+  selectLiquidity,
   selectSobLiquidityWallet,
 } from 'store/user/selectors';
 import useGetTokensPrices from './useGetTokensPrices';
@@ -60,15 +61,6 @@ export const useTokenBalance = (
         : new Promise(() => {});
 
       switch (context) {
-        // case 'liquidity':
-        //   const balanceInfoLiq = liquidity.find(token =>
-        //     checkAddress(token.address, tokenAddress),
-        //   );
-        //   response = {
-        //     ...balanceInfoLiq,
-        //     rate: lpTokenPrices[tokenAddress.toLowerCase()] ?? '0',
-        //   };
-        //   break;
         case 'farm':
           const balanceInfoFarm = farmsStaked[tokenAddress];
           response = {

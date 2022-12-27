@@ -15,12 +15,13 @@ import {
   saturateGauges,
 } from 'utils/data';
 import { getLimitOrders } from 'utils/swap/gelato';
-import { checkSpiritAllowance } from 'utils/web3';
+import { checkSpiritAllowance, formatFrom } from 'utils/web3';
 import { UNIDEX_ETH_ADDRESS } from 'utils/swap';
 import { formatUnits } from 'ethers/lib/utils';
 import { getRoundedSFs } from 'app/utils';
 import { LendAndBorrowItem } from 'app/pages/Portfolio/components/LendAndBorrowPanel/LendAndBorrowPanel.d';
 import { getOlaFinanceData } from 'utils/web3/actions/lendandborrow';
+import { getPricesByPools } from 'utils/apollo/queries';
 
 onmessage = ({ data: { type, provider, userAddress, signer, params } }) => {
   const loadedProvider = JSON.parse(provider);
@@ -57,6 +58,7 @@ const getStakedBalance = async (
       covalentRawDataPromise,
       provider,
     );
+
     self.postMessage({
       type: 'setLiquidityWallet',
       payload: walletLiquidityArray,
@@ -96,46 +98,36 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
 
     getStakedBalance(userWalletAddress, covalentRawDataPromise, provider);
 
-    // const sobLiquidityPromise = getSobOrWeightedData(userWalletAddress);
-    // const weightedLiquidityPromise = getSobOrWeightedData(
-    //   userWalletAddress,
-    //   'weighted',
-    // );
-
-    // const portfolio = await reconciliateBalances(
-    //   userWalletAddress,
-    //   covalentRawData,
-    //   trackedTokens,
-    // );
-
-    // Verifies tracked tokens are part of the portfolio data from covalent
-    // Also multicalls blockchain for balances
-
-    // const stableAndWeighted = async () => {
-    //   if (covalentRawData) {
-    //     const [sobLiquidity, weightedLiquidity] = await Promise.all([
-    //       sobLiquidityPromise,
-    //       weightedLiquidityPromise,
-    //     ]);
-
-    //     self.postMessage({
-    //       type: 'setCovalentData',
-    //       payload: {
-    //         sobLiquidity,
-    //         weightedLiquidity,
-    //       },
-    //       userWalletAddress,
-    //     });
-    //   }
-    // };
-
     const gaugesPromise = getGaugeBasicInfo(provider);
     const stakesAndLiquidity = async () => {
       const covalentData = await covalentRawDataPromise;
 
       if (!covalentData) return;
 
-      const tokens = getTokenGroupStatistics(covalentData.items, 'tokenList');
+      const items = await Promise.all(
+        covalentData.items.map(async item => {
+          let rate = item.quote_rate;
+          let quote = item.quote;
+
+          if (!rate || !quote) {
+            rate = await getPricesByPools(item.contract_address);
+
+            quote =
+              rate *
+              parseFloat(
+                formatFrom(item?.balance || 0, item?.contract_decimals),
+              );
+          }
+
+          return {
+            ...item,
+            quote_rate: rate,
+            quote,
+          };
+        }),
+      );
+
+      const tokens = getTokenGroupStatistics(items, 'tokenList');
 
       self.postMessage({
         type: 'setTokens',

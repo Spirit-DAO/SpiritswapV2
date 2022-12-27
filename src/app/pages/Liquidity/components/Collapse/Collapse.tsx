@@ -27,6 +27,8 @@ import { CHAIN_ID } from 'constants/index';
 import { useEffect, useState } from 'react';
 import { getPooledData } from 'utils/web3/actions/liquidity';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
+import { useSelector } from 'react-redux';
+import { selectLpPrices } from 'store/general/selectors';
 
 const CollapseItem = ({
   pair,
@@ -42,6 +44,9 @@ const CollapseItem = ({
   const { tokensPrices } = useGetTokensPrices({
     tokenAddresses: [pair.address],
   });
+
+  const lpPrices = useSelector(selectLpPrices);
+
   const { token: tokenWithBalance } = useTokenBalance(
     CHAIN_ID,
     pair.address,
@@ -52,6 +57,15 @@ const CollapseItem = ({
       decimals: 18,
     },
   );
+
+  let rate = Object.values(tokensPrices || {})[0]?.rate;
+
+  if (!rate) {
+    rate = lpPrices[pair.address];
+  }
+
+  const amount = +tokenWithBalance?.amount ?? pair?.amount;
+  const usd = rate * amount || 0;
 
   useEffect(() => {
     const getPoolData = async () => {
@@ -103,12 +117,6 @@ const CollapseItem = ({
   const removeLiquidityText = isMobile
     ? t(`${translationPath}.removeLiquidityMobile`)
     : t(`${translationPath}.removeLiquidity`);
-
-  const amount = +tokenWithBalance?.amount ?? pair?.amount;
-
-  const pairRate = Object.values(tokensPrices || {})[0]?.rate;
-
-  const usd = pairRate * amount || 0;
 
   if (amount === 0) {
     return null;

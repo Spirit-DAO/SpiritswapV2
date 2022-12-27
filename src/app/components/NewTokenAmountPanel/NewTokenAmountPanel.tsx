@@ -163,6 +163,12 @@ const NewTokenAmountPanel = ({
         userBalance = fetchedTokenWithBalance.amount;
       }
 
+      if (!tradeUSD && fetchedTokenWithBalance.rate) {
+        usdValue = `${
+          parseFloat(inputValue || '0') * fetchedTokenWithBalance.rate
+        }`;
+      }
+
       if (tradeUSD) {
         usdValue = tradeUSD;
       }
@@ -170,7 +176,10 @@ const NewTokenAmountPanel = ({
       return {
         balance: userBalance,
         usd: usdValue,
-        trunBalance: truncateTokenValue(+userBalance, +rate),
+        trunBalance:
+          parseFloat(userBalance) < 0.001 && context === 'liquidity'
+            ? '<0.000001'
+            : truncateTokenValue(+userBalance, +rate),
       };
     }
     return {
@@ -261,8 +270,6 @@ const NewTokenAmountPanel = ({
     if (usd && +usd > 0 && +usd < 0.01) return '<$0.01';
     return `≈ $${parseFloat(usd).toFixed(2)}`;
   };
-
-  // console.log(getBalanceValue(), 'getBalanceValue');
 
   return (
     <Flex

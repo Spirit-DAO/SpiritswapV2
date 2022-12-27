@@ -345,7 +345,6 @@ export const getStakedBalances = async (
     );
 
   const lpBalances = await getUserStakedBalance(_address, V2Pools, provider);
-
   const liquidity = getTokenGroupStatistics(lpBalances, 'stakeList');
 
   const walletLiquidityArray = liquidity.stakeList;

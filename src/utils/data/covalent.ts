@@ -6,6 +6,7 @@ import { getApiUrl } from 'app/utils/urlBuilder';
 import { LpRewardData, Token } from 'app/interfaces/General';
 import { CHART_LABELS_POINTS, formatAmount, isVerifiedToken } from 'app/utils';
 import moment from 'moment';
+import { getPricesByPools } from 'utils/apollo/queries';
 
 export const request = async (_url: string, _shouldCache: boolean = true) => {
   try {
@@ -207,32 +208,39 @@ export const getTokensDetails = async (
   });
 
   const { data } = await request(source);
+  const walletItems: tokenData[] = [];
 
   if (data && data.length > 0) {
-    const walletItems: tokenData[] = data.map(tokenData => ({
-      address: tokenData.contract_address,
-      amount: '0',
-      full_name: tokenData.contract_name,
-      liquidity: false,
-      name: tokenData.contract_ticker_symbol,
-      rate: tokenData.items[0]?.price,
-      rate_24: tokenData.items[1]?.price,
-      staked: false,
-      symbol: tokenData.contract_ticker_symbol,
-      title: tokenData.contract_name,
-      tokens: [tokenData.contract_name],
-      usd: '0',
-      usd_24: '0',
-      percentaje_change_24:
-        ((tokenData.items[0]?.price - tokenData.items[1]?.price) /
-          tokenData.items[1]?.price) *
-        100,
-    }));
+    for (const tokenData of data) {
+      let rate = tokenData.items[0]?.price;
 
-    return walletItems;
+      if (!rate) {
+        rate = await getPricesByPools(tokenData.contract_address.toLowerCase());
+      }
+
+      walletItems.push({
+        address: tokenData.contract_address,
+        amount: '0',
+        full_name: tokenData.contract_name,
+        liquidity: false,
+        name: tokenData.contract_ticker_symbol,
+        rate,
+        rate_24: tokenData.items[1]?.price,
+        staked: false,
+        symbol: tokenData.contract_ticker_symbol,
+        title: tokenData.contract_name,
+        tokens: [tokenData.contract_name],
+        usd: 0,
+        usd_24: 0,
+        percentaje_change_24:
+          ((tokenData.items[0]?.price - tokenData.items[1]?.price) /
+            tokenData.items[1]?.price) *
+          100,
+      });
+    }
   }
 
-  return [];
+  return walletItems;
 };
 
 export const getTokenPoolInfo = async (
@@ -274,8 +282,12 @@ export const getTokenUsdPrice = async (
 
   if (data && data[0].prices[0]) {
     const response = data[0].prices[0].price;
-    if (response === null) return 0;
-    return response;
+    let price = response;
+    if (!price) {
+      price = await getPricesByPools(tokenAddress);
+    }
+    if (!price) return 0;
+    return price;
   }
 
   return null;
@@ -293,7 +305,7 @@ export const getHistoricalPortfolioValue = async (
     innerParams: { chainId, _addresses },
     queryParams: {
       'quote-currency': 'USD',
-      // '&days': '365',
+
       format: 'JSON',
       key: COVALENT_API_KEY,
     },

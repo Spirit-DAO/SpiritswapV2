@@ -12,10 +12,7 @@ import {
 } from 'store/general/selectors';
 import { useAppSelector } from 'store/hooks';
 import { client, clientV2 } from 'utils/apollo/client';
-import {
-  GET_TOTAL_VOLUME,
-  GET_TOTAL_VOLUMEV2,
-} from 'utils/apollo/queries/getTotalVolume';
+import { GET_TOTAL_VOLUME, GET_TOTAL_VOLUMEV2 } from 'utils/apollo/queries';
 import useMobile from 'utils/isMobile';
 import { Wrapper, StyledBottom, StyledInfoTab } from './style';
 

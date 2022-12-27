@@ -10,10 +10,7 @@ import {
 } from 'constants/index';
 import { formatEther } from 'ethers/lib/utils';
 import { client, clientV2 } from 'utils/apollo/client';
-import {
-  GET_TOTAL_VALUE,
-  GET_TOTAL_VALUEV2,
-} from 'utils/apollo/queries/getTotalValue';
+import { GET_TOTAL_VALUE, GET_TOTAL_VALUEV2 } from 'utils/apollo/queries';
 import { Call, Contract, Multicall } from 'utils/web3';
 
 export const getMarketCap = async (

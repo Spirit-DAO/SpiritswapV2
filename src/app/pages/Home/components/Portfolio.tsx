@@ -33,6 +33,8 @@ import { useAppSelector } from 'store/hooks';
 import { selectHistoricalPortfolioValue } from 'store/user/selectors';
 import { FadeInAnimationBox } from 'app/components/FadeInAnimationBox';
 import LimitOrdersPanelV2 from 'app/pages/Portfolio/components/LimitOrderPanelV2/LimitOrdersPanelV2';
+import { useSelector } from 'react-redux';
+import { selectLpPrices } from 'store/general/selectors';
 
 interface PortfolioProps {
   translationPath: string;
