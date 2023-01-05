@@ -206,6 +206,7 @@ async function extractSpiritWarsData({ holders: tokens }, stats) {
       } = token.holder;
 
       const inSpiritHoldings = format(token.balance);
+
       const projectName = addressToToken[tokenAddress] || 'Millennium Club';
 
       tokenDistribution.push({

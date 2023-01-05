@@ -15,11 +15,11 @@ const SpiritWars = () => {
     <Wrapper>
       <SpiritWarsList
         tokens={spiritWarsData}
-        isLoadingData={spiritWarsData.length === 0}
+        isLoadingData={!spiritWarsData.length}
       />
       <Statistics
         {...spiritWarsStatistics}
-        isLoadingData={Object.keys(spiritWarsStatistics).length === 0}
+        isLoadingData={!Object.keys(spiritWarsStatistics).length}
       />
     </Wrapper>
   );
