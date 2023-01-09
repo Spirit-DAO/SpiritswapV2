@@ -587,10 +587,12 @@ export const formatUSDAmount = (value: number, symbol: string = ''): string => {
 
 export const getUserFarms = (farms: BoostedFarm[], userFarms) => {
   if (!userFarms || !farms) return [];
+  const userArray = Object.entries(userFarms);
+
   const userFarmsOnly = farms.filter(e => {
     const address = e.fulldata.farmAddress;
-    let findInd = userFarms.findIndex(a => {
-      return checkAddress(a.address, address);
+    let findInd = userArray.findIndex(a => {
+      return checkAddress(a[0], address);
     });
     return findInd !== -1;
   });
