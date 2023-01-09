@@ -68,6 +68,8 @@ export const Farms = () => {
   const rewards = useAppSelector(selectFarmRewards);
   const farmsStaked = useAppSelector(selectFarmsStaked);
 
+  console.log('farmsStaked ', farmsStaked);
+
   const { price: spiritPrice } = spiritPriceInfo;
 
   const farmCreate = useDisclosure();

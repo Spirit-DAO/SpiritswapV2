@@ -13,6 +13,7 @@ import { getUserFarms } from 'app/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from 'store/hooks';
 import {
+  selectFarmsStaked,
   selectLiquidityWallet,
   selectLockedInSpiritAmount,
 } from 'store/user/selectors';
@@ -45,7 +46,8 @@ const TokenTableV3 = ({
   const { account, isLoggedIn } = useWallets();
   const isMobile = useMobile();
   const translationPath = 'inSpirit.voting';
-  const stakedFarms = useAppSelector(selectLiquidityWallet);
+
+  const stakedFarms = useAppSelector(selectFarmsStaked);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
   const [searchValues, setSearchValues] = useState('');
   const [showMobileTableFilters, setShowMobileTableFilters] =
