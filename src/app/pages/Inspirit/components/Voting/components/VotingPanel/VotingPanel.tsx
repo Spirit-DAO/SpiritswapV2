@@ -111,20 +111,18 @@ const VotingPanel = ({
 
   return (
     <>
-      {userOnly ? null : (
-        <Flex justifyContent="center">
-          <Skeleton
-            startColor="grayBorderBox"
-            endColor="bgBoxLighter"
-            h="240px"
-            w="240px"
-            borderRadius="50%"
-            isLoaded={!!selectedFarms.length}
-          >
-            <PieChart data={pieChartData} options={pieChartOptions} />
-          </Skeleton>
-        </Flex>
-      )}
+      <Flex justifyContent="center">
+        <Skeleton
+          startColor="grayBorderBox"
+          endColor="bgBoxLighter"
+          h="240px"
+          w="240px"
+          borderRadius="50%"
+          isLoaded={!!selectedFarms.length}
+        >
+          <PieChart data={pieChartData} options={pieChartOptions} />
+        </Skeleton>
+      </Flex>
 
       <TokenTableV3
         errorMessage={errorMessage}
