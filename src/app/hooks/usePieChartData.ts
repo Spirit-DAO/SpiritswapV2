@@ -65,7 +65,6 @@ const usePieChartData = ({ farmsList }: { farmsList: BoostedFarm[] }) => {
   const pieChartData = useMemo(() => {
     const data: number[] = [];
     const labels: string[] = [];
-    const backgroundColor: string[] = [];
     const othersVotes = {
       name: t(`${translationPath}.others`),
       value: 0,
@@ -75,18 +74,9 @@ const usePieChartData = ({ farmsList }: { farmsList: BoostedFarm[] }) => {
       const { name, userVotes } = farmsList[i];
       const value = +`${userVotes}`.replace('%', '');
       const lpSymbol = `${name.replace(' ', '-')} LP`;
-      // const [symbolA, symbolB] = name.split(' ');
       if (value > 1) {
         data.push(value);
         labels.push(lpSymbol);
-        // backgroundColor.push(
-        //   colorMixer(
-        //     TOKENS_COLORS[symbolA],
-        //     TOKENS_COLORS[symbolB],
-        //     0.1,
-        //     symbolB,
-        //   ),
-        // );
       } else {
         othersVotes.value = othersVotes.value + value;
       }
