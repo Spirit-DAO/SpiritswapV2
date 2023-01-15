@@ -1,7 +1,8 @@
 import { Box, Button } from '@chakra-ui/react';
 
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
+import { SWAP } from 'app/router/routes';
 
 const LimitFooter = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const LimitFooter = () => {
       <Button
         variant="secondary"
         onClick={() =>
-          navigate('/swap/FTM/SPIRIT', {
+          navigate(`${SWAP.path}/FTM/SPIRIT`, {
             state: { limitOrderPanel: true } as {
               limitOrderPanel: boolean;
             },

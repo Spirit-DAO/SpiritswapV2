@@ -11,7 +11,7 @@ import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { transactionResponse } from 'utils/web3/actions/utils';
 import { checkAddress, getRoundedSFs } from 'app/utils';
 import { SuggestionsTypes } from 'app/hooks/Suggestions/Suggestion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import {
   Button,
   SimpleGrid,
@@ -39,6 +39,7 @@ import BigNumber from 'bignumber.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { Props } from './Farm.d';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
+import { LIQUIDITY, resolveRoutePath } from 'app/router/routes';
 
 export const Farm = ({
   farm,
@@ -278,7 +279,7 @@ export const Farm = ({
   const getUrl = () => {
     const token0 = tokens[0] === 'WFTM' ? 'FTM' : tokens[0];
     const token1 = tokens[1] === 'WFTM' ? 'FTM' : tokens[1];
-    return `/liquidity/${token0}/${token1}/${type}`;
+    return `${LIQUIDITY.path}/${token0}/${token1}/${type}`;
   };
 
   const staked = Number(farmUserData.lpTokens) > 0;

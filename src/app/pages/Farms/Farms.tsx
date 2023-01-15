@@ -10,7 +10,8 @@ import { GetWalletBalance } from 'app/utils';
 import debounce from 'lodash/debounce';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { resetEcosystemValues, setEcosystemFarmAddress } from 'store/farms';
 import {
   selectEcosystemValues,
@@ -38,6 +39,7 @@ import { FarmCreateModal } from './components/FarmCreateModal';
 import { ethers } from 'ethers';
 import useWallets from 'app/hooks/useWallets';
 import useLogin from 'app/connectors/EthersConnector/login';
+import { FARMS as FARMS_ROUTE } from 'app/router/routes';
 
 const translationPath = 'farms.common';
 
@@ -226,7 +228,7 @@ export const Farms = () => {
   ]);
 
   const handleBackToFarms = () => {
-    navigate('/farms');
+    navigate(FARMS_ROUTE.path);
     setFarmData(farmMasterData);
     setIsLoading(false);
   };

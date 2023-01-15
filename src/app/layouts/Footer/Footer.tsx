@@ -47,6 +47,7 @@ import {
   NFTS,
   SWAP,
   SPIRITWARS,
+  resolveRoutePath,
 } from 'app/router/routes';
 import { useAppDispatch } from 'store/hooks';
 import { setUnexpectedError } from 'store/errors';
@@ -78,7 +79,7 @@ const NavMenuItem = ({ menu, is_active }: NavMenuProps) => {
 
   return (
     <StyledMenuItem
-      to={menu.path}
+      to={resolveRoutePath(menu.path)}
       $is_active={is_active}
       onClick={handleResetError}
     >
@@ -95,11 +96,11 @@ const Footer = () => {
   const translatedNavMenus = navMenus.map(menu => ({
     title: t(`${menuTranslationPath}.${menu.key}`),
     image: menu.image,
-    path: menu.path,
+    path: resolveRoutePath(menu.path),
   }));
   const translatedDropdownMenus = navDropdownMenus.map((menu: any) => ({
     title: t(`${menuTranslationPath}.${menu.key}`),
-    path: menu.path,
+    path: resolveRoutePath(menu.path),
     url: menu.url,
   }));
 
@@ -120,7 +121,7 @@ const Footer = () => {
   useEffect(() => {
     setMenuIndex(
       [...translatedNavMenus, ...translatedDropdownMenus].findIndex(
-        menu => location.pathname === menu.path,
+        menu => location.pathname === resolveRoutePath(menu.path),
       ),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

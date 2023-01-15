@@ -23,6 +23,7 @@ import { CommonTokens } from '../CommonTokens';
 import { useTokenBalances } from 'app/hooks/useTokenBalances';
 import { List } from 'react-virtualized';
 import useWallets from 'app/hooks/useWallets';
+import { resolveRoutePath } from 'app/router/routes';
 
 const ModalToken = ({
   tokens,
@@ -66,7 +67,7 @@ const ModalToken = ({
           if (findToken) {
             const path =
               findToken.chainId === 250
-                ? `/images/tokens/${findToken.symbol}.png`
+                ? resolveRoutePath(`images/tokens/${findToken.symbol}.png`)
                 : findToken.logoURI;
 
             return {
@@ -110,7 +111,7 @@ const ModalToken = ({
           ) {
             const path =
               liFinanceToken.chainId === 250
-                ? `/images/tokens/${liFinanceToken.symbol}.png`
+                ? resolveRoutePath(`images/tokens/${liFinanceToken.symbol}.png`)
                 : liFinanceToken.logoURI;
 
             return {

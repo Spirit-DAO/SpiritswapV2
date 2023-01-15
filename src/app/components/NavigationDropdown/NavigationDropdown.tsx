@@ -26,6 +26,7 @@ import {
   MoneyHandIcon,
 } from 'app/assets/icons';
 import { openInNewTab } from 'app/utils/redirectTab';
+import { resolveRoutePath } from 'app/router/routes';
 
 const NavigationDropdown: FC<Props> = ({
   items,
@@ -78,7 +79,7 @@ const NavigationDropdown: FC<Props> = ({
     const link = item.path ? (
       <StyledNavLink
         key={item.path}
-        to={item.path}
+        to={resolveRoutePath(item.path)}
         onClick={onClickOutside}
         end={true}
       >

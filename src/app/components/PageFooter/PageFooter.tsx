@@ -28,7 +28,7 @@ import { setShowPortfolio } from 'store/user';
 import { useAppSelector } from 'store/hooks';
 import { selectIsLoggedIn, selectShowPortfolio } from 'store/user/selectors';
 import { selectIsHomePage } from 'store/general/selectors';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import {
   ZOKYO_AUDIT_URL,
   PECK_SHIELD_AUDIT_URL,
@@ -48,7 +48,7 @@ export default function PageFooter() {
 
   const onClickLandingButton = () => {
     dispatch(setShowPortfolio(false));
-    navigate('/');
+    navigate('');
   };
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const isPortfolioShown = useAppSelector(selectShowPortfolio);

@@ -2,32 +2,32 @@ import { SPIRIT_DOCS_URL } from 'constants/index';
 
 export const HOME = {
   key: 'home',
-  path: '/home',
+  path: 'home',
 };
 
 export const SWAP = {
   key: 'swap',
-  path: '/swap',
+  path: 'swap',
 };
 
 export const BRIDGE = {
   key: 'bridge',
-  path: '/bridge',
+  path: 'bridge',
 };
 
 export const LIQUIDITY = {
   key: 'liquidity',
-  path: '/liquidity',
+  path: 'liquidity',
 };
 
 export const FARMS = {
   key: 'farms',
-  path: '/farms',
+  path: 'farms',
 };
 
 export const INSPIRIT = {
   key: 'inSpirit',
-  path: '/inspirit',
+  path: 'inspirit',
 };
 
 export const LENDANDBORROW = {
@@ -68,7 +68,7 @@ export const DOCS = {
 
 export const APEMODE = {
   key: 'apemode',
-  path: '/apemode',
+  path: 'apemode',
   url: '',
 };
 
@@ -80,16 +80,42 @@ export const GOVERNANCE = {
 
 export const SPIRITWARS = {
   key: 'spiritwars',
-  path: '/spiritwars',
+  path: 'spiritwars',
   url: '',
 };
+
 export const BUYFTM = {
   key: 'buyftm',
   path: '',
   url: 'https://spiritswap.banxa.com/',
 };
+
 export const APEMODE_V1 = {
   key: 'apemode',
   path: '',
   url: 'https://swap.spiritswap.finance/#/exchange/apemode',
+};
+
+export const ROUTE_LOOKUP = {
+  [HOME.key]: HOME,
+  [SWAP.key]: SWAP,
+  [BRIDGE.key]: BRIDGE,
+  [LIQUIDITY.key]: LIQUIDITY,
+  [FARMS.key]: FARMS,
+  [INSPIRIT.key]: INSPIRIT,
+  [LENDANDBORROW.key]: LENDANDBORROW,
+  [STORE.key]: STORE,
+  [ANALYTICS.key]: ANALYTICS,
+  [IDO.key]: IDO,
+  [NFTS.key]: NFTS,
+  [DOCS.key]: DOCS,
+  [APEMODE.key]: APEMODE,
+  [GOVERNANCE.key]: GOVERNANCE,
+  [SPIRITWARS.key]: SPIRITWARS,
+  [BUYFTM.key]: BUYFTM,
+};
+
+export const resolveRoutePath = (path?: string) => {
+  const rootPath = document.documentElement.dataset['rootPath'] || '/';
+  return path ? `${rootPath}${path}` : rootPath;
 };

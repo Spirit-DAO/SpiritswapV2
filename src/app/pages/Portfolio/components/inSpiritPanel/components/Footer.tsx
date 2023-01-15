@@ -1,5 +1,5 @@
 import { HStack, Button } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { SparklesIcon } from 'app/assets/icons';
 import { useTranslation } from 'react-i18next';
 import { claimSpirit } from 'utils/web3';
@@ -9,6 +9,7 @@ import { truncateTokenValue } from 'app/utils';
 import { useAppSelector } from 'store/hooks';
 import { selectSpiritInfo } from 'store/general/selectors';
 import useWallets from 'app/hooks/useWallets';
+import { INSPIRIT } from 'app/router/routes';
 
 const Footer = ({ userClaimableAmount }) => {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ const Footer = ({ userClaimableAmount }) => {
         <SparklesIcon w="20px" h="20px" mr="6px" />
         {t(`${farmsTranslationPath}.claimRewards`)}
       </Button>
-      <Button onClick={() => navigate('/inspirit')} variant="secondary">
+      <Button onClick={() => navigate(INSPIRIT.path)} variant="secondary">
         Dashboard
       </Button>
     </HStack>

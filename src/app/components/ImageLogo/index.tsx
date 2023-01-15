@@ -1,6 +1,7 @@
 import { Flex, Image } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { QuestionIcon } from 'app/assets/icons';
+import { resolveRoutePath } from 'app/router/routes';
 
 export default function ImageLogo({
   symbol,
@@ -27,8 +28,10 @@ export default function ImageLogo({
 }) {
   let upperCaseSymbol = symbol?.toUpperCase();
   const srcs: string = useMemo(() => {
-    if (type === 'network') return `/images/networks/${symbol}.png`;
-    if (type === 'languages') return `/images/languages/${upperCaseSymbol}.png`;
+    if (type === 'network')
+      return resolveRoutePath(`images/networks/${symbol}.png`);
+    if (type === 'languages')
+      return resolveRoutePath(`images/languages/${upperCaseSymbol}.png`);
 
     return getTokenImageUrl(upperCaseSymbol);
   }, [upperCaseSymbol, symbol, type]);
@@ -44,7 +47,7 @@ export default function ImageLogo({
           margin={margin}
           src={src ?? srcs}
           alt={`${upperCaseSymbol ?? 'token'} logo`}
-          fallbackSrc="/images/tokens/default.png"
+          fallbackSrc={resolveRoutePath('images/tokens/default.png')}
           fallbackStrategy="onError"
         />
       ) : (
@@ -55,4 +58,4 @@ export default function ImageLogo({
 }
 
 export const getTokenImageUrl = (symbol?: string) =>
-  `/images/tokens/${symbol?.toUpperCase()}.png`;
+  resolveRoutePath(`images/tokens/${symbol?.toUpperCase()}.png`);

@@ -12,7 +12,7 @@ import {
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import Heading from './components/Heading';
 import Settings from './components/Settings';
 import SpiritsBackground from './components/Background';
@@ -57,6 +57,7 @@ import useSettings from 'app/hooks/useSettings';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
 import TWAPPanel from 'app/components/TWAP/TWAPPanel';
 import TWAPOrders from 'app/components/TWAP/TWAPOrders';
+import { SWAP } from 'app/router/routes';
 
 const SwapPage = () => {
   const { t } = useTranslation();
@@ -97,7 +98,7 @@ const SwapPage = () => {
   const setToken = (inputToken: Token, outputToken: Token) => {
     try {
       if (inputToken.symbol === outputToken.symbol) {
-        navigate('/swap/FTM/SPIRIT', { replace: true });
+        navigate(`${SWAP.path}/FTM/SPIRIT`, { replace: true });
         return [allTokens[0], allTokens[1]];
       }
       return [inputToken, outputToken];
@@ -193,14 +194,14 @@ const SwapPage = () => {
   useEffect(() => {
     if (queriedTokenOne && !queriedTokenTwo) {
       return navigate(
-        `/swap/${queriedTokenOne.symbol}/${
+        `${SWAP.path}/${queriedTokenOne.symbol}/${
           queriedTokenOne.symbol === 'SPIRIT' ? 'FTM' : 'SPIRIT'
         }`,
         { replace: true },
       );
     }
     if (!queriedTokenOne) {
-      return navigate('/swap/FTM/SPIRIT', { replace: true });
+      return navigate(`${SWAP.path}/FTM/SPIRIT`, { replace: true });
     }
   }, [queriedTokenOne, queriedTokenTwo, navigate]);
 
@@ -574,7 +575,7 @@ const SwapPage = () => {
         changeRateParams(firstToken.value, type, txType, newToken, secondToken);
       }
       navigate(
-        `/swap/${newToken.tokenSelected.symbol}/${
+        `${SWAP.path}/${newToken.tokenSelected.symbol}/${
           firstIsSameAsSecond
             ? defaultOtherToken
             : secondToken.tokenSelected.symbol
@@ -601,7 +602,7 @@ const SwapPage = () => {
       }
 
       navigate(
-        `/swap/${
+        `${SWAP.path}/${
           secondIsSameAsFirst
             ? defaultOtherToken
             : firstToken.tokenSelected.symbol
@@ -657,7 +658,7 @@ const SwapPage = () => {
     setFirstToken(token2);
     setSecondToken(token1);
     navigate(
-      `/swap/${token2.tokenSelected.symbol}/${token1.tokenSelected.symbol}`,
+      `${SWAP.path}/${token2.tokenSelected.symbol}/${token1.tokenSelected.symbol}`,
       { replace: true },
     );
     changeRateParams(firstToken.value, 0, 'swap', token2, token1);

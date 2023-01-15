@@ -2,7 +2,14 @@ import React from 'react';
 import { Suggestion } from './Suggestion';
 import { Button, ToastId, useToast } from '@chakra-ui/react';
 import { useSuggestionsProps, SuggestionsTypes } from './Suggestion';
-import { FARMS, HOME, INSPIRIT, LIQUIDITY, SWAP } from 'app/router/routes';
+import {
+  FARMS,
+  HOME,
+  INSPIRIT,
+  LIQUIDITY,
+  SWAP,
+  resolveRoutePath,
+} from 'app/router/routes';
 import { openInSelfTab } from 'app/utils/redirectTab';
 import { useAppSelector } from 'store/hooks';
 import { selectUserSettings } from 'store/settings/selectors';
@@ -64,7 +71,11 @@ export function useSuggestion() {
   const farmButton = (lpAddress?: string) => (
     <Button
       onClick={() =>
-        openInSelfTab(lpAddress ? `${FARMS.path}/${lpAddress}` : LIQUIDITY.path)
+        openInSelfTab(
+          lpAddress
+            ? `${resolveRoutePath(FARMS.path)}/${lpAddress}`
+            : resolveRoutePath(LIQUIDITY.path),
+        )
       }
     >
       {t(`${translationPath}.buttons.farms`)}
@@ -72,7 +83,7 @@ export function useSuggestion() {
   );
 
   const portfolioButton = (
-    <Button onClick={() => openInSelfTab(HOME.path)}>
+    <Button onClick={() => openInSelfTab(resolveRoutePath(HOME.path))}>
       {t(`${translationPath}.buttons.portfolio`)}
     </Button>
   );
@@ -85,7 +96,7 @@ export function useSuggestion() {
   // );
 
   const swapButton = (
-    <Button onClick={() => openInSelfTab(SWAP.path)}>
+    <Button onClick={() => openInSelfTab(resolveRoutePath(SWAP.path))}>
       {t(`${translationPath}.buttons.swap`)}
     </Button>
   );
@@ -102,7 +113,7 @@ export function useSuggestion() {
               block: 'end',
             });
           }
-          openInSelfTab(INSPIRIT.path);
+          openInSelfTab(resolveRoutePath(INSPIRIT.path));
         }}
       >
         {t(`${translationPath}.buttons.${textContent}`)}
@@ -115,8 +126,8 @@ export function useSuggestion() {
       onClick={() =>
         openInSelfTab(
           tokenA && tokenB
-            ? `${LIQUIDITY.path}/${tokenA}/${tokenB}`
-            : LIQUIDITY.path,
+            ? `${resolveRoutePath(LIQUIDITY.path)}/${tokenA}/${tokenB}`
+            : resolveRoutePath(LIQUIDITY.path),
         )
       }
     >

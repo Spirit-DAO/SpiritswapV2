@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { PlaceholderScreen } from 'app/components/PlaceholderScreen';
 import { ReactComponent as ApeModeImage } from 'app/assets/apemode/wip.svg';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { HOME } from 'app/router/routes';
 
 const ApeModePlaceholder = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const ApeModePlaceholder = () => {
       {
         type: 'secondary',
         label: t('apeMode.wip.buttons.back'),
-        action: () => navigate('/home'),
+        action: () => navigate(HOME.path),
       },
     ],
   };

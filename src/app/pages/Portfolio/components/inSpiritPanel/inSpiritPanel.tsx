@@ -20,6 +20,11 @@ import {
 } from 'app/utils';
 import { selectLiquidity } from 'store/user/selectors';
 import moment from 'moment';
+import {
+  INSPIRIT as INSPIRIT_ROUTE,
+  SWAP,
+  resolveRoutePath,
+} from 'app/router/routes';
 
 const InSpiritPanel = ({ spiritData, inSpiritData }: inSpiritPanel) => {
   const { t } = useTranslation();
@@ -86,7 +91,9 @@ const InSpiritPanel = ({ spiritData, inSpiritData }: inSpiritPanel) => {
     : `${t(`${translationPath}.inSpiritReward`)} ${restTime()}`;
 
   const navigateTo =
-    amount && !inSpiritBalance ? '/inspirit' : `/swap/address/${address}`;
+    amount && !inSpiritBalance
+      ? INSPIRIT_ROUTE.path
+      : `${SWAP.path}/address/${address}`;
 
   const showLoader = isLoading;
 

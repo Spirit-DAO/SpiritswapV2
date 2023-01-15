@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { DotOutlineIcon } from 'app/assets/icons';
 import { Props } from './NewDropdown.d';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 
 const NewDropdown = ({ items, address, migrateItem }: Props) => {
   const navigate = useNavigate();
