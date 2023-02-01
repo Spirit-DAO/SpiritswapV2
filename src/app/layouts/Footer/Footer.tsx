@@ -96,11 +96,11 @@ const Footer = () => {
   const translatedNavMenus = navMenus.map(menu => ({
     title: t(`${menuTranslationPath}.${menu.key}`),
     image: menu.image,
-    path: resolveRoutePath(menu.path),
+    path: menu.path,
   }));
   const translatedDropdownMenus = navDropdownMenus.map((menu: any) => ({
     title: t(`${menuTranslationPath}.${menu.key}`),
-    path: resolveRoutePath(menu.path),
+    path: menu.path,
     url: menu.url,
   }));
 
@@ -121,7 +121,7 @@ const Footer = () => {
   useEffect(() => {
     setMenuIndex(
       [...translatedNavMenus, ...translatedDropdownMenus].findIndex(
-        menu => location.pathname === resolveRoutePath(menu.path),
+        menu => location.pathname === menu.path,
       ),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
