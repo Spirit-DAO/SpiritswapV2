@@ -22,11 +22,11 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
 
         if (data) {
           standardSpeed = new BigNumber(data?.average)
-            .multipliedBy(2)
+            .multipliedBy(10)
             .toString();
-          fastSppeed = new BigNumber(data?.fast).multipliedBy(2).toString();
+          fastSppeed = new BigNumber(data?.fast).multipliedBy(3).toString();
           instantSpeed = new BigNumber(data?.fastest)
-            .multipliedBy(2)
+            .multipliedBy(10)
             .toString();
         }
 
