@@ -17,6 +17,14 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 let commitHash: string = '';
 
+// All the public files needed for a build
+// to work in the real world
+const baseFilesToCopy = [
+  'public/favicon-*.png',
+  'public/android-chrome-*.png',
+  'public/apple-*.png',
+].map((x: string) => ({ from: x, to: '[name][ext]' }));
+
 try {
   commitHash = require('child_process')
     .execSync('git rev-parse --short HEAD')
@@ -28,6 +36,9 @@ try {
 
 const config = (env): Configuration => {
   const isProduction = process.env.NODE_ENV === 'production';
+  const rootPath = env.rootPath || '/';
+
+  console.log(`ROOT_PATH: ${rootPath}`);
 
   return {
     mode: isProduction ? 'production' : 'development',
@@ -36,8 +47,8 @@ const config = (env): Configuration => {
       assetModuleFilename: 'images/[hash][ext][query]',
       chunkFilename: '[name]-[chunkhash].js',
       filename: '[name]-[fullhash].js',
-      path: path.resolve(__dirname, 'build'),
-      publicPath: '/',
+      path: path.resolve(__dirname, `build${rootPath}`),
+      publicPath: rootPath,
     },
     module: {
       rules: [
@@ -90,6 +101,8 @@ const config = (env): Configuration => {
         template: './public/index.html',
         favicon: './public/favicon.ico',
         inject: true,
+        publicPath: rootPath,
+        rootPath,
       }),
       new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       // Ensure the app has the globals it needs
@@ -109,7 +122,14 @@ const config = (env): Configuration => {
             from: 'public/images/',
             to: 'images/',
           },
-        ],
+          {
+            from: 'public/build.manifest.json',
+            to: 'manifest.json',
+            transform: content => {
+              return content.toString().replace('$ROOT_PATH', rootPath);
+            },
+          },
+        ].concat(baseFilesToCopy),
       }),
       // Moment adds a lot of locale files we don't need
       new IgnorePlugin({

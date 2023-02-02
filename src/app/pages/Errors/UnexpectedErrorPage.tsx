@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as UnexpectedError } from 'app/assets/errors/500.svg';
 import PlaceholderScreen from 'app/components/PlaceholderScreen/PlaceholderScreen';
 import { useAppDispatch } from 'store/hooks';
 import { setUnexpectedError } from 'store/errors';
+import { HOME } from 'app/router/routes';
+import { useNavigate } from 'app/hooks/Routing';
 
 const UnexpectedErrorPage = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const UnexpectedErrorPage = () => {
         label: t('common.errors.500.buttons.back'),
         action: () => {
           dispatch(setUnexpectedError(false));
-          navigate('/home');
+          navigate(HOME.path);
         },
       },
     ],

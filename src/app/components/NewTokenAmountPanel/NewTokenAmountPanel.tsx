@@ -35,6 +35,7 @@ import { TOKENS_BRIDGE } from 'constants/bridgeTokens';
 import useLogin from 'app/connectors/EthersConnector/login';
 import { selectIsLoggedIn } from 'store/user/selectors';
 import { useAppSelector } from 'store/hooks';
+import { LIQUIDITY, BRIDGE, resolveRoutePath } from 'app/router/routes';
 
 const NewTokenAmountPanel = ({
   token,
@@ -74,8 +75,6 @@ const NewTokenAmountPanel = ({
   ...props
 }: Props) => {
   const { t } = useTranslation();
-  const LIQUIDITY_PATH = '/liquidity';
-  const BRIDGE_PATH = '/bridge';
   const { pathname } = useLocation();
   const { handleLogin } = useLogin();
   const [mustShowPercentage, setMustShowPercentage] = useState(showPercentage);
@@ -246,10 +245,10 @@ const NewTokenAmountPanel = ({
 
   const commonTokens = () => {
     if (notShowCommonBase) return [];
-    if (pathname === BRIDGE_PATH) {
+    if (pathname === resolveRoutePath(BRIDGE.path)) {
       return [];
     }
-    if (pathname === LIQUIDITY_PATH) return LIQUIDITY_TOKENS;
+    if (pathname === resolveRoutePath(LIQUIDITY.path)) return LIQUIDITY_TOKENS;
     return isOutput ? SECOND_TOKEN_AMOUNT_PANEL : FIRST_TOKEN_AMOUNT_PANEL;
   };
 
@@ -257,7 +256,9 @@ const NewTokenAmountPanel = ({
 
   const getSRC = () => {
     if (token?.chainId === 250 && token.symbol)
-      return `/images/tokens/${token.symbol.toUpperCase()}.png`;
+      return resolveRoutePath(
+        `images/tokens/${token.symbol.toUpperCase()}.png`,
+      );
     return token?.logoURI;
   };
 

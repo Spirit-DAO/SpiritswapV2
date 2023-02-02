@@ -18,7 +18,7 @@
       "sizes": "26x256"
     }
   ],
-  "start_url": "/home",
+  "start_url": "$ROOT_PATHhome",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

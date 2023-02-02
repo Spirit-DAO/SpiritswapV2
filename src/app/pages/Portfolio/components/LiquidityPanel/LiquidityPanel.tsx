@@ -26,7 +26,7 @@ import {
   StyledDescription,
   StyledSubtitle,
 } from './styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { List, Flex } from '@chakra-ui/react';
 import { MigratePanel } from '../MigratePanel';
 import { CHAIN_ID } from 'constants/index';
@@ -38,6 +38,7 @@ import { useAppSelector } from 'store/hooks';
 import { selectFarmRewards } from 'store/user/selectors';
 import { balanceReturnData } from 'utils/data';
 import { selectLpPrices } from 'store/general/selectors';
+import { LIQUIDITY as LIQUIDITY_ROUTE, FARMS } from 'app/router/routes';
 
 const LiquidityPanel = ({
   liquidityData,
@@ -172,7 +173,10 @@ const LiquidityPanel = ({
         disabled={!farmsWithRewards || !farmsWithRewards.length}
         onClick={openHarvestManager}
       />
-      <Button variant="secondary" onClick={() => navigate('/liquidity')}>
+      <Button
+        variant="secondary"
+        onClick={() => navigate(LIQUIDITY_ROUTE.path)}
+      >
         {t(`${translationPath}.footer.add`)}
       </Button>
     </StyledFooter>
@@ -187,7 +191,9 @@ const LiquidityPanel = ({
         <StyledNoFarmsMessage>
           {t(`${translationPath}.noFarms.${index}.message`)}
         </StyledNoFarmsMessage>
-        <Button onClick={() => navigate(!index ? '/liquidity' : '/farms')}>
+        <Button
+          onClick={() => navigate(!index ? LIQUIDITY_ROUTE.path : FARMS.path)}
+        >
           {t(`${translationPath}.noFarms.${index}.action`)}
         </Button>
       </StyledNoFarmsBody>

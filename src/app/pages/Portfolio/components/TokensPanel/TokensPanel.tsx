@@ -38,11 +38,12 @@ import {
 import { TOKENS_TO_SHOW } from 'constants/index';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { setTokensToShow } from 'store/general';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { balanceReturnData, tokenData } from 'utils/data';
 import { selectTokens } from 'store/user/selectors';
 import { ArrowDiagonalIcon } from 'app/assets/icons';
 import { Button } from 'app/components/Button';
+import { BRIDGE, SWAP } from 'app/router/routes';
 
 interface Props {
   tokensData: balanceReturnData;
@@ -116,10 +117,13 @@ const TokensPanel = ({ tokensData }: Props) => {
 
   const renderFooter = (): ReactNode => (
     <StyledFooter>
-      <Button variant="secondary" onClick={() => navigate('/bridge')}>
+      <Button variant="secondary" onClick={() => navigate(BRIDGE.path)}>
         {t(`${translationPath}.footer.bridge`)}
       </Button>
-      <Button variant="secondary" onClick={() => navigate('/swap/FTM/SPIRIT')}>
+      <Button
+        variant="secondary"
+        onClick={() => navigate(`${SWAP.path}/FTM/SPIRIT`)}
+      >
         {t(`${translationPath}.footer.swap`)}
       </Button>
     </StyledFooter>
@@ -197,7 +201,7 @@ const TokensPanel = ({ tokensData }: Props) => {
           t(`${translationPath}.noTokens.message.UNVERIFIED`)}
       </StyledNoTokensMessage>
       <Stack spacing={4} direction="row" align="center">
-        <Button variant="primary" onClick={() => navigate('/bridge')}>
+        <Button variant="primary" onClick={() => navigate(BRIDGE.path)}>
           {t(`${translationPath}.noTokens.action`)}
         </Button>
         <ChakraButton

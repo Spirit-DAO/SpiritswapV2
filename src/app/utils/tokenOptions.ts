@@ -2,6 +2,7 @@ import { CHAIN_ID, FTM } from 'constants/index';
 import { NETWORK } from 'constants/networks';
 import { verifiedTokenData } from 'utils/data/balances';
 import { verifiedLpTokenData } from 'utils/data/pools';
+import { SWAP, FARMS, ROUTE_LOOKUP } from 'app/router/routes';
 
 const Tokens = verifiedTokenData();
 const LPTokens = verifiedLpTokenData();
@@ -51,10 +52,9 @@ export const TokenOptions = (
         }
 
         if (tokenAddress === FTM.address) {
-          return navigate('/swap');
+          return navigate(SWAP.path);
         }
-
-        navigate(`/${target}/${token.symbol + '/FTM'}`);
+        navigate(`${SWAP.path}/${token.symbol}/FTM`);
       },
     };
 
@@ -72,7 +72,7 @@ export const TokenOptions = (
             return null;
           }
 
-          navigate(`/farms/${tokenAddress}`);
+          navigate(`${FARMS.path}/${tokenAddress}`);
         },
       };
 
@@ -94,11 +94,14 @@ export const TokenOptions = (
         }
 
         if (tokenAddress === FTM.address) {
-          return navigate('/swap');
+          return navigate(SWAP.path);
         }
 
+        const targetPath = ROUTE_LOOKUP[target]?.path;
         navigate(
-          `/${target}/${token.lpSymbol.replace(' LP', '').replace('-', '/')}`,
+          `${targetPath}/${token.lpSymbol
+            .replace(' LP', '')
+            .replace('-', '/')}`,
         );
       },
     };
@@ -111,7 +114,7 @@ export const TokenOptions = (
         if (!tokenAddress) {
           return null;
         }
-        navigate(`/farms/${tokenAddress}`);
+        navigate(`${FARMS.path}/${tokenAddress}`);
       },
     };
 
@@ -125,8 +128,10 @@ export const TokenOptions = (
         if (!token) {
           return null;
         }
+
+        const targetPath = ROUTE_LOOKUP[target]?.path;
         navigate(
-          `/${target}/${token.lpSymbol
+          `${targetPath}/${token.lpSymbol
             .replace(' LP', '')
             .replace('-', '/')}/remove`,
         );

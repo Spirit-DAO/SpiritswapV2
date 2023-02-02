@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { balanceReturnData, fiat, getTokenGroupStatistics } from 'utils/data';
 import { Box, Button, Flex, Stack, useDisclosure } from '@chakra-ui/react';
 import PartnersIcons from './PartnersIcons';
+import { useNavigate } from 'app/hooks/Routing';
 import {
   SwapIcon,
   FarmsIcon,
@@ -43,7 +43,14 @@ import {
   selectShowPortfolio,
   selectLimitOrdersTotalValue,
 } from 'store/user/selectors';
-import { LENDANDBORROW } from 'app/router/routes';
+import {
+  LENDANDBORROW,
+  SWAP,
+  FARMS,
+  BRIDGE,
+  INSPIRIT,
+  resolveRoutePath,
+} from 'app/router/routes';
 import { ConnectWallet } from 'app/components/ConnectWallet';
 import {
   GetInspiritData,
@@ -179,7 +186,7 @@ const Home = () => {
       id: 'swap',
       titleIcon: <SwapIcon />,
       translationPath: 'home.about.swap',
-      buttonNavPath: { path: '/swap' },
+      buttonNavPath: { path: SWAP.path },
       image: Swap,
       animation: SwapAnimation,
     },
@@ -187,7 +194,7 @@ const Home = () => {
       id: 'farms',
       titleIcon: <FarmsIcon />,
       translationPath: 'home.about.farms',
-      buttonNavPath: { path: '/farms' },
+      buttonNavPath: { path: FARMS.path },
       image: Earn,
       animation: FarmAnimation,
     },
@@ -195,7 +202,7 @@ const Home = () => {
       id: 'bridge',
       titleIcon: <BridgeIcon />,
       translationPath: 'home.about.bridge',
-      buttonNavPath: { path: '/bridge' },
+      buttonNavPath: { path: BRIDGE.path },
       image: Bridge,
       animation: BridgeAnimation,
     },
@@ -203,7 +210,7 @@ const Home = () => {
       id: 'inSpirit',
       titleIcon: <InspiritIcon />,
       translationPath: 'home.about.inspirit',
-      buttonNavPath: { path: '/inspirit' },
+      buttonNavPath: { path: INSPIRIT.path },
       image: Inspirit,
       animation: InspiritAnimation,
     },
@@ -219,7 +226,7 @@ const Home = () => {
 
   const handleGoToLanding = () => {
     dispatch(setShowPortfolio(false));
-    navigate('/');
+    navigate('');
   };
 
   const handleConnectButton = () => {
@@ -387,8 +394,8 @@ const Home = () => {
                           }
                           onButtonClick={
                             portfolioAmount
-                              ? () => navigate('/swap')
-                              : () => navigate('/bridge')
+                              ? () => navigate(SWAP.path)
+                              : () => navigate(BRIDGE.path)
                           }
                         />
                         <WalletPanel
@@ -398,7 +405,7 @@ const Home = () => {
                             spiritPrice,
                           )}
                           buttonTitle={t(`${translationPath}.showFarms`)}
-                          onButtonClick={() => navigate('/farms')}
+                          onButtonClick={() => navigate(FARMS.path)}
                         />
                       </WalletPanelWrapper>
                     )}

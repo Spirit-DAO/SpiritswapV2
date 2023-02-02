@@ -29,7 +29,7 @@ import { Props } from './FarmCreateModal.d';
 import Requirments from './Steps/Requirments';
 import Selections from './Steps/Selections';
 import { createFarm, getPairs } from 'utils/web3/actions/farm';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { LIQUIDITY } from 'app/router/routes';
 import { useAppSelector } from 'store/hooks';
 import {

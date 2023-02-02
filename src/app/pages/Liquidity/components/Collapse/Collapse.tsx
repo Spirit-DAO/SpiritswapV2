@@ -19,7 +19,7 @@ import getDetailData, { LiquidityDetailProps } from '../../utils/getDetailData';
 import useMobile from 'utils/isMobile';
 import { truncateTokenValue } from 'app/utils';
 import getSobDetailData from '../../utils/getSobDetailData';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { weightedpools } from 'constants/weightedpools';
 import { stableSobPools } from 'constants/sobpools';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
@@ -29,6 +29,7 @@ import { getPooledData } from 'utils/web3/actions/liquidity';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
 import { useSelector } from 'react-redux';
 import { selectLpPrices } from 'store/general/selectors';
+import { FARMS } from 'app/router/routes';
 
 const CollapseItem = ({
   pair,
@@ -107,7 +108,7 @@ const CollapseItem = ({
   };
 
   const handleNavigateFarm = () => {
-    navigate(`/farms/${pair.address}`);
+    navigate(`${FARMS.path}/${pair.address}`);
   };
 
   const symbolsList = pair?.tokens?.map((symbol, i) => {

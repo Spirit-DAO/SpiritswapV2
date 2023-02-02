@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Props } from './Dropdown.d';
 import { Wrapper, Button } from './styles';
 import ImageLogo from '../ImageLogo';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 
 const Dropdown: FC<Props> = ({
   items,
