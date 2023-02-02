@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
 import { SPEED_PRICES } from 'utils/swap';
@@ -20,9 +21,13 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
         const data = await response.json();
 
         if (data) {
-          standardSpeed = data?.average;
-          fastSppeed = data?.fast;
-          instantSpeed = data?.fastest;
+          standardSpeed = new BigNumber(data?.average)
+            .multipliedBy(10)
+            .toString();
+          fastSppeed = new BigNumber(data?.fast).multipliedBy(3).toString();
+          instantSpeed = new BigNumber(data?.fastest)
+            .multipliedBy(10)
+            .toString();
         }
 
         switch (speed) {
