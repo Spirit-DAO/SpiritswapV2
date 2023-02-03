@@ -107,6 +107,27 @@ Object {
   border-radius: 8px 8px 0 0;
 }
 
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 4px 0;
+  gap: 2px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background: rgba(100,221,192,0.15);
+  color: #60E6C5;
+  border-radius: 4px;
+}
+
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -132,19 +153,19 @@ Object {
   color: #FFFFFF;
 }
 
-.c10 {
-  color: #FFFFFF;
-}
-
 .c11 {
-  color: #FFFFFF;
-}
-
-.c14 {
-  color: #FFFFFF;
+  color: #60E6C5;
 }
 
 .c12 {
+  color: #FFFFFF;
+}
+
+.c15 {
+  color: #FFFFFF;
+}
+
+.c13 {
   color: #FFFFFF;
 }
 
@@ -157,7 +178,7 @@ Object {
   line-height: 20px;
 }
 
-.c13 {
+.c14 {
   background: transparent;
   border-radius: 4px;
   display: -webkit-box;
@@ -176,14 +197,14 @@ Object {
   position: relative;
 }
 
-.c15 {
+.c16 {
   color: #FFFFFF;
   font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-size: 10px;
   line-height: 20px;
 }
 
-.c16 {
+.c17 {
   position: absolute;
   right: 0;
   bottom: 62px;
@@ -334,14 +355,14 @@ Object {
             </span>
           </a>
           <a
-            class="c6"
+            class="c10"
             href="/swap"
           >
             <div
               class="c7"
             >
               <svg
-                class="c10"
+                class="c11"
               >
                 menu-swap.svg
               </svg>
@@ -360,7 +381,7 @@ Object {
               class="c7"
             >
               <svg
-                class="c11"
+                class="c12"
               >
                 menu-liquidity.svg
               </svg>
@@ -379,7 +400,7 @@ Object {
               class="c7"
             >
               <svg
-                class="c12"
+                class="c13"
               >
                 menu-inspirit.svg
               </svg>
@@ -391,24 +412,24 @@ Object {
             </span>
           </a>
           <div
-            class="c13"
+            class="c14"
           >
             <div
               class="c7"
             >
               <svg
-                class="c14"
+                class="c15"
               >
                 menu-dots.svg
               </svg>
             </div>
             <span
-              class="c15"
+              class="c16"
             >
               More
             </span>
             <div
-              class="c16"
+              class="c17"
             />
           </div>
         </div>
@@ -507,14 +528,14 @@ Object {
           </span>
         </a>
         <a
-          class="sc-crHmcD eQgfhF"
+          class="sc-crHmcD eYpDcT"
           href="/swap"
         >
           <div
             class="sc-jRQBWg fNjUei"
           >
             <svg
-              class="sc-bqiRlB kPEcTd"
+              class="sc-bqiRlB fMnJPG"
             >
               menu-swap.svg
             </svg>
