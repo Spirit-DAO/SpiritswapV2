@@ -1,7 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PlaceholderScreen } from 'app/components/PlaceholderScreen';
 import { ReactComponent as NotFound } from 'app/assets/errors/404.svg';
+import { HOME } from 'app/router/routes';
+import { useNavigate } from 'app/hooks/Routing';
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const NotFoundPage = () => {
       {
         type: 'primary',
         label: t('common.errors.404.buttons.back'),
-        action: () => navigate('/home'),
+        action: () => navigate(HOME.path),
       },
     ],
   };

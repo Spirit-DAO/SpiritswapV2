@@ -24,6 +24,7 @@ import ImageLogo from 'app/components/ImageLogo';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { getRoundedSFs } from 'app/utils';
 import { formatUnits } from 'ethers/lib/utils';
+import { resolveRoutePath } from 'app/router/routes';
 
 const explorerLink = NETWORK[CHAIN_ID].blockExp[0];
 
@@ -196,7 +197,9 @@ const TableLimitOrders = ({
                     <ImageLogo
                       margin="0 8px 0 0"
                       symbol={row.original.tokens}
-                      src={`/images/tokens/${row.original.tokens}.png`}
+                      src={resolveRoutePath(
+                        `images/tokens/${row.original.tokens}.png`,
+                      )}
                       size="32px"
                       cw="32px"
                       display="inline-flex"

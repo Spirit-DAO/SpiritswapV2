@@ -41,7 +41,7 @@ import {
 } from '@chakra-ui/react';
 import { useClaimBribes } from '../Voting/hooks/useClaimBribes';
 import { SuggestionsTypes } from 'app/hooks/Suggestions/Suggestion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import {
   CompoundIcon,
   SoullyIcon,
@@ -57,6 +57,7 @@ import { useState } from 'react';
 import addresses from 'constants/contracts';
 import useWallets from 'app/hooks/useWallets';
 import useMobile from 'utils/isMobile';
+import { SWAP } from 'app/router/routes';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -163,7 +164,7 @@ export default function Dashboard() {
   };
 
   const onBuySpiritClick = () => {
-    navigate('/swap');
+    navigate(SWAP.path);
   };
 
   const balanceFormatted = formatNumber({

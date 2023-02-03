@@ -1,5 +1,4 @@
 import { ReactNode, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { onClickUrl, openInSelfTab } from 'app/utils/redirectTab';
 import { Button } from 'app/components/Button';
@@ -11,6 +10,7 @@ import {
   AboutSectionButtonWrapper,
   AboutSectionImageWrapper,
 } from './styles';
+import { useNavigate } from 'app/hooks/Routing';
 import { LightBoxModal } from 'app/components/LightBoxModal';
 import { StyledWalletDescription } from '../styles';
 import { Box, Flex } from '@chakra-ui/react';

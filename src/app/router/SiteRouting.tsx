@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useContext } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Box } from '@chakra-ui/react';
@@ -26,6 +26,7 @@ import {
   LIQUIDITY,
   SPIRITWARS,
   SWAP,
+  resolveRoutePath,
 } from './routes';
 
 const SiteRouting = () => {
@@ -40,35 +41,59 @@ const SiteRouting = () => {
       >
         <div id="top-page" />
         <Routes>
-          <Route path="/" element={<Navigate to={HOME.path} />} />
-          <Route path={HOME.path} element={<HomePage />} />
-          <Route path={SWAP.path} element={<SwapPage />} />
           <Route
-            path={`${SWAP.path}/address/:address`}
+            path={resolveRoutePath()}
+            element={<Navigate to={resolveRoutePath(HOME.path)} />}
+          />
+          <Route path={resolveRoutePath(HOME.path)} element={<HomePage />} />
+          <Route path={resolveRoutePath(SWAP.path)} element={<SwapPage />} />
+          <Route
+            path={`${resolveRoutePath(SWAP.path)}/address/:address`}
             element={<SwapPage />}
           />
-          <Route path={`${SWAP.path}/:token1`} element={<SwapPage />} />{' '}
-          <Route path={`${SWAP.path}/:token1/:token2`} element={<SwapPage />} />
-          <Route path={BRIDGE.path} element={<BridgePage />} />
-          <Route path={LIQUIDITY.path} element={<LiquidityPage />} />
           <Route
-            path={`${LIQUIDITY.path}/:token1/:token2`}
+            path={`${resolveRoutePath(SWAP.path)}/:token1`}
+            element={<SwapPage />}
+          />{' '}
+          <Route
+            path={`${resolveRoutePath(SWAP.path)}/:token1/:token2`}
+            element={<SwapPage />}
+          />
+          <Route
+            path={resolveRoutePath(BRIDGE.path)}
+            element={<BridgePage />}
+          />
+          <Route
+            path={resolveRoutePath(LIQUIDITY.path)}
             element={<LiquidityPage />}
           />
           <Route
-            path={`${LIQUIDITY.path}/:token1/:token2/:type`}
+            path={`${resolveRoutePath(LIQUIDITY.path)}/:token1/:token2`}
             element={<LiquidityPage />}
           />
           <Route
-            path={`${LIQUIDITY.path}/:token1/:token2/remove`}
+            path={`${resolveRoutePath(LIQUIDITY.path)}/:token1/:token2/:type`}
             element={<LiquidityPage />}
           />
-          <Route path={FARMS.path} element={<FarmsPage />}>
-            <Route path={`${FARMS.path}/:address`} element={<FarmsPage />} />
+          <Route
+            path={`${resolveRoutePath(LIQUIDITY.path)}/:token1/:token2/remove`}
+            element={<LiquidityPage />}
+          />
+          <Route path={resolveRoutePath(FARMS.path)} element={<FarmsPage />}>
+            <Route
+              path={`${resolveRoutePath(FARMS.path)}/:address`}
+              element={<FarmsPage />}
+            />
           </Route>
-          <Route path={INSPIRIT.path} element={<InspiritPage />} />
+          <Route
+            path={resolveRoutePath(INSPIRIT.path)}
+            element={<InspiritPage />}
+          />
           {/* <Route path={APEMODE.path} element={<ApeModePage />} /> */}
-          <Route path={SPIRITWARS.path} element={<SpiritWars />} />
+          <Route
+            path={resolveRoutePath(SPIRITWARS.path)}
+            element={<SpiritWars />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </ErrorBoundary>

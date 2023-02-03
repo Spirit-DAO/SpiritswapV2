@@ -1,5 +1,6 @@
 import { FC, useEffect, useCallback, useState, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 import { useTranslation } from 'react-i18next';
 import { NavigationDropdown } from 'app/components/NavigationDropdown';
 import { ConnectWallet } from 'app/components/ConnectWallet';
@@ -67,6 +68,7 @@ import {
   APEMODE,
   SPIRITWARS,
   BUYFTM,
+  resolveRoutePath,
 } from 'app/router/routes';
 import { openInNewTab } from 'app/utils/redirectTab';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
@@ -114,7 +116,7 @@ const NavMenuItem = ({ menu, is_active }: NavMenuProps) => {
 
   return (
     <StyledMenuItem
-      to={menu.path}
+      to={resolveRoutePath(menu.path)}
       $is_active={is_active}
       onClick={handleResetError}
     >
@@ -203,7 +205,7 @@ const TopBar: FC<Props> = () => {
     : null;
 
   useEffect(() => {
-    if (window.location.pathname === '/home') {
+    if (window.location.pathname === resolveRoutePath(HOME.path)) {
       dispatch(setIsHomePage(true));
     } else {
       dispatch(setIsHomePage(false));
@@ -248,7 +250,7 @@ const TopBar: FC<Props> = () => {
   };
 
   const navigateHome = () => {
-    navigate('/home');
+    navigate(HOME.path);
   };
 
   const openConnectWalletModal = () => {
@@ -263,7 +265,7 @@ const TopBar: FC<Props> = () => {
   useEffect(() => {
     setMenuIndex(
       [...navMenuItems, ...navDropdownItems].findIndex(menu =>
-        location.pathname.includes(menu.path),
+        location.pathname.includes(resolveRoutePath(menu.path)),
       ),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -403,7 +405,10 @@ const TopBar: FC<Props> = () => {
           </MenuWrapper>
           <HStack spacing="spacing03" justify="end" flex="1" mr="spacing04">
             {!isMobile && (
-              <StyledMenuItem to="/swap" $is_active={false}>
+              <StyledMenuItem
+                to={resolveRoutePath(SWAP.path)}
+                $is_active={false}
+              >
                 <Button fontSize="base" fontWeight="normal">
                   <SoullyIcon />
                   <Skeleton

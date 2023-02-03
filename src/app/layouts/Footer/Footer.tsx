@@ -47,6 +47,7 @@ import {
   NFTS,
   SWAP,
   SPIRITWARS,
+  resolveRoutePath,
 } from 'app/router/routes';
 import { useAppDispatch } from 'store/hooks';
 import { setUnexpectedError } from 'store/errors';
@@ -78,7 +79,7 @@ const NavMenuItem = ({ menu, is_active }: NavMenuProps) => {
 
   return (
     <StyledMenuItem
-      to={menu.path}
+      to={resolveRoutePath(menu.path)}
       $is_active={is_active}
       onClick={handleResetError}
     >

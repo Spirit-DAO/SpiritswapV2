@@ -18,6 +18,18 @@ yarn
 yarn start
 ```
 
+- To Build
+```bash
+yarn build
+```
+
+if you want to build for a specific subdirectory
+
+```bash
+yarn build --env rootPath=/<path>/<to>/<subfolder>/
+
+```
+
 ### Storybook
 
 Run inside another terminal:

@@ -3,7 +3,7 @@ import { InSpiritIcon } from 'app/layouts/TopBar/styles';
 import { IconButton } from 'app/components/IconButton';
 import { Text, Flex } from '@chakra-ui/react';
 import { GreeBoxProps } from '..';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'app/hooks/Routing';
 
 const GreenBox = ({ title, buttonTitle, navigateTo }: GreeBoxProps) => {
   const navigate = useNavigate();
