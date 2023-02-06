@@ -42,7 +42,7 @@ export const getHistoricalPegForWinSpirits = async (
 
   for (const array of results) {
     let tokenAddress = '';
-    const dataPointsArray = array.map(dataPoint => {
+    const dataPointsArray = array?.map(dataPoint => {
       const { datapointAt, fromToken, pegPercentage } = dataPoint;
       tokenAddress = fromToken;
 

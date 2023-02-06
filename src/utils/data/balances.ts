@@ -11,6 +11,7 @@ import {
   formatFrom,
   getNativeTokenBalance,
   Multicall,
+  MulticallSingleResponse,
 } from 'utils/web3';
 import { Call, balanceReturnData, tokenData } from './types';
 import safeExecute from 'utils/safeExecute';
@@ -47,40 +48,43 @@ export const getUserStakedBalance = async (
   _provider,
   _network = CHAIN_ID,
 ) => {
-  const balanceCalls: Call[] = [];
-
-  _v2Pools?.forEach(item => {
-    balanceCalls.push({
-      name: 'balanceOf',
-      address: item.contract_address,
-      params: [_user],
-    });
-  });
+  const balanceCalls: Call[] = _v2Pools?.map(item => ({
+    name: 'balanceOf',
+    address: item.contract_address,
+    params: [_user],
+  }));
 
   const [balances, mappedTokens] = await Promise.all([
     Multicall(balanceCalls, 'gauge', undefined, undefined, _provider),
     getMappedTokens('symbol'),
   ]);
 
-  const parsedBalances: any = [];
-  balances?.forEach((balance, index) => {
-    const item = _v2Pools[index];
-    const tokens = item.contract_name
-      .replace('VolatileV1 AMM - ', '')
-      .replace('StableV1 AMM - ', '')
-      .split('/');
-    parsedBalances.push({
-      balance: formatFrom(balance.response[0]),
-      address: item.contract_address ? item.contract_address : '',
-      token0: mappedTokens[tokens[0].toLowerCase()]
-        ? mappedTokens[tokens[0].toLowerCase()].address
-        : '',
-      token1: mappedTokens[tokens[1].toLowerCase()]
-        ? mappedTokens[tokens[1].toLowerCase()].address
-        : '',
-      symbol: item.contract_name ? item.contract_name : '',
-    });
-  });
+  const parsedBalances: MulticallSingleResponse[] = balances?.map(
+    (balance, index) => {
+      const item = _v2Pools[index];
+      const [symbolToken0, symbolToken1] = item.contract_name
+        .replace('VolatileV1 AMM - ', '')
+        .replace('StableV1 AMM - ', '')
+        .split('/')
+        .map(t => t.toLowerCase());
+
+      const token0 = mappedTokens[symbolToken0]?.address || '';
+      const token1 =
+        symbolToken1 === 'mimatic'
+          ? mappedTokens['mai']?.address
+          : mappedTokens[symbolToken1]?.address || '';
+
+      return {
+        response: null,
+        call: {} as Call,
+        balance: formatFrom(balance.response[0]),
+        address: item.contract_address || '',
+        token0,
+        token1,
+        symbol: item.contract_name || '',
+      };
+    },
+  );
 
   return parsedBalances;
 };
@@ -345,6 +349,7 @@ export const getStakedBalances = async (
     );
 
   const lpBalances = await getUserStakedBalance(_address, V2Pools, provider);
+
   const liquidity = getTokenGroupStatistics(lpBalances, 'stakeList');
 
   const walletLiquidityArray = liquidity.stakeList;
