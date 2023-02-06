@@ -44,7 +44,6 @@ const FarmTransaction = ({
   );
   const [shouldTransition, setShouldTransition] = useState(true);
   const farmsStaked = useAppSelector(selectFarmsStaked);
-  const liquidity = useAppSelector(selectLiquidityWallet);
   const lpPrices = useAppSelector(selectLpPrices);
 
   useEffect(() => {}, [account]);
