@@ -140,31 +140,6 @@ async function getFarms(provider, gaugesPromise) {
   }
 }
 
-async function getEcosystemTokenDetails(
-  farm: any,
-  getTokensDetails,
-  ecosystemFarmObject,
-  type,
-) {
-  const [firstTokenDetails, secondTokenDetails] = await Promise.all([
-    getTokensDetails(farm.token0),
-    getTokensDetails(farm.token1),
-  ]);
-
-  const lpAddress = farm[3];
-  const tokenAddress = farm[4];
-  const ecoFarms = ecosystemFarmObject(
-    farm,
-    firstTokenDetails,
-    secondTokenDetails,
-    lpAddress,
-    tokenAddress,
-    type,
-  );
-
-  return ecoFarms;
-}
-
 // =========================
 // ===== Spirit Wars =======
 // =========================

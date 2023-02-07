@@ -162,6 +162,7 @@ const CollapseItem = ({
         {detailData?.map((item: LiquidityDetailProps) => {
           return (
             <Skeleton
+              key={item.id}
               startColor="grayBorderBox"
               endColor="bgBoxLighter"
               isLoaded={detailData.length > 1}
