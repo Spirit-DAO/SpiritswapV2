@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { formatUnits } from 'ethers/lib/utils';
+import { formatEther, formatUnits } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
 import { SPEED_PRICES } from 'utils/swap';
 
@@ -16,45 +16,48 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
         let fastSppeed: string = '0';
         let instantSpeed: string = '0';
 
-        const response = await fetch(`https://api.paraswap.io/prices/gas/250 `);
+        // const response = await fetch(`https://api.paraswap.io/prices/gas/250 `);
+        const response = await fetch(`https://oapi.fantom.network/gasprice `);
 
+        // const data2 = await response2.json();
         const data = await response.json();
 
         if (data) {
-          standardSpeed = new BigNumber(data?.average)
-            .multipliedBy(10)
-            .toString();
-          fastSppeed = new BigNumber(data?.fast).multipliedBy(3).toString();
-          instantSpeed = new BigNumber(data?.fastest)
-            .multipliedBy(10)
-            .toString();
+          standardSpeed = data.SafeGasPrice;
+
+          fastSppeed = data.ProposedGasPrice;
+          instantSpeed = data.FastGasPrice;
         }
 
         switch (speed) {
           case SPEED_PRICES.FAST:
             return setGasData({
-              gasPrice: fastSppeed,
-              txGweiCost: parseFloat(
-                formatUnits(`${fastSppeed}`, 'gwei'),
-              ).toFixed(2),
+              gasPrice: new BigNumber(fastSppeed)
+                .multipliedBy(1000000000)
+                .toString(),
+              txGweiCost: parseFloat(fastSppeed).toFixed(2),
             });
 
           case SPEED_PRICES.INSTANT:
             return setGasData({
-              gasPrice: instantSpeed,
-              txGweiCost: parseFloat(
-                formatUnits(`${instantSpeed}`, 'gwei').toString(),
-              ).toFixed(2),
+              gasPrice: new BigNumber(instantSpeed)
+                .multipliedBy(1000000000)
+                .toString(),
+
+              txGweiCost: parseFloat(instantSpeed).toFixed(2),
             });
           default:
             return setGasData({
-              gasPrice: standardSpeed,
-              txGweiCost: parseFloat(
-                formatUnits(`${standardSpeed}`, 'gwei').toString(),
-              ).toFixed(2),
+              gasPrice: new BigNumber(standardSpeed)
+                .multipliedBy(1000000000)
+                .toString(),
+
+              txGweiCost: parseFloat(standardSpeed).toFixed(2),
             });
         }
       } catch (error) {
+        console.log({ error });
+
         return setGasData({
           gasPrice: '0',
           txGweiCost: '0',
