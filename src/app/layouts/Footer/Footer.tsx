@@ -34,7 +34,6 @@ import {
 
 import {
   ANALYTICS,
-  APEMODE,
   BRIDGE,
   BUYFTM,
   DOCS,
@@ -66,7 +65,6 @@ const navDropdownMenus = [
   ANALYTICS,
   LENDANDBORROW,
   BRIDGE,
-  // APEMODE,
   FARMS,
   SPIRITWARS,
   BUYFTM,

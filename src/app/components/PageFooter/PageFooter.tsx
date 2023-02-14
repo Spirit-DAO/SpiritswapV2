@@ -121,7 +121,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://t.me/spirit_swap"
+                  href="https://t.me/SpiritSwap"
                   _hover={{ color: 'ci' }}
                 >
                   <TelegramSvg />
