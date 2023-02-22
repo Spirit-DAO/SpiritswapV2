@@ -10,6 +10,7 @@ const TokenSelection: FC<Props> = ({
   src,
   isSelectable,
 }: Props) => {
+  console.log({ symbol });
   return (
     <Flex
       alignItems="center"

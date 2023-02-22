@@ -63,7 +63,6 @@ const SwapPage = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useWallets();
-
   const globalSwapModeIndex = useAppSelector(selectSwapModeIndex);
   const translationPath = 'swap.questionHelper';
   const [modeIndex, setModeIndex] = useState<number>(globalSwapModeIndex || 0);

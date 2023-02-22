@@ -19,6 +19,7 @@ yarn start
 ```
 
 - To Build
+
 ```bash
 yarn build
 ```
@@ -29,6 +30,13 @@ if you want to build for a specific subdirectory
 yarn build --env rootPath=/<path>/<to>/<subfolder>/
 
 ```
+
+## How to load a new Token Image
+
+1. Get a Token with the format PNG
+2. The name of the Token needs to be the symbol; Fantom it will be FTM)
+3. Need to be on upperCase
+4. The folder is inside Public/images/tokens
 
 ### Storybook
 
@@ -69,7 +77,6 @@ yarn start
 ### GitHub Actions
 
 One actions are added by default:
-
 
 We use a semantic versioning to update the build or changes that we have on the project. They way to handle this is using a command
 
