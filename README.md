@@ -31,12 +31,18 @@ yarn build --env rootPath=/<path>/<to>/<subfolder>/
 
 ```
 
-## How to load a new Token Image
+### How to add new tokens icons
 
-1. Get a Token with the format PNG
-2. The name of the Token needs to be the symbol; Fantom it will be FTM)
-3. Need to be on upperCase
-4. The folder is inside Public/images/tokens
+1. Get the token image with `PNG` format.
+2. The image not have to have bigger than 200x200px.
+3. The name of the token have to be the `symbol`
+4. The image name have to be in `upperCase`
+5. Put the images inside folder: `public/images/tokens`
+
+#####Examples:
+
+- `Fantom` it will be `FTM.png` --> in `public/images/tokens/FTM.png`
+- `Bitcoin` it will be `BTC.png` --> in `public/images/tokens/BTC.png`
 
 ### Storybook
 
