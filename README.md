@@ -31,7 +31,11 @@ yarn build --env rootPath=/<path>/<to>/<subfolder>/
 
 ```
 
-### How to add new tokens
+---
+
+### - How to add new tokens
+
+> For token icons:
 
 1. Get the token image with `PNG` format.
 2. The image not have to have bigger than 200x200px.
@@ -43,6 +47,28 @@ yarn build --env rootPath=/<path>/<to>/<subfolder>/
 
 - `Fantom` it will be `FTM.png` --> in `public/images/tokens/FTM.png`
 - `Bitcoin` it will be `BTC.png` --> in `public/images/tokens/BTC.png`
+
+> For the token address:
+
+1. Get the next data from the token:
+   - `name`
+   - `symbol`
+   - `chainId`
+   - `address`
+   - `decimals`
+2. Create a object like this:
+   ```javascript
+   const FTM = {
+     name: 'Fantom',
+     symbol: 'FTM',
+     chainId: 250,
+     address: '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',
+     decimals: 18,
+   };
+   ```
+3. Add it into the `tokens array` in `src/constants/tokens.ts`
+
+---
 
 ### Storybook
 
