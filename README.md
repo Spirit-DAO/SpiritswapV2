@@ -31,7 +31,7 @@ yarn build --env rootPath=/<path>/<to>/<subfolder>/
 
 ```
 
-### How to add new tokens icons
+### How to add new tokens
 
 1. Get the token image with `PNG` format.
 2. The image not have to have bigger than 200x200px.
