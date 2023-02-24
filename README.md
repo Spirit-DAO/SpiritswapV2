@@ -19,6 +19,7 @@ yarn start
 ```
 
 - To Build
+
 ```bash
 yarn build
 ```
@@ -29,6 +30,45 @@ if you want to build for a specific subdirectory
 yarn build --env rootPath=/<path>/<to>/<subfolder>/
 
 ```
+
+---
+
+### - How to add new tokens
+
+> For token icons:
+
+1. Get the token image with `PNG` format.
+2. The image not have to have bigger than 200x200px.
+3. The name of the token have to be the `symbol`
+4. The image name have to be in `upperCase`
+5. Put the images inside folder: `public/images/tokens`
+
+#####Examples:
+
+- `Fantom` it will be `FTM.png` --> in `public/images/tokens/FTM.png`
+- `Bitcoin` it will be `BTC.png` --> in `public/images/tokens/BTC.png`
+
+> For the token address:
+
+1. Get the next data from the token:
+   - `name`
+   - `symbol`
+   - `chainId`
+   - `address`
+   - `decimals`
+2. Create a object like this:
+   ```javascript
+   const FTM = {
+     name: 'Fantom',
+     symbol: 'FTM',
+     chainId: 250,
+     address: '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',
+     decimals: 18,
+   };
+   ```
+3. Add it into the `tokens array` in `src/constants/tokens.ts`
+
+---
 
 ### Storybook
 
@@ -69,7 +109,6 @@ yarn start
 ### GitHub Actions
 
 One actions are added by default:
-
 
 We use a semantic versioning to update the build or changes that we have on the project. They way to handle this is using a command
 
