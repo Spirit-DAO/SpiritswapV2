@@ -75,15 +75,9 @@ export const swapTransaction = async (
     chainId: quote.chainId,
   };
 
-  console.log(gasPriceData?.type !== 'standard', 'gasPriceData?.type !==)');
-
-  console.log(gasPriceData, 'gasPriceData');
-
   if (gasPriceData?.type !== 'standard') {
     tx['gasPrice'] = BigNumber.from(gasPriceData?.gasPrice ?? quote.gasPrice);
   }
-
-  console.log(tx, 'ts');
 
   const transaction = await signer.sendTransaction(tx);
 
