@@ -87,6 +87,8 @@ export const ZOKYO_AUDIT_URL =
 
 export const SPIRIT_DOCS_URL = 'https://docs.spiritswap.finance/';
 
+export const SPIRIT_WHITELISTING_FORMS = 'https://forms.gle/LqrWp7cGi7eXc6UR7';
+
 export const BRIDGE_NAMES = {
   nxtp: 'Connext',
   hop: 'Hop',
