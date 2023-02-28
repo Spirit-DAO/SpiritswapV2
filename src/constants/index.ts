@@ -167,3 +167,6 @@ export const VARIABLE = 'Variable';
 export const STABLE = 'Stable';
 
 export const TOKENS_WITH_HIGH_SLIPPAGE = [wBOMB.address.toLowerCase()];
+
+export const V3_POOL_INIT_CODE_HASH =
+  '0x9a6810113806533f58ba03fd4242aeacec87dbc6b15d932f991a4b43ef5dd546';

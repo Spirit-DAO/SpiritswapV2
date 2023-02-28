@@ -8,3 +8,11 @@ export const clientV2 = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/spirit-dao/spiritswapv2-analytics',
   cache: new InMemoryCache(),
 });
+export const clientV3 = new ApolloClient({
+  uri: 'https://api.thegraph.com/subgraphs/name/spirit-dao/spiritswapv3-analytics',
+  cache: new InMemoryCache(),
+});
+export const farmingV3 = new ApolloClient({
+  uri: 'https://api.thegraph.com/subgraphs/name/spirit-dao/spiritswapv3-farming',
+  cache: new InMemoryCache(),
+});

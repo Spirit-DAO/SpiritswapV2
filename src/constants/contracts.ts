@@ -340,6 +340,30 @@ const contracts = {
   olaLendingLend: {
     250: '0xAD4AB7130e3bE6D4d02A33b339A9000e8F442617',
   },
+  v3AlgebraFactory: {
+    250: '0x180Ae1d2E6f1DDA88CFf27598F6570b049C2C4d4',
+  },
+  v3AlgebraPoolDeployer: {
+    250: '0xDF5e3626c79ccA8e561D53b4a10D59EEe9d24FF7',
+  },
+  v3AlgebraQuoter: {
+    250: '0xB729D127640bDFe9b19b66979DC22Bce1F6a34c3',
+  },
+  v3SwapRouter: {
+    250: '0x7B527cd46a0e7d83596E8310385dfABba6794e11',
+  },
+  v3NonfungiblePositionManager: {
+    250: '0x190D14E22234431163f2c80ad1962D1786Bc2c93',
+  },
+  v3LimitOrderManager: {
+    250: '0x2a9e9642694E99b5b5e320aaab6Fbd4e0874fBf0',
+  },
+  v3Multicall: {
+    250: '0xc79b89F5170b1cb18A5bA93D64206c2a83068410',
+  },
+  v3FarmingCenter: {
+    250: '',
+  },
 };
 
 export default contracts;
