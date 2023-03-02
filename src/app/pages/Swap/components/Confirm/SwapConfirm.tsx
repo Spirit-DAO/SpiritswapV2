@@ -46,7 +46,7 @@ export default function SwapConfirm({
   const [loaderText, setLoaderText] = useState('Loading');
   const { handleLogin } = useLogin();
   const { states } = useSettings();
-  const { gasPrice } = useGetGasPrice({ speed: states.txSpeed });
+  const gasPriceData = useGetGasPrice({ speed: states.txSpeed });
 
   const tokenA = firstToken.tokenSelected;
   const tokenB = secondToken.tokenSelected;
@@ -86,7 +86,7 @@ export default function SwapConfirm({
           trade,
           firstToken.tokenSelected,
           secondToken.tokenSelected,
-          gasPrice,
+          gasPriceData,
           states.deadline,
         );
 

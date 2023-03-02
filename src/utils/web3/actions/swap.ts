@@ -18,7 +18,11 @@ export const swapTransaction = async (
   quote: SwapQuote,
   firstToken?: Token, // Not filtering directly from whitelist for when using non-verified tokens
   secondToken?: Token,
-  gasPrice?: string,
+  gasPriceData?: {
+    gasPrice: string;
+    txGweiCost: string;
+    type: string;
+  },
   deadlineOffset?: number,
 ) => {
   const _connection = getProvider();
@@ -63,13 +67,17 @@ export const swapTransaction = async (
 
   const tx = {
     from: senderAddress,
-    gasPrice: BigNumber.from(gasPrice ?? quote.gasPrice),
+
     gasLimit: MIN_GAS_LIMIT.gt(txGas) ? MIN_GAS_LIMIT : txGas,
     to: quote.to,
     value: BigNumber.from(quote.value),
     data: quote.data,
     chainId: quote.chainId,
   };
+
+  if (gasPriceData?.type !== 'standard') {
+    tx['gasPrice'] = BigNumber.from(gasPriceData?.gasPrice ?? quote.gasPrice);
+  }
 
   const transaction = await signer.sendTransaction(tx);
 

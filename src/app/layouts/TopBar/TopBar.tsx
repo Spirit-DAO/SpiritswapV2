@@ -128,7 +128,7 @@ const NavMenuItem = ({ menu, is_active }: NavMenuProps) => {
   );
 };
 
-const TopBar: FC<Props> = () => {
+const TopBar = () => {
   const translationPath = 'common.topBar';
   const menuTranslationPath = 'common.menu';
   const { account, isLoggedIn } = useWallets();
