@@ -485,9 +485,9 @@
     },
     "boostInfoPanel": {
       "holdLabel": "Hold <b>{{ value }}</b> <mark>inSpirit</mark> for {{ boostFactor }}x boost",
-      "yourBoostFactor": "inSPIRIT boost factor",
+      "yourBoostFactor": "Your boost factor",
       "boostfactorExplanation": "Your boost factor indicates what kind of a boost you are receiving for this farm depending on how much inSPIRIT you hold. More inSPIRIT = More boost = More rewards.",
-      "holdForMaxBoost": "Hold <strong>{{amount}} inSPIRIT</strong> for max boost",
+      "holdForMaxBoost": "Hold <strong>{{amount}}</strong> inSPIRIT for 2.5x boost.",
       "maxBoostAchieved": "You have the max boost",
       "noBoostTokens": "You have not deposited into this farm",
       "of": "of"
