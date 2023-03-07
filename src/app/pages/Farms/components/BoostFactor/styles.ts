@@ -8,7 +8,7 @@ export const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: ${({ theme }) =>
-    `${theme.spacing.spacing03} ${theme.spacing.spacing04}`};
+    `${theme.spacing.spacing02} ${theme.spacing.spacing01}`};
   background-color: ${({ theme }) => theme.color.bgBoxLighter};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
 `;
@@ -20,9 +20,7 @@ export const StyledParagraph = styled(Paragraph)<{
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   color: ${({ color, theme }) =>
     color ? 'theme.color.grayDarker' : theme.color.gray};
-  letter-spacing: 1;
   display: inline-flex;
-  margin-bottom: ${({ theme }) => theme.spacing.spacing02};
 `;
 
 export const StyledDoughnutWrapper = styled.div`
@@ -39,7 +37,6 @@ export const StyledDoughnutWrapper = styled.div`
 export const StyledInSpirit = styled(InSpirit)`
   color: ${({ theme }) => theme.color.ci};
   display: inline-flex;
-  margin-right: ${({ theme }) => theme.spacing.spacing03};
   width: 20px;
   height: 20px;
 `;
@@ -61,14 +58,13 @@ export const StyledCurrentBoost = styled(Heading)`
   text-align: center;
 `;
 
-export const StyledText = styled(Paragraph)`
-  // font size of boost factor here
-  font-size: ${({ theme }) => theme.fontSize.s};
-  color: ${({ theme }) => theme.color.grayDarker};
-
-  > strong {
-    color: white;
-  }
+export const StyledText = styled.p<{ color?: string }>`
+  color: ${({ theme, color }) => (color ? color : theme.color.grayDarker)};
+  font-family: ${({ theme }) => theme.fontFamily.sans};
+  font-weight: 500;
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  letter-spacing: ${({ theme }) => theme.letterSpacing.tight};
+  margin: 0;
 `;
 
 export const StyledTextGraph = styled(StyledText)`
