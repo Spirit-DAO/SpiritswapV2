@@ -15,6 +15,7 @@ export const StyledWrapper = styled.div`
   gap: ${({ theme }) => theme.spacing.spacing03};
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;

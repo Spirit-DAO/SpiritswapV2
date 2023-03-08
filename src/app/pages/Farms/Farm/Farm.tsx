@@ -39,7 +39,7 @@ import BigNumber from 'bignumber.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { Props } from './Farm.d';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
-import { LIQUIDITY, resolveRoutePath } from 'app/router/routes';
+import { LIQUIDITY } from 'app/router/routes';
 
 export const Farm = ({
   farm,
@@ -309,9 +309,12 @@ export const Farm = ({
                 ecosystem={ecosystem}
                 isBoosted={boosted}
                 isMax={isMax}
+                isExpanded={isExpanded}
+                farmUserData={farmUserData}
                 lpApr={lpApr}
                 staked={staked}
               />
+
               <IconTooltipPanel staked={staked} items={infoPanelItems} />
               <AccordionPanel p={0}>
                 <RetrieveTokens
@@ -350,16 +353,6 @@ export const Farm = ({
                     />
                   }
                 />
-                {boosted && (
-                  <BoostFactor
-                    key="boostfactor"
-                    currentBoost={farmUserData.currentBoost || '0'}
-                    holdAmountForMaxBoost={
-                      farmUserData.spiritNeededForMax || '0'
-                    }
-                    lpTokens={farmUserData.lpTokens}
-                  />
-                )}
               </AccordionPanel>
               <AccordionButton
                 justifyContent={'center'}
