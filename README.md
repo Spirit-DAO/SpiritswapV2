@@ -67,6 +67,8 @@ yarn build --env rootPath=/<path>/<to>/<subfolder>/
    };
    ```
 3. Add it into the `tokens array` in `src/constants/tokens.ts`
+4. Verify that the token have liquidity on spiritswap with [paraswap](https://app.paraswap.io/#/?network=fantom). On Paraswap settings, only enabled spiritswapV2.
+5. Verify that the token show the price information on spiritswap. If doesn't show, we need to contact to Covalent Team
 
 ---
 
