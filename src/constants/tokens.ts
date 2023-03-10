@@ -643,6 +643,14 @@ export const tokens: Token[] = [
     decimals: 18,
     chainId: 250,
   },
+  {
+  name: 'Ankr Staked FTM',
+  symbol: 'ankrFTM',
+  chainId: 250,
+  address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
+  decimals: 18,
+  },
+  
   wBOMB,
   MIM,
   FRAX,
