@@ -229,13 +229,19 @@ export const tokens: Token[] = [
     chainId: 250,
     decimals: 18,
   },
-
   {
     name: 'Frax Share',
     symbol: 'FXS',
     address: '0x7d016eec9c25232b01F23EF992D98ca97fc2AF5a',
     chainId: 250,
     decimals: 18,
+  },
+  {
+    name: 'JEFE TOKEN',
+    symbol: 'JEFE',
+    address: '0x5b2AF7fd27E2Ea14945c82Dd254c79d3eD34685e',
+    chainId: 250,
+    decimals: 9,
   },
   {
     name: 'Binance',
