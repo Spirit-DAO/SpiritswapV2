@@ -337,8 +337,6 @@ const GetInSpirit = () => {
     const DISABLED = true;
     const NOT_DISABLED = false;
 
-    console.log(errorMessage.msg);
-
     if (isLoading) return DISABLED;
     if (!isLoggedIn) return DISABLED;
     if (errorMessage?.canApprove) return DISABLED;
