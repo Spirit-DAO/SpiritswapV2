@@ -53,6 +53,11 @@ import { TransactionStatus } from 'app/components/TransactionFlow';
 import { StepStateProps } from './GetInSpirit.d';
 import useWallets from 'app/hooks/useWallets';
 
+const INITIAL_ERROR_MESSAGE = {
+  msg: '',
+  canApprove: false,
+};
+
 const GetInSpirit = () => {
   const { t } = useTranslation();
   const { addToQueue } = Web3Monitoring();
@@ -61,17 +66,16 @@ const GetInSpirit = () => {
   const translationPathHelper = 'inSpirit.modalHelper';
   const lockedInSpiritEndDate = useAppSelector(selectLockedInsSpiritEndDate);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
+  const [steps, setSteps] = useState<StepStateProps[]>([]);
   const inspiritAllowance = useAppSelector(selectInspiritAllowance);
   const { isLoggedIn, account } = useWallets();
   const [loadingText, setLoadingText] = useState('');
-  const initialErrorMessageProps = {
-    msg: '',
-    canApprove: false,
-  };
+
   const [errorMessage, setErrorMessage] = useState<{
     msg: string;
     canApprove: boolean;
-  }>(initialErrorMessageProps);
+  }>(INITIAL_ERROR_MESSAGE);
+
   const [balance, setBalance] = useState<string | null>(null);
   const {
     isLoading: isLoadingUnlock,
@@ -149,8 +153,10 @@ const GetInSpirit = () => {
   };
 
   const handleSetLockAmount = event => {
-    setErrorMessage(initialErrorMessageProps);
+    setErrorMessage(INITIAL_ERROR_MESSAGE);
     setLockAmount(event.value);
+
+    if (validate(event.value)) return;
 
     const estimation = getInspiritEstimate(
       event.value,
@@ -176,7 +182,7 @@ const GetInSpirit = () => {
       setLoadingText('');
     } catch (error) {
       loadingOff();
-      throw '';
+      console.error(error);
     }
   };
 
@@ -196,7 +202,7 @@ const GetInSpirit = () => {
     } catch (error) {
       loadingOff();
       setLoadingText('');
-      throw '';
+      console.error(error);
     }
   };
 
@@ -217,7 +223,7 @@ const GetInSpirit = () => {
     } catch (error) {
       loadingOff();
       setLoadingText('');
-      throw '';
+      console.error(error);
     }
   };
 
@@ -232,13 +238,15 @@ const GetInSpirit = () => {
     } catch (error) {
       loadingOff();
       setLoadingText('');
-      throw '';
+      console.error(error);
     }
   };
 
-  const validate = () => {
+  const validate = (lockAmount: string) => {
+    const numberLockAmount = parseFloat(lockAmount);
+
     if (lockMode === 0) {
-      if (!lockAmount || Number(lockAmount) === 0) {
+      if (!lockAmount || !numberLockAmount) {
         setErrorMessage({ msg: NON_ZERO, canApprove: false });
         return true;
       }
@@ -250,15 +258,7 @@ const GetInSpirit = () => {
       }
     }
 
-    if (
-      Number(lockAmount) > Number(lockedSpiritBalance) &&
-      lockedSpiritBalance !== '0.0'
-    ) {
-      setErrorMessage({ msg: NOT_ENOUGH_FUNDS, canApprove: false });
-      return true;
-    }
-
-    if (Number(balance) < Number(lockAmount)) {
+    if (parseFloat(balance || '') < numberLockAmount) {
       setErrorMessage({ msg: NOT_ENOUGH_FUNDS, canApprove: false });
       return true;
     }
@@ -267,8 +267,9 @@ const GetInSpirit = () => {
   };
 
   const handleInspiritAction = async () => {
-    setErrorMessage(initialErrorMessageProps);
-    if (validate()) return;
+    setErrorMessage(INITIAL_ERROR_MESSAGE);
+
+    if (validate(lockAmount)) return;
 
     if (inspiritAllowance && !hasLock) {
       return lockSpiritForInSpirit();
@@ -282,6 +283,7 @@ const GetInSpirit = () => {
       return extendLockingPeriod();
     }
   };
+
   const handleInspiritLabel = () => {
     const lockText = 'Lock SPIRIT for inSPIRIT';
     if (inspiritAllowance && !hasLock) {
@@ -337,7 +339,8 @@ const GetInSpirit = () => {
 
     if (isLoading) return DISABLED;
     if (!isLoggedIn) return DISABLED;
-    if (errorMessage.canApprove) return DISABLED;
+    if (errorMessage?.canApprove) return DISABLED;
+    if (errorMessage?.msg) return DISABLED;
     if (lockMode === 0 && lockAmount === '') return DISABLED;
     if (lockMode === 1 && estimate.date?.unix() === lockedInSpiritEndDate)
       return DISABLED;
@@ -347,7 +350,6 @@ const GetInSpirit = () => {
     return NOT_DISABLED;
   };
 
-  const [steps, setSteps] = useState<StepStateProps[]>([]);
   const handleTransactionFlow = () => {
     const approveStep: StepStateProps = {
       action: approveSpiritAmount,
@@ -356,16 +358,16 @@ const GetInSpirit = () => {
         ? TransactionStatus.UPCOMING
         : TransactionStatus.SUCCESS,
     };
+
     const actionStep: StepStateProps = {
       action: handleInspiritAction,
       label: handleInspiritLabel(),
       status: TransactionStatus.UPCOMING,
     };
-    if (lockMode === 1) {
-      setSteps([actionStep]);
-    } else {
-      setSteps([approveStep, actionStep]);
-    }
+
+    if (lockMode === 1) setSteps([actionStep]);
+    else setSteps([approveStep, actionStep]);
+
     onOpen();
   };
 
@@ -428,7 +430,7 @@ const GetInSpirit = () => {
             context="token"
             onChange={handleSetLockAmount}
             showPercentage
-            errorMessage={errorMessage.msg}
+            errorMessage={errorMessage?.msg}
             setErrorMessage={setErrorMessage}
             setBalance={setBalance}
           />
