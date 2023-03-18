@@ -10,6 +10,8 @@ const MobileTable: FC<MobileTableProps> = ({
   resetInputs,
   onNewVote,
   cleanError,
+  showAll,
+  uniqueFarm,
 }) => {
   const [direction, setDirection] = useState('des');
 
@@ -61,19 +63,33 @@ const MobileTable: FC<MobileTableProps> = ({
           );
         })}
       </Grid>
-      <HStack overflow="scroll">
-        {filteredBribes.length
-          ? filteredBribes.map((farm, i) => (
-              <MobileRow
-                farm={farm}
-                key={`farm-${farm.name}-${i}`}
-                resetInputs={resetInputs}
-                onNewVote={onNewVote}
-                cleanError={cleanError}
-              />
-            ))
-          : null}
-      </HStack>
+      {showAll ? (
+        <HStack overflow="scroll">
+          {filteredBribes.length
+            ? filteredBribes.map((farm, i) => (
+                <MobileRow
+                  farm={farm}
+                  key={`farm-${farm.name}-${i}`}
+                  resetInputs={resetInputs}
+                  onNewVote={onNewVote}
+                  cleanError={cleanError}
+                  showAll={showAll}
+                />
+              ))
+            : null}
+        </HStack>
+      ) : (
+        <HStack w="full">
+          <MobileRow
+            farm={uniqueFarm}
+            key={`farm-${uniqueFarm?.name}`}
+            resetInputs={resetInputs}
+            onNewVote={onNewVote}
+            cleanError={cleanError}
+            showAll={showAll}
+          />
+        </HStack>
+      )}
     </HStack>
   );
 };
