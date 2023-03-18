@@ -180,6 +180,13 @@ export const tokens: Token[] = [
     decimals: 8,
   },
   {
+    name: 'Rave Names',
+    symbol: 'Rave',
+    address: '0x88888a335b1F65a79Ec56A610D865b8b25B6060B',
+    chainId: 250,
+    decimals: 18,
+  },
+  {
     name: 'Wrapped ETH',
     symbol: 'WETH',
     address: '0x74b23882a30290451A17c44f4F05243b6b58C76d',
@@ -644,13 +651,13 @@ export const tokens: Token[] = [
     chainId: 250,
   },
   {
-  name: 'Ankr Staked FTM',
-  symbol: 'ankrFTM',
-  chainId: 250,
-  address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
-  decimals: 18,
+    name: 'Ankr Staked FTM',
+    symbol: 'ankrFTM',
+    chainId: 250,
+    address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
+    decimals: 18,
   },
-  
+
   wBOMB,
   MIM,
   FRAX,
