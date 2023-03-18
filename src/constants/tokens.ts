@@ -168,6 +168,14 @@ export const wBOMB = {
   chainId: 250,
 };
 
+export const CHILL = {
+  name: 'ChillPillFTM',
+  symbol: 'CHILL',
+  address: '0xe47d957F83F8887063150AaF7187411351643392',
+  decimals: 18,
+  chainId: 250,
+};
+
 export const tokens: Token[] = [
   FTM,
   SPIRIT,
@@ -659,6 +667,7 @@ export const tokens: Token[] = [
   FUSDT,
   DAI,
   CRE8R,
+  CHILL,
 ];
 
 // Common tokens lists
