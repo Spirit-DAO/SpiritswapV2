@@ -70,18 +70,21 @@ const navDropdownMenus = [
   BUYFTM,
 ];
 
-const NavMenuItem = ({ menu, is_active }: NavMenuProps) => {
+const NavMenuItem = ({ menu }: NavMenuProps) => {
   const Image = menu.image;
   const dispatch = useAppDispatch();
   const handleResetError = () => dispatch(setUnexpectedError(false));
+  const { pathname } = useLocation();
+
+  const isActive = pathname?.replace('/', '') === menu?.path?.toLowerCase();
 
   return (
     <StyledMenuItem
       to={resolveRoutePath(menu.path)}
-      $is_active={is_active}
+      $is_active={isActive}
       onClick={handleResetError}
     >
-      <Icon size="24px" icon={<Image selected={is_active} />} />
+      <Icon size="24px" icon={<Image selected={isActive} />} />
       <MenuLabel>{menu.title}</MenuLabel>
     </StyledMenuItem>
   );
@@ -104,8 +107,6 @@ const Footer = () => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [outsideClicked, setOutsideClicked] = useState(false);
-  const location = useLocation();
-  const [menuIndex, setMenuIndex] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const onHideDropdownCallback = useCallback(() => {
     setShowDropdown(false);
@@ -115,15 +116,6 @@ const Footer = () => {
   const onClickMoreButton = () => {
     !outsideClicked && setShowDropdown(!showDropdown);
   };
-
-  useEffect(() => {
-    setMenuIndex(
-      [...translatedNavMenus, ...translatedDropdownMenus].findIndex(
-        menu => location.pathname === menu.path,
-      ),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
 
   useEffect(() => {
     outsideClicked &&
@@ -179,19 +171,12 @@ const Footer = () => {
         </ThirdPartyItemsDiv>
       </FooterDiv>
       <MenuWrapper ref={ref}>
-        {translatedNavMenus.map((menu, index) => {
-          const active: boolean = Math.abs(menuIndex) === index || false;
-          return (
-            <NavMenuItem
-              key={`${menu.path}-${active}`}
-              menu={menu}
-              is_active={active}
-            />
-          );
+        {translatedNavMenus.map(menu => {
+          return <NavMenuItem key={menu.path} menu={menu} />;
         })}
         <MoreButtonWrapper selected={showDropdown} onClick={onClickMoreButton}>
           <Icon size="24px" icon={<DotsIcon selected={showDropdown} />} />
-          <MoreButtonLabel>More</MoreButtonLabel>
+          <MoreButtonLabel>Moreee</MoreButtonLabel>
           <NavDropdownWrapper>
             {showDropdown && (
               <NavigationDropdown

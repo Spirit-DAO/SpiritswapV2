@@ -6,5 +6,4 @@ export interface MenuButtonProps {
 
 export interface NavMenuProps {
   menu: { title: string; image: FC<MenuButtonProps>; path: string };
-  is_active: boolean;
 }
