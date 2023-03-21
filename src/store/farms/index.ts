@@ -27,6 +27,7 @@ const initialState: InitialStateProps = {
   customFarmTokens: tokens,
   ecosystemFarms: [],
   farmMasterData: [],
+  concentratedLiquidityFarms: [],
 };
 
 export const farmsReducer = createSlice({
@@ -57,6 +58,9 @@ export const farmsReducer = createSlice({
     setFarmMasterData: (state, action) => {
       state.farmMasterData = action.payload;
     },
+    setConcentratedLiquidityFarms: (state, action) => {
+      state.concentratedLiquidityFarms = action.payload;
+    },
   },
 });
 
@@ -70,6 +74,7 @@ export const {
   setFarmTokens,
   setEcosystemFarms,
   setFarmMasterData,
+  setConcentratedLiquidityFarms,
 } = farmsReducer.actions;
 
 export default farmsReducer.reducer;
