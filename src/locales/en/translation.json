@@ -242,9 +242,22 @@
         {
           "message": "You currently don't have active farms",
           "action": "Start farming"
+        },
+        {
+          "message": "You currently don't provider V3 liquidity",
+          "action": "Add liquidity"
+        },
+        {
+          "message": "You currently don't have active V3 farms",
+          "action": "Start farming"
         }
       ],
-      "noResults": ["No LP Token found", "No active farm found"],
+      "noResults": [
+        "No LP Token found",
+        "No active farm found",
+        "No V3 liquidity found",
+        "No V3 farms found"
+      ],
       "sub": [
         {
           "title": "Liquidity",
@@ -255,6 +268,14 @@
         {
           "title": "Farms",
           "unit": "Active Farm(s)"
+        },
+        {
+          "title": "Concentrated Liquidity",
+          "unit": "V3 Position(s)"
+        },
+        {
+          "title": "V3 Farms",
+          "unit": "V3 Farm(s)"
         }
       ],
       "footer": {
@@ -433,7 +454,9 @@
         "loading": "Loading..."
       },
       "firstLiquidityProvider": "You are the first liquidity provider. No farms exist for this pair. The ratio of tokens you add will set the price of this pool. Once you are happy with the rate click supply to review.",
-      "alternatePair": "It looks like you are trying to add liquidity to a {{type}} liquidity pool which does not have a farm. A farm exists for the {{altType}} liquidity pool, if you would like to deposit into this farm, switch your liquidity type to {{altType}}."
+      "alternatePair": "It looks like you are trying to add liquidity to a {{type}} liquidity pool which does not have a farm. A farm exists for the {{altType}} liquidity pool, if you would like to deposit into this farm, switch your liquidity type to {{altType}}.",
+      "lpTokens": "LP token(s)",
+      "concentratedPositions": "V3 Position(s)"
     }
   },
   "farms": {
@@ -462,6 +485,7 @@
       "claimRewards": "Claim Rewards",
       "confirmWithdraw": "Confirm",
       "lpTokens": "LP tokens",
+      "concentratedPositions": "Concentrated Positions",
       "stakedLPTokens": "Staked LP Tokens",
       "stakedLPTokensMoney": "USD Value",
       "yourApr": "Your APR",
@@ -469,6 +493,7 @@
       "all": "All",
       "classic": "Classic",
       "classicV2": "Variable",
+      "concentrated": "Concentrated",
       "variable": "Variable",
       "stable": "Stable",
       "admin": "Admin",

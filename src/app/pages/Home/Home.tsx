@@ -118,7 +118,13 @@ const Home = () => {
   const translationPath = 'home.common';
   const navigate = useNavigate();
   const isMobile = useMobile();
-  const { isLoggedIn, account, liquidity, walletLiquidity } = useWallets();
+  const {
+    isLoggedIn,
+    account,
+    liquidity,
+    walletLiquidity,
+    concentratedLiqudiity,
+  } = useWallets();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useAppDispatch();
   const { name: browserName } = browser();
@@ -253,6 +259,7 @@ const Home = () => {
     setLiquidityData({
       ...liquidity,
       stakeList: walletLiquidity,
+      v3LiquidityList: concentratedLiqudiity,
     });
     setLimitOrdersData(limitOrders);
 
@@ -298,7 +305,15 @@ const Home = () => {
         return setTokenData(response_1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokensToShow, tokens, account, liquidity, dispatch, limitOrders]);
+  }, [
+    tokensToShow,
+    tokens,
+    account,
+    liquidity,
+    dispatch,
+    limitOrders,
+    concentratedLiqudiity,
+  ]);
 
   const portfolioAmount =
     portfolioAmountValue +

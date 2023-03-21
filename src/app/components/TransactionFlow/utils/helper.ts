@@ -2,6 +2,7 @@ import { TransactionStatus } from 'app/components/TransactionFlow';
 import {
   depositAllGaugePoolToken,
   gaugeHarvest,
+  harvestConcentratedFarm,
 } from 'utils/web3/actions/farm';
 import { BASE_TOKEN_ADDRESS } from 'constants/index';
 import { FarmConfig } from 'constants/types';
@@ -17,8 +18,10 @@ import {
   AddLiquidityTrade,
   addWeightedLiquidity,
   AddLiquidityTradeV2,
+  AddLiquidityTradeV3,
   addSobLiquidity,
   removeLiquidity,
+  addConcentratedLiquidity,
 } from 'utils/web3/actions/liquidity';
 import {
   unstakePoolToken,
@@ -29,6 +32,7 @@ import { parseUnits } from 'ethers/lib/utils';
 import { StepProps } from '../TransactionFlow.d';
 import { FarmRewardInfo } from 'utils/data';
 import { formatAmount, getRoundedSFs } from 'app/utils';
+import { IConcentratedFarm } from 'app/interfaces/Farm';
 
 export const buildCheckAndApprove = (
   number: number,
@@ -59,9 +63,13 @@ export const buildCheckAndApprove = (
 export const buildAddLiquidity = (
   number: number,
   account: string,
-  liquidityTrade: AddLiquidityTrade | AddLiquidityTradeV2 | null,
+  liquidityTrade:
+    | AddLiquidityTrade
+    | AddLiquidityTradeV2
+    | AddLiquidityTradeV3
+    | null,
   isV2?: boolean,
-  type?: number, // classic: 0, stable: 1, weighted: 2
+  type?: number, // classic: 0, stable: 1, concentrated: 2, weighted: 3
   isStable?: boolean,
 ): StepProps | {} => {
   let action: Function = addLiquidity;
@@ -77,6 +85,13 @@ export const buildAddLiquidity = (
   }
 
   if (type === 2) {
+    action = addConcentratedLiquidity;
+    if (liquidityTrade) {
+      params = Object.values(liquidityTrade);
+    }
+  }
+
+  if (type === 3) {
     action = addWeightedLiquidity;
     if (liquidityTrade) {
       params = Object.values(liquidityTrade);
@@ -514,20 +529,58 @@ export const claimRewards = async ({
   addToQueue: any;
 }) => {
   let tx;
+  let text;
   try {
     // if (!farm.gaugeAddress) {
     //   tx = await harvest(farm.pid);
     // }
 
-    if (farm.gaugeAddress) {
+    if (farm.isConcentrated) {
+      const _farm = farm as unknown as IConcentratedFarm;
+
+      tx = await harvestConcentratedFarm(
+        _farm.eternalFarming.owner,
+        _farm.eternalFarming.rewardToken.id,
+        _farm.eternalFarming.bonusRewardToken.id,
+        _farm.eternalFarming.pool.id,
+        _farm.eternalFarming.startTime,
+        _farm.eternalFarming.endTime,
+        _farm.tokenId,
+      );
+
+      if (
+        _farm.eternalFarming.rewardToken.id ===
+        _farm.eternalFarming.bonusRewardToken.id
+      ) {
+        text = `Claiming ${getRoundedSFs(
+          formatAmount(
+            _farm.eternalFarming.earned + _farm.eternalFarming.bonusEarned,
+            _farm.eternalFarming.rewardToken.decimals,
+          ),
+        )}`;
+      } else {
+        text = `Claiming ${getRoundedSFs(
+          formatAmount(
+            _farm.eternalFarming.earned + _farm.eternalFarming.bonusEarned,
+            _farm.eternalFarming.rewardToken.decimals,
+          ),
+        )} ${_farm.eternalFarming.rewardToken.symbol} and ${getRoundedSFs(
+          formatAmount(
+            _farm.eternalFarming.bonusEarned,
+            _farm.eternalFarming.bonusRewardToken.decimals,
+          ),
+        )} ${_farm.eternalFarming.bonusRewardToken.symbol}`;
+      }
+    } else if (farm.gaugeAddress) {
       tx = await gaugeHarvest(farm.gaugeAddress);
+      text = `Claiming ${getRoundedSFs(formatAmount(farm.earned, 18))}`;
     }
 
     const response = transactionResponse('farm.claim', {
       tx: tx,
       uniqueMessage: {
-        text: `Claiming ${getRoundedSFs(formatAmount(farm.earned, 18))}`,
-        secondText: 'SPIRIT',
+        text,
+        secondText: farm.isConcentrated ? '' : 'SPIRIT',
       },
       update: 'portfolio',
       updateTarget: 'user',

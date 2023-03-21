@@ -1,6 +1,10 @@
 import { checkAddress } from 'app/utils';
 import { store } from 'store';
-import { setEcosystemFarms, setFarmMasterData } from 'store/farms';
+import {
+  setConcentratedLiquidityFarms,
+  setEcosystemFarms,
+  setFarmMasterData,
+} from 'store/farms';
 import {
   setSpiritWarsData,
   setSpiritWarsStatistics,
@@ -42,6 +46,7 @@ import {
   setSpiritClaimableAmount,
   setTokens,
   setUserLiquidityWallet,
+  setUserV3LiquidityWallet,
   setUserSobLiquidityWallet,
   setUserWallet,
   setUserWeightedLiquidityWallet,
@@ -62,6 +67,9 @@ export const listenToAppWorker = (
         break;
       case 'setFarmMasterData':
         dispatch(setFarmMasterData(JSON.parse(payload)));
+        break;
+      case 'setConcentratedLiquidityFarms':
+        dispatch(setConcentratedLiquidityFarms(payload));
         break;
       case 'setSpiritWarsStatistics':
         dispatch(setSpiritWarsStatistics(payload));
@@ -135,6 +143,9 @@ export const listenToUserworker = (worker: Worker, dispatch) => {
         break;
       case 'setLiquidityWallet':
         dispatch(setUserLiquidityWallet(payload));
+        break;
+      case 'setV3LiquidityWallet':
+        dispatch(setUserV3LiquidityWallet(payload));
         break;
       case 'setUserLiquidityWallet':
         dispatch(setUserLiquidityWallet(payload));
