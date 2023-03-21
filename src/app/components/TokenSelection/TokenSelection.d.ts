@@ -3,4 +3,5 @@ export interface Props {
   handleOpen?: () => void;
   src?: string;
   isSelectable?: boolean;
+  isTokenSelectorOnly?: boolean;
 }
