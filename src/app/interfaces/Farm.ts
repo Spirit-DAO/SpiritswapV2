@@ -22,6 +22,7 @@ export interface IFarm {
   classic?: boolean;
   stable?: boolean;
   weighted?: boolean;
+  concentrated?: boolean;
 
   /* Info */
   totalLiquidity: number;
@@ -50,6 +51,17 @@ export interface IFarm {
   pid: number;
 }
 
+export interface IConcentratedFarm extends IFarm {
+  pool: any;
+  rangeLength: number;
+  eternalFarming: any | null;
+  rewardToken: any;
+  bonusRewardToken: any;
+  rewardRate: any;
+  bonusRewardRate: any;
+  wallet?: any[];
+}
+
 export interface IFarmTransaction {
   farm: IFarm;
   amountStaked: string;
@@ -57,9 +69,9 @@ export interface IFarmTransaction {
   moneyValue: string;
   type?: FarmTransactionType;
   onConfirmDeposit: (_amount: string) => Promise<any> | void;
-  onConfirmWithdraw: (_amount: string, isMax: boolean) => Promise<any> | void;
+  onConfirmWithdraw: (_amount: string, isMax?: boolean) => Promise<any> | void;
   onCancelTransaction?: () => void;
-  onApproveTransaction: () => any;
+  onApproveTransaction: (_positionId?: string) => any;
   onClaimTransaction: () => any;
   onOpen?: () => void;
 }
@@ -77,6 +89,7 @@ export enum FarmType {
   ALL,
   CLASSIC,
   STABLE,
+  CONCENTRATED,
   ADMIN,
 }
 

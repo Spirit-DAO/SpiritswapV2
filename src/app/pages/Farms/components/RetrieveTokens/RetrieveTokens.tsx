@@ -7,10 +7,12 @@ import {
 } from './styles';
 
 import { formatAmount } from 'app/utils';
+import { Box, Skeleton } from '@chakra-ui/react';
 
 export const RetrieveTokens = ({
   highlight = false,
   value,
+  isConcentrated = false,
   moneyValue,
   title,
   button,
@@ -21,13 +23,43 @@ export const RetrieveTokens = ({
     <StyledContainer style={style}>
       <div>
         <StyledParagraph>{title}</StyledParagraph>
-        {highlight ? (
-          <StyledValue>{formatAmount(value, 6)}</StyledValue>
-        ) : (
-          <StyledHighlightValue>{formatAmount(value, 6)}</StyledHighlightValue>
-        )}
+        <Box mb="3px">
+          {isConcentrated ? (
+            value ? (
+              <StyledHighlightValue>{value}</StyledHighlightValue>
+            ) : (
+              <Skeleton
+                startColor="grayBorderBox"
+                endColor="bgBoxLighter"
+                w="100px"
+                h="16px"
+              />
+            )
+          ) : highlight ? (
+            <StyledValue>
+              {isConcentrated ? value : formatAmount(value, 6)}
+            </StyledValue>
+          ) : (
+            <StyledHighlightValue>
+              {isConcentrated ? value : formatAmount(value, 6)}
+            </StyledHighlightValue>
+          )}
+        </Box>
         <StyledParagraph color="grayDarker">
-          {preParsed ? moneyValue : `$${moneyValue}`}
+          {moneyValue ? (
+            preParsed ? (
+              moneyValue
+            ) : (
+              `$${moneyValue}`
+            )
+          ) : (
+            <Skeleton
+              startColor="grayBorderBox"
+              endColor="bgBoxLighter"
+              w="50px"
+              h="16px"
+            />
+          )}
         </StyledParagraph>
       </div>
       <div>{button}</div>

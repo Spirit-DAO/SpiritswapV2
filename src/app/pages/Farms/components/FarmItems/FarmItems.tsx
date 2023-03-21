@@ -9,6 +9,7 @@ function FarmItems({
   handleBackToFarms,
   handleResetFilters,
   userLiquidity,
+  userConcentratedLiquidity,
   farms,
   farmFilters,
   isLoading,
@@ -50,7 +51,12 @@ function FarmItems({
                       <FarmController
                         key={`farm-${farm.title}-${farm.lpAddress}-${farm.label}-${index}`}
                         onOpen={onOpen}
-                        farm={{ ...farm, wallet: userLiquidity }}
+                        farm={{
+                          ...farm,
+                          wallet: farm.concentrated
+                            ? userConcentratedLiquidity
+                            : userLiquidity,
+                        }}
                       />
                     )
                   );

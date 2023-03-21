@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Flex, Skeleton } from '@chakra-ui/react';
+import { Button, Flex, List, Skeleton } from '@chakra-ui/react';
 import { FarmTransactionType } from 'app/pages/Farms/enums/farmTransaction';
 import { StyledHeading, StylesContainer } from './styles';
 import UseIsLoading from 'app/hooks/UseIsLoading';
 import { checkAddress } from 'app/utils';
-import { farmStatus } from 'utils/web3/actions/farm';
+import { concentratedFarmStatus, farmStatus } from 'utils/web3/actions/farm';
 import { TokenAmountPanel } from 'app/components/NewTokenAmountPanel';
 import { NON_ZERO, NOT_ENOUGH_FUNDS } from 'constants/errors';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
@@ -21,6 +21,8 @@ import useWallets from 'app/hooks/useWallets';
 import { selectLpPrices } from 'store/general/selectors';
 import { Props } from './FarmTransaction.d';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
+import { ConcentratedPositionsPanel } from '../ConcentratedPositionsPanel';
+import { IConcentratedFarm } from 'app/interfaces/Farm';
 
 const FarmTransaction = ({
   farm,
@@ -31,6 +33,7 @@ const FarmTransaction = ({
   onConfirmDeposit,
   onOpen,
   TokenList,
+  preselectedPosition,
 }: Props) => {
   const { t } = useTranslation();
   const { account } = useWallets();
@@ -45,6 +48,8 @@ const FarmTransaction = ({
   const [shouldTransition, setShouldTransition] = useState(true);
   const farmsStaked = useAppSelector(selectFarmsStaked);
   const lpPrices = useAppSelector(selectLpPrices);
+  const [selectedConcentratedPosition, setSelectedConcentratedPosition] =
+    useState<string | undefined>(preselectedPosition);
 
   useEffect(() => {}, [account]);
 
@@ -93,6 +98,8 @@ const FarmTransaction = ({
   }
 
   const hasError = () => {
+    if (farm.concentrated) return false;
+
     const checkNonZeroValue = !+inputValue;
     if (checkNonZeroValue) {
       setErrorMessage(NON_ZERO);
@@ -107,6 +114,11 @@ const FarmTransaction = ({
 
   const handleInput = token => {
     setInputValue(token.value);
+    setErrorMessage(undefined);
+  };
+
+  const handleConcentratedInput = positionId => {
+    setSelectedConcentratedPosition(positionId);
     setErrorMessage(undefined);
   };
 
@@ -128,7 +140,12 @@ const FarmTransaction = ({
       }
       setLoadingText('Pending');
       const isMax = inputValue === amount;
-      const tx = await onConfirmWithdraw(inputValue, isMax);
+      let tx;
+      if (farm.concentrated) {
+        tx = await onConfirmWithdraw(selectedConcentratedPosition || '');
+      } else {
+        tx = await onConfirmWithdraw(inputValue, isMax);
+      }
       const response = transactionResponse('farm.withdraw', {
         tx: tx,
         inputSymbol: `${title} LP`,
@@ -157,15 +174,40 @@ const FarmTransaction = ({
     try {
       loadingOn();
       setLoadingText('Checking approve');
-      const status = await farmStatus(lpAddress, gaugeAddress, account);
+      let status;
+
+      if (farm.concentrated) {
+        if (selectedConcentratedPosition) {
+          status = await concentratedFarmStatus(selectedConcentratedPosition);
+        } else {
+          return;
+        }
+      } else {
+        status = await farmStatus(lpAddress, gaugeAddress, account);
+      }
+
       setLoadingText('Approve');
       if (status.toString() === '0') {
-        const txApprove = await onApproveTransaction();
+        const txApprove = await onApproveTransaction(
+          selectedConcentratedPosition && selectedConcentratedPosition,
+        );
         setLoadingText('Approving');
         await txApprove.wait();
       }
       setLoadingText('Pending');
-      const tx = await onConfirmDeposit(inputValue);
+
+      let tx;
+
+      if (farm.concentrated) {
+        if (selectedConcentratedPosition) {
+          tx = await onConfirmDeposit(selectedConcentratedPosition);
+        } else {
+          return;
+        }
+      } else {
+        tx = await onConfirmDeposit(inputValue);
+      }
+
       const response = transactionResponse('farm.deposit', {
         tx: tx,
         inputSymbol: `${title} LP`,
@@ -196,9 +238,47 @@ const FarmTransaction = ({
   const getTitle = () => {
     switch (type) {
       case FarmTransactionType.DEPOSIT:
-        return `${t('farms.common.deposit')} ${t('farms.common.lpTokens')}`;
+        return `${t('farms.common.deposit')} ${
+          farm.concentrated
+            ? t('farms.common.concentratedPositions')
+            : t('farms.common.lpTokens')
+        }`;
       case FarmTransactionType.WITHDRAW:
-        return `${t('farms.common.withdraw')} ${t('farms.common.lpTokens')}`;
+        return `${t('farms.common.withdraw')} ${
+          farm.concentrated
+            ? t('farms.common.concentratedPositions')
+            : t('farms.common.lpTokens')
+        }`;
+    }
+  };
+
+  const getLiquidityPanel = () => {
+    switch (farm.label) {
+      case 'concentrated':
+        return (
+          <ConcentratedPositionsPanel
+            wallet={farm.wallet}
+            type={type}
+            preselectedPosition={preselectedPosition}
+            farm={farm as IConcentratedFarm}
+            onChange={handleConcentratedInput}
+          />
+        );
+
+      default:
+        return (
+          <TokenAmountPanel
+            token={token}
+            context={isWithdraw ? 'farm' : 'liquidity'}
+            showPercentage
+            showBalance
+            showTokenSelection={false}
+            errorMessage={errorMessage}
+            inputValue={inputValue}
+            onChange={handleInput}
+            setErrorMessage={setErrorMessage}
+          />
+        );
     }
   };
 
@@ -213,17 +293,7 @@ const FarmTransaction = ({
       <Skeleton isLoaded={!shouldTransition} fadeDuration={0.15} mt="0">
         <StyledHeading level={2}>{getTitle()}</StyledHeading>
 
-        <TokenAmountPanel
-          token={token}
-          context={isWithdraw ? 'farm' : 'liquidity'}
-          showPercentage
-          showBalance
-          showTokenSelection={false}
-          errorMessage={errorMessage}
-          inputValue={inputValue}
-          onChange={handleInput}
-          setErrorMessage={setErrorMessage}
-        />
+        {getLiquidityPanel()}
 
         <Flex>
           <Button

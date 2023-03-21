@@ -10,6 +10,8 @@ export const handleFarmData = (data, index) => {
       return data.filter(farm => farm.type === 'stable');
     // case FarmType.ADMIN:
     //   return data.filter(farm => farm.type === 'admin');
+    case FarmType.CONCENTRATED:
+      return data.filter(farm => farm.type === 'concentrated');
 
     default:
       return data;

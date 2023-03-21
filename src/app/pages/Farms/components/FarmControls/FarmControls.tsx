@@ -40,6 +40,7 @@ export default function FarmControls({
           t(`${translationPath}.all`),
           t(`${translationPath}.classicV2`),
           t(`${translationPath}.stable`),
+          t(`${translationPath}.concentrated`),
           //t(`${translationPath}.admin`),
         ]}
         onChange={onFarmTabChange}

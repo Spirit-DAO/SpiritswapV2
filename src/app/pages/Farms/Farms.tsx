@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'app/hooks/Routing';
 import { resetEcosystemValues, setEcosystemFarmAddress } from 'store/farms';
 import {
+  selectConcentratedFarms,
   selectEcosystemValues,
   selectFarmAddress,
   selectFarmMasterData,
@@ -40,6 +41,7 @@ import { ethers } from 'ethers';
 import useWallets from 'app/hooks/useWallets';
 import useLogin from 'app/connectors/EthersConnector/login';
 import { FARMS as FARMS_ROUTE } from 'app/router/routes';
+import { useEternalFarmingRewards } from 'app/hooks/v3/useEternalFarmingsRewards';
 
 const translationPath = 'farms.common';
 
@@ -48,7 +50,7 @@ export const Farms = () => {
   const { t } = useTranslation();
   const { address } = useParams();
   const { addToQueue } = Web3Monitoring();
-  const { userLiquidity } = GetWalletBalance();
+  const { userLiquidity, userConcentratedLiquidity } = GetWalletBalance();
   const { account } = useWallets();
   const { handleLogin } = useLogin();
   const pageTitle = `${t('common.name')} - ${t(`${translationPath}.title`)}`;
@@ -64,11 +66,14 @@ export const Farms = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const farmMasterData = useAppSelector(selectFarmMasterData);
+  const concentratedData = useAppSelector(selectConcentratedFarms);
   const spiritPriceInfo = useAppSelector(selectSpiritInfo);
   const ecosystemValues = useAppSelector(selectEcosystemValues);
   const ecosystemFarmAddress = useAppSelector(selectFarmAddress);
   const rewards = useAppSelector(selectFarmRewards);
   const farmsStaked = useAppSelector(selectFarmsStaked);
+
+  const { positionsOnFarming } = useEternalFarmingRewards();
 
   const { price: spiritPrice } = spiritPriceInfo;
 
@@ -77,6 +82,7 @@ export const Farms = () => {
   const initialFarmFilters = {
     staked: false,
     inactive: false,
+    concentrated: false,
   };
 
   const [farmFilters, setFarmFilters] =
@@ -106,14 +112,21 @@ export const Farms = () => {
   useEffect(() => {
     if (farmMasterData.length !== 0) {
       if (address) {
-        const getFarmByAddress = farmMasterData?.filter(
+        let getFarmByAddress = farmMasterData?.filter(
           pool => pool?.lpAddress?.toLowerCase() === address?.toLowerCase(),
         );
+
+        if (getFarmByAddress.length === 0 && concentratedData) {
+          getFarmByAddress = concentratedData?.filter(
+            farm => farm?.id === address,
+          );
+        }
+
         setFarmData(getFarmByAddress);
         setIsLoading(false);
       }
     }
-  }, [farmMasterData, address, setFarmData]);
+  }, [farmMasterData, concentratedData, address, setFarmData]);
 
   useEffect(() => {
     const updateCollectedRewards = () => {
@@ -201,14 +214,17 @@ export const Farms = () => {
   };
 
   useEffect(() => {
+    // if (!address && farmMasterData && farmMasterData.length > 0) {
     if (!address && farmMasterData && farmMasterData.length > 0) {
       let result: any = farmMasterData;
-      if (result.length === 0) {
-        result = farmMasterData;
+
+      if (concentratedData && concentratedData.length > 0) {
+        result = concentratedData.concat(result);
       }
 
       result = onFarmFilterChange(result);
       result = handleFarmData(result, selectedTab);
+
       if (searchTerm.length > 0) {
         result = onFilterByQueryChange(result, searchTerm);
       }
@@ -223,6 +239,7 @@ export const Farms = () => {
     searchTerm,
     sortType,
     farmMasterData,
+    concentratedData,
     farmsStaked,
     hashRewards,
   ]);
@@ -278,6 +295,7 @@ export const Farms = () => {
           handleBackToFarms={handleBackToFarms}
           handleResetFilters={handleResetFilters}
           userLiquidity={userLiquidity}
+          userConcentratedLiquidity={userConcentratedLiquidity}
           farms={farmData}
           farmFilters={farmFilters}
           isLoading={isLoading}

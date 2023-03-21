@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EcosystemFarmType } from 'app/interfaces/Farm';
+import { EcosystemFarmType, IConcentratedFarm } from 'app/interfaces/Farm';
 import { IconTooltipPanel } from '../components/IconTooltipPanel';
 import { YourApr } from '../components/YourApr';
 import { IconButton } from 'app/components/IconButton';
@@ -22,6 +22,7 @@ import {
   AccordionPanel,
   Spinner,
   Skeleton,
+  Flex,
 } from '@chakra-ui/react';
 import { RetrieveTokens } from '../components/RetrieveTokens/RetrieveTokens';
 import {
@@ -40,6 +41,8 @@ import { formatUnits } from 'ethers/lib/utils';
 import { Props } from './Farm.d';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
 import { LIQUIDITY, resolveRoutePath } from 'app/router/routes';
+import { RetrieveConcentratedPosition } from '../components/RetrieveConcentratedPosition/RetrieveConcentratedPosition';
+import ImageLogo from 'app/components/ImageLogo';
 
 export const Farm = ({
   farm,
@@ -70,6 +73,8 @@ export const Farm = ({
     rewardToken,
     type,
     gaugeAddress,
+    concentrated,
+    label,
   } = farm;
 
   const { loadingPrices } = useGetTokensPrices({
@@ -169,7 +174,7 @@ export const Farm = ({
     });
   };
 
-  if (!ecosystem && aprRange) {
+  if (!ecosystem && aprRange && !farm.concentrated) {
     if (aprRange[0] !== aprRange[1]) {
       infoPanelItems.push({
         label: t(`farms.iconTooltipPanel.aprRange`),
@@ -187,7 +192,7 @@ export const Farm = ({
     }
   }
 
-  if (ecosystem) {
+  if (ecosystem && !farm.concentrated) {
     infoPanelItems.push({
       label: t(`farms.iconTooltipPanel.status`),
       value: t(
@@ -198,7 +203,7 @@ export const Farm = ({
     });
   }
 
-  if (!!totalLiquidity || totalLiquidity === 0) {
+  if (!!totalLiquidity || (totalLiquidity === 0 && !farm.concentrated)) {
     infoPanelItems.push({
       label: t(`farms.iconTooltipPanel.totalLiquidity`),
       value:
@@ -209,7 +214,7 @@ export const Farm = ({
 
   const multiplierValue = parseFloat(multiplier || '0');
 
-  if (!ecosystem && !!multiplier) {
+  if (!ecosystem && !!multiplier && !farm.concentrated) {
     infoPanelItems.push({
       label: t(`farms.iconTooltipPanel.votingWeight`),
       value:
@@ -219,19 +224,113 @@ export const Farm = ({
       tooltip: 'votingWeight',
     });
   }
-  infoPanelItems.push({
-    label: t(`${translationPath}.stakedLPTokens`),
-    value: checkSmallValue(+farmUserData.lpTokens),
-  });
 
-  infoPanelItems.push({
-    label: t(`${translationPath}.stakedLPTokensMoney`),
-    value: `$${farmUserData.lpTokensMoney}`,
-  });
-  if (ecosystem && rewardToken) {
+  if (!farm.concentrated) {
+    infoPanelItems.push({
+      label: t(`${translationPath}.stakedLPTokens`),
+      value: checkSmallValue(+farmUserData.lpTokens),
+    });
+
+    infoPanelItems.push({
+      label: t(`${translationPath}.stakedLPTokensMoney`),
+      value: `$${farmUserData.lpTokensMoney}`,
+    });
+  }
+
+  if (ecosystem && rewardToken && !farm.concentrated) {
     infoPanelItems.push({
       label: t(`farms.ecosystem.rewardToken`),
       value: rewardToken,
+    });
+  }
+
+  const concentratedStakedPositions = useMemo(() => {
+    const _farm = farm as IConcentratedFarm;
+
+    if (!_farm || !_farm.wallet) return [];
+
+    return _farm.wallet.filter(
+      stake => stake.eternalFarming && stake.eternalFarming.id === _farm.id,
+    );
+  }, [farm]);
+
+  const [claimTitle, claimValue, claimMoney] = useMemo(() => {
+    if (!farm.concentrated) {
+      return [
+        t(`${translationPath}.spiritEarned`),
+        farmUserData.spiritEarned,
+        farm.spiritEarnedMoney,
+      ];
+    }
+
+    const _farm = farm as IConcentratedFarm;
+
+    const earned = concentratedStakedPositions.reduce(
+      (acc, stake) => Number(stake.eternalFarming.earned) + acc,
+      0,
+    );
+    const bonusEarned = concentratedStakedPositions.reduce(
+      (acc, stake) => Number(stake.eternalFarming.bonusEarned) + acc,
+      0,
+    );
+
+    if (_farm.rewardToken.id === _farm.bonusRewardToken.id) {
+      return [
+        ' ',
+        `${Number(earned) + Number(bonusEarned)} ${_farm.rewardToken.symbol}`,
+        ' ',
+      ];
+    } else {
+      return [
+        `${Number(earned)} ${_farm.rewardToken.symbol}`,
+        `${Number(bonusEarned)} ${_farm.bonusRewardToken.symbol}`,
+      ];
+    }
+  }, []);
+
+  if (farm.concentrated) {
+    // TODO
+
+    const _farm = farm as IConcentratedFarm;
+
+    const rewardRate = formatUnits(
+      _farm.rewardRate,
+      Number(_farm.rewardToken.decimals),
+    );
+    const bonusRewardRate = formatUnits(
+      _farm.bonusRewardRate,
+      Number(_farm.bonusRewardToken.decimals),
+    );
+
+    const dailyRewardRate = Math.round(+rewardRate * 86_400);
+    const dailyBonusRewardRate = Math.round(+bonusRewardRate * 86_400);
+
+    if (_farm.rewardToken.id === _farm.bonusRewardToken.id) {
+      infoPanelItems.push({
+        label: `${_farm.rewardToken.symbol} per day`,
+        value: Number(dailyRewardRate) + Number(dailyBonusRewardRate),
+      });
+    } else {
+      infoPanelItems.push(
+        {
+          label: `${_farm.rewardToken.symbol} per day`,
+          value: dailyRewardRate,
+        },
+        {
+          label: `${_farm.bonusRewardToken.symbol} per day`,
+          value: dailyBonusRewardRate,
+        },
+      );
+    }
+
+    infoPanelItems.push({
+      label: 'TVL',
+      value: '$120k',
+    });
+
+    infoPanelItems.push({
+      label: 'Your Staked Positions',
+      value: concentratedStakedPositions.length,
     });
   }
 
@@ -244,17 +343,55 @@ export const Farm = ({
   const handleWithdraw = () => {
     onWithdraw(defaultAmount);
   };
+  const handleConcentratedInput = (positionId: string) => {
+    onWithdraw(positionId);
+  };
   const handleClaim = async () => {
     setIsLoading(true);
     try {
-      const tx = await onClaim();
+      let tx,
+        text,
+        secondText = '';
+
+      if (farm.concentrated) {
+        const _farm = farm as IConcentratedFarm;
+
+        const positionsToClaim = farm.wallet?.filter(
+          (position: any) => position?.eternalFarming?.id === farm.id,
+        );
+
+        const earned = positionsToClaim?.reduce(
+          (acc, stake: any) => Number(stake.eternalFarming.earned) + acc,
+          0,
+        );
+        const bonusEarned = positionsToClaim?.reduce(
+          (acc, stake: any) => Number(stake.eternalFarming.bonusEarned) + acc,
+          0,
+        );
+
+        const isSameToken = _farm.rewardToken.id === _farm.bonusRewardToken.id;
+
+        if (isSameToken) {
+          text = `${Number(earned) + Number(bonusEarned)} ${
+            _farm.rewardToken.symbol
+          }`;
+        } else
+          text = `${Number(earned)} ${_farm.rewardToken.symbol} + ${Number(
+            bonusEarned,
+          )} ${_farm.bonusRewardToken.symbol}`;
+
+        tx = await onClaim(positionsToClaim);
+      } else {
+        tx = await onClaim();
+        text = getRoundedSFs(farmUserData.spiritEarned?.toString() || '');
+        secondText = 'SPIRIT';
+      }
+
       const response = transactionResponse('farm.claim', {
         tx: tx,
         uniqueMessage: {
-          text: `Claiming ${getRoundedSFs(
-            farmUserData.spiritEarned?.toString() || '',
-          )}`,
-          secondText: 'SPIRIT',
+          text,
+          secondText,
         },
         update: 'portfolio',
         updateTarget: 'user',
@@ -279,7 +416,7 @@ export const Farm = ({
   const getUrl = () => {
     const token0 = tokens[0] === 'WFTM' ? 'FTM' : tokens[0];
     const token1 = tokens[1] === 'WFTM' ? 'FTM' : tokens[1];
-    return `${LIQUIDITY.path}/${token0}/${token1}/${type}`;
+    return `${LIQUIDITY.path}/${token0}/${token1}/${type || 'concentrated'}`;
   };
 
   const staked = Number(farmUserData.lpTokens) > 0;
@@ -311,33 +448,58 @@ export const Farm = ({
                 isMax={isMax}
                 lpApr={lpApr}
                 staked={staked}
+                concentrated={farm.concentrated}
               />
               <IconTooltipPanel staked={staked} items={infoPanelItems} />
               <AccordionPanel p={0}>
-                <RetrieveTokens
-                  key="retrieveToken2"
-                  highlight={true}
-                  value={checkSmallValue(+farmUserData.lpTokens)}
-                  moneyValue={farmUserData.lpTokensMoney}
-                  title={t(`${translationPath}.stakedLPTokens`)}
-                  style={{ marginTop: '0.5rem' }}
-                  button={
-                    <Button
-                      variant="secondary"
-                      onClick={handleWithdraw}
-                      disabled={!staked}
-                    >
-                      {t(`${translationPath}.withdraw`)}
-                    </Button>
-                  }
-                />
+                {concentrated ? (
+                  concentratedStakedPositions.map(position => (
+                    <RetrieveConcentratedPosition
+                      key={`retrieve-concentrated-${position.tokenId}`}
+                      position={position}
+                      highlight={true}
+                      title={`Position #${position.tokenId}`}
+                      style={{ marginTop: '0.5rem' }}
+                      button={
+                        <Button
+                          variant="secondary"
+                          onClick={() =>
+                            handleConcentratedInput(position.tokenId)
+                          }
+                          disabled={false}
+                        >
+                          {t(`${translationPath}.withdraw`)}
+                        </Button>
+                      }
+                    />
+                  ))
+                ) : (
+                  <RetrieveTokens
+                    key="retrieveToken2"
+                    highlight={true}
+                    value={checkSmallValue(+farmUserData.lpTokens)}
+                    moneyValue={farmUserData.lpTokensMoney}
+                    title={t(`${translationPath}.stakedLPTokens`)}
+                    style={{ marginTop: '0.5rem' }}
+                    button={
+                      <Button
+                        variant="secondary"
+                        onClick={handleWithdraw}
+                        disabled={!staked}
+                      >
+                        {t(`${translationPath}.withdraw`)}
+                      </Button>
+                    }
+                  />
+                )}
                 <RetrieveTokens
                   key="retrieveToken1"
                   highlight={false}
-                  value={`${farmUserData.spiritEarned}`}
-                  moneyValue={farmUserData.spiritEarnedMoney}
-                  title={t(`${translationPath}.spiritEarned`)}
+                  value={claimValue}
+                  moneyValue={claimMoney}
+                  title={claimTitle}
                   preParsed
+                  isConcentrated={farm.concentrated}
                   button={
                     <IconButton
                       size="small"
@@ -345,7 +507,7 @@ export const Farm = ({
                       variant="inverted"
                       label={t(`${translationPath}.claimRewards`)}
                       icon={isLoading ? <Spinner /> : <SparklesIcon />}
-                      disabled={!farmReward}
+                      disabled={farm.concentrated ? false : !farmReward}
                       onClick={handleClaim}
                     />
                   }

@@ -15,6 +15,7 @@ import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
 import { Props } from './FarmRewards.d';
 import useWallets from 'app/hooks/useWallets';
 import { setFarmRewards } from 'store/user';
+import { useEternalFarmingRewards } from 'app/hooks/v3/useEternalFarmingsRewards';
 
 const translationPath = 'farms.common';
 
@@ -26,6 +27,9 @@ export const FarmRewards = ({ rewards, spiritPrice }: Props) => {
   const dispatch = useAppDispatch();
   const farmsWithRewards = useAppSelector(selectFarmRewards);
   const notificationsTranslationsPath = 'notifications.farm.claim';
+
+  const { farmRewards: eternalFarmingRewards, positionsOnFarming } =
+    useEternalFarmingRewards();
 
   const getDataToClaimRewards = () => {
     if (!farmsWithRewards) {
@@ -48,7 +52,11 @@ export const FarmRewards = ({ rewards, spiritPrice }: Props) => {
 
   const { farmsPidV1, farmsGaugeAddressesV2 } = getDataToClaimRewards();
 
-  const claimRewardsCallback = useAllHarvest(farmsPidV1, farmsGaugeAddressesV2);
+  const claimRewardsCallback = useAllHarvest(
+    farmsPidV1,
+    farmsGaugeAddressesV2,
+    positionsOnFarming,
+  );
 
   const claimRewards = async () => {
     try {
@@ -70,7 +78,16 @@ export const FarmRewards = ({ rewards, spiritPrice }: Props) => {
   };
 
   const isDisabled = () =>
-    !isLoggedIn || !(farmsPidV1.length || farmsGaugeAddressesV2.length);
+    !isLoggedIn ||
+    !(
+      farmsPidV1.length ||
+      farmsGaugeAddressesV2.length ||
+      positionsOnFarming.length
+    );
+
+  const spiritRewards = Number(rewards) * spiritPrice;
+
+  const totalRewards = spiritRewards + (Number(eternalFarmingRewards) || 0);
 
   return (
     <StyledRewardsWrapper>
@@ -79,7 +96,7 @@ export const FarmRewards = ({ rewards, spiritPrice }: Props) => {
           {t(`${translationPath}.farmRewards`)}
         </StyledRewardsSubtitle>
         <StyledH2Heading level={2}>
-          {truncateTokenValue(Number(rewards) * spiritPrice, spiritPrice, '$')}
+          {truncateTokenValue(totalRewards, spiritPrice, '$')}
         </StyledH2Heading>
       </Box>
       <Box>
