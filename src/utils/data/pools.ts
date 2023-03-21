@@ -14,7 +14,13 @@ import Contracts from 'constants/contracts';
 import addresses from 'constants/contracts';
 import { IFarm } from 'app/interfaces/Farm';
 import { getSplitCalls, formatFarmsCalls } from 'utils/data';
-import { Multicall, Call, Contract } from 'utils/web3';
+import {
+  Multicall,
+  Call,
+  Contract,
+  nonfungiblePositionManagerContract,
+  MulticallV2,
+} from 'utils/web3';
 import { FarmChainData } from './types';
 import {
   request,
@@ -26,6 +32,16 @@ import { TokenAmount } from 'app/interfaces/General';
 import { checkAddress, GetVerifiedTokenFromAddres } from 'app/utils/methods';
 import { tokenData } from 'utils/data/types';
 import { weightedpools } from 'constants/weightedpools';
+import {
+  getEternalFarming,
+  getEternalFarmings,
+  getPool,
+  getToken,
+  getTransferredPositions,
+} from 'utils/apollo/queries-v3';
+import { algebraFarmingCenterContract } from 'utils/web3/actions/farm';
+import { getProvider } from 'app/connectors/EthersConnector/login';
+import { wallet } from 'utils/web3';
 
 const FARMS = farms;
 
@@ -734,6 +750,70 @@ export const loadFarmsList = async (
   );
 
   return masterFarms;
+};
+
+export const loadConcentratedFarmsList = async () => {
+  const eternalFarmings = await getEternalFarmings();
+
+  const _pools = eternalFarmings.map(farming => farming.pool);
+  const _rewardTokens = eternalFarmings.map(farming => farming.rewardToken);
+  const _bonusRewardTokens = eternalFarmings.map(
+    farming => farming.bonusRewardToken,
+  );
+
+  const pools = await Promise.all(_pools.map(pool => getPool(pool)));
+
+  const rewardTokens = await Promise.all(
+    _rewardTokens.map(reward => getToken(reward)),
+  );
+  const bonusRewardTokens = await Promise.all(
+    _bonusRewardTokens.map(reward => getToken(reward)),
+  );
+
+  if (!pools || !rewardTokens || !bonusRewardTokens) return [];
+
+  return eternalFarmings.map((farming, index) => {
+    const rewardRate = formatUnits(
+      new BigNumber(farming.rewardRate).toString(),
+      rewardTokens[index].decimals,
+    );
+    const bonusRewardRate = formatUnits(
+      new BigNumber(farming.bonusRewardRate).toString(),
+      bonusRewardTokens[index].decimals,
+    );
+
+    const dailyRewardRate = Math.round(+rewardRate * 86_400);
+    const dailyBonusRewardRate = Math.round(+bonusRewardRate * 86_400);
+
+    return {
+      title:
+        `${pools[index].token0.symbol} + ${pools[index].token1.symbol}`.replace(
+          'WFTM',
+          'FTM',
+        ),
+      tokens: [pools[index].token0.symbol, pools[index].token1.symbol],
+      label: 'concentrated',
+      totalLiquidity: 0,
+      aprLabel: 'APR',
+      stable: false,
+      boosted: false,
+      concentrated: true,
+      type: 'concentrated',
+      apr: '2',
+      ...farming,
+      rewardToken: rewardTokens[index],
+      bonusRewardToken: bonusRewardTokens[index],
+      dailyRewardRate,
+      dailyBonusRewardRate,
+      pool: pools[index],
+      valid: true,
+      lpAddress: pools[index].id,
+      aprRange: ['0', '1'],
+      rangeLength: farming.minRangeLength,
+      // apr: aprs && aprs[farming.id] ? aprs[farming.id] : 0,
+      // tvl: tvls && tvls[farming.id] && ethPrice ? Math.round(tvls[farming.id] * ethPrice) : 0
+    };
+  });
 };
 
 export const getGauges = async provider => {

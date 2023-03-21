@@ -26,11 +26,6 @@
     "type": "constructor"
   },
   {
-    "inputs": [],
-    "name": "tickOutOfRange",
-    "type": "error"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -338,24 +333,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "lock",
-        "type": "bool"
-      }
-    ],
-    "name": "changeTokenLock",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "components": [
           {
             "internalType": "uint256",
@@ -397,19 +374,6 @@
       }
     ],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "contractOwner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -495,19 +459,6 @@
   {
     "inputs": [],
     "name": "factory",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "farmingCenter",
     "outputs": [
       {
         "internalType": "address",
@@ -821,14 +772,9 @@
     "name": "positions",
     "outputs": [
       {
-        "internalType": "uint88",
+        "internalType": "uint96",
         "name": "nonce",
-        "type": "uint88"
-      },
-      {
-        "internalType": "bool",
-        "name": "locked",
-        "type": "bool"
+        "type": "uint96"
       },
       {
         "internalType": "address",
@@ -1108,32 +1054,6 @@
       }
     ],
     "name": "setApprovalForAll",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_farmingCenter",
-        "type": "address"
-      }
-    ],
-    "name": "setFarmingCenter",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "setOwner",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

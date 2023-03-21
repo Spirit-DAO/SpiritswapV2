@@ -24,6 +24,7 @@ import {
   selectTrackedTokens,
   selectBridgeTokensFrom,
   selectBridgeTokensTo,
+  selectConcentratedLiquidityWallet,
 } from 'store/user/selectors';
 import {
   selectTotalSpiritLocked,
@@ -314,8 +315,11 @@ export const GetWalletBalance = () => {
   const balances = useAppSelector(selectWallet);
   const userWallet = formatPortfolioToWallet(balances);
   const userLiquidity = useAppSelector(selectLiquidityWallet);
+  const userConcentratedLiquidity = useAppSelector(
+    selectConcentratedLiquidityWallet,
+  );
 
-  return { balances, userWallet, userLiquidity };
+  return { balances, userWallet, userLiquidity, userConcentratedLiquidity };
 };
 
 export const TrackedTokens = () => {

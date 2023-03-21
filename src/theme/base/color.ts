@@ -13,7 +13,7 @@ export const colorValues = {
     800: '#321623',
   },
   yellow: {
-    warningBgTrans15: 'rgba(234, 179, 8, 0,15)',
+    warningBgTrans15: 'rgba(234, 179, 8, 0.15)',
     500: '#EAB308',
     800: '#312E22',
   },
@@ -28,6 +28,7 @@ export const colorValues = {
     900: '#0D1321',
   },
   blue: {
+    400: '#4090FF',
     900: '#000315',
   },
 };

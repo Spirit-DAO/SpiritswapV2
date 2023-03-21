@@ -9,6 +9,7 @@ import {
   getMappedTokens,
   getPendingRewards,
   getStakedBalances,
+  getV3Balances,
   getTokenGroupStatistics,
   getUserBalances,
   getUserInspiritBalances,
@@ -97,6 +98,8 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
     const covalentRawDataPromise = getUserBalances(userWalletAddress);
 
     getStakedBalance(userWalletAddress, covalentRawDataPromise, provider);
+
+    getV3Liquidity(userWalletAddress, provider);
 
     const gaugesPromise = getGaugeBasicInfo(provider);
     const stakesAndLiquidity = async () => {
@@ -350,4 +353,23 @@ const fetchIndividualLP = async (userWalletAddress, params, provider) => {
     payload: data,
     userWalletAddress,
   });
+};
+
+const getV3Liquidity = async (userWalletAddress, provider) => {
+  const stakesPromise = new Promise(async resolve => {
+    const { v3PositionsArray } = await getV3Balances(
+      userWalletAddress,
+      provider,
+    );
+
+    self.postMessage({
+      type: 'setV3LiquidityWallet',
+      payload: v3PositionsArray,
+      userWalletAddress,
+    });
+
+    resolve('');
+  });
+
+  await Promise.all([stakesPromise]);
 };

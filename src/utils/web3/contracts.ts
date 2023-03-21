@@ -12,6 +12,7 @@ import souschefABI from './abis/sousChef.json';
 import masterChefABI2 from './abis/masterchefV2.json';
 import gaugeABI from './abis/gauges.json';
 import erc20ABI from './abis/erc20.json';
+import erc20Bytes32ABI from './abis/erc20-bytes32.json';
 import inSpiritABI from './abis/inspirit.json';
 import inSpiritLPABI from './abis/inspiritLp.json';
 import feeDistributorABI from './abis/feeDistributor.json';
@@ -61,6 +62,7 @@ export const ABIS = {
   gauge: gaugeABI,
   souschef: souschefABI,
   erc20: erc20ABI,
+  erc20Bytes32: erc20Bytes32ABI,
   inspirit: inSpiritABI,
   inspiritLp: inSpiritLPABI,
   feedistributor: feeDistributorABI,
@@ -214,7 +216,12 @@ export async function MulticallV2(
         ABIS[_connectABI],
       );
       if (call.params) {
-        action = targetContract[call.name](call.params[0]);
+        const isArray = Array.isArray(call.params[0]);
+        if (isArray) {
+          action = targetContract[call.name](...call.params[0]);
+        } else {
+          action = targetContract[call.name](call.params[0]);
+        }
       }
     }
     finalCalls.push(action);

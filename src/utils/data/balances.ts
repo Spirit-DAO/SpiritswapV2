@@ -12,6 +12,8 @@ import {
   getNativeTokenBalance,
   Multicall,
   MulticallSingleResponse,
+  MulticallV2,
+  nonfungiblePositionManagerContract,
 } from 'utils/web3';
 import { Call, balanceReturnData, tokenData } from './types';
 import safeExecute from 'utils/safeExecute';
@@ -24,6 +26,16 @@ import { getTokensDetails, getWalletData } from './covalent';
 import { formatUnits } from 'ethers/lib/utils';
 import { UNIDEX_ETH_ADDRESS } from 'utils/swap';
 import { checkInvalidValue } from 'app/utils';
+import {
+  getEternalFarming,
+  getEternalFarmingFromPool,
+  getPool,
+  getToken,
+  getTransferredPositions,
+} from 'utils/apollo/queries-v3';
+import { algebraFarmingCenterContract } from 'utils/web3/actions/farm';
+import BigNumber from 'bignumber.js';
+import { computePoolAddress, Token } from '../../v3-sdk';
 
 const FARMS = [...allFarms, ...unsupportedFarms];
 
@@ -567,4 +579,250 @@ export const getPendingRewards = async (
   });
 
   return rewards;
+};
+
+export const getV3Balances = async (_address: string, provider?: any) => {
+  const nonfungiblePositionManagerAddress =
+    addresses.v3NonfungiblePositionManager[CHAIN_ID];
+
+  const nonfungiblePositionManager = await Contract(
+    Contracts.v3NonfungiblePositionManager[CHAIN_ID],
+    'v3NonfungiblePositionManager',
+    undefined,
+    undefined,
+    provider,
+  );
+
+  const farmingCenter = await Contract(
+    Contracts.v3FarmingCenter[CHAIN_ID],
+    'v3FarmingCenter',
+    undefined,
+    undefined,
+    provider,
+  );
+
+  const balanceResult = await nonfungiblePositionManager.balanceOf(_address);
+
+  const accountBalance: number | undefined = balanceResult?.toNumber();
+
+  let tokenIdsArgs: any[] = [];
+
+  if (accountBalance && _address) {
+    const tokenRequests: any[] = [];
+    for (let i = 0; i < accountBalance; i++) {
+      tokenRequests.push([_address, i]);
+    }
+    tokenIdsArgs = tokenRequests;
+  }
+
+  const tokenCalls: Call[] = tokenIdsArgs.map(token => {
+    const call: Call = {
+      address: nonfungiblePositionManagerAddress,
+      name: 'tokenOfOwnerByIndex',
+      params: [[...token]],
+    };
+
+    return call;
+  });
+
+  const positionsOnFarming = await getTransferredPositions(_address);
+  const tokenIdsOnFarming = positionsOnFarming.map(position => position.id);
+
+  const tokenIds = await MulticallV2(
+    tokenCalls,
+    'v3NonfungiblePositionManager',
+    CHAIN_ID,
+    'rpc',
+  );
+
+  const positionCalls: Call[] = tokenIds.map(token => {
+    const call: Call = {
+      address: nonfungiblePositionManagerAddress,
+      name: 'positions',
+      params: [token],
+    };
+
+    return call;
+  });
+
+  const positionResults: any[] = await MulticallV2(
+    positionCalls,
+    'v3NonfungiblePositionManager',
+    CHAIN_ID,
+    'rpc',
+  );
+
+  const farmingPositionCalls: Call[] = tokenIdsOnFarming.map(id => {
+    const call: Call = {
+      address: nonfungiblePositionManagerAddress,
+      name: 'positions',
+      params: [id],
+    };
+    return call;
+  });
+
+  const farmingPositionResults: any[] = await MulticallV2(
+    farmingPositionCalls,
+    'v3NonfungiblePositionManager',
+    CHAIN_ID,
+    'rpc',
+  );
+
+  const farmingsFromPosition = positionsOnFarming.map(
+    position => position.eternalFarming,
+  );
+
+  const eternalFarmingFromPositions = await Promise.allSettled(
+    farmingsFromPosition.map(farming => getEternalFarming(farming)),
+  ).then(results =>
+    results.map(res => (res.status === 'fulfilled' ? res.value : null)),
+  );
+
+  const _pools = positionsOnFarming?.map(res => (res ? res.pool : null));
+  const _rewardTokens = eternalFarmingFromPositions?.map(res =>
+    res ? res.rewardToken : null,
+  );
+  const _bonusRewardTokens = eternalFarmingFromPositions?.map(res =>
+    res ? res.bonusRewardToken : null,
+  );
+
+  const pools = await Promise.allSettled(
+    _pools.map(pool => getPool(pool)),
+  ).then(results =>
+    results.map(res => (res.status === 'fulfilled' ? res.value : null)),
+  );
+  const rewardTokens = await Promise.allSettled(
+    _rewardTokens.map(reward => getToken(reward)),
+  ).then(results =>
+    results.map(res => (res.status === 'fulfilled' ? res.value : null)),
+  );
+  const bonusRewardTokens = await Promise.allSettled(
+    _bonusRewardTokens.map(bonusReward => getToken(bonusReward)),
+  ).then(results =>
+    results.map(res => (res.status === 'fulfilled' ? res.value : null)),
+  );
+
+  const farmingPositions: any[] = [];
+
+  for (let i = 0; i < eternalFarmingFromPositions.length; i++) {
+    let _position: any = {
+      ...farmingPositionResults[i],
+      id: positionsOnFarming[i].id,
+      pool: pools[i],
+      eternalFarming: null,
+    };
+
+    if (eternalFarmingFromPositions[i]) {
+      const {
+        rewardToken,
+        bonusRewardToken,
+        pool,
+        startTime,
+        endTime,
+        id: eternalFarmingId,
+      } = eternalFarmingFromPositions[i];
+
+      const { reward, bonusReward } =
+        await farmingCenter.callStatic.collectRewards(
+          [rewardToken, bonusRewardToken, pool, startTime, endTime],
+          positionsOnFarming[i].id,
+          { from: _address },
+        );
+
+      _position = {
+        ..._position,
+        eternalFarming: {
+          id: eternalFarmingId,
+          rewardToken: rewardTokens[i],
+          bonusRewardToken: bonusRewardTokens[i],
+          startTime: startTime,
+          endTime: endTime,
+          earned: formatUnits(reward.toString(), rewardTokens[i]?.decimals),
+          bonusEarned: formatUnits(
+            bonusReward.toString(),
+            bonusRewardTokens[i]?.decimals,
+          ),
+          owner: _address,
+          pool: pools[i],
+        },
+        eternalAvailable: eternalFarmingId,
+      };
+    } else {
+      const farmingForPool = await getEternalFarmingFromPool(_position.pool.id);
+
+      _position = {
+        ..._position,
+        eternalAvailable: farmingForPool[0]?.id,
+      };
+    }
+
+    farmingPositions.push(_position);
+  }
+
+  const availableFarmings: any[] = [];
+
+  for (let i = 0; i < positionResults.length; i++) {
+    const pool = computePoolAddress({
+      poolDeployer: addresses.v3AlgebraPoolDeployer[250],
+      tokenA: new Token(250, positionResults[i].token0, 18),
+      tokenB: new Token(250, positionResults[i].token1, 18),
+    });
+
+    const availableFarming = await getEternalFarmingFromPool(pool);
+
+    availableFarmings.push(availableFarming[0]?.id);
+  }
+
+  const positions = farmingPositions
+    .map(result => ({
+      ...result,
+      tokenId: Number(result.id),
+      onFarmingCenter: true,
+      eternalAvailable: result.eternalAvailable,
+    }))
+    .concat(
+      positionResults.map((result, index) => ({
+        ...result,
+        tokenId: Number(tokenIds[index]),
+        onFarmingCenter: false,
+        eternalAvailable: availableFarmings[index],
+      })),
+    )
+    .map(result => ({
+      feeGrowthInside0LastX128: result.feeGrowthInside0LastX128,
+      feeGrowthInside1LastX128: result.feeGrowthInside1LastX128,
+      liquidity: result.liquidity,
+      nonce: result.nonce,
+      operator: result.operator,
+      tickLower: result.tickLower,
+      tickUpper: result.tickUpper,
+      token0: result.token0,
+      token1: result.token1,
+      tokensOwed0: result.tokensOwed0,
+      tokensOwed1: result.tokensOwed1,
+      tokenId: result.tokenId,
+      isConcentrated: true,
+      rangeLength: result.tickUpper - result.tickLower,
+      onFarmingCenter: result.onFarmingCenter,
+      eternalFarming: result.eternalFarming,
+      eternalAvailable: result.eternalAvailable,
+      pool: computePoolAddress({
+        poolDeployer: addresses.v3AlgebraPoolDeployer[250],
+        tokenA: new Token(250, result.token0, 18),
+        tokenB: new Token(250, result.token1, 18),
+      }),
+      name: `${
+        tokens.find(
+          token => token.address.toLowerCase() === result.token0.toLowerCase(),
+        )?.symbol
+      } ${
+        tokens.find(
+          token => token.address.toLowerCase() === result.token1.toLowerCase(),
+        )?.symbol
+      }`,
+    }));
+
+  return {
+    v3PositionsArray: positions && positions.length > 0 ? positions : null,
+  };
 };

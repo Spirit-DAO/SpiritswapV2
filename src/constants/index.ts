@@ -1,5 +1,7 @@
 import contracts from './contracts';
 import { wBOMB } from './tokens';
+import JSBI from 'jsbi';
+import { toHex } from '../v3-sdk';
 
 export { NETWORK } from './networks';
 export * from './tokens';
@@ -50,7 +52,7 @@ export const LIMIT_PRICE = 1;
 export const LIMIT_RECIEVE = 2;
 
 // URLS
-export const REACT_APP_NODE_1 = 'https://rpc.ankr.com/fantom';
+export const REACT_APP_NODE_1 = 'https://rpc.ftm.tools';
 
 export const REACT_APP_FACTORY_ADDRESS =
   '0xEF45d134b73241eDa7703fa787148D9C9F4950b0';
@@ -169,4 +171,20 @@ export const STABLE = 'Stable';
 export const TOKENS_WITH_HIGH_SLIPPAGE = [wBOMB.address.toLowerCase()];
 
 export const V3_POOL_INIT_CODE_HASH =
-  '0x9a6810113806533f58ba03fd4242aeacec87dbc6b15d932f991a4b43ef5dd546';
+  '0x6ec6c9c8091d160c0aa74b2b14ba9c1717e95093bd3ac085cee99a49aab294a4';
+
+export const BIG_INT_ZERO = JSBI.BigInt(0);
+
+export const GlobalConst = {
+  v3LiquidityRangeType: {
+    MANUAL_RANGE: '0',
+    GAMMA_RANGE: '1',
+  },
+};
+
+export const MaxUint128 = toHex(
+  JSBI.subtract(
+    JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(128)),
+    JSBI.BigInt(1),
+  ),
+);

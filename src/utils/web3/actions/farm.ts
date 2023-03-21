@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
-import { CHAIN_ID, VARIABLE } from 'constants/index';
+import { CHAIN_ID, MaxUint128, VARIABLE } from 'constants/index';
 import contracts from 'constants/contracts';
 import PAIR_ABI from '../abis/IUniswapV2Pair.json';
+import NONFUNGIBLE_POSITION_MANAGER_ABI from '../abis/v3/nonfungiblePositionManager.json';
 import { Contract } from '../contracts';
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { ethers } from 'ethers';
@@ -9,6 +10,7 @@ import { setEcosystemFarmAddress } from 'store/farms';
 import { transactionResponse } from './utils';
 import { approve } from './general';
 import { parseUnits } from 'ethers/lib/utils';
+import { nonfungiblePositionManagerContract } from './liquidity';
 
 export const gaugeContract = async (
   _farmGaugeAddress: string,
@@ -57,6 +59,18 @@ export const masterChefContract = async (_version = 0, _chainId = CHAIN_ID) => {
   const instance = await Contract(
     contracts.masterchef[CHAIN_ID],
     !_version ? 'masterchef' : 'masterchef2',
+    _connector,
+    _chainId,
+  );
+
+  return instance;
+};
+
+export const algebraFarmingCenterContract = async (_chainId = CHAIN_ID) => {
+  const _connector = getProvider();
+  const instance = await Contract(
+    contracts.v3FarmingCenter[CHAIN_ID],
+    'v3FarmingCenter',
     _connector,
     _chainId,
   );
@@ -197,6 +211,17 @@ export const farmStatus = async (
   );
 
   return allowance;
+};
+
+export const concentratedFarmStatus = async (positionId: string) => {
+  const nonfungiblePositionManager = await nonfungiblePositionManagerContract();
+
+  const owner = await nonfungiblePositionManager.callStatic.ownerOf(positionId);
+
+  return owner.toLowerCase() ===
+    contracts.v3FarmingCenter[CHAIN_ID].toLowerCase()
+    ? 1
+    : 0;
 };
 
 export const getPairs = async (
@@ -344,4 +369,148 @@ export const getEcosystemFarmAddress = async (
 
     await restartConfigTx.wait();
   }
+};
+
+export const approveConcentratedFarm = async (
+  account: string,
+  positionId: string,
+) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = await provider.getSigner();
+
+  const nonfungiblePositionManagerContract = new ethers.Contract(
+    contracts.v3NonfungiblePositionManager[CHAIN_ID],
+    NONFUNGIBLE_POSITION_MANAGER_ABI,
+    signer,
+  );
+  const approve = await nonfungiblePositionManagerContract[
+    'safeTransferFrom(address,address,uint256)'
+  ](account, contracts.v3FarmingCenter[CHAIN_ID], positionId);
+  return approve;
+};
+
+export const stakeConcentratedFarm = async (
+  rewardToken: string,
+  bonusRewardToken: string,
+  pool: string,
+  startTime: number,
+  endTime: number,
+  positionId: string,
+) => {
+  const algebraFarmingCenter = await algebraFarmingCenterContract();
+
+  const tx = await algebraFarmingCenter.enterFarming(
+    [rewardToken, bonusRewardToken, pool, startTime, endTime],
+    positionId,
+    0,
+    false,
+  );
+
+  return tx;
+};
+
+export const unstakeConcentratedFarm = async (
+  account: string,
+  rewardToken: string,
+  bonusRewardToken: string,
+  pool: string,
+  startTime: number,
+  endTime: number,
+  rewardsEarned: number,
+  bonusRewardsEarned: number,
+  positionId: string,
+) => {
+  const algebraFarmingCenter = await algebraFarmingCenterContract();
+
+  let callDatas: string[] = [
+    algebraFarmingCenter.interface.encodeFunctionData('exitFarming', [
+      [rewardToken, bonusRewardToken, pool, startTime, endTime],
+      positionId,
+      false,
+    ]),
+  ];
+
+  if (rewardsEarned) {
+    callDatas.push(
+      algebraFarmingCenter.interface.encodeFunctionData('claimReward', [
+        rewardToken,
+        account,
+        0,
+        MaxUint128,
+      ]),
+    );
+  }
+
+  if (bonusRewardsEarned) {
+    callDatas.push(
+      algebraFarmingCenter.interface.encodeFunctionData('claimReward', [
+        bonusRewardToken,
+        account,
+        0,
+        MaxUint128,
+      ]),
+    );
+  }
+
+  callDatas.push(
+    algebraFarmingCenter.interface.encodeFunctionData('withdrawToken', [
+      positionId,
+      account,
+      0x0,
+    ]),
+  );
+
+  const tx = await algebraFarmingCenter.multicall(callDatas);
+
+  return tx;
+};
+
+export const harvestConcentratedFarm = async (
+  account: string,
+  rewardToken: string,
+  bonusRewardToken: string,
+  pool: string,
+  startTime: number,
+  endTime: number,
+  positionId: string,
+  returnCalldata: boolean = false,
+) => {
+  const algebraFarmingCenter = await algebraFarmingCenterContract();
+
+  const collectRewards = algebraFarmingCenter.interface.encodeFunctionData(
+    'collectRewards',
+    [[rewardToken, bonusRewardToken, pool, startTime, endTime], positionId],
+  );
+  const claimReward1 = algebraFarmingCenter.interface.encodeFunctionData(
+    'claimReward',
+    [rewardToken, account, 0, MaxUint128],
+  );
+  const claimReward2 = algebraFarmingCenter.interface.encodeFunctionData(
+    'claimReward',
+    [bonusRewardToken, account, 0, MaxUint128],
+  );
+
+  let calldata;
+
+  if (rewardToken.toLowerCase() !== bonusRewardToken.toLowerCase()) {
+    calldata = [collectRewards, claimReward1, claimReward2];
+  } else {
+    calldata = [collectRewards, claimReward1];
+  }
+
+  if (returnCalldata) {
+    return calldata;
+  }
+
+  const tx = await algebraFarmingCenter.multicall(calldata);
+
+  return tx;
+};
+
+export const harvestMultipleFarms = async (calldatas: string[]) => {
+  const algebraFarmingCenter = await algebraFarmingCenterContract();
+
+  const tx = await algebraFarmingCenter.multicall(calldatas.flat());
+
+  return tx;
 };
