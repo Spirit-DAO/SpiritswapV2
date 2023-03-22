@@ -295,13 +295,7 @@ export abstract class NonfungiblePositionManager extends SelfPermit {
       NonfungiblePositionManager.encodeCollect(options);
 
     return {
-      calldata:
-        calldatas.length === 1
-          ? calldatas[0]
-          : NonfungiblePositionManager.INTERFACE.encodeFunctionData(
-              'multicall',
-              [calldatas],
-            ),
+      calldata: calldatas,
       value: toHex(0),
     };
   }

@@ -42,7 +42,6 @@ import { Props } from './Farm.d';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
 import { LIQUIDITY, resolveRoutePath } from 'app/router/routes';
 import { RetrieveConcentratedPosition } from '../components/RetrieveConcentratedPosition/RetrieveConcentratedPosition';
-import ImageLogo from 'app/components/ImageLogo';
 
 export const Farm = ({
   farm,
@@ -254,6 +253,21 @@ export const Farm = ({
     );
   }, [farm]);
 
+  const [concentratedEarned, concentratedBonusEarned] = useMemo(() => {
+    if (!concentratedStakedPositions.length) return [0, 0];
+
+    const earned = concentratedStakedPositions.reduce(
+      (acc, stake) => Number(stake.eternalFarming.earned) + acc,
+      0,
+    );
+    const bonusEarned = concentratedStakedPositions.reduce(
+      (acc, stake) => Number(stake.eternalFarming.bonusEarned) + acc,
+      0,
+    );
+
+    return [earned, bonusEarned];
+  }, [concentratedStakedPositions]);
+
   const [claimTitle, claimValue, claimMoney] = useMemo(() => {
     if (!farm.concentrated) {
       return [
@@ -265,28 +279,34 @@ export const Farm = ({
 
     const _farm = farm as IConcentratedFarm;
 
-    const earned = concentratedStakedPositions.reduce(
-      (acc, stake) => Number(stake.eternalFarming.earned) + acc,
-      0,
-    );
-    const bonusEarned = concentratedStakedPositions.reduce(
-      (acc, stake) => Number(stake.eternalFarming.bonusEarned) + acc,
-      0,
-    );
-
     if (_farm.rewardToken.id === _farm.bonusRewardToken.id) {
       return [
         ' ',
-        `${Number(earned) + Number(bonusEarned)} ${_farm.rewardToken.symbol}`,
+        `${Number(concentratedEarned) + Number(concentratedBonusEarned)} ${
+          _farm.rewardToken.symbol
+        }`,
         ' ',
       ];
     } else {
-      return [
-        `${Number(earned)} ${_farm.rewardToken.symbol}`,
-        `${Number(bonusEarned)} ${_farm.bonusRewardToken.symbol}`,
-      ];
+      let earnedRewards: string[] = [' ', ' ', ' '];
+
+      if (concentratedEarned) {
+        earnedRewards[0] = `${Number(concentratedEarned)} ${
+          _farm.rewardToken.symbol
+        }`;
+      }
+
+      if (concentratedBonusEarned) {
+        earnedRewards[1] = `${Number(concentratedBonusEarned)} ${
+          _farm.bonusRewardToken.symbol
+        }`;
+      }
+
+      return earnedRewards;
     }
-  }, []);
+  }, [concentratedEarned, concentratedBonusEarned]);
+
+  const hasConcenctratedRewards = concentratedEarned || concentratedBonusEarned;
 
   if (farm.concentrated) {
     // TODO
@@ -311,16 +331,19 @@ export const Farm = ({
         value: Number(dailyRewardRate) + Number(dailyBonusRewardRate),
       });
     } else {
-      infoPanelItems.push(
-        {
+      if (dailyRewardRate) {
+        infoPanelItems.push({
           label: `${_farm.rewardToken.symbol} per day`,
           value: dailyRewardRate,
-        },
-        {
+        });
+      }
+
+      if (dailyBonusRewardRate) {
+        infoPanelItems.push({
           label: `${_farm.bonusRewardToken.symbol} per day`,
           value: dailyBonusRewardRate,
-        },
-      );
+        });
+      }
     }
 
     infoPanelItems.push({
@@ -507,7 +530,11 @@ export const Farm = ({
                       variant="inverted"
                       label={t(`${translationPath}.claimRewards`)}
                       icon={isLoading ? <Spinner /> : <SparklesIcon />}
-                      disabled={farm.concentrated ? false : !farmReward}
+                      disabled={
+                        farm.concentrated
+                          ? !hasConcenctratedRewards
+                          : !farmReward
+                      }
                       onClick={handleClaim}
                     />
                   }

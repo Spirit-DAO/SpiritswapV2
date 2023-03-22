@@ -34,7 +34,7 @@ export default function ConcentratedPositionsPanelItem({
           boxShadow: 'outline',
         }}
       >
-        <HStack>
+        <HStack pl={4}>
           <Text mr={4}>{`Position #${position.tokenId}`}</Text>
           <Box>
             <ConcentratedRangeBadge inRange={!outOfRange} />
@@ -45,6 +45,7 @@ export default function ConcentratedPositionsPanelItem({
           startColor="grayBorderBox"
           endColor="bgBoxLighter"
           h="24px"
+          pr={4}
           w={usdAmount !== undefined ? 'unset' : '40px'}
           isLoaded={usdAmount !== undefined}
         >

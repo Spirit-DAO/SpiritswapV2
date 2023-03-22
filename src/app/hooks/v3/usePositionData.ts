@@ -6,12 +6,15 @@ import { unwrappedToken } from 'utils/v3/wrappedCurrency';
 import { Position } from '../../../v3-sdk';
 import { useTokenV3 } from './useCurrency';
 import { usePool } from './usePools';
+import { useV3PositionFees } from './useV3PositionFees';
 
 export function usePositionData(
   positionDetails: any,
   updateRates?: (rate) => void,
+  updateFees?: (fees) => void,
 ) {
-  const [usdAmount, setUsdAmount] = useState<number | null>();
+  const [usdAmount, setUsdAmount] = useState<number | undefined>();
+  const [feesAmount, setFeesAmount] = useState<number | undefined>();
 
   const prevPositionDetails = usePrevious({ ...positionDetails });
   const {
@@ -82,6 +85,12 @@ export function usePositionData(
     ];
   }, [amount0, amount1, token0, token1]);
 
+  const [feeValue0, feeValue1] = useV3PositionFees(
+    _pool ?? undefined,
+    positionDetails?.tokenId,
+    false,
+  );
+
   useEffect(() => {
     if (!token0 || !token1 || !amount0 || !amount1) return;
 
@@ -92,18 +101,29 @@ export function usePositionData(
       if (rates) {
         const sum = rates[0] * Number(amount0) + rates[1] * Number(amount1);
 
+        const fees0 = feeValue0 ? Number(feeValue0?.toSignificant(4)) : 0;
+        const fees1 = feeValue0 ? Number(feeValue1?.toSignificant(4)) : 0;
+
+        const feesSum = rates[0] * fees0 + rates[1] * fees1;
+
         setUsdAmount(sum);
+        setFeesAmount(feesSum);
 
         if (updateRates) {
           updateRates(sum);
         }
+
+        if (updateFees) {
+          updateFees(feesSum);
+        }
       }
     });
-  }, [token0, token1, amount0, amount1]);
+  }, [token0, token1, amount0, amount1, feeValue0, feeValue1]);
 
   return useMemo(() => {
     return {
       usdAmount,
+      feesAmount,
       outOfRange,
       amount0,
       amount1,
@@ -112,9 +132,12 @@ export function usePositionData(
       token0,
       token1,
       pool,
+      feeValue0,
+      feeValue1,
     };
   }, [
     usdAmount,
+    feesAmount,
     outOfRange,
     amount0,
     amount1,
@@ -123,5 +146,7 @@ export function usePositionData(
     token0,
     token1,
     pool,
+    feeValue0,
+    feeValue1,
   ]);
 }

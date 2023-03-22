@@ -10,45 +10,39 @@ import { usePositionData } from 'app/hooks/v3/usePositionData';
 import { ConcentratedRangeBadge } from 'app/pages/Liquidity/components/ConcentratedRangeBadge';
 import { NewDropdown } from 'app/components/Menu';
 import { useAppSelector } from 'store/hooks';
+import { useEternalFarmingRewards } from 'app/hooks/v3/useEternalFarmingsRewards';
 
 export default function PositionListItem({
   positionDetails,
   options,
   handleConcentratedPositionTotalValue,
 }: Props) {
-  const [usdRewards, setUsdRewards] = useState<number>(0);
+  const { farmRewardsByPositions } = useEternalFarmingRewards();
 
-  const farmingStakes = useAppSelector(selectConcentratedLiquidityWallet);
-
-  const { usdAmount, outOfRange, token0, token1 } =
-    usePositionData(positionDetails);
+  const {
+    usdAmount,
+    feesAmount,
+    outOfRange,
+    token0,
+    token1,
+    feeValue0,
+    feeValue1,
+  } = usePositionData(positionDetails);
 
   const isOnFarmingCenter = positionDetails.onFarmingCenter;
 
-  useEffect(() => {
-    if (!farmingStakes || !positionDetails.onFarmingCenter) return;
+  const isOnFarmingCenterAndNotDeposited =
+    isOnFarmingCenter && !positionDetails.eternalFarming;
 
-    const farming = farmingStakes.find(
-      farming => farming.id === positionDetails.tokenId,
+  const positionRewardsUSD = useMemo(() => {
+    const position = farmRewardsByPositions.find(
+      farmReward => farmReward.positionId === positionDetails.tokenId,
     );
 
-    if (!farming) return;
+    if (!position) return 0;
 
-    Promise.all([
-      getTokenUsdPrice(farming.rewardToken),
-      getTokenUsdPrice(farming.bonusRewardToken),
-    ]).then(results => {
-      if (results) {
-        const earned = farming.eternalEarned;
-        const bonusEarned = farming.eternalBonusEarned;
-
-        const sum =
-          Number(earned) * results[0] + Number(bonusEarned) * results[1];
-
-        setUsdRewards(sum);
-      }
-    });
-  }, [farmingStakes, positionDetails]);
+    return position.amount + (feesAmount || 0);
+  }, [farmRewardsByPositions]);
 
   const tokenSymbols = useMemo(() => {
     if (!token0 || !token1) return [undefined, undefined];
@@ -58,11 +52,14 @@ export default function PositionListItem({
 
   const isUSDAmountLoaded =
     usdAmount !== undefined &&
-    (isOnFarmingCenter ? usdRewards !== undefined : true);
+    (isOnFarmingCenter ? positionRewardsUSD !== undefined : true);
 
   useEffect(() => {
-    handleConcentratedPositionTotalValue((usdRewards || 0) + (usdAmount || 0));
-  }, [usdRewards, usdAmount]);
+    handleConcentratedPositionTotalValue({
+      tokenId: positionDetails.tokenId,
+      value: (positionRewardsUSD || 0) + (usdAmount || 0) + (feesAmount || 0),
+    });
+  }, [positionRewardsUSD, usdAmount]);
 
   return (
     <StyledContainer data-testid="ListItem">
@@ -104,26 +101,37 @@ export default function PositionListItem({
             <ConcentratedRangeBadge inRange={!outOfRange} />
             <Text>{`Position #${positionDetails.tokenId}`}</Text>
           </HStack>
-          <Skeleton
-            isLoaded={isUSDAmountLoaded}
-            startColor="grayBorderBox"
-            endColor="bgBoxLighter"
-            h="18px"
-            w={
-              !isUSDAmountLoaded
-                ? isOnFarmingCenter
-                  ? '150px'
-                  : '40px'
-                : 'unset'
-            }
-          >
-            <Text fontSize="sm" color="grayDarker">
-              $
-              {`${truncateTokenValue(usdAmount)}${
-                isOnFarmingCenter ? ` + $${usdRewards} farming rewards` : ''
-              }`}
+          {isOnFarmingCenterAndNotDeposited ? (
+            <Text fontSize="sm" color="warning">
+              Position is not deposited
             </Text>
-          </Skeleton>
+          ) : (
+            <Skeleton
+              isLoaded={isUSDAmountLoaded}
+              startColor="grayBorderBox"
+              endColor="bgBoxLighter"
+              h="18px"
+              w={
+                !isUSDAmountLoaded
+                  ? isOnFarmingCenter
+                    ? '150px'
+                    : '40px'
+                  : 'unset'
+              }
+            >
+              <Text fontSize="sm" color="grayDarker">
+                $
+                {`${truncateTokenValue(usdAmount, usdAmount)}${
+                  isOnFarmingCenter
+                    ? ` + $${truncateTokenValue(
+                        positionRewardsUSD,
+                        positionRewardsUSD,
+                      )} rewards`
+                    : ''
+                }`}
+              </Text>
+            </Skeleton>
+          )}
         </Flex>
         <NewDropdown
           items={options}

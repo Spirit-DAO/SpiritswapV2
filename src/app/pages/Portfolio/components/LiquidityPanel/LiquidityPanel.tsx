@@ -1,4 +1,10 @@
-import { ReactNode, useCallback, useState, ChangeEvent } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useState,
+  ChangeEvent,
+  useReducer,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Skeleton, useDisclosure } from '@chakra-ui/react';
 import { checkAddress, getSign } from 'app/utils';
@@ -40,6 +46,7 @@ import { balanceReturnData } from 'utils/data';
 import { selectLpPrices } from 'store/general/selectors';
 import { LIQUIDITY as LIQUIDITY_ROUTE, FARMS } from 'app/router/routes';
 import { ListConcentratedLiquidityItem } from '../ListConcentratedLiquidityItem';
+import { useEternalFarmingRewards } from 'app/hooks/v3/useEternalFarmingsRewards';
 
 const LiquidityPanel = ({
   liquidityData,
@@ -66,16 +73,19 @@ const LiquidityPanel = ({
   const [migrateSubIndex, setMigrateSubIndex] = useState<number>(-1);
   const lpTokensPrices = useAppSelector(selectLpPrices);
   const [query, setQuery] = useState<string>('');
-  const [concentratedTotalValue, updateConcentratedTotalValue] = useState(0);
+
+  const [concentratedTotalValue, updateConcentratedTotalValue] = useReducer(
+    (acc, { tokenId, value }: { tokenId: number; value: number }) => ({
+      ...acc,
+      [tokenId]: value,
+    }),
+    {},
+  );
+
   const isLoading =
     liquidityData.farmList !== null && !liquidityData.farmList?.length;
 
-  const handleConcentratedPositionTotalValue = useCallback(
-    (value: number) => {
-      updateConcentratedTotalValue(concentratedTotalValue + value);
-    },
-    [concentratedTotalValue],
-  );
+  const { positionsOnFarming } = useEternalFarmingRewards();
 
   const onSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
@@ -191,7 +201,10 @@ const LiquidityPanel = ({
         variant="inverted"
         label={t(`${farmsTranslationPath}.claimRewards`)}
         icon={<SparklesIcon />}
-        disabled={!farmsWithRewards || !farmsWithRewards.length}
+        disabled={
+          (!farmsWithRewards || !farmsWithRewards.length) &&
+          (!positionsOnFarming || !positionsOnFarming.length)
+        }
         onClick={openHarvestManager}
       />
       <Button
@@ -252,7 +265,7 @@ const LiquidityPanel = ({
                 key={`concentrated-list-${index}`}
                 positionDetails={farm}
                 handleConcentratedPositionTotalValue={
-                  handleConcentratedPositionTotalValue
+                  updateConcentratedTotalValue
                 }
                 options={TokenOptions(
                   farm.eternalAvailable ?? '',
@@ -291,7 +304,11 @@ const LiquidityPanel = ({
     if (isLoading) return null;
 
     let currentTotal =
-      Number(totalValue.replace('$', '')) + concentratedTotalValue;
+      Number(totalValue.replace('$', '')) +
+      Object.values<number>(concentratedTotalValue).reduce(
+        (acc, v) => acc + v,
+        0,
+      );
 
     if (currentTotal === 0) {
       let newTotal = 0;
@@ -411,15 +428,9 @@ const LiquidityPanel = ({
   const renderHarvestManager = (farms): ReactNode => {
     const farmsWithRewards = farms.filter(farm => +farm.earned > 0);
 
-    const concentratedFarmsWithRewards = concentratedData.filter(
-      position =>
-        position.eternalFarming &&
-        (position.eternalFarming.earned || position.eternalFarming.bonusEarned),
-    );
-
     return (
       <HarvestManager
-        farmsWithRewards={farmsWithRewards.concat(concentratedFarmsWithRewards)}
+        farmsWithRewards={farmsWithRewards.concat(positionsOnFarming)}
         isOpen={isOpen}
         onClose={onClose}
       />

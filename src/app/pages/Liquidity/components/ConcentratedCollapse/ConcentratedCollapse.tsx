@@ -26,30 +26,36 @@ import { LiquidityDetailProps } from '../../utils/getDetailData';
 import { tickToPrice } from '../../../../../v3-sdk';
 import { FARMS } from 'app/router/routes';
 import { useNavigate } from 'app/hooks/Routing';
+import UseIsLoading from 'app/hooks/UseIsLoading';
+import {
+  collectConcentratedLiquidityFees,
+  transactionResponse,
+} from 'utils/web3';
+import useWallets from 'app/hooks/useWallets';
+import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 
-const ConcentratedCollapseItem = ({
-  position,
-  hideRemoveLiquidity,
-  handleChangeToken,
-  setLPToken,
-}: Props) => {
+const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
   const isMobile = useMobile();
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isLoading, loadingOn, loadingOff } = UseIsLoading();
+  const { account } = useWallets();
+  const { addToQueue } = Web3Monitoring();
 
   const translationPath = 'liquidity.common';
 
   const {
     usdAmount,
+    feesAmount,
     amount0String,
     amount1String,
     token0,
     token1,
-    amount0,
-    amount1,
     outOfRange,
     pool,
+    feeValue0,
+    feeValue1,
   } = usePositionData(position);
 
   const lowerPrice =
@@ -77,7 +83,46 @@ const ConcentratedCollapseItem = ({
     ? t(`${translationPath}.removeLiquidityMobile`)
     : t(`${translationPath}.removeLiquidity`);
 
+  const claimFeesText = t(`${translationPath}.claimFees`);
+
   const isOnFarmingCenter = position.onFarmingCenter;
+
+  const isFeesToCollect =
+    feeValue0?.greaterThan(0) || feeValue1?.greaterThan(0);
+
+  async function handleCollectFees() {
+    if (feeValue0 === undefined || feeValue1 === undefined) return;
+
+    try {
+      loadingOn();
+
+      const tx = await collectConcentratedLiquidityFees(
+        position.tokenId,
+        account,
+        feeValue0,
+        feeValue1,
+        isOnFarmingCenter,
+      );
+
+      const response = transactionResponse('liquidity.remove', {
+        operation: 'LIQUIDITY',
+        tx: tx,
+        update: 'liquidity',
+        updateTarget: 'user',
+        uniqueMessage: {
+          text: `Collected $${feesAmount} fees`,
+          secondText: `Position #${position.tokenId}`,
+        },
+      });
+
+      addToQueue(response);
+      await tx.wait();
+      loadingOff();
+    } catch (error) {
+      console.error(error);
+      loadingOff();
+    }
+  }
 
   const handleNavigateFarm = () => {
     navigate(`${FARMS.path}/${position.eternalAvailable}`);
@@ -96,6 +141,10 @@ const ConcentratedCollapseItem = ({
         detailTitle: `Pooled ${token1.symbol}`,
         detailValue: amount1String,
       },
+      {
+        detailTitle: `Earned fees`,
+        detailValue: feesAmount,
+      },
       // {
       //   detailTitle: `Pool APR`,
       //   detailValue: '12%',
@@ -104,6 +153,7 @@ const ConcentratedCollapseItem = ({
         detailTitle: `Range`,
         detailValue: priceRange,
       },
+
       {
         detailTitle: `Pool Fee`,
         detailValue: `${pool.fee / 10000}%`,
@@ -182,10 +232,10 @@ const ConcentratedCollapseItem = ({
           startColor="grayBorderBox"
           endColor="bgBoxLighter"
           w={'full'}
-          h={'80px'}
+          h={'100px'}
           isLoaded={detailData.length > 1}
         >
-          {detailData?.map((item: LiquidityDetailProps, index) => {
+          {detailData?.map((item: any, index) => {
             return (
               <Flex
                 px={isMobile ? 'spacing03' : 'spacing05'}
@@ -214,6 +264,15 @@ const ConcentratedCollapseItem = ({
             disabled={isOnFarmingCenter}
           >
             {removeLiquidityText}
+          </Button>
+          <Button
+            variant="secondary"
+            w="full"
+            size="sm"
+            onClick={handleCollectFees}
+            disabled={!isFeesToCollect}
+          >
+            {claimFeesText}
           </Button>
           {position.eternalAvailable && (
             <Button

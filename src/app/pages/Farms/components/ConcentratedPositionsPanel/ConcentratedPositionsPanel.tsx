@@ -1,4 +1,4 @@
-import { List, Text, useRadioGroup } from '@chakra-ui/react';
+import { Box, List, Text, useRadioGroup } from '@chakra-ui/react';
 import { IConcentratedFarm } from 'app/interfaces/Farm';
 import { useMemo } from 'react';
 import { FarmTransactionType } from '../../enums/farmTransaction';
@@ -31,10 +31,12 @@ export default function ConcentratedPositionsPanel({
     const positionsForFarming = wallet.filter(position => {
       if (type === FarmTransactionType.DEPOSIT) {
         return (
-          position.rangeLength >= farm.rangeLength && !position.eternalFarming
+          position.rangeLength >= farm.rangeLength &&
+          !position.eternalFarming &&
+          position.eternalAvailable === farm.id
         );
       } else {
-        return position.onFarmingCenter;
+        return position.onFarmingCenter && position.pool === farm.pool.id;
       }
     });
 
@@ -45,7 +47,9 @@ export default function ConcentratedPositionsPanel({
 
   return positions ? (
     positions.length === 0 ? (
-      <div>No positions for this farming</div>
+      <Box p={4} pl={0}>
+        No positions for this farming
+      </Box>
     ) : (
       <List
         display="inline-grid"

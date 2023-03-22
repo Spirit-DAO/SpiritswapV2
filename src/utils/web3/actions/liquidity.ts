@@ -39,6 +39,7 @@ import { NonfungiblePositionManager } from '../../../v3-sdk';
 
 import { SWAP_SLIPPAGE_TOLERANCE_INDEX_KEY } from 'constants/index';
 import { ExtendedEther } from '../../../v3-sdk/entities/ExtendedEther';
+import { algebraFarmingCenterContract } from './farm';
 
 const BATCH_SWAP_TYPE_IN = 0;
 const SWAP_FEE_PERCENTAGE = '150000000000000000';
@@ -1635,6 +1636,40 @@ export const removeConcentratedLiquidity = async (
       },
     },
   );
+
+  const estimatedGas = await contract.estimateGas['multicall'](calldata, {
+    value,
+  });
+
+  const tx = await contract.multicall(calldata, {
+    gasLimit: estimatedGas,
+    value,
+  });
+
+  return tx;
+};
+
+export const collectConcentratedLiquidityFees = async (
+  positionId: string,
+  account: string,
+  feeValue0: CurrencyAmount<Currency>,
+  feeValue1: CurrencyAmount<Currency>,
+  isOnFarming: boolean,
+) => {
+  let contract;
+
+  if (isOnFarming) {
+    contract = await nonfungiblePositionManagerContract();
+  } else {
+    contract = await algebraFarmingCenterContract();
+  }
+
+  const { calldata, value } = NonfungiblePositionManager.collectCallParameters({
+    tokenId: positionId,
+    expectedCurrencyOwed0: feeValue0,
+    expectedCurrencyOwed1: feeValue1,
+    recipient: account,
+  });
 
   const estimatedGas = await contract.estimateGas['multicall'](calldata, {
     value,

@@ -6,6 +6,9 @@ import { getTokenUsdPrice } from 'utils/data';
 export function useEternalFarmingRewards() {
   const liquidity = useAppSelector(selectConcentratedLiquidityWallet);
   const [totalUSDPrice, setTotalUSDPrice] = useState<number>();
+  const [positionsRewardsUSDPrice, setPositionsRewardsUSDPrice] = useState<
+    { positionId: string; amount: number }[]
+  >([]);
 
   const positionsOnFarming = useMemo(
     () => liquidity.filter(stake => stake.eternalFarming),
@@ -15,6 +18,7 @@ export function useEternalFarmingRewards() {
   useEffect(() => {
     async function fetchRate() {
       let totalAmount = 0;
+      const positionsRewards: { positionId: string; amount: number }[] = [];
 
       for (const position of positionsOnFarming) {
         try {
@@ -25,16 +29,26 @@ export function useEternalFarmingRewards() {
             position.eternalFarming.bonusRewardToken.id,
           );
 
-          totalAmount +=
-            (rewardPrice || 0) * Number(position.eternalFarming.earned) +
+          const positionReward =
+            (rewardPrice || 0) * Number(position.eternalFarming.earned);
+          const positionBonusRewards =
             (bonusRewardPrice || 0) *
-              Number(position.eternalFarming.bonusEarned);
+            Number(position.eternalFarming.bonusEarned);
+
+          totalAmount += positionReward + positionBonusRewards;
+
+          positionsRewards.push({
+            positionId: position.tokenId,
+            amount: positionReward + positionBonusRewards,
+          });
         } catch {
           totalAmount += 0;
+          positionsRewards.push({ positionId: position.tokenId, amount: 0 });
         }
       }
 
       setTotalUSDPrice(totalAmount);
+      setPositionsRewardsUSDPrice(positionsRewards);
     }
 
     fetchRate();
@@ -42,6 +56,7 @@ export function useEternalFarmingRewards() {
 
   return {
     farmRewards: totalUSDPrice,
+    farmRewardsByPositions: positionsRewardsUSDPrice,
     positionsOnFarming,
   };
 }
