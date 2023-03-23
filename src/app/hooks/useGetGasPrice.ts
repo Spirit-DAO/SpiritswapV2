@@ -56,7 +56,6 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
             });
         }
       } catch (error) {
-        console.log({ error });
         return setGasData({
           gasPrice: '0',
           txGweiCost: '0',

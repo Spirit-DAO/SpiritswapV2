@@ -27,6 +27,7 @@ import { ConnectWallet } from 'app/components/ConnectWallet';
 import { useCheckAllowance } from 'app/hooks/useCheckAllowance';
 import useWallets from 'app/hooks/useWallets';
 import { openInNewTab } from 'app/utils/redirectTab';
+import { getPricesByPools } from 'utils/apollo/queries';
 
 const mockInputToken = {
   name: 'USD Coin',
@@ -239,6 +240,35 @@ export default function SwapPanel({ panelProps, isWrapped }) {
     return '-';
   };
 
+  const [ownPriceImpact, setOwmPriceImpact] = useState<number>(0);
+
+  useEffect(() => {
+    const prices = async () => {
+      const priceA = await getPricesByPools(
+        firstToken.tokenSelected.address.toLowerCase(),
+      );
+      const priceB = await getPricesByPools(
+        secondToken.tokenSelected.address.toLowerCase(),
+      );
+      const amountA = firstToken.value;
+      const amountB = secondToken.value;
+
+      const destAmountUSD = priceB * parseFloat(amountB);
+      const srcAmountUSD = priceA * parseFloat(amountA);
+
+      const priceImpact = ((destAmountUSD - srcAmountUSD) / srcAmountUSD) * 100;
+
+      setOwmPriceImpact(priceImpact ?? 0);
+    };
+
+    prices();
+  }, [
+    firstToken.tokenSelected.address,
+    secondToken.tokenSelected.address,
+    firstToken.value,
+    secondToken.value,
+  ]);
+
   return (
     <Box mt="20px">
       <NewTokenAmountPanel
@@ -287,7 +317,7 @@ export default function SwapPanel({ panelProps, isWrapped }) {
         handleCheckBalance={handleCheckBalance}
         isLoading={loadAmountInput2 && isLoading}
         isOutput
-        priceDiff={trade ? +trade.estimatedPriceImpact : undefined}
+        priceDiff={trade ? ownPriceImpact : undefined}
         onChange={({ value }) => {
           onChangeNumberInput(value, 1);
         }}

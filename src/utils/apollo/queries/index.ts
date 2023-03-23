@@ -1,7 +1,12 @@
 import { gql } from '@apollo/client';
 import { client, clientV2 } from 'utils/apollo/client';
 
-import { REACT_APP_FACTORY_ADDRESS, USDC, WFTM } from 'constants/index';
+import {
+  FTM_TOKEN_NULL_ADDRESS,
+  REACT_APP_FACTORY_ADDRESS,
+  USDC,
+  WFTM,
+} from 'constants/index';
 
 export const getLpFromApollo = async (
   tokenAddressA: string,
@@ -60,7 +65,11 @@ export const getFtmPriceByPool = async () => {
 export const getPricesByPools = async (address: string) => {
   try {
     const FTMPRICE = await getFtmPriceByPool();
-    if (address === WFTM.address) {
+    if (
+      address.toLowerCase() === WFTM.address.toLowerCase() ||
+      address.toLowerCase() ===
+        '0x0000000000000000000000000000000000000000'.toLowerCase()
+    ) {
       return FTMPRICE;
     }
     const { data: firstCall } = await clientV2.query({
