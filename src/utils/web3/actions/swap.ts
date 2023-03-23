@@ -2,7 +2,7 @@ import { getProvider } from 'app/connectors/EthersConnector/login';
 import { Token } from 'app/interfaces/General';
 import { formatAmount } from 'app/utils';
 import { TOKENS_WITH_HIGH_SLIPPAGE } from 'constants/index';
-import { WFTM } from 'constants/tokens';
+import { JEFE, WFTM } from 'constants/tokens';
 import { BigNumber } from 'ethers';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { SLIPPAGE_TOLERANCES, SwapQuote } from 'utils/swap';
@@ -32,12 +32,23 @@ export const swapTransaction = async (
   if (quote.priceRoute) {
     const { priceRoute } = quote;
 
-    const finalSlippage = TOKENS_WITH_HIGH_SLIPPAGE.includes(
-      quote.buyTokenAddress.toLowerCase() ||
-        quote.sellTokenAddress.toLowerCase(),
+    const srcTokenAddress = quote.buyTokenAddress.toLowerCase();
+    const destTokenAddress = quote.sellTokenAddress.toLowerCase();
+
+    let finalSlippage;
+
+    finalSlippage = TOKENS_WITH_HIGH_SLIPPAGE.includes(
+      srcTokenAddress || destTokenAddress,
     )
       ? +SLIPPAGE_TOLERANCES[2] * 100 // 1%
       : quote.slippage || +SLIPPAGE_TOLERANCES[1] * 100; // Slippage by user or 0.5% by default
+
+    if (
+      srcTokenAddress === JEFE.address.toLowerCase() ||
+      destTokenAddress === JEFE.address.toLowerCase()
+    ) {
+      finalSlippage = '3000'; // for JEFE token we set the slippage to 30%
+    }
 
     const transactionRequest = await buildSwapForParaSwap({
       side: priceRoute.side,
@@ -67,7 +78,6 @@ export const swapTransaction = async (
 
   const tx = {
     from: senderAddress,
-
     gasLimit: MIN_GAS_LIMIT.gt(txGas) ? MIN_GAS_LIMIT : txGas,
     to: quote.to,
     value: BigNumber.from(quote.value),

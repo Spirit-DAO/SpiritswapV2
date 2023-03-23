@@ -168,10 +168,19 @@ export const wBOMB = {
   chainId: 250,
 };
 
+export const JEFE = {
+  name: 'JEFE TOKEN',
+  symbol: 'JEFE',
+  address: '0x5b2AF7fd27E2Ea14945c82Dd254c79d3eD34685e',
+  chainId: 250,
+  decimals: 9,
+};
+
 export const tokens: Token[] = [
   FTM,
   SPIRIT,
   WFTM,
+  JEFE,
   {
     name: 'Wrapped BTC',
     symbol: 'WBTC',
@@ -229,7 +238,6 @@ export const tokens: Token[] = [
     chainId: 250,
     decimals: 18,
   },
-
   {
     name: 'Frax Share',
     symbol: 'FXS',
