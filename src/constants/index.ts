@@ -1,5 +1,5 @@
 import contracts from './contracts';
-import { wBOMB } from './tokens';
+import { JEFE, wBOMB } from './tokens';
 
 export { NETWORK } from './networks';
 export * from './tokens';
@@ -168,4 +168,7 @@ export const FTM_TOKEN_NULL_ADDRESS = {
 export const VARIABLE = 'Variable';
 export const STABLE = 'Stable';
 
-export const TOKENS_WITH_HIGH_SLIPPAGE = [wBOMB.address.toLowerCase()];
+export const TOKENS_WITH_HIGH_SLIPPAGE = [
+  wBOMB.address.toLowerCase(),
+  JEFE.address.toLowerCase(),
+];

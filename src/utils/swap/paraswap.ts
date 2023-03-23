@@ -1,4 +1,9 @@
-import { CHAIN_ID, FTM, FTM_TOKEN_NULL_ADDRESS } from 'constants/index';
+import {
+  CHAIN_ID,
+  FTM,
+  FTM_TOKEN_NULL_ADDRESS,
+  TOKENS_WITH_HIGH_SLIPPAGE,
+} from 'constants/index';
 import { Address, NumberAsString, OptimalRate, SwapSide } from 'paraswap-core';
 import axios from 'axios';
 import { SwapQuote } from './types';
@@ -10,6 +15,7 @@ interface PriceQueryParams {
   destToken: string;
   srcDecimals: number;
   destDecimals: number;
+  maxImpact: string;
   amount: string;
   side: SwapSide;
   network: string;
@@ -122,6 +128,11 @@ export const getParaSwapRate: Swapper['getRate'] = async (
     srcToken: srcToken?.address,
     destToken: destToken?.address,
     srcDecimals: srcToken?.decimals,
+    maxImpact: TOKENS_WITH_HIGH_SLIPPAGE.includes(
+      destToken.address.toLowerCase(),
+    )
+      ? '100'
+      : '15', // 15% by default by paraswap
     destDecimals: destToken?.decimals,
     amount: isFirtsInput ? srcAmount : destAmount,
     side: isFirtsInput ? SwapSide.SELL : SwapSide.BUY,
