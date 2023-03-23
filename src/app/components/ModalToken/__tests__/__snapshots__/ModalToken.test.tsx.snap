@@ -323,6 +323,57 @@ Object {
                         class="css-k008qs"
                       >
                         <img
+                          alt="JEFE logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          JEFE TOKEN
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            JEFE
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 212px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
                           alt="WBTC logo"
                           class="chakra-image__placeholder css-dex8nh"
                           fallbackstrategy="onError"
@@ -365,7 +416,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 212px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 265px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -416,7 +467,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 265px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 318px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -467,7 +518,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 318px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 371px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -518,7 +569,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 371px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 424px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -569,7 +620,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 424px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 477px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -620,7 +671,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 477px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 530px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -671,7 +722,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 530px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 583px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -722,7 +773,7 @@ Object {
                   </div>
                   <div
                     class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 583px; width: 100%;"
+                    style="height: 53px; left: 0px; position: absolute; top: 636px; width: 100%;"
                   >
                     <div
                       class="css-70qvj9"
@@ -757,57 +808,6 @@ Object {
                             class="chakra-text css-ie7mb8"
                           >
                             FXS
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-8hppig"
-                      >
-                        $0
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 636px; width: 100%;"
-                  >
-                    <div
-                      class="css-70qvj9"
-                    >
-                      <div
-                        class="css-k008qs"
-                      >
-                        <img
-                          alt="JEFE logo"
-                          class="chakra-image__placeholder css-dex8nh"
-                          fallbackstrategy="onError"
-                          src="/images/tokens/default.png"
-                        />
-                      </div>
-                      <div
-                        class="css-0"
-                      >
-                        <p
-                          class="chakra-text css-10rvbm3"
-                        >
-                          JEFE TOKEN
-                        </p>
-                        <div
-                          class="css-kqxjc4"
-                        >
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            0
-                          </p>
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            JEFE
                           </p>
                         </div>
                       </div>
@@ -1382,6 +1382,57 @@ Object {
                       class="css-k008qs"
                     >
                       <img
+                        alt="JEFE logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        JEFE TOKEN
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          JEFE
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 212px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
                         alt="WBTC logo"
                         class="chakra-image__placeholder css-dex8nh"
                         fallbackstrategy="onError"
@@ -1424,7 +1475,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 212px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 265px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1475,7 +1526,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 265px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 318px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1526,7 +1577,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 318px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 371px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1577,7 +1628,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 371px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 424px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1628,7 +1679,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 424px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 477px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1679,7 +1730,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 477px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 530px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1730,7 +1781,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 530px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 583px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1781,7 +1832,7 @@ Object {
                 </div>
                 <div
                   class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 583px; width: 100%;"
+                  style="height: 53px; left: 0px; position: absolute; top: 636px; width: 100%;"
                 >
                   <div
                     class="css-70qvj9"
@@ -1816,57 +1867,6 @@ Object {
                           class="chakra-text css-ie7mb8"
                         >
                           FXS
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="css-0"
-                  >
-                    <p
-                      class="chakra-text css-8hppig"
-                    >
-                      $0
-                    </p>
-                  </div>
-                </div>
-                <div
-                  class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 636px; width: 100%;"
-                >
-                  <div
-                    class="css-70qvj9"
-                  >
-                    <div
-                      class="css-k008qs"
-                    >
-                      <img
-                        alt="JEFE logo"
-                        class="chakra-image__placeholder css-dex8nh"
-                        fallbackstrategy="onError"
-                        src="/images/tokens/default.png"
-                      />
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-10rvbm3"
-                      >
-                        JEFE TOKEN
-                      </p>
-                      <div
-                        class="css-kqxjc4"
-                      >
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          0
-                        </p>
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          JEFE
                         </p>
                       </div>
                     </div>
