@@ -1,8 +1,16 @@
 import { Box, Flex, HStack, Text } from '@chakra-ui/react';
 import { Chart } from 'app/components/Chart';
-import { usePoolActiveLiquidity } from 'app/hooks/v3/usePoolTickData';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useInfoTickData } from 'app/hooks/v3/usePoolTickData';
+import JSBI from 'jsbi';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useInitialTokenPrice } from 'store/v3/mint/hooks';
+import {
+  Currency,
+  CurrencyAmount,
+  Price,
+  TickMath,
+  Token,
+} from '../../../../../v3-sdk';
 
 export const liquidityChartOptions = {
   maintainAspectRatio: false,
@@ -63,8 +71,8 @@ export const dataOptions: any = {
     datasets: [
       {
         label: '',
-        borderColor: '#60E6C5',
-        backgroundColor: '#60E6C5',
+        borderColor: '#8498B9',
+        backgroundColor: '#8498B9',
         minBarLength: 10,
       },
     ],
@@ -74,39 +82,79 @@ export const dataOptions: any = {
 export function LiquidityRangeChart({
   currencyA,
   currencyB,
-  feeAmount,
-  ticksAtLimit,
   price,
   priceLower,
   priceUpper,
+}: {
+  currencyA: Currency | undefined;
+  currencyB: Currency | undefined;
+  price: any;
+  priceLower: Price<Token, Token> | undefined;
+  priceUpper: Price<Token, Token> | undefined;
 }) {
-  const { isLoading, isUninitialized, isError, error, data } =
-    usePoolActiveLiquidity(currencyA, currencyB, feeAmount);
+  const {
+    fetchTicksSurroundingPrice: {
+      ticksLoading,
+      ticksResult,
+      fetchTicksSurroundingPrice,
+    },
+  } = useInfoTickData();
 
-  const formattedData = useMemo(() => {
-    if (!data?.length) {
-      return undefined;
+  const [processedData, setProcessedData] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    if (!currencyA || !currencyB) return;
+    fetchTicksSurroundingPrice(currencyA, currencyB);
+  }, [currencyA, currencyB]);
+
+  useEffect(() => {
+    if (!ticksResult || !ticksResult.ticksProcessed) return;
+
+    async function processTicks() {
+      const _data = await Promise.all(
+        ticksResult.ticksProcessed.map(async (t: any, i: number) => {
+          const active = t.tickIdx === ticksResult.activeTickIdx;
+
+          return {
+            index: i,
+            isCurrent: active,
+            activeLiquidity: parseFloat(t.liquidityActive.toString()),
+            price0: parseFloat(t.price0),
+            price1: parseFloat(t.price1),
+          };
+        }),
+      );
+      setProcessedData(_data);
     }
 
-    const newData: any[] = [];
+    processTicks();
+  }, [ticksResult]);
 
-    for (let i = 0; i < data.length; i++) {
-      const t: any = data[i];
+  const formattedData = useMemo(() => {
+    if (!processedData) return undefined;
+    if (processedData && processedData.length === 0) return undefined;
 
-      const formattedPrice = parseFloat(t.price0);
+    const ZOOM = 5;
 
-      const chartEntry = {
-        activeLiquidity: parseFloat(t.liquidityActive.toString()),
-        price0: formattedPrice,
-      };
+    const middle = Math.round(processedData.length / 2);
+    const chunkLength = Math.round(processedData.length / ZOOM);
 
-      if (chartEntry.activeLiquidity > 0) {
-        newData.push(chartEntry);
+    return processedData.slice(middle - chunkLength, middle + chunkLength);
+  }, [processedData]);
+
+  const activeTickIdx = useMemo(() => {
+    if (!formattedData) return;
+
+    let idx;
+
+    for (let i = 0; i < formattedData.length; i++) {
+      if (formattedData[i].isCurrent) {
+        idx = i;
       }
     }
 
-    return newData;
-  }, [data]);
+    return idx;
+  }, [formattedData]);
 
   const initialPrice = useInitialTokenPrice();
 
@@ -126,103 +174,57 @@ export function LiquidityRangeChart({
   const [labels, values] = useMemo(() => {
     let data;
 
-    if (!formattedData || !price) {
-      data = [{ price0: +initialPrice, activeLiquidity: 0 }];
+    if (!formattedData) {
+      data = [];
     } else {
       data = formattedData;
     }
 
-    const CHART_TICKS = 100;
-    const TICK_STEP = price * 0.07;
-
-    let additionalTicks = Math.round((CHART_TICKS - data.length) / 2);
-    let firstValue = data[0].price0;
-    let lastValue = data[data.length - 1].price0;
-
-    let ticksBefore: any[] = [];
-    let ticksAfter: any[] = [];
-
-    for (let i = additionalTicks; i >= 0; i--) {
-      firstValue = firstValue - TICK_STEP;
-      ticksBefore.push({
-        price0: firstValue,
-        activeLiquidity: 0,
-      });
+    if (isSorted) {
+      return [data?.map(d => d.price0), data.map(d => d.activeLiquidity)];
+    } else {
+      return [
+        data?.map(d => d.price1).reverse(),
+        data.map(d => d.activeLiquidity),
+      ];
     }
-
-    for (let i = 0; i <= additionalTicks; i++) {
-      lastValue = lastValue + TICK_STEP;
-      ticksAfter.push({
-        price0: lastValue,
-        activeLiquidity: 0,
-      });
-    }
-
-    const ticksData = ticksBefore
-      .reverse()
-      .concat(data)
-      .concat(ticksAfter)
-      .filter(v => v.price0 > 0);
-
-    let closestToPrice = ticksData[0];
-    let closestToPriceIdx = 0;
-
-    for (let i = 1; i < ticksData.length; i++) {
-      if (closestToPrice.price0 <= price) {
-        closestToPrice = ticksData[i];
-        closestToPriceIdx = i;
-      } else {
-        break;
-      }
-    }
-
-    ticksData[closestToPriceIdx].activeLiquidity = 100_000_000;
-    ticksData[closestToPriceIdx].activePrice = true;
-
-    return [
-      ticksData?.map(d => ({ price: d.price0, activePrice: d.activePrice })),
-      ticksData.map(d => d.activeLiquidity),
-    ];
-  }, [formattedData, price, initialPrice]);
+  }, [formattedData, price, initialPrice, isSorted]);
 
   const brush = useMemo(() => {
-    if (!labels) return '#60E6C5';
+    if (!labels) return '#8498B9';
 
     let left, right;
 
     if (leftPrice && rightPrice) {
-      left = leftPrice.toSignificant(4);
-      right = rightPrice.toSignificant(4);
+      left = leftPrice.toSignificant(18);
+      right = rightPrice.toSignificant(18);
     }
 
-    return labels.map(value => {
-      if (value.activePrice) {
+    return labels.map((value, index) => {
+      if (index === activeTickIdx) {
         return 'yellow';
       }
 
-      if (!left || !right) return '#60E6C5';
+      if (!left || !right) return '#8498B9';
 
-      if (
-        Number(value.price) >= Number(left) &&
-        Number(value.price) <= Number(right)
-      ) {
-        return '#486bf7';
+      if (Number(value) >= Number(left) && Number(value) <= Number(right)) {
+        return '#60E6C5';
       }
 
-      return '#60E6C5';
+      return '#8498B9';
     });
-  }, [price, labels, leftPrice, rightPrice]);
+  }, [price, labels, leftPrice, rightPrice, isSorted]);
 
   const dataset = useMemo(() => {
     dataOptions.Bar.datasets[0].backgroundColor = brush;
     return dataOptions;
   }, [brush]);
 
-  return (
+  return formattedData ? (
     <>
       <Chart
         type={'Bar'}
-        durationLabels={labels.map(v => v.price)}
+        durationLabels={labels}
         data={values}
         customChartDataset={dataset}
         customChartOptions={liquidityChartOptions}
@@ -233,14 +235,14 @@ export function LiquidityRangeChart({
           <Text>Current price</Text>
         </Flex>
         <Flex alignItems="center">
-          <Box w="10px" h="10px" bg="#486bf7" borderRadius="50%" mr={4}></Box>
+          <Box w="10px" h="10px" bg="#60E6C5" borderRadius="50%" mr={4}></Box>
           <Text>Selected range</Text>
         </Flex>
         <Flex alignItems="center">
-          <Box w="10px" h="10px" bg="#60E6C5" borderRadius="50%" mr={4}></Box>
+          <Box w="10px" h="10px" bg="#8498B9" borderRadius="50%" mr={4}></Box>
           <Text>Liquidity</Text>
         </Flex>
       </HStack>
     </>
-  );
+  ) : null;
 }

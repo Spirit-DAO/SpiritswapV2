@@ -45,7 +45,7 @@ export default function ConcentratedPositionsPanelItem({
           startColor="grayBorderBox"
           endColor="bgBoxLighter"
           h="24px"
-          pr={4}
+          mr={4}
           w={usdAmount !== undefined ? 'unset' : '40px'}
           isLoaded={usdAmount !== undefined}
         >

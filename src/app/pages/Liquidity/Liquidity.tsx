@@ -926,22 +926,7 @@ export function LiquidityPage() {
     : {};
 
   const selectedTokensWithValue = useCallback(() => {
-    if (!isWeightedSelected && liquidityTrade) {
-      return [
-        { token: liquidityTrade.tokenA, amount: liquidityTrade.amountA },
-        { token: liquidityTrade.tokenB, amount: liquidityTrade.amountB },
-      ];
-    } else if (isWeightedSelected) {
-      const tps = weightedPoolSelected?.tokens as Token[];
-      if (tps) {
-        return tps.map(token => ({
-          token,
-          amount: weightedPoolInputValue[token.symbol] ?? '0',
-        }));
-      }
-    } else if (isConcentratedSelected) {
-      // const
-
+    if (isConcentratedSelected) {
       return [
         {
           token: {
@@ -964,6 +949,19 @@ export function LiquidityPage() {
           amount: '2',
         },
       ];
+    } else if (!isWeightedSelected && liquidityTrade) {
+      return [
+        { token: liquidityTrade.tokenA, amount: liquidityTrade.amountA },
+        { token: liquidityTrade.tokenB, amount: liquidityTrade.amountB },
+      ];
+    } else if (isWeightedSelected) {
+      const tps = weightedPoolSelected?.tokens as Token[];
+      if (tps) {
+        return tps.map(token => ({
+          token,
+          amount: weightedPoolInputValue[token.symbol] ?? '0',
+        }));
+      }
     } else {
       const tps = tokenPoolSelected?.tokens as Token[];
       if (tps) {
@@ -1685,39 +1683,41 @@ export function LiquidityPage() {
                     />
                   </Flex>
                   {isLoggedIn && walletLiquidity ? (
-                    <Box maxH="460px" overflowY="scroll">
+                    <>
                       <Box my={3}>
                         <Heading level={5}>
                           {t(`${translationPath}.lpTokens`)}
                         </Heading>
                       </Box>
-                      <Accordion
-                        defaultIndex={[-1]}
-                        allowToggle
-                        variant="liquidity"
-                      >
-                        {walletLiquidity.length > 0 ? (
-                          liquidityItems?.map(pair => (
-                            <CollapseItem
-                              key={pair.address}
-                              userAddress={account}
-                              hideRemoveLiquidity={hideRemoveLiquidity}
-                              handleChangeToken={handleChangeToken}
-                              setLPToken={showRemoveLiquidity}
-                              pair={pair}
+                      <Box maxH="460px" overflowY="scroll">
+                        <Accordion
+                          defaultIndex={[-1]}
+                          allowToggle
+                          variant="liquidity"
+                        >
+                          {walletLiquidity.length > 0 ? (
+                            liquidityItems?.map(pair => (
+                              <CollapseItem
+                                key={pair.address}
+                                userAddress={account}
+                                hideRemoveLiquidity={hideRemoveLiquidity}
+                                handleChangeToken={handleChangeToken}
+                                setLPToken={showRemoveLiquidity}
+                                pair={pair}
+                              />
+                            ))
+                          ) : (
+                            <Skeleton
+                              startColor="grayBorderBox"
+                              endColor="bgBoxLighter"
+                              w="full"
+                              h="170px"
+                              mb="spacing05"
                             />
-                          ))
-                        ) : (
-                          <Skeleton
-                            startColor="grayBorderBox"
-                            endColor="bgBoxLighter"
-                            w="full"
-                            h="170px"
-                            mb="spacing05"
-                          />
-                        )}
-                      </Accordion>
-                    </Box>
+                          )}
+                        </Accordion>
+                      </Box>
+                    </>
                   ) : !walletLiquidity ? (
                     <HStack py="3" justifyContent="center">
                       <Text fontSize="h3" color="grayDarker">
@@ -1749,41 +1749,43 @@ export function LiquidityPage() {
                     </VStack>
                   )}
                   {isLoggedIn && concentratedLiqudiity ? (
-                    <Box maxH="460px" overflowY="scroll">
+                    <>
                       <Box my={3}>
                         <Heading level={5}>
                           {t(`${translationPath}.concentratedPositions`)}
                         </Heading>
                       </Box>
-                      <Accordion
-                        defaultIndex={[-1]}
-                        allowToggle
-                        variant="liquidity"
-                      >
-                        {concentratedLiqudiity.length > 0 ? (
-                          concentratedLiqudiity?.map(position => (
-                            <ConcentratedCollapseItem
-                              key={position.tokenId}
-                              position={position}
-                              // userAddress={account}
-                              hideRemoveLiquidity={hideRemoveLiquidity}
-                              handleChangeToken={handleChangeToken}
-                              setLPToken={position => {
-                                showRemoveConcentratedLiquidity(position);
-                              }}
+                      <Box maxH="460px" overflowY="scroll">
+                        <Accordion
+                          defaultIndex={[-1]}
+                          allowToggle
+                          variant="liquidity"
+                        >
+                          {concentratedLiqudiity.length > 0 ? (
+                            concentratedLiqudiity?.map(position => (
+                              <ConcentratedCollapseItem
+                                key={position.tokenId}
+                                position={position}
+                                // userAddress={account}
+                                hideRemoveLiquidity={hideRemoveLiquidity}
+                                handleChangeToken={handleChangeToken}
+                                setLPToken={position => {
+                                  showRemoveConcentratedLiquidity(position);
+                                }}
+                              />
+                            ))
+                          ) : (
+                            <Skeleton
+                              startColor="grayBorderBox"
+                              endColor="bgBoxLighter"
+                              w="full"
+                              h="170px"
+                              mb="spacing05"
                             />
-                          ))
-                        ) : (
-                          <Skeleton
-                            startColor="grayBorderBox"
-                            endColor="bgBoxLighter"
-                            w="full"
-                            h="170px"
-                            mb="spacing05"
-                          />
-                        )}
-                      </Accordion>
-                    </Box>
+                          )}
+                        </Accordion>
+                      </Box>
+                    </>
                   ) : isLoggedIn ? (
                     <HStack py="3" justifyContent="center">
                       <Text fontSize="h3" color="grayDarker">

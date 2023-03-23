@@ -722,12 +722,19 @@ export const getV3Balances = async (_address: string, provider?: any) => {
         id: eternalFarmingId,
       } = eternalFarmingFromPositions[i];
 
-      const { reward, bonusReward } =
-        await farmingCenter.callStatic.collectRewards(
+      let reward = 0,
+        bonusReward = 0;
+
+      try {
+        const rewards = await farmingCenter.callStatic.collectRewards(
           [rewardToken, bonusRewardToken, pool, startTime, endTime],
           positionsOnFarming[i].id,
           { from: _address },
         );
+
+        reward = rewards.reward;
+        bonusReward = rewards.bonusReward;
+      } catch (error) {}
 
       _position = {
         ..._position,

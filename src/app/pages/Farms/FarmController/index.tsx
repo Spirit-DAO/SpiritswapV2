@@ -63,8 +63,9 @@ export const FarmController = ({
 
   const { account } = useWallets();
 
-  const [preselectedConcentratedPosition, setPreselectedConcentratedPosition] =
-    useState<string | undefined>();
+  const [selectedPosition, setSelectedConcentratedPosition] = useState<
+    string | undefined
+  >();
 
   const farmTrasactionData: IFarmTransaction = {
     farm: farm,
@@ -141,8 +142,8 @@ export const FarmController = ({
           _farm.pool.id,
           _farm.startTime,
           _farm.endTime,
-          stake.earned,
-          stake.bonusEarned,
+          stake.eternalFarming.earned,
+          stake.eternalFarming.bonusEarned,
           _value,
         );
       } else if (farm.gaugeAddress) {
@@ -219,7 +220,7 @@ export const FarmController = ({
           farm={farm}
           onWithdraw={(positionId: string) => {
             if (positionId) {
-              setPreselectedConcentratedPosition(positionId);
+              setSelectedConcentratedPosition(positionId);
             }
             onWithdrawHandler();
           }}
@@ -238,6 +239,10 @@ export const FarmController = ({
           onCancelTransaction={onCancelTransaction}
           onOpen={onOpen}
           TokenList={MemorizeTokenList}
+          selectedPosition={selectedPosition}
+          onSelectPosition={positionId =>
+            setSelectedConcentratedPosition(positionId)
+          }
         />
       )}
 
@@ -247,7 +252,7 @@ export const FarmController = ({
           type={FarmTransactionType.WITHDRAW}
           onCancelTransaction={onCancelTransaction}
           TokenList={MemorizeTokenList}
-          preselectedPosition={preselectedConcentratedPosition}
+          selectedPosition={selectedPosition}
         />
       )}
     </>

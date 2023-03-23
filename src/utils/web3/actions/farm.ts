@@ -430,7 +430,7 @@ export const unstakeConcentratedFarm = async (
     ]),
   ];
 
-  if (rewardsEarned) {
+  if (Number(rewardsEarned)) {
     callDatas.push(
       algebraFarmingCenter.interface.encodeFunctionData('claimReward', [
         rewardToken,
@@ -441,7 +441,7 @@ export const unstakeConcentratedFarm = async (
     );
   }
 
-  if (bonusRewardsEarned) {
+  if (Number(bonusRewardsEarned)) {
     callDatas.push(
       algebraFarmingCenter.interface.encodeFunctionData('claimReward', [
         bonusRewardToken,

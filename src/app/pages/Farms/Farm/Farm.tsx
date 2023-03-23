@@ -9,7 +9,7 @@ import { ReactComponent as SparklesIcon } from 'app/assets/images/sparkles.svg';
 import { BoostFactor } from '../components/BoostFactor';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { transactionResponse } from 'utils/web3/actions/utils';
-import { checkAddress, getRoundedSFs } from 'app/utils';
+import { checkAddress, formatNumber, getRoundedSFs } from 'app/utils';
 import { SuggestionsTypes } from 'app/hooks/Suggestions/Suggestion';
 import { useNavigate } from 'app/hooks/Routing';
 import {
@@ -395,13 +395,14 @@ export const Farm = ({
         const isSameToken = _farm.rewardToken.id === _farm.bonusRewardToken.id;
 
         if (isSameToken) {
-          text = `${Number(earned) + Number(bonusEarned)} ${
-            _farm.rewardToken.symbol
-          }`;
+          text = `${formatNumber({
+            value: Number(earned) + Number(bonusEarned),
+            maxDecimals: 2,
+          })} ${_farm.rewardToken.symbol}`;
         } else
-          text = `${Number(earned)} ${_farm.rewardToken.symbol} + ${Number(
-            bonusEarned,
-          )} ${_farm.bonusRewardToken.symbol}`;
+          text = `${formatNumber({ value: Number(earned), maxDecimals: 2 })} ${
+            _farm.rewardToken.symbol
+          } + ${Number(bonusEarned)} ${_farm.bonusRewardToken.symbol}`;
 
         tx = await onClaim(positionsToClaim);
       } else {
@@ -443,6 +444,11 @@ export const Farm = ({
   };
 
   const staked = Number(farmUserData.lpTokens) > 0;
+
+  const disableConcentratedFarm =
+    farm.concentrated &&
+    Number(farm.rewardRate) === 0 &&
+    Number(farm.bonusRewardRate) === 0;
 
   useEffect(() => {
     setDoTransition(isOpen);
@@ -567,7 +573,11 @@ export const Farm = ({
                   {t(`${translationPath}.addLiquidity`)}
                 </Button>
 
-                <Button variant="inverted" onClick={handleDeposit}>
+                <Button
+                  variant="inverted"
+                  disabled={disableConcentratedFarm}
+                  onClick={handleDeposit}
+                >
                   {t(`${translationPath}.deposit`)}
                 </Button>
               </SimpleGrid>

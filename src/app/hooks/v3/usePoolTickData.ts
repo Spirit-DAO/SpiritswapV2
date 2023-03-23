@@ -1,191 +1,262 @@
-import { Currency, FeeAmount, Pool, tickToPrice } from '../../../v3-sdk';
-import computeSurroundingTicks from '../../../v3-sdk/utils/computeSurroundingTicks';
-
+import { useState } from 'react';
+import keyBy from 'lodash.keyby';
+import {
+  Token,
+  TickMath,
+  tickToPrice,
+  computePoolAddress,
+  Currency,
+} from '../../../v3-sdk';
 import JSBI from 'jsbi';
-import { PoolState, usePool } from './usePools';
-import { useEffect, useMemo, useState } from 'react';
-import { getAllV3Ticks } from 'utils/apollo/queries-v3';
+import { getAllV3Ticks, getPool } from 'utils/apollo/queries-v3';
+import contracts from 'constants/contracts';
 
-// TODO
-// import { useAllV3TicksQuery } from '../../services/graph/hooks/v3';
+export function useInfoTickData() {
+  const numSurroundingTicks = 300;
+  const PRICE_FIXED_DIGITS = 8;
 
-const PRICE_FIXED_DIGITS = 8;
+  const [ticksResult, setTicksResult] = useState<null | any>(null);
+  const [ticksLoading, setTicksLoading] = useState<boolean>(false);
 
-// Tick with fields parsed to JSBIs, and active liquidity computed.
-export interface TickProcessed {
-  tickIdx: number;
-  liquidityActive: JSBI;
-  liquidityNet: JSBI;
-  price0: string;
-}
+  async function fetchInitializedTicks(
+    poolAddress: string,
+    tickIdxLowerBound: number,
+    tickIdxUpperBound: number,
+  ) {
+    let surroundingTicks: any[] = [];
+    let surroundingTicksResult: any[] = [];
 
-const getActiveTick = (
-  tickCurrent: number | undefined,
-  feeAmount: FeeAmount | undefined,
-) => (tickCurrent && feeAmount ? Math.floor(tickCurrent / 60) * 60 : undefined);
+    let skip = 0;
+    do {
+      const { data, error, loading } = await getAllV3Ticks(
+        poolAddress,
+        tickIdxLowerBound,
+        tickIdxUpperBound,
+        skip,
+      );
 
-// Fetches all ticks for a given pool
-export function useAllV3Ticks(
-  currencyA: Currency | undefined,
-  currencyB: Currency | undefined,
-  feeAmount: FeeAmount | undefined,
-) {
-  const poolAddress =
-    currencyA && currencyB && feeAmount
-      ? Pool.getAddress(currencyA?.wrapped, currencyB?.wrapped, feeAmount)
-      : undefined;
+      if (loading) {
+        continue;
+      }
 
-  const [ticksData, setTicksData] = useState<{
-    data: any;
-    error: any;
-    loading: boolean;
-  }>({
-    data: undefined,
-    error: undefined,
-    loading: false,
-  });
+      if (error) {
+        return {
+          error: Boolean(error),
+          loading,
+          ticks: surroundingTicksResult,
+        };
+      }
 
-  useEffect(() => {
-    if (!poolAddress) return;
+      surroundingTicks = data;
+      surroundingTicksResult = surroundingTicksResult.concat(surroundingTicks);
+      skip += 1000;
+    } while (surroundingTicks.length > 0);
 
-    async function fetchTickData() {
-      if (!poolAddress) return;
-      getAllV3Ticks(poolAddress).then(ticks => {
-        setTicksData(ticks);
+    return { ticks: surroundingTicksResult, loading: false, error: false };
+  }
+
+  async function fetchTicksSurroundingPrice(
+    currencyA: Currency,
+    currencyB: Currency,
+  ) {
+    setTicksLoading(true);
+
+    const poolAddress = computePoolAddress({
+      poolDeployer: contracts.v3AlgebraPoolDeployer[250],
+      tokenA: currencyA.wrapped,
+      tokenB: currencyB.wrapped,
+    });
+
+    try {
+      const pool = await getPool(poolAddress);
+
+      if (!pool) return;
+
+      const {
+        tick: poolCurrentTick,
+        liquidity,
+        token0: { id: token0Address, decimals: token0Decimals },
+        token1: { id: token1Address, decimals: token1Decimals },
+      } = pool;
+
+      const poolCurrentTickIdx = parseInt(poolCurrentTick);
+      const tickSpacing = 60;
+
+      const activeTickIdx =
+        Math.floor(poolCurrentTickIdx / tickSpacing) * tickSpacing;
+
+      const tickIdxLowerBound =
+        activeTickIdx - numSurroundingTicks * tickSpacing;
+      const tickIdxUpperBound =
+        activeTickIdx + numSurroundingTicks * tickSpacing;
+
+      const initializedTicksResult = await fetchInitializedTicks(
+        poolAddress,
+        tickIdxLowerBound,
+        tickIdxUpperBound,
+      );
+      if (initializedTicksResult.error || initializedTicksResult.loading) {
+        return {
+          error: initializedTicksResult.error,
+          loading: initializedTicksResult.loading,
+        };
+      }
+
+      const { ticks: initializedTicks } = initializedTicksResult;
+
+      const tickIdxToInitializedTick = keyBy(initializedTicks, 'tickIdx');
+
+      const token0 = new Token(1, token0Address, parseInt(token0Decimals));
+      const token1 = new Token(1, token1Address, parseInt(token1Decimals));
+
+      let activeTickIdxForPrice = activeTickIdx;
+      if (activeTickIdxForPrice < TickMath.MIN_TICK) {
+        activeTickIdxForPrice = TickMath.MIN_TICK;
+      }
+      if (activeTickIdxForPrice > TickMath.MAX_TICK) {
+        activeTickIdxForPrice = TickMath.MAX_TICK;
+      }
+
+      const activeTickProcessed = {
+        liquidityActive: JSBI.BigInt(liquidity),
+        tickIdx: activeTickIdx,
+        liquidityNet: JSBI.BigInt(0),
+        price0: tickToPrice(token0, token1, activeTickIdxForPrice).toFixed(
+          PRICE_FIXED_DIGITS,
+        ),
+        price1: tickToPrice(token1, token0, activeTickIdxForPrice).toFixed(
+          PRICE_FIXED_DIGITS,
+        ),
+        liquidityGross: JSBI.BigInt(0),
+      };
+
+      const activeTick = tickIdxToInitializedTick[activeTickIdx];
+      if (activeTick) {
+        activeTickProcessed.liquidityGross = JSBI.BigInt(
+          activeTick.liquidityGross,
+        );
+        activeTickProcessed.liquidityNet = JSBI.BigInt(activeTick.liquidityNet);
+      }
+
+      enum Direction {
+        ASC,
+        DESC,
+      }
+
+      // Computes the numSurroundingTicks above or below the active tick.
+      const computeSurroundingTicks = (
+        activeTickProcessed: any,
+        tickSpacing: number,
+        numSurroundingTicks: number,
+        direction: Direction,
+      ) => {
+        let previousTickProcessed = {
+          ...activeTickProcessed,
+        };
+
+        // Iterate outwards (either up or down depending on 'Direction') from the active tick,
+        // building active liquidity for every tick.
+        let processedTicks: any[] = [];
+        for (let i = 0; i < numSurroundingTicks; i++) {
+          const currentTickIdx =
+            direction == Direction.ASC
+              ? previousTickProcessed.tickIdx + tickSpacing
+              : previousTickProcessed.tickIdx - tickSpacing;
+
+          if (
+            currentTickIdx < TickMath.MIN_TICK ||
+            currentTickIdx > TickMath.MAX_TICK
+          ) {
+            break;
+          }
+
+          const currentTickProcessed: any = {
+            liquidityActive: previousTickProcessed.liquidityActive,
+            tickIdx: currentTickIdx,
+            liquidityNet: JSBI.BigInt(0),
+            price0: tickToPrice(token0, token1, currentTickIdx).toFixed(
+              PRICE_FIXED_DIGITS,
+            ),
+            price1: tickToPrice(token1, token0, currentTickIdx).toFixed(
+              PRICE_FIXED_DIGITS,
+            ),
+            liquidityGross: JSBI.BigInt(0),
+          };
+
+          const currentInitializedTick =
+            tickIdxToInitializedTick[currentTickIdx.toString()];
+          if (currentInitializedTick) {
+            currentTickProcessed.liquidityGross = JSBI.BigInt(
+              currentInitializedTick.liquidityGross,
+            );
+            currentTickProcessed.liquidityNet = JSBI.BigInt(
+              currentInitializedTick.liquidityNet,
+            );
+          }
+
+          if (direction == Direction.ASC && currentInitializedTick) {
+            currentTickProcessed.liquidityActive = JSBI.add(
+              previousTickProcessed.liquidityActive,
+              JSBI.BigInt(currentInitializedTick.liquidityNet),
+            );
+          } else if (
+            direction == Direction.DESC &&
+            JSBI.notEqual(previousTickProcessed.liquidityNet, JSBI.BigInt(0))
+          ) {
+            currentTickProcessed.liquidityActive = JSBI.subtract(
+              previousTickProcessed.liquidityActive,
+              previousTickProcessed.liquidityNet,
+            );
+          }
+
+          processedTicks.push(currentTickProcessed);
+          previousTickProcessed = currentTickProcessed;
+        }
+
+        if (direction == Direction.DESC) {
+          processedTicks = processedTicks.reverse();
+        }
+
+        return processedTicks;
+      };
+
+      const subsequentTicks = computeSurroundingTicks(
+        activeTickProcessed,
+        tickSpacing,
+        numSurroundingTicks,
+        Direction.ASC,
+      );
+
+      const previousTicks = computeSurroundingTicks(
+        activeTickProcessed,
+        tickSpacing,
+        numSurroundingTicks,
+        Direction.DESC,
+      );
+
+      const ticksProcessed = previousTicks
+        .concat(activeTickProcessed)
+        .concat(subsequentTicks);
+
+      setTicksResult({
+        ticksProcessed,
+        tickSpacing,
+        activeTickIdx,
+        token0,
+        token1,
       });
+    } catch (err: any) {
+      throw new Error(err);
+    } finally {
+      setTicksLoading(false);
     }
-
-    fetchTickData();
-  }, [poolAddress]);
+  }
 
   return {
-    isLoading: ticksData?.loading,
-    isUninitialized: false,
-    isError: Boolean(ticksData?.error),
-    error: ticksData?.error,
-    ticks: ticksData?.data,
+    fetchTicksSurroundingPrice: {
+      ticksResult,
+      ticksLoading,
+      fetchTicksSurroundingPrice,
+    },
   };
-}
-
-export function usePoolActiveLiquidity(
-  currencyA: Currency | undefined,
-  currencyB: Currency | undefined,
-  feeAmount: FeeAmount | undefined,
-): {
-  isLoading: boolean;
-  isUninitialized: boolean;
-  isError: boolean;
-  error: any;
-  activeTick: number | undefined;
-  data: TickProcessed[] | undefined;
-} {
-  const pool = usePool(currencyA, currencyB);
-
-  // Find nearest valid tick for pool in case tick is not initialized.
-  const activeTick = useMemo(
-    () => getActiveTick(pool[1]?.tickCurrent, feeAmount),
-    [pool, feeAmount],
-  );
-
-  const { isLoading, isUninitialized, isError, error, ticks } = useAllV3Ticks(
-    currencyA,
-    currencyB,
-    feeAmount,
-  );
-
-  return useMemo(() => {
-    if (
-      !currencyA ||
-      !currencyB ||
-      activeTick === undefined ||
-      pool[0] !== PoolState.EXISTS ||
-      !ticks ||
-      ticks.length === 0 ||
-      isLoading ||
-      isUninitialized
-    ) {
-      return {
-        isLoading: isLoading || pool[0] === PoolState.LOADING,
-        isUninitialized,
-        isError,
-        error,
-        activeTick,
-        data: undefined,
-      };
-    }
-
-    const token0 = currencyA?.wrapped;
-    const token1 = currencyB?.wrapped;
-
-    // find where the active tick would be to partition the array
-    // if the active tick is initialized, the pivot will be an element
-    // if not, take the previous tick as pivot
-    const pivot = ticks.findIndex(({ tickIdx }) => tickIdx > activeTick) - 1;
-
-    if (pivot < 0) {
-      // consider setting a local error
-      console.error('TickData pivot not found');
-      return {
-        isLoading,
-        isUninitialized,
-        isError,
-        error,
-        activeTick,
-        data: undefined,
-      };
-    }
-
-    const activeTickProcessed: TickProcessed = {
-      liquidityActive: JSBI.BigInt(pool[1]?.liquidity ?? 0),
-      tickIdx: activeTick,
-      liquidityNet:
-        Number(ticks[pivot].tickIdx) === activeTick
-          ? JSBI.BigInt(ticks[pivot].liquidityNet)
-          : JSBI.BigInt(0),
-      price0: tickToPrice(token0, token1, activeTick).toFixed(
-        PRICE_FIXED_DIGITS,
-      ),
-    };
-
-    const subsequentTicks = computeSurroundingTicks(
-      token0,
-      token1,
-      activeTickProcessed,
-      ticks,
-      pivot,
-      true,
-    );
-
-    const previousTicks = computeSurroundingTicks(
-      token0,
-      token1,
-      activeTickProcessed,
-      ticks,
-      pivot,
-      false,
-    );
-
-    const ticksProcessed = previousTicks
-      .concat(activeTickProcessed)
-      .concat(subsequentTicks);
-
-    return {
-      isLoading,
-      isUninitialized,
-      isError: isError,
-      error,
-      activeTick,
-      data: ticksProcessed,
-    };
-  }, [
-    currencyA,
-    currencyB,
-    activeTick,
-    pool,
-    ticks,
-    isLoading,
-    isUninitialized,
-    isError,
-    error,
-  ]);
 }

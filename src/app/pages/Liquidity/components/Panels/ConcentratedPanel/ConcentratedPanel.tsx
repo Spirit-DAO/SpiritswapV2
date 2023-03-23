@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Skeleton, Stack } from '@chakra-ui/react';
+import { Box, Flex, HStack, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { TokenAmountPanel } from 'app/components/NewTokenAmountPanel';
 import { Token } from 'app/interfaces/General';
 import Heading from 'app/components/Typography/Heading';
@@ -30,6 +30,8 @@ import { SelectRange } from '../../V3/SelectRange/SelectRange';
 import { EnterAmounts } from '../../V3/EnterAmounts/EnterAmounts';
 import { InitialPrice } from '../../V3/InitialPrice/InitiallPrice';
 import { StyledWarningNotification } from '../../V3/SelectRange/styled';
+import { openInNewTab } from 'app/utils/redirectTab';
+import { AlgebraLogo } from 'app/assets/icons';
 
 const DEFAULT_ADD_IN_RANGE_SLIPPAGE_TOLERANCE = new Percent(50, 10_000);
 const ZERO_PERCENT = new Percent('0');
@@ -346,6 +348,19 @@ const ConcentratedPanel = ({
       )}
 
       {children}
+
+      <Box textAlign="right" mt="16px">
+        <Text
+          fontSize="12px"
+          _hover={{
+            cursor: 'pointer',
+          }}
+          onClick={() => openInNewTab('https://www.algebra.finance/')}
+        >
+          Powered by {''}
+          <AlgebraLogo h="auto" w="90px" />
+        </Text>
+      </Box>
     </>
   );
 };

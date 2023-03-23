@@ -178,13 +178,9 @@ export function SelectRange({
             <LiquidityRangeChart
               currencyA={currencyA ?? undefined}
               currencyB={currencyB ?? undefined}
-              feeAmount={mintInfo.dynamicFee}
-              ticksAtLimit={mintInfo.ticksAtLimit}
               price={price ? parseFloat(price) : undefined}
               priceLower={priceLower}
               priceUpper={priceUpper}
-              // onLeftRangeInput={onLeftRangeInput}
-              // onRightRangeInput={onRightRangeInput}
             />
             {mintInfo.outOfRange && (
               <StyledWarningNotification>

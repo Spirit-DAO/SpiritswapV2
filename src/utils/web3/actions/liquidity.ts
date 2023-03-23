@@ -1659,9 +1659,9 @@ export const collectConcentratedLiquidityFees = async (
   let contract;
 
   if (isOnFarming) {
-    contract = await nonfungiblePositionManagerContract();
-  } else {
     contract = await algebraFarmingCenterContract();
+  } else {
+    contract = await nonfungiblePositionManagerContract();
   }
 
   const { calldata, value } = NonfungiblePositionManager.collectCallParameters({

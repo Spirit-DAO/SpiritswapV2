@@ -13,9 +13,10 @@ export const getPool = async (poolAddress: string) => {
   } = await clientV3.query({
     query: fetchPoolQuery,
     variables: {
-      poolId: poolAddress,
+      poolId: poolAddress.toLowerCase(),
     },
   });
+
   return pool;
 };
 
@@ -110,7 +111,12 @@ export const getTransferredPositionsForPool = async (
   return deposits;
 };
 
-export const getAllV3Ticks = async (poolAddress: string) => {
+export const getAllV3Ticks = async (
+  poolAddress: string,
+  tickIdxLowerBound: number,
+  tickIdxUpperBound: number,
+  skip: number,
+) => {
   const {
     data: { ticks },
     error,
@@ -119,7 +125,9 @@ export const getAllV3Ticks = async (poolAddress: string) => {
     query: fetchAllV3TicksQuery,
     variables: {
       poolAddress: poolAddress.toLowerCase(),
-      skip: 0,
+      tickIdxLowerBound,
+      tickIdxUpperBound,
+      skip,
     },
   });
 
@@ -280,14 +288,24 @@ export const fetchTransferredPositionsForPoolQuery = gql`
 `;
 
 export const fetchAllV3TicksQuery = gql`
-  query allV3Ticks($poolAddress: String!, $skip: Int!) {
+  query surroundingTicks(
+    $poolAddress: String!
+    $tickIdxLowerBound: BigInt!
+    $tickIdxUpperBound: BigInt!
+    $skip: Int!
+  ) {
     ticks(
+      subgraphError: allow
       first: 1000
       skip: $skip
-      where: { poolAddress: $poolAddress }
-      orderBy: tickIdx
+      where: {
+        poolAddress: $poolAddress
+        tickIdx_lte: $tickIdxUpperBound
+        tickIdx_gte: $tickIdxLowerBound
+      }
     ) {
       tickIdx
+      liquidityGross
       liquidityNet
       price0
       price1

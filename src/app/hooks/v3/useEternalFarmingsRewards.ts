@@ -10,10 +10,10 @@ export function useEternalFarmingRewards() {
     { positionId: string; amount: number }[]
   >([]);
 
-  const positionsOnFarming = useMemo(
-    () => liquidity.filter(stake => stake.eternalFarming),
-    [liquidity],
-  );
+  const positionsOnFarming = useMemo(() => {
+    if (!liquidity) return [];
+    return liquidity.filter(stake => stake.eternalFarming);
+  }, [liquidity]);
 
   useEffect(() => {
     async function fetchRate() {

@@ -36,7 +36,10 @@ export default function ConcentratedPositionsPanel({
           position.eternalAvailable === farm.id
         );
       } else {
-        return position.onFarmingCenter && position.pool === farm.pool.id;
+        return (
+          position.onFarmingCenter &&
+          position.pool.toLowerCase() === farm.pool.id.toLowerCase()
+        );
       }
     });
 

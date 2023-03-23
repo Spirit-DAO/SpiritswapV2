@@ -135,23 +135,21 @@ export function EnterAmounts({
           </StyledDisabledDeposit>
         )}
       </Flex>
-      <Flex>
-        <Flex position="relative">
-          <TokenAmountPanel
-            key="tokenB"
-            isSelectable={false}
-            inputValue={formattedAmounts[Field.CURRENCY_B]}
-            context="token"
-            token={secondToken?.tokenSelected}
-            onChange={({ value }) => onFieldBInput(value)}
-            errorMessage={currencyBError}
-          />
-          {mintInfo.depositBDisabled && (
-            <StyledDisabledDeposit>
-              For selected range this deposit is disabled
-            </StyledDisabledDeposit>
-          )}
-        </Flex>
+      <Flex position="relative">
+        <TokenAmountPanel
+          key="tokenB"
+          isSelectable={false}
+          inputValue={formattedAmounts[Field.CURRENCY_B]}
+          context="token"
+          token={secondToken?.tokenSelected}
+          onChange={({ value }) => onFieldBInput(value)}
+          errorMessage={currencyBError}
+        />
+        {mintInfo.depositBDisabled && (
+          <StyledDisabledDeposit>
+            For selected range this deposit is disabled
+          </StyledDisabledDeposit>
+        )}
       </Flex>
     </Flex>
   );

@@ -59,6 +59,7 @@
     "js-cookie": "3.0.1",
     "jsbi": "4.3.0",
     "jsog": "1.0.7",
+    "lodash.keyby": "4.6.0",
     "lodasync": "1.0.7",
     "memorize-one": "0.0.0",
     "moment": "2.29.3",

@@ -74,6 +74,8 @@ export interface IFarmTransaction {
   onApproveTransaction: (_positionId?: string) => any;
   onClaimTransaction: () => any;
   onOpen?: () => void;
+  onSelectPosition?: (positionId: string) => void;
+  selectedPosition?: string | undefined;
 }
 
 export interface GaugeFarm {

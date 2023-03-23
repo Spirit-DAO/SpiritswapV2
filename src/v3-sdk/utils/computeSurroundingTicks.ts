@@ -1,6 +1,5 @@
 import { Token } from '../../v3-sdk';
 import { tickToPrice } from './priceTickConversions';
-import { TickProcessed } from 'app/hooks/v3/usePoolTickData';
 import JSBI from 'jsbi';
 
 const PRICE_FIXED_DIGITS = 8;
@@ -9,24 +8,24 @@ const PRICE_FIXED_DIGITS = 8;
 export default function computeSurroundingTicks(
   token0: Token,
   token1: Token,
-  activeTickProcessed: TickProcessed,
+  activeTickProcessed: any,
   sortedTickData: any,
   pivot: number,
   ascending: boolean,
-): TickProcessed[] {
-  let previousTickProcessed: TickProcessed = {
+): any[] {
+  let previousTickProcessed: any = {
     ...activeTickProcessed,
   };
   // Iterate outwards (either up or down depending on direction) from the active tick,
   // building active liquidity for every tick.
-  let processedTicks: TickProcessed[] = [];
+  let processedTicks: any[] = [];
   for (
     let i = pivot + (ascending ? 1 : -1);
     ascending ? i < sortedTickData.length : i >= 0;
     ascending ? i++ : i--
   ) {
     const tickIdx = Number(sortedTickData[i].tickIdx);
-    const currentTickProcessed: TickProcessed = {
+    const currentTickProcessed: any = {
       liquidityActive: previousTickProcessed.liquidityActive,
       tickIdx,
       liquidityNet: JSBI.BigInt(sortedTickData[i].liquidityNet),

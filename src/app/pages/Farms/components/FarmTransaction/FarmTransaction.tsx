@@ -11,12 +11,13 @@ import { NON_ZERO, NOT_ENOUGH_FUNDS } from 'constants/errors';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { transactionResponse } from 'utils/web3';
 import { SuggestionsTypes } from 'app/hooks/Suggestions/Suggestion';
-import { useAppSelector } from 'store/hooks';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import {
   selectFarmsStaked,
   selectIsLoggedIn,
   selectLiquidityWallet,
 } from 'store/user/selectors';
+import { setUserV3LiquidityWallet } from 'store/user';
 import useWallets from 'app/hooks/useWallets';
 import { selectLpPrices } from 'store/general/selectors';
 import { Props } from './FarmTransaction.d';
@@ -32,8 +33,9 @@ const FarmTransaction = ({
   onConfirmWithdraw,
   onConfirmDeposit,
   onOpen,
+  onSelectPosition,
   TokenList,
-  preselectedPosition,
+  selectedPosition,
 }: Props) => {
   const { t } = useTranslation();
   const { account } = useWallets();
@@ -49,7 +51,9 @@ const FarmTransaction = ({
   const farmsStaked = useAppSelector(selectFarmsStaked);
   const lpPrices = useAppSelector(selectLpPrices);
   const [selectedConcentratedPosition, setSelectedConcentratedPosition] =
-    useState<string | undefined>(preselectedPosition);
+    useState<string | undefined>(selectedPosition);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {}, [account]);
 
@@ -84,6 +88,8 @@ const FarmTransaction = ({
   if (isWithdraw && lowerLp && token.address !== lowerLp) {
     setToken({ ...token, address: lowerLp });
   }
+
+  const disableConcentratedDeposit = farm.concentrated && !selectedPosition;
 
   useEffect(() => {
     new Promise(() =>
@@ -120,6 +126,9 @@ const FarmTransaction = ({
   const handleConcentratedInput = positionId => {
     setSelectedConcentratedPosition(positionId);
     setErrorMessage(undefined);
+    if (onSelectPosition) {
+      onSelectPosition(positionId);
+    }
   };
 
   const handleWithdraw = async () => {
@@ -157,6 +166,21 @@ const FarmTransaction = ({
       addToQueue(response);
       setLoadingText('Withdrawing');
       await tx.wait();
+
+      if (farm.concentrated) {
+        const removedFromFarming = farm.wallet?.map((position: any) => {
+          if (position.tokenId === selectedConcentratedPosition) {
+            return {
+              ...position,
+              eternalFarming: null,
+            };
+          }
+          return position;
+        });
+
+        dispatch(setUserV3LiquidityWallet(removedFromFarming));
+      }
+
       loadingOff();
       onCancelTransaction && onCancelTransaction();
     } catch (error) {
@@ -227,6 +251,33 @@ const FarmTransaction = ({
       addToQueue(response, suggestionData);
       setLoadingText('Depositing');
       await tx.wait();
+
+      if (farm.concentrated) {
+        const populatedPositionsWithFarming = farm.wallet?.map(
+          (position: any) => {
+            if (position.tokenId === selectedConcentratedPosition) {
+              return {
+                ...position,
+                eternalFarming: {
+                  earned: 0,
+                  bonusEarned: 0,
+                  startTime: farm.startTime,
+                  endTime: farm.endTime,
+                  rewardToken: farm.rewardToken,
+                  bonusRewardToken: farm.bonusRewardToken,
+                  id: farm.id,
+                  owner: account,
+                  pool: farm.pool,
+                },
+              };
+            }
+            return position;
+          },
+        );
+
+        dispatch(setUserV3LiquidityWallet(populatedPositionsWithFarming));
+      }
+
       loadingOff();
       onCancelTransaction && onCancelTransaction();
     } catch (error) {
@@ -259,7 +310,7 @@ const FarmTransaction = ({
           <ConcentratedPositionsPanel
             wallet={farm.wallet}
             type={type}
-            preselectedPosition={preselectedPosition}
+            preselectedPosition={selectedPosition}
             farm={farm as IConcentratedFarm}
             onChange={handleConcentratedInput}
           />
@@ -327,6 +378,7 @@ const FarmTransaction = ({
               variant="inverted"
               mt="0.5rem"
               onClick={handleDeposit}
+              disabled={disableConcentratedDeposit}
             >
               {isLoggedIn
                 ? t(`farms.common.confirmWithdraw`)
