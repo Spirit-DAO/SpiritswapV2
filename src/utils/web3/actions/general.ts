@@ -100,7 +100,7 @@ export const getNativeTokenBalance = async (
   _address: string,
   _chainId = CHAIN_ID,
 ) => {
-  const { provider } = await connect('rpc', undefined, _chainId);
+  const { provider } = await connect('rpc', undefined, _chainId, 2);
   const balance = await provider.getBalance(_address);
 
   return formatEther(balance);

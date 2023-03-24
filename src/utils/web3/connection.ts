@@ -54,6 +54,7 @@ export const connect = async (
   _connection: any = 'rpc',
   _callback?: Function,
   _chainId = CHAIN_ID,
+  rpcID: number = 0,
 ) => {
   if (CONNECTIONS().includes(_connection)) {
     try {
@@ -69,7 +70,7 @@ export const connect = async (
   if (connectionUrl === 'rpc') {
     const chainID = _chainId !== 0 ? _chainId : CHAIN_ID;
     const chain = NETWORK[chainID];
-    connectionUrl = chain.rpc[0];
+    connectionUrl = chain.rpc[rpcID];
   }
 
   const provider = new ethers.providers.JsonRpcProvider(connectionUrl);
