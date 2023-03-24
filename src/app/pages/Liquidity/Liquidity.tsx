@@ -119,6 +119,7 @@ export function LiquidityPage() {
   const { handlers, states } = useSettings();
   const { showSuggestion } = useSuggestion();
   const { token1, token2, type } = useParams();
+
   const { userDataWorker } = useContext(DataContext);
   const [attempt, setAttempt] = useState(false);
   const [zapDirectly, setZapDirectly] = useState(false);
@@ -481,7 +482,7 @@ export function LiquidityPage() {
           });
         }
 
-        const { provider } = await connect();
+        const { provider } = await connect('rpc', undefined, CHAIN_ID, 3);
 
         userDataWorker.postMessage({
           userAddress: account,
@@ -498,7 +499,7 @@ export function LiquidityPage() {
         resetPanel();
       }
     } catch (error) {
-      console.error(error);
+      console.error('ERROR EN LIQUIDITY');
       setShowConfirmModal(false);
     }
   };
