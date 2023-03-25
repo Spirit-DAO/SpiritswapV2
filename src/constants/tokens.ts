@@ -476,9 +476,16 @@ export const tokens: Token[] = [
     decimals: 9,
   },
   {
-    name: 'DEI',
+    name: 'DEI (OLD)',
     symbol: 'DEI',
     address: '0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3',
+    chainId: 250,
+    decimals: 18,
+  },
+  {
+    name: 'DEI (NEW)',
+    symbol: 'DEI',
+    address: '0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0',
     chainId: 250,
     decimals: 18,
   },
@@ -652,13 +659,13 @@ export const tokens: Token[] = [
     chainId: 250,
   },
   {
-  name: 'Ankr Staked FTM',
-  symbol: 'ankrFTM',
-  chainId: 250,
-  address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
-  decimals: 18,
+    name: 'Ankr Staked FTM',
+    symbol: 'ankrFTM',
+    chainId: 250,
+    address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
+    decimals: 18,
   },
-  
+
   wBOMB,
   MIM,
   FRAX,
