@@ -59,15 +59,15 @@ const navMenus = [
 ];
 
 const navDropdownMenus = [
-  GOVERNANCE,
+  // GOVERNANCE,
   DOCS,
-  NFTS,
+  // NFTS,
   ANALYTICS,
-  LENDANDBORROW,
-  BRIDGE,
+  // LENDANDBORROW,
+  // BRIDGE,
   FARMS,
   SPIRITWARS,
-  BUYFTM,
+  // BUYFTM,
 ];
 
 const NavMenuItem = ({ menu }: NavMenuProps) => {

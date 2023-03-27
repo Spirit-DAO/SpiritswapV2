@@ -24,7 +24,7 @@ Object {
 }
 
 .c17:active {
-  border: 1px solid #60E6C5;
+  border: 1px solid #453a3c ;
   opacity: 1;
 }
 
@@ -221,7 +221,7 @@ Object {
 }
 
 .c9 a:hover svg {
-  color: #60E6C5;
+  color: #453a3c ;
 }
 
 .c10 {
@@ -252,7 +252,7 @@ Object {
 }
 
 .c13 {
-  background-color: #60E6C5;
+  background-color: #453a3c ;
   height: 4px;
   border-radius: 4px;
 }

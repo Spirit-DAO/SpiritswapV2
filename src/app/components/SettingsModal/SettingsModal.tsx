@@ -85,7 +85,7 @@ const SettingsModal = ({
             onChange={() => handleToggleSuggestions(!suggestions)}
           />
         </Flex>
-        <Button
+        {/* <Button
           w="full"
           bg="grayBorderBox"
           h="28px"
@@ -94,7 +94,7 @@ const SettingsModal = ({
           onClick={() => openInNewTab('https://app.spiritswap.finance/#/')}
         >
           {t(`${buttonTranslationPath}.switchV1`)}
-        </Button>
+        </Button> */}
       </BodyContainer>
     </Modal>
   );

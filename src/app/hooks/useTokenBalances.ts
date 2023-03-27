@@ -10,7 +10,7 @@ import useWallets from './useWallets';
 
 const TIME = 60_00;
 
-export const useTokenBalances = (selectedChainId: number = 250) => {
+export const useTokenBalances = (selectedChainId: number = 42161) => {
   const { account } = useWallets();
   const { chains, isLoading: isChainsLoading } = useChains();
   const { tokens, isLoading, isFetching } = useTokens(selectedChainId, true);

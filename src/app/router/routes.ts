@@ -99,20 +99,20 @@ export const APEMODE_V1 = {
 export const ROUTE_LOOKUP = {
   [HOME.key]: HOME,
   [SWAP.key]: SWAP,
-  [BRIDGE.key]: BRIDGE,
+  // [BRIDGE.key]: BRIDGE,
   [LIQUIDITY.key]: LIQUIDITY,
   [FARMS.key]: FARMS,
   [INSPIRIT.key]: INSPIRIT,
-  [LENDANDBORROW.key]: LENDANDBORROW,
+  // [LENDANDBORROW.key]: LENDANDBORROW,
   [STORE.key]: STORE,
   [ANALYTICS.key]: ANALYTICS,
   [IDO.key]: IDO,
-  [NFTS.key]: NFTS,
+  // [NFTS.key]: NFTS,
   [DOCS.key]: DOCS,
   [APEMODE.key]: APEMODE,
-  [GOVERNANCE.key]: GOVERNANCE,
+  // [GOVERNANCE.key]: GOVERNANCE,
   [SPIRITWARS.key]: SPIRITWARS,
-  [BUYFTM.key]: BUYFTM,
+  // [BUYFTM.key]: BUYFTM,
 };
 
 export const resolveRoutePath = (path?: string) => {

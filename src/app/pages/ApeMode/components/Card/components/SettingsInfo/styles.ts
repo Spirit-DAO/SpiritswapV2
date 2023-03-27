@@ -60,7 +60,7 @@ export const GreenLink = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #60e6c5;
+  color: #453a3c;
   font-size: ${({ theme }) => `${theme.fontSize.xs}`};
   font-weight: 700;
 `;

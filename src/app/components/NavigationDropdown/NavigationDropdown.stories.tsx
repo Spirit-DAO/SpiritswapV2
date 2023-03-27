@@ -19,14 +19,14 @@ const Template: ComponentStory<typeof NavigationDropdown> = args => (
 );
 
 export const items = [
-  { title: 'Bridge', path: 'bridge' },
-  { title: 'Lend/Borrow', path: 'lend-borrow' },
+  // { title: 'Bridge', path: 'bridge' },
+  // { title: 'Lend/Borrow', path: 'lend-borrow' },
   { title: 'Staking', path: 'staking' },
   { title: 'ApeMode', path: 'apemode' },
   { title: 'Store', path: 'store' },
   { title: 'Analytics', path: 'analytics' },
   { title: 'IDO', path: 'ido' },
-  { title: 'NFTs', path: 'nfts' },
+  // { title: 'NFTs', path: 'nfts' },
   { title: 'Docs', path: 'docs' },
 ];
 

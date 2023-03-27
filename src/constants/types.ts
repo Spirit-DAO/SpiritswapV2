@@ -4,8 +4,9 @@ import { Token } from '@lifi/sdk';
 import { LpRewardData } from 'app/interfaces/General';
 
 export interface Address {
-  4002?: string;
-  250: string;
+  421611?: string;
+  250?: string;
+  42161: string;
 }
 
 export enum QuoteToken {

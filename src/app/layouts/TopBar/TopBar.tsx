@@ -87,7 +87,7 @@ import useWallets from 'app/hooks/useWallets';
 const navMenus = [
   { ...HOME, icon: <HomeIcon /> },
   { ...SWAP, icon: <SwapIcon /> },
-  { ...BRIDGE, icon: <BridgeIcon /> },
+  // { ...BRIDGE, icon: <BridgeIcon /> },
   { ...LIQUIDITY, icon: <MoneyHandIcon /> },
   { ...FARMS, icon: <FarmsIcon /> },
   { ...INSPIRIT, icon: <InSpiritIcon /> },
@@ -98,13 +98,13 @@ const navMenus = [
 ];
 
 const navDropdownMenus = [
-  LENDANDBORROW,
+  // LENDANDBORROW,
   ANALYTICS,
-  NFTS,
+  // NFTS,
   DOCS,
-  GOVERNANCE,
+  // GOVERNANCE,
   // APEMODE,
-  BUYFTM,
+  // BUYFTM,
 ];
 
 const NavMenuItem = ({ menu, is_active }: NavMenuProps) => {
@@ -352,7 +352,7 @@ const TopBar = () => {
             />
           ))}
 
-          {!isMobile && (
+          {/* {!isMobile && (
             <Button
               variant="topBar"
               fontSize="14px"
@@ -361,7 +361,7 @@ const TopBar = () => {
             >
               {t(`${translationPath}.switchV1`)}
             </Button>
-          )}
+          )} */}
         </TopWrapper>
         <BottomWrapper>
           <Box
@@ -369,7 +369,7 @@ const TopBar = () => {
             display="flex"
             alignItems="center"
             pr="spacing06"
-            minW={{ base: '0', sm: '150px' }}
+            // minW={{ base: '0', sm: '150px' }}
             minH="50px"
             marginLeft={isMobile ? '5px' : '0'}
             _hover={{ cursor: 'pointer' }}

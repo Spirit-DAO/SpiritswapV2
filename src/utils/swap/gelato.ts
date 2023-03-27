@@ -21,14 +21,14 @@ export const GELATO_NATIVE_ASSET_ADDRESS =
 export const limitOrdersItf = (
   _signer,
   _handler: Handler = DEFAULT_HANDLER,
-  _chainId: ChainId = CHAIN_ID,
-) => new GelatoLimitOrders(_chainId, _signer, _handler);
+  _chainId = CHAIN_ID,
+) => new GelatoLimitOrders(_chainId as ChainId, _signer, _handler);
 
 export const stopLimitOrdersItf = (
   _signer,
   _handler: Handler = DEFAULT_HANDLER,
-  _chainId: ChainId = CHAIN_ID,
-) => new GelatoStopLimitOrders(_chainId, _signer, _handler);
+  _chainId = CHAIN_ID,
+) => new GelatoStopLimitOrders(_chainId as ChainId, _signer, _handler);
 
 // inputAmount = Amount to sell
 // _minReturn = Minimum amount of outToken which the users want to receive back
@@ -42,7 +42,7 @@ export const placeLimitOrder = async (
   _minReturn: BigNumber,
   _allowance: string,
   _handler: Handler = DEFAULT_HANDLER,
-  _chainId: ChainId = CHAIN_ID,
+  _chainId = CHAIN_ID,
 ) => {
   const itf = limitOrdersItf(_signer, _handler, _chainId);
 
@@ -89,7 +89,7 @@ export const placeStopLimitOrder = async (
   _inputAmount: number,
   _maxReturn: number,
   _handler: Handler = DEFAULT_HANDLER,
-  _chainId: ChainId = CHAIN_ID,
+  _chainId = CHAIN_ID,
 ) => {
   const itf = stopLimitOrdersItf(_signer, _handler, _chainId);
 
@@ -110,7 +110,7 @@ export const placeStopLimitOrder = async (
 
 export const cancelLimitOrder = async (
   _order: GelattoLimitOrder,
-  _chainId: ChainId = CHAIN_ID,
+  _chainId = CHAIN_ID,
   _handler: Handler = DEFAULT_HANDLER,
 ) => {
   const connector = getProvider();
@@ -145,7 +145,7 @@ export const cancelStopLimitOrder = async (
   _signer: any,
   _order: StopLimitOrder,
   _type?: string,
-  _chainId: ChainId = CHAIN_ID,
+  _chainId = CHAIN_ID,
   _handler: Handler = DEFAULT_HANDLER,
 ) => {
   const itf = stopLimitOrdersItf(_signer, _handler, _chainId);
@@ -162,7 +162,7 @@ export const cancelStopLimitOrder = async (
 export const getLimitOrders = async (
   _userAddress: string,
   _handler: Handler = DEFAULT_HANDLER,
-  _chainId: ChainId = CHAIN_ID,
+  _chainId = CHAIN_ID,
   _signer: any = null,
 ) => {
   let signer;

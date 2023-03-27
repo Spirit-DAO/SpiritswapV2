@@ -13,7 +13,7 @@ export enum ConnectorNames {
   CloverWallet = 'cloverwallet',
 }
 
-export const CHAIN_ID = 250; // I think this should be refactored
+export const CHAIN_ID = 42161; // I think this should be refactored
 export const DEFAULT_HANDLER = 'spiritswap';
 
 export const COVALENT_API_KEY = 'ckey_ce0907ce545344edb6d203df10e';
@@ -149,8 +149,8 @@ export const EMPY_FARM = {
   lpSymbol: 'Spirit-FTM LP',
   name: 'SPIRIT FTM',
   lpAddresses: {
-    4002: '',
-    250: '',
+    421611: '',
+    42161: '',
   },
   gaugeAddress: '',
   bribeAddress: '',

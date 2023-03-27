@@ -129,7 +129,8 @@ export interface Call {
   data?: {
     lpSymbol: string;
     lpAddresses: {
-      250: string;
+      250?: string;
+      42161: string;
     };
     balance?: string;
   };

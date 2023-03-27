@@ -2,14 +2,35 @@
 <html lang="en" data-root-path="<%= htmlWebpackPlugin.options.rootPath %>">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="<%= htmlWebpackPlugin.options.rootPath %>favicon.ico" />
+    <link
+      rel="icon"
+      href="<%= htmlWebpackPlugin.options.rootPath %>favicon.ico"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="<%= htmlWebpackPlugin.options.rootPath %>apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="<%= htmlWebpackPlugin.options.rootPath %>favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="<%= htmlWebpackPlugin.options.rootPath %>favicon-16x16.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="<%= htmlWebpackPlugin.options.rootPath %>apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="<%= htmlWebpackPlugin.options.rootPath %>favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="<%= htmlWebpackPlugin.options.rootPath %>favicon-16x16.png"
+    />
 
-    <link rel="mask-icon" href="<%= htmlWebpackPlugin.options.rootPath %>safari-pinned-tab.svg" color="#5bbad5" />
+    <link
+      rel="mask-icon"
+      href="<%= htmlWebpackPlugin.options.rootPath %>safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
     <meta name="msapplication-TileColor" content="#00aba9" />
     <meta name="ui-version" content="%REACT_APP_GIT_SHA%" />
 
@@ -19,7 +40,7 @@
       name="description"
       content="The all-in-one DEX on Fantom. A complete hub for trading, lending, staking delegations, farming, and much more."
     />
-    <meta name="theme-color" content="#60E6C5" />
+    <meta name="theme-color" content="#453a3c " />
 
     <!-- Facebook Meta Tags -->
     <meta property="og:type" content="website" />
@@ -28,7 +49,10 @@
       property="og:description"
       content="The all-in-one DEX on Fantom. A complete hub for trading, lending, staking delegations, farming, and much more."
     />
-    <meta property="og:image" content="<%= htmlWebpackPlugin.options.rootPath %>images/embed-banner.png" />
+    <meta
+      property="og:image"
+      content="<%= htmlWebpackPlugin.options.rootPath %>images/embed-banner.png"
+    />
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -37,20 +61,34 @@
       name="twitter:description"
       content="The all-in-one DEX on Fantom. A complete hub for trading, lending, staking delegations, farming, and much more."
     />
-    <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.rootPath %>images/embed-banner.png" />
+    <meta
+      name="twitter:image"
+      content="<%= htmlWebpackPlugin.options.rootPath %>images/embed-banner.png"
+    />
 
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="<%= htmlWebpackPlugin.options.rootPath %>manifest.json" />
+    <link
+      rel="manifest"
+      href="<%= htmlWebpackPlugin.options.rootPath %>manifest.json"
+    />
 
     <link
       href="https://fonts.googleapis.com/css?family=Jost"
       rel="stylesheet"
     />
   </head>
-  <body style="background: #000315">
+  <body
+    style="
+      background: linear-gradient(
+        109.6deg,
+        rgba(0, 0, 0, 0.93) 11.2%,
+        rgb(63, 61, 61) 78.9%
+      );
+    "
+  >
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="modal-root"></div>

@@ -17,13 +17,13 @@ export const ecosystemFarmObject = (
     lpAddress: lpAddress,
     tokenSymbol: 'symbol',
     tokenAddresses: {
-      4002: '0x0',
-      250: tokenAddress,
+      421611: '0x0',
+      42161: tokenAddress,
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: {
-      4002: '0x0',
-      250: farm.token1,
+      421611: '0x0',
+      42161: farm.token1,
     },
 
     statistics: {

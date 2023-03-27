@@ -106,7 +106,7 @@
   },
   "home": {
     "common": {
-      "header": "Embrace your <b style='color: #60E6C5'>DeFi SPIRIT</b>",
+      "header": "Embrace your <b style='color: #453a3c '>DeFi SPIRIT</b>",
       "description": "The SpiritSwap protocol captures the essence of everything Defi 2.0 on the Fantom network, delivering a complete hub for <b style='color: white'>trading</b>, <b style='color: white'>lending</b> and <b style='color: white'>borrowing</b>, <b style='color: white'>reward sharing</b>, <b style='color: white'>staking delegations</b>, and <b style='color: white'>farming</b>.<br/><br/>Scroll below and click on <b style='color: white'>“Learn more”</b> to learn more about SpiritSwap’s unique features and lucrative investment options.",
       "descriptionFull": "The SpiritSwap protocol captures the essence of everything Defi 2.0 on the Fantom network, delivering a complete hub for <b style='color: white'>trading</b>, <b style='color: white'>lending</b> and <b style='color: white'>borrowing</b>, <b style='color: white'>reward sharing</b>, <b style='color: white'>staking delegations</b>, and <b style='color: white'>farming</b>.<br/><br/>Scroll below and click on <b style='color: white'>“Learn more”</b> to learn more about SpiritSwap’s unique features and lucrative investment options.",
       "showPortfolio": "Show Portfolio",
@@ -165,7 +165,7 @@
       },
       "leverage": {
         "title": "Leverage your trades",
-        "description": "<b style='color:#60E6C5'>Coming soon:</b> Ape Mode is a leverage trading feature, unique to SpiritSwap and a first of its kind on Fantom’s DeFi ecosystem. Ape Mode provides users with a simplified, one-click leverage trade opportunity, offering up to 3x leverage on assets such as FTM, SPIRIT, TAROT, LQDR and ICE.",
+        "description": "<b style='color:#453a3c '>Coming soon:</b> Ape Mode is a leverage trading feature, unique to SpiritSwap and a first of its kind on Fantom’s DeFi ecosystem. Ape Mode provides users with a simplified, one-click leverage trade opportunity, offering up to 3x leverage on assets such as FTM, SPIRIT, TAROT, LQDR and ICE.",
         "button": "Ape Mode"
       },
       "lend": {

@@ -198,14 +198,14 @@ const Home = () => {
       image: Earn,
       animation: FarmAnimation,
     },
-    {
-      id: 'bridge',
-      titleIcon: <BridgeIcon />,
-      translationPath: 'home.about.bridge',
-      buttonNavPath: { path: BRIDGE.path },
-      image: Bridge,
-      animation: BridgeAnimation,
-    },
+    // {
+    //   id: 'bridge',
+    //   titleIcon: <BridgeIcon />,
+    //   translationPath: 'home.about.bridge',
+    //   buttonNavPath: { path: BRIDGE.path },
+    //   image: Bridge,
+    //   animation: BridgeAnimation,
+    // },
     {
       id: 'inSpirit',
       titleIcon: <InspiritIcon />,
@@ -214,14 +214,14 @@ const Home = () => {
       image: Inspirit,
       animation: InspiritAnimation,
     },
-    {
-      id: 'lend',
-      titleIcon: <LendAndBorrowIcon />,
-      translationPath: 'home.about.lend',
-      buttonNavPath: { path: LENDANDBORROW.url, targetSelf: true },
-      image: Share,
-      animation: LendingAnimation,
-    },
+    // {
+    //   id: 'lend',
+    //   titleIcon: <LendAndBorrowIcon />,
+    //   translationPath: 'home.about.lend',
+    //   buttonNavPath: { path: LENDANDBORROW.url, targetSelf: true },
+    //   image: Share,
+    //   animation: LendingAnimation,
+    // },
   ];
 
   const handleGoToLanding = () => {

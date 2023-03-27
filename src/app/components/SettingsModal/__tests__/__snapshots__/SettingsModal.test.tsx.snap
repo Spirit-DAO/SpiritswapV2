@@ -26,7 +26,7 @@ Object {
 
 .c5 {
   background: rgba(100,221,192,0.15);
-  color: #60E6C5;
+  color: #453a3c ;
   border: 1px solid transparent;
   border-radius: 4px;
   font-family: inherit;
@@ -45,7 +45,7 @@ Object {
 }
 
 .c5:active {
-  border: 1px solid #60E6C5;
+  border: 1px solid #453a3c ;
   opacity: 1;
 }
 
@@ -190,7 +190,7 @@ Object {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
-  background-color: #60E6C5;
+  background-color: #453a3c ;
 }
 
 <body

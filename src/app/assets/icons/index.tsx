@@ -500,11 +500,11 @@ export const DotOutlineIcon = ({
 };
 
 export const SpiritDesktopIcon = ({ w = md, h = md, ...rest }) => {
-  return <Image src={SpiritLogo} w="150px" ml="15px" />;
+  return <Image src={SpiritLogo} w="50px" ml="15px" />;
 };
 
 export const SpiritMobileIcon = ({ ...rest }) => {
-  return <Image src={SpiritLogo} w="115px" ml="10px" py="10px" />;
+  return <Image src={SpiritLogo} w="38px" ml="10px" py="10px" />;
 };
 
 export const WarningNewIcon = ({ w = md, h = md, ...rest }) => {

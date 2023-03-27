@@ -50,7 +50,7 @@ Array [
 
 .c2,
 .c2 > * {
-  color: #60E6C5;
+  color: #453a3c ;
 }
 
 .c3 {
@@ -152,7 +152,7 @@ Array [
 }
 
 .c5:focus {
-  color: #60E6C5;
+  color: #453a3c ;
   border: 1px solid #1D9384;
 }
 
@@ -274,7 +274,7 @@ Array [
 
 .c2,
 .c2 > * {
-  color: #60E6C5;
+  color: #453a3c ;
 }
 
 .c3 {
@@ -368,7 +368,7 @@ Array [
 }
 
 .c5:focus {
-  color: #60E6C5;
+  color: #453a3c ;
   border: 1px solid #1D9384;
 }
 
@@ -491,7 +491,7 @@ Array [
 }
 
 .c2:focus {
-  color: #60E6C5;
+  color: #453a3c ;
   border: 1px solid #1D9384;
 }
 

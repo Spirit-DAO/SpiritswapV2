@@ -131,7 +131,7 @@ Array [
   background: transparent;
   padding: 0;
   border: none;
-  color: #60E6C5;
+  color: #453a3c ;
   margin: auto;
 }
 
@@ -366,7 +366,7 @@ Array [
   background: transparent;
   padding: 0;
   border: none;
-  color: #60E6C5;
+  color: #453a3c ;
   margin: auto;
 }
 

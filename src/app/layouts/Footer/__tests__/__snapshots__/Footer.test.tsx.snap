@@ -59,7 +59,7 @@ Object {
 }
 
 .c4 a:hover svg {
-  color: #60E6C5;
+  color: #453a3c ;
 }
 
 .c2 {

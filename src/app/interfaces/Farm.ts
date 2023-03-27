@@ -92,8 +92,9 @@ export interface FarmProps {
   lpSymbol: string;
   name: string;
   lpAddresses: {
-    4002: string;
-    250: string;
+    421611: string;
+    250?: string;
+    42161: string;
   };
   gaugeAddress: string;
   bribeAddress: string;

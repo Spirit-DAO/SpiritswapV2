@@ -59,10 +59,10 @@ const SiteRouting = () => {
             path={`${resolveRoutePath(SWAP.path)}/:token1/:token2`}
             element={<SwapPage />}
           />
-          <Route
+          {/* <Route
             path={resolveRoutePath(BRIDGE.path)}
             element={<BridgePage />}
-          />
+          /> */}
           <Route
             path={resolveRoutePath(LIQUIDITY.path)}
             element={<LiquidityPage />}

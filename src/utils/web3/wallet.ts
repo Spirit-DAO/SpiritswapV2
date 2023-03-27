@@ -11,6 +11,8 @@ export const setupNetwork = async (chainId = CHAIN_ID) => {
   const provider = getProvider();
   const chain = NETWORK[chainId];
 
+  console.log(chain);
+
   if (provider) {
     const networkConfig: EthereumChainParameter = {
       chainId: `0x${chain.hex}`,
