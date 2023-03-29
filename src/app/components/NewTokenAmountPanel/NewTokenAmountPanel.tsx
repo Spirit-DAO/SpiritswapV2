@@ -162,12 +162,6 @@ const NewTokenAmountPanel = ({
         userBalance = fetchedTokenWithBalance.amount;
       }
 
-      if (!tradeUSD && fetchedTokenWithBalance.rate) {
-        usdValue = `${
-          parseFloat(inputValue || '0') * fetchedTokenWithBalance.rate
-        }`;
-      }
-
       if (tradeUSD) {
         usdValue = tradeUSD;
       }
@@ -269,7 +263,7 @@ const NewTokenAmountPanel = ({
       return `≈ ${getRoundedSFs(inputValue)} ${token?.symbol}`;
     }
     if (usd && +usd > 0 && +usd < 0.01) return '<$0.01';
-    return `≈ $${parseFloat(usd).toFixed(2)}`;
+    return `≈ $${getRoundedSFs(usd, 4)}`;
   };
 
   return (

@@ -241,6 +241,8 @@ export default function SwapPanel({ panelProps, isWrapped }) {
   };
 
   const [ownPriceImpact, setOwmPriceImpact] = useState<number>(0);
+  const [destAmount, setDestAmount] = useState<number>(0);
+  const [srcAmount, setSrcAmount] = useState<number>(0);
 
   useEffect(() => {
     const prices = async () => {
@@ -250,11 +252,15 @@ export default function SwapPanel({ panelProps, isWrapped }) {
       const priceB = await getPricesByPools(
         secondToken.tokenSelected.address.toLowerCase(),
       );
+
       const amountA = firstToken.value;
       const amountB = secondToken.value;
 
       const destAmountUSD = priceB * parseFloat(amountB);
       const srcAmountUSD = priceA * parseFloat(amountA);
+
+      setDestAmount(destAmountUSD);
+      setSrcAmount(srcAmountUSD);
 
       const priceImpact = ((destAmountUSD - srcAmountUSD) / srcAmountUSD) * 100;
 
@@ -282,7 +288,7 @@ export default function SwapPanel({ panelProps, isWrapped }) {
         setErrorMessage={setErrorMessage}
         isLoading={loadAmountInput1 && isLoading}
         handleCheckBalance={handleCheckBalance}
-        tradeUSD={trade?.priceRoute?.srcUSD}
+        tradeUSD={srcAmount.toString() || '0'}
         errorMessage={
           errorMessage.relevantTokens
             ? errorMessage.relevantTokens.includes(
@@ -310,7 +316,7 @@ export default function SwapPanel({ panelProps, isWrapped }) {
         onSelect={(item: Token, onClose) => handleChangeToken(item, onClose, 1)}
         inputValue={secondToken.value || ''}
         context="token"
-        tradeUSD={trade?.priceRoute?.destUSD}
+        tradeUSD={destAmount.toString() || '0'}
         showInputInUSD={showInputInUSD}
         setShowInputInUSD={setShowInputInUSD}
         token={secondToken?.tokenSelected || mockInputToken}
