@@ -256,8 +256,14 @@ export default function SwapPanel({ panelProps, isWrapped }) {
       const amountA = firstToken.value;
       const amountB = secondToken.value;
 
-      const destAmountUSD = priceB * parseFloat(amountB);
-      const srcAmountUSD = priceA * parseFloat(amountA);
+      let destAmountUSD;
+      let srcAmountUSD;
+
+      srcAmountUSD = priceA * parseFloat(amountA);
+      destAmountUSD = priceB * parseFloat(amountB);
+
+      if (!srcAmountUSD) srcAmountUSD = trade?.priceRoute?.srcUSD;
+      if (!destAmountUSD) destAmountUSD = trade?.priceRoute?.destUSD;
 
       setDestAmount(destAmountUSD);
       setSrcAmount(srcAmountUSD);
@@ -273,6 +279,8 @@ export default function SwapPanel({ panelProps, isWrapped }) {
     secondToken.tokenSelected.address,
     firstToken.value,
     secondToken.value,
+    trade?.priceRoute?.srcUSD,
+    trade?.priceRoute?.destUSD,
   ]);
 
   return (
@@ -288,7 +296,7 @@ export default function SwapPanel({ panelProps, isWrapped }) {
         setErrorMessage={setErrorMessage}
         isLoading={loadAmountInput1 && isLoading}
         handleCheckBalance={handleCheckBalance}
-        tradeUSD={srcAmount.toString() || '0'}
+        tradeUSD={srcAmount?.toString() || '0'}
         errorMessage={
           errorMessage.relevantTokens
             ? errorMessage.relevantTokens.includes(
@@ -316,7 +324,7 @@ export default function SwapPanel({ panelProps, isWrapped }) {
         onSelect={(item: Token, onClose) => handleChangeToken(item, onClose, 1)}
         inputValue={secondToken.value || ''}
         context="token"
-        tradeUSD={destAmount.toString() || '0'}
+        tradeUSD={destAmount?.toString() || '0'}
         showInputInUSD={showInputInUSD}
         setShowInputInUSD={setShowInputInUSD}
         token={secondToken?.tokenSelected || mockInputToken}
