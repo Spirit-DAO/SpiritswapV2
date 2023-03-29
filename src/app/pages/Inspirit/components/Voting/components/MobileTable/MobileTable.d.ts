@@ -1,4 +1,6 @@
 export interface MobileTableProps {
+  uniqueFarm: any;
+  showAll: boolean;
   filteredBribes: any;
   resetInputs: boolean;
   cleanError: any;
