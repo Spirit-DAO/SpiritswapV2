@@ -337,7 +337,6 @@ export default function LimitPanel({ panelProps, isLimitBuy, isWrapped }) {
             width="170px"
             height="20px"
             alt="Powered By Gelato"
-            src={PartnersIcons.PowerByGelato}
           />
         </Box>
       </Box>

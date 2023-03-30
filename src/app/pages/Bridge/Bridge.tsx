@@ -67,7 +67,6 @@ export function BridgePage() {
   );
 
   const { states, handlers } = useSettings();
-  const liFinanceItem = partnersIcons.LiFinanceIcon;
   const [inputToken, setInputToken] = useState<Token>();
   const [outputToken, setOutputToken] = useState<Token>();
   const [showConfirmModal, setshowConfirmModal] = useState(false);
@@ -447,7 +446,7 @@ export function BridgePage() {
                             >
                               Powered by
                             </Text>
-                            <Image w="40px" src={liFinanceItem} />
+                            <Image w="40px" />
                           </HStack>
                         </Link>
                       </Flex>
