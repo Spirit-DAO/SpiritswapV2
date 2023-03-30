@@ -2,7 +2,7 @@ import ape from './ape.webm';
 import bridge from './bridge.webm';
 import farm from './farm.webm';
 import inspirit from './inspirit.webm';
-import landing from './landing.webm';
+import landing from './landing-new.webm';
 import lend_borrow from './lend_borrow.webm';
 import swap from './swap.webm';
 
