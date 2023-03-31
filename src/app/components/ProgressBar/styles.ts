@@ -2,11 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   height: 8px;
-  background-image: linear-gradient(
-    90deg,
-    rgba(19, 181, 236, 0.25),
-    rgba(0, 189, 116, 0.25)
-  );
+  background-image: linear-gradient(to right, rgba(0, 0, 0), rgba(67, 67, 67));
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   position: relative;
   filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.5));
@@ -29,6 +25,6 @@ export const StyledIndicator = styled.div<{ value: number }>`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: linear-gradient(90deg, #13b5ec, #00bd74);
+    background-image: linear-gradient(to right, #000000, #434343);
   }
 `;

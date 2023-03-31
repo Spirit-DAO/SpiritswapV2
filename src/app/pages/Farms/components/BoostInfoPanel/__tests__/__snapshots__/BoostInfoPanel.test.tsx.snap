@@ -100,7 +100,7 @@ Object {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(90deg,#13b5ec,#00bd74);
+  background-image: linear-gradient(to right, #000000, #434343);
 }
 
 .c4 {
