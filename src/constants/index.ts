@@ -1,5 +1,5 @@
 import contracts from './contracts';
-import { JEFE, wBOMB } from './tokens';
+import { JEFE, rainSPIRIT, wBOMB } from './tokens';
 
 export { NETWORK } from './networks';
 export * from './tokens';
@@ -171,4 +171,5 @@ export const STABLE = 'Stable';
 export const TOKENS_WITH_HIGH_SLIPPAGE = [
   wBOMB.address.toLowerCase(),
   JEFE.address.toLowerCase(),
+  rainSPIRIT.address.toLowerCase(),
 ];
