@@ -130,7 +130,7 @@ Object {
 }
 
 .c8 {
-  color: #60E6C5;
+  color: #0086ff;
 }
 
 .c0 {
@@ -190,7 +190,7 @@ Object {
 }
 
 .c12 mark {
-  color: #60E6C5;
+  color: #0086ff;
   font-weight: 500;
   background: transparent;
 }

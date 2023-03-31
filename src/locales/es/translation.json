@@ -102,7 +102,7 @@
   },
   "home": {
     "common": {
-      "header": "Abraza tu <b style='color: #60E6C5'>DeFi SPIRIT</b>",
+      "header": "Abraza tu <b style='color: #0086ff'>DeFi SPIRIT</b>",
       "description": "El protocolo SpiritSwap captura la esencia de todo Defi 2.0 en la red Fantom, ofreciendo un centro completo para <b style='color: white'>comercio</b>, <b style='color: white'>préstamos</b > y <b style='color: white'>tomar prestado</b>, <b style='color: white'>compartir recompensas</b>, <b style='color: white'>asignar delegaciones</b > y <b style='color: white'>agricultura</b>.<br/><br/>Desplácese hacia abajo y haga clic en <b style='color: white'>“Más información”</b> para obtener más información sobre las características únicas de SpiritSwap y las lucrativas opciones de inversión.",
       "descriptionFull": "El protocolo SpiritSwap captura la esencia de todo Defi 2.0 en la red Fantom, ofreciendo un centro completo para <b style='color: white'>comercio</b>, <b style='color: white'>préstamos</b > y <b style='color: white'>tomar prestado</b>, <b style='color: white'>compartir recompensas</b>, <b style='color: white'>asignar delegaciones</b > y <b style='color: white'>agricultura</b>.<br/><br/>Desplácese hacia abajo y haga clic en <b style='color: white'>“Más información”</b> para obtener más información sobre las características únicas de SpiritSwap y las lucrativas opciones de inversión.",
       "showPortfolio": "Mostrar cartera",
@@ -153,7 +153,7 @@
       },
       "leverage": {
         "title": "Aproveche sus operaciones",
-        "description": "<b style='color:#60E6C5'>Próximamente:</b> Ape Mode es una función de negociación de apalancamiento, exclusiva de SpiritSwap y la primera de su tipo en el ecosistema DeFi de Fantom. Ape Mode brinda a los usuarios una oportunidad comercial de apalancamiento simplificada con un solo clic, que ofrece un apalancamiento de hasta 3x en activos como FTM, SPIRIT, TAROT, LQDR e ICE.",
+        "description": "<b style='color:#0086ff'>Próximamente:</b> Ape Mode es una función de negociación de apalancamiento, exclusiva de SpiritSwap y la primera de su tipo en el ecosistema DeFi de Fantom. Ape Mode brinda a los usuarios una oportunidad comercial de apalancamiento simplificada con un solo clic, que ofrece un apalancamiento de hasta 3x en activos como FTM, SPIRIT, TAROT, LQDR e ICE.",
         "button": "Ape Mode"
       }
     },

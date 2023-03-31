@@ -82,8 +82,8 @@ export const dataOptions = {
     datasets: [
       {
         label: '',
-        borderColor: '#60E6C5',
-        backgroundColor: '#60E6C5',
+        borderColor: '#0086ff',
+        backgroundColor: '#0086ff',
         borderRadius: 4,
         minBarLength: 10,
       },
@@ -94,8 +94,8 @@ export const dataOptions = {
       {
         label: 'Tokens value',
         tension: 0.4,
-        borderColor: '#60E6C5',
-        backgroundColor: '#60E6C5',
+        borderColor: '#0086ff',
+        backgroundColor: '#0086ff',
         pointRadius: 3,
       },
     ],

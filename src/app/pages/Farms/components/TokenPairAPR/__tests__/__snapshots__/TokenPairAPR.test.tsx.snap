@@ -29,7 +29,7 @@ Array [
   font-family: Jost,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   padding: 0.125rem 0.25rem;
   background-color: rgba(100,221,192,0.15);
-  color: #60E6C5;
+  color: #0086ff;
 }
 
 .c0 {

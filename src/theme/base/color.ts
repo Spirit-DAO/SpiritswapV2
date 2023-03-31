@@ -1,7 +1,7 @@
 export const colorValues = {
   teal: {
     ciTrans15: 'rgba(100, 221, 192, 0.15)',
-    400: '#60E6C5',
+    400: '#0086ff',
     600: '#1D9384',
     800: '#1D353D',
   },

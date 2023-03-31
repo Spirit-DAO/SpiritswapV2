@@ -79,7 +79,7 @@ Object {
 
 .c1,
 .c1 > * {
-  color: #60E6C5;
+  color: #0086ff;
 }
 
 .c2 {
@@ -309,7 +309,7 @@ Object {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
-  background-color: #60E6C5;
+  background-color: #0086ff;
 }
 
 @media (min-width:320px) {
