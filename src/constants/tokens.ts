@@ -176,11 +176,20 @@ export const JEFE = {
   decimals: 9,
 };
 
+export const rainSPIRIT = {
+  name: 'rainSPIRIT',
+  symbol: 'rainSPIRIT',
+  address: '0xf9c6e3C123f0494A4447100bD7dbd536F43CC33A',
+  chainId: 250,
+  decimals: 18,
+};
+
 export const tokens: Token[] = [
   FTM,
   SPIRIT,
   WFTM,
   JEFE,
+  rainSPIRIT,
   {
     name: 'Wrapped BTC',
     symbol: 'WBTC',
@@ -545,13 +554,7 @@ export const tokens: Token[] = [
     chainId: 250,
     decimals: 0,
   },
-  {
-    name: 'rainSPIRIT',
-    symbol: 'rainSPIRIT',
-    address: '0xf9c6e3C123f0494A4447100bD7dbd536F43CC33A',
-    chainId: 250,
-    decimals: 18,
-  },
+
   {
     name: 'Oath',
     symbol: 'OATH',
@@ -652,13 +655,13 @@ export const tokens: Token[] = [
     chainId: 250,
   },
   {
-  name: 'Ankr Staked FTM',
-  symbol: 'ankrFTM',
-  chainId: 250,
-  address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
-  decimals: 18,
+    name: 'Ankr Staked FTM',
+    symbol: 'ankrFTM',
+    chainId: 250,
+    address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
+    decimals: 18,
   },
-  
+
   wBOMB,
   MIM,
   FRAX,

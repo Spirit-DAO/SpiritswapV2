@@ -128,11 +128,11 @@ export const getParaSwapRate: Swapper['getRate'] = async (
     srcToken: srcToken?.address,
     destToken: destToken?.address,
     srcDecimals: srcToken?.decimals,
-    maxImpact: TOKENS_WITH_HIGH_SLIPPAGE.includes(
-      destToken.address.toLowerCase(),
-    )
-      ? '100'
-      : '15', // 15% by default by paraswap
+    maxImpact:
+      TOKENS_WITH_HIGH_SLIPPAGE.includes(destToken.address.toLowerCase()) ||
+      TOKENS_WITH_HIGH_SLIPPAGE.includes(srcToken.address.toLowerCase())
+        ? '100'
+        : '15', // 15% by default by paraswap
     destDecimals: destToken?.decimals,
     amount: isFirtsInput ? srcAmount : destAmount,
     side: isFirtsInput ? SwapSide.SELL : SwapSide.BUY,

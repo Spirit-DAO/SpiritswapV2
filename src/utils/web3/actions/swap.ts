@@ -73,9 +73,6 @@ export const swapTransaction = async (
 
   const txGas = BigNumber.from(quote.gas);
 
-  // These are the amounts that make the unidex api work every time
-  // TODO: Sort out a more dynamic way to set these ones
-
   const tx = {
     from: senderAddress,
     gasLimit: MIN_GAS_LIMIT.gt(txGas) ? MIN_GAS_LIMIT : txGas,
