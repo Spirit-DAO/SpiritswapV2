@@ -24,8 +24,6 @@ import {
 import { CardHeader } from 'app/components/CardHeader';
 import { ARROWBACK, BRIDGE } from 'constants/icons';
 import { ButtonGroup } from './components/ButtonGroup';
-import BridgeLeftImage from 'app/assets/bridge/bridge01.png';
-import BridgeRightImage from 'app/assets/bridge/bridge02.png';
 import { setupNetwork } from 'utils/web3';
 import useMobile from 'utils/isMobile';
 import { NetworksPanels } from './components/NetworksPanels';
@@ -285,19 +283,7 @@ export function BridgePage() {
               gridTemplateColumns={isMobile ? 'auto' : '33% 520px 33%'}
               justifyContent="center"
             >
-              {!isMobile && (
-                <FadeInAnimationBox>
-                  <Image
-                    src={BridgeRightImage}
-                    position="relative"
-                    top="30px"
-                    left="-10px"
-                    opacity="25%"
-                    maxW="unset"
-                    float="right"
-                  />
-                </FadeInAnimationBox>
-              )}
+              {!isMobile && <FadeInAnimationBox></FadeInAnimationBox>}
               <BridgeTokenContainer>
                 {showSettings ? (
                   <Settings
@@ -454,18 +440,7 @@ export function BridgePage() {
                   </>
                 )}
               </BridgeTokenContainer>
-              {!isMobile && (
-                <FadeInAnimationBox>
-                  <Image
-                    src={BridgeLeftImage}
-                    position="relative"
-                    top="-36px"
-                    opacity="25%"
-                    maxW="unset"
-                    float="left"
-                  />
-                </FadeInAnimationBox>
-              )}
+              {!isMobile && <FadeInAnimationBox></FadeInAnimationBox>}
             </Grid>
 
             {quote && quote.type === 'lifi' ? (
