@@ -12,8 +12,6 @@ import { ThirdPartyItemsDiv } from 'app/layouts/Footer/styles';
 import { useTranslation } from 'react-i18next';
 import useMobile from 'utils/isMobile';
 import { ArrowDownAnimation } from 'app/components/ArrowDownAnimation';
-import { PeckShiledAuditLogo, ZokyoAuditLogo } from 'app/assets/icons';
-import { PECK_SHIELD_AUDIT_URL, ZOKYO_AUDIT_URL } from 'constants/index';
 
 export default function MiniFooter() {
   const { t } = useTranslation();
@@ -44,39 +42,35 @@ export default function MiniFooter() {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://discord.gg/8FGd4nFQdT"
+            href="https://discord.gg/Mr92PZ63xZ"
           >
             <DiscordSvg />
           </a>
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://twitter.com/Spirit_Swap"
+            href="https://twitter.com/Sterling_Fi"
           >
             <TwitterSvg />
           </a>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="https://github.com/Spirit-DAO/"
-          >
+          <a target="_blank" rel="noreferrer" href="https://github.com/Sterl-o">
             <GitHubSvg />
           </a>
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://spiritswap.medium.com/"
+            href="https://medium.com/@sterlingfinancearb"
           >
             <MediumSvg />
           </a>
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://www.youtube.com/channel/UCrKLtNctO0obN4-bDMGlFuQ"
+            href="https://youtu.be/NMqeWMujiFA"
           >
             <YouTubeSvg />
           </a>
-          <a target="_blank" rel="noreferrer" href="https://t.me/spirit_swap">
+          <a target="https://youtu.be/NMqeWMujiFA">
             <TelegramSvg />
           </a>
         </ThirdPartyItemsDiv>
@@ -87,23 +81,6 @@ export default function MiniFooter() {
           <ArrowDownAnimation />
         </Box>
       )}
-
-      <Flex
-        id="audit_id"
-        justifyContent={isMobile ? 'center' : 'end'}
-        alignItems="start"
-        minW="336px"
-      >
-        <Text mr="5px">{t(`${translationPath}.auditedBy`)}</Text>
-
-        <a href={ZOKYO_AUDIT_URL} target="_blank" rel="noreferrer">
-          <ZokyoAuditLogo h="18px" w="auto" />
-        </a>
-        <Text mx="5px">{`&`}</Text>
-        <a href={PECK_SHIELD_AUDIT_URL} target="_blank" rel="noreferrer">
-          <PeckShiledAuditLogo h="22px" w="auto" />
-        </a>
-      </Flex>
     </Flex>
   );
 }
