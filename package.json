@@ -49,6 +49,7 @@
     "ethcall": "4.6.0",
     "ethers": "5.5.3",
     "file": "0.2.2",
+    "file-loader": "6.2.0",
     "fontfaceobserver": "2.1.0",
     "framer-motion": "^4.1.17",
     "graphql": "16.3.0",
