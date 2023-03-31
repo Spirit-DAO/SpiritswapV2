@@ -283,7 +283,6 @@ export function BridgePage() {
               gridTemplateColumns={isMobile ? 'auto' : '33% 520px 33%'}
               justifyContent="center"
             >
-              {!isMobile && <FadeInAnimationBox></FadeInAnimationBox>}
               <BridgeTokenContainer>
                 {showSettings ? (
                   <Settings
@@ -440,7 +439,6 @@ export function BridgePage() {
                   </>
                 )}
               </BridgeTokenContainer>
-              {!isMobile && <FadeInAnimationBox></FadeInAnimationBox>}
             </Grid>
 
             {quote && quote.type === 'lifi' ? (
