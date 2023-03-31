@@ -398,7 +398,7 @@ const GetInSpirit = () => {
     <Box>
       <StyledListItem>
         <CardHeader
-          title="Get inSPIRIT"
+          title="Get inLEVI"
           id={INSPIRIT}
           helperContent={{
             title: t(`${translationPathHelper}.inspirit`),

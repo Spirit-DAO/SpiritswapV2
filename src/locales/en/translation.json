@@ -24,8 +24,7 @@
     },
     "topBar": {
       "buy": "Buy $LEVI Token",
-      "connect": "Connect Wallet",
-      "switchV1": "Switch to V1"
+      "connect": "Connect Wallet"
     },
     "footer": {
       "goToLandingPage": "Go to landing page"

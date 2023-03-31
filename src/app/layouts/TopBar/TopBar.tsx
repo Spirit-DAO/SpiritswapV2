@@ -171,13 +171,13 @@ const TopBar = () => {
       },
       { name: 'TVL', priceCurrency: '$', price: TVL ?? 0 },
       {
-        name: 'FTM',
+        name: 'ETH',
         priceCurrency: '$',
         price: !ftmPrice ? null : ftmPrice,
         rate: !percentaje24hsFtm ? null : percentaje24hsFtm,
       },
       {
-        name: 'SPIRIT',
+        name: 'LEVI',
         priceCurrency: '$',
         price: !spiritPrice ? null : spiritPrice,
         rate: !percentaje24hsFtm ? null : percentaje24hsSpirit,
@@ -185,10 +185,10 @@ const TopBar = () => {
     ];
 
     if (isMobile) {
-      const i = info.findIndex(item => item.name === 'FTM');
+      const i = info.findIndex(item => item.name === 'ETH');
       info.splice(i, 1);
       info.unshift({
-        name: 'SPIRIT',
+        name: 'LEVI',
         priceCurrency: '$',
         price: !spiritPrice ? null : spiritPrice,
         rate: !percentaje24hsSpirit ? null : percentaje24hsSpirit,
@@ -351,17 +351,6 @@ const TopBar = () => {
               tokenRate={info?.rate}
             />
           ))}
-
-          {!isMobile && (
-            <Button
-              variant="topBar"
-              fontSize="14px"
-              paddingInline="8px"
-              onClick={() => openInNewTab('https://app.spiritswap.finance/#/')}
-            >
-              {t(`${translationPath}.switchV1`)}
-            </Button>
-          )}
         </TopWrapper>
         <BottomWrapper>
           <Box
