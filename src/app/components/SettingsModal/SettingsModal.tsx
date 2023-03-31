@@ -19,7 +19,6 @@ const SettingsModal = ({
 }: Props) => {
   const { t } = useTranslation();
   const translationPath = 'common.settingsModal';
-  const buttonTranslationPath = 'common.topBar';
   const dispatch = useAppDispatch();
   const { notifications, suggestions } = useAppSelector(selectUserSettings);
   const { account } = useWallets();
@@ -92,9 +91,7 @@ const SettingsModal = ({
           mt="spacing03"
           border="none"
           onClick={() => openInNewTab('https://app.spiritswap.finance/#/')}
-        >
-          {t(`${buttonTranslationPath}.switchV1`)}
-        </Button>
+        ></Button>
       </BodyContainer>
     </Modal>
   );

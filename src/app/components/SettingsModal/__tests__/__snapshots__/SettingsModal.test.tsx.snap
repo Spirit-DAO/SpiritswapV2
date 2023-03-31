@@ -348,8 +348,6 @@ Object {
                   class="chakra-button css-3wygne"
                   type="button"
                 >
-                  common.topBar.switchV1
-                </button>
               </div>
             </div>
           </div>
@@ -481,8 +479,6 @@ Object {
                 class="chakra-button css-3wygne"
                 type="button"
               >
-                common.topBar.switchV1
-              </button>
             </div>
           </div>
         </div>
