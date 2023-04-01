@@ -35,7 +35,7 @@ const NavigationDropdown: FC<Props> = ({
 }: Props) => {
   const ref = useOnClickOutside<HTMLInputElement>(onClickOutside);
   const [features, setFeatures] = useState<DropdownMenuLink[]>([]);
-  const [spiritSwap, setSpiritSwap] = useState<DropdownMenuLink[]>([]);
+  const [Leviathan, setLeviathan] = useState<DropdownMenuLink[]>([]);
   const isMobile = useMobile();
 
   const renderIcon = name => {
@@ -105,26 +105,26 @@ const NavigationDropdown: FC<Props> = ({
     return features.map((item, index) => renderLink(item, index));
   };
 
-  const renderSpiritSwap = () => {
-    return spiritSwap.map((item, index) => renderLink(item, index));
+  const renderLeviathan = () => {
+    return Leviathan.map((item, index) => renderLink(item, index));
   };
 
   useEffect(() => {
     const SpiritSwapLinks = new Set(['Analytics', 'Docs', 'Governance']);
 
     const features: DropdownMenuLink[] = [];
-    const spiritSwap: DropdownMenuLink[] = [];
+    const Leviathan: DropdownMenuLink[] = [];
 
     items.forEach(item => {
       if (SpiritSwapLinks.has(item.title)) {
-        spiritSwap.push(item);
+        Leviathan.push(item);
       } else {
         features.push(item);
       }
     });
 
     setFeatures(features);
-    setSpiritSwap(spiritSwap);
+    setLeviathan(Leviathan);
   }, [items]);
 
   return (
@@ -137,8 +137,8 @@ const NavigationDropdown: FC<Props> = ({
         {renderFeatures()}
       </ColumnWrapper>
       <ColumnWrapper>
-        <StyledColumnHeading>SpiritSwap</StyledColumnHeading>
-        {renderSpiritSwap()}
+        <StyledColumnHeading>Leviathan</StyledColumnHeading>
+        {renderLeviathan()}
       </ColumnWrapper>
     </DropdownWrapper>
   );
