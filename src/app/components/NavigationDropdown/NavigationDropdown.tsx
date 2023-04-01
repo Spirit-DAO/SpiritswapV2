@@ -55,20 +55,8 @@ const NavigationDropdown: FC<Props> = ({
         return <MenuInspirit {...props} />;
       case 'Analytics':
         return <AnalyticsIcon {...props} />;
-      case 'dSynths':
-        return <DSynthsIcon {...props} />;
-      case 'Lend/Borrow':
-        return <LendAndBorrowIcon {...props} />;
       case 'Docs':
         return <DocsIcon {...props} />;
-      case 'Governance':
-        return <GovernanceIcon {...props} />;
-      case 'NFTs':
-        return <NFTIcon {...props} />;
-      case 'SpiritWars':
-        return <MartialArtsSwordFencingIcon {...props} />;
-      case 'Buy FTM':
-        return <BuyCryptoIcon {...props} />;
       case 'Liquidity':
         return <MoneyHandIcon {...props} />;
       default:
@@ -132,14 +120,8 @@ const NavigationDropdown: FC<Props> = ({
       ref={ref}
       width={isMobile ? (98 * (width ?? 0)) / 100 : width}
     >
-      <ColumnWrapper>
-        <StyledColumnHeading>Features</StyledColumnHeading>
-        {renderFeatures()}
-      </ColumnWrapper>
-      <ColumnWrapper>
-        <StyledColumnHeading>Leviathan</StyledColumnHeading>
-        {renderLeviathan()}
-      </ColumnWrapper>
+      <StyledColumnHeading>Leviathan</StyledColumnHeading>
+      {renderLeviathan()}
     </DropdownWrapper>
   );
 };
