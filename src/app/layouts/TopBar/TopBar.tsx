@@ -1,4 +1,4 @@
-import { FC, useEffect, useCallback, useState, useRef } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'app/hooks/Routing';
 import { useTranslation } from 'react-i18next';
@@ -23,14 +23,12 @@ import {
   SpiritDesktopIcon,
   SpiritMobileIcon,
   WalletExitIcon,
-  MartialArtsSwordFencingIcon,
 } from 'app/assets/icons';
 
 import type {
   navDropdownMenusType,
   NavMenuProps,
   navMenusType,
-  Props,
 } from './TopBar.d';
 import {
   ContentWrapper,
@@ -45,7 +43,6 @@ import {
   NavDropdownWrapper,
   StyledSettingsModal,
   MoneyHandIcon,
-  BridgeIcon,
   SwapIcon,
   FarmsIcon,
   HomeIcon,
@@ -55,7 +52,6 @@ import {
 
 import {
   ANALYTICS,
-  BRIDGE,
   DOCS,
   FARMS,
   HOME,
@@ -65,12 +61,9 @@ import {
   NFTS,
   SWAP,
   GOVERNANCE,
-  APEMODE,
-  SPIRITWARS,
   BUYFTM,
   resolveRoutePath,
 } from 'app/router/routes';
-import { openInNewTab } from 'app/utils/redirectTab';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import useMobile from 'utils/isMobile';
 import { setUnexpectedError } from 'store/errors';
@@ -87,14 +80,9 @@ import useWallets from 'app/hooks/useWallets';
 const navMenus = [
   { ...HOME, icon: <HomeIcon /> },
   { ...SWAP, icon: <SwapIcon /> },
-  { ...BRIDGE, icon: <BridgeIcon /> },
   { ...LIQUIDITY, icon: <MoneyHandIcon /> },
   { ...FARMS, icon: <FarmsIcon /> },
   { ...INSPIRIT, icon: <InSpiritIcon /> },
-  {
-    ...SPIRITWARS,
-    icon: <MartialArtsSwordFencingIcon />,
-  },
 ];
 
 const navDropdownMenus = [
@@ -293,13 +281,7 @@ const TopBar = () => {
         setNavMenuItems(navMenus.slice(0, -4));
         setNavDropdownItems([
           ...Array.from(
-            new Set([
-              ...navDropdownMenus,
-              INSPIRIT,
-              FARMS,
-              LIQUIDITY,
-              SPIRITWARS,
-            ]),
+            new Set([...navDropdownMenus, INSPIRIT, FARMS, LIQUIDITY]),
           ),
         ]);
       }, 100);
@@ -307,24 +289,20 @@ const TopBar = () => {
       setTimeout(() => {
         setNavMenuItems(navMenus.slice(0, -3));
         setNavDropdownItems([
-          ...Array.from(
-            new Set([...navDropdownMenus, INSPIRIT, FARMS, SPIRITWARS]),
-          ),
+          ...Array.from(new Set([...navDropdownMenus, INSPIRIT, FARMS])),
         ]);
       }, 100);
     } else if (isLg) {
       setTimeout(() => {
         setNavMenuItems(navMenus.slice(0, -2));
         setNavDropdownItems([
-          ...Array.from(new Set([...navDropdownMenus, INSPIRIT, SPIRITWARS])),
+          ...Array.from(new Set([...navDropdownMenus, INSPIRIT])),
         ]);
       }, 100);
     } else if (isLg2) {
       setTimeout(() => {
         setNavMenuItems(navMenus.slice(0, -1));
-        setNavDropdownItems([
-          ...Array.from(new Set([...navDropdownMenus, SPIRITWARS])),
-        ]);
+        setNavDropdownItems([...Array.from(new Set([...navDropdownMenus]))]);
       }, 100);
     } else {
       setTimeout(() => {
