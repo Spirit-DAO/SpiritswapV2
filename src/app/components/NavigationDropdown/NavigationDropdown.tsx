@@ -14,15 +14,9 @@ import {
   QuestionIcon,
   BridgeIcon,
   ApeIcon,
-  DSynthsIcon,
-  LendAndBorrowIcon,
   AnalyticsIcon,
   MenuInspirit,
   DocsIcon,
-  GovernanceIcon,
-  NFTIcon,
-  MartialArtsSwordFencingIcon,
-  BuyCryptoIcon,
   MoneyHandIcon,
 } from 'app/assets/icons';
 import { openInNewTab } from 'app/utils/redirectTab';
@@ -47,8 +41,6 @@ const NavigationDropdown: FC<Props> = ({
     switch (name) {
       case 'Farms':
         return <FarmIcon {...props} />;
-      case 'Bridge':
-        return <BridgeIcon {...props} />;
       case 'Ape Mode':
         return <ApeIcon {...props} />;
       case 'inSPIRIT':
@@ -98,7 +90,7 @@ const NavigationDropdown: FC<Props> = ({
   };
 
   useEffect(() => {
-    const SpiritSwapLinks = new Set(['Analytics', 'Docs', 'Governance']);
+    const SpiritSwapLinks = new Set(['Analytics', 'Docs']);
 
     const features: DropdownMenuLink[] = [];
     const Leviathan: DropdownMenuLink[] = [];
