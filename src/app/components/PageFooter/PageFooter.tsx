@@ -82,7 +82,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://twitter.com/Spirit_Swap"
+                  href="https://twitter.com/Sterling_Fi"
                   _hover={{ color: 'ci' }}
                 >
                   <TwitterSvg />
@@ -90,7 +90,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://discord.gg/8FGd4nFQdT"
+                  href="https://discord.gg/Mr92PZ63xZ"
                   _hover={{ color: 'ci' }}
                 >
                   <DiscordSvg />
@@ -98,7 +98,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://github.com/Spirit-DAO/"
+                  href="https://github.com/Sterl-o"
                   _hover={{ color: 'ci' }}
                 >
                   <GitHubSvg />
@@ -106,7 +106,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://www.youtube.com/channel/UCrKLtNctO0obN4-bDMGlFuQ"
+                  href=""
                   _hover={{ color: 'ci' }}
                 >
                   <YouTubeSvg />
@@ -114,7 +114,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://spiritswap.medium.com/"
+                  href="https://medium.com/@sterlingfinancearb"
                   _hover={{ color: 'ci' }}
                 >
                   <MediumSvg />
@@ -122,7 +122,7 @@ export default function PageFooter() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://t.me/SpiritSwap"
+                  href="https://youtu.be/NMqeWMujiFA"
                   _hover={{ color: 'ci' }}
                 >
                   <TelegramSvg />
@@ -218,18 +218,10 @@ export default function PageFooter() {
                 <Box color="ci" fontWeight="bold">
                   SPIRIT Token
                 </Box>
-                <Link
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://www.coingecko.com/en/coins/spiritswap"
-                >
+                <Link target="_blank" rel="noreferrer" href="">
                   CoinGecko
                 </Link>
-                <Link
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://coinmarketcap.com/currencies/spiritswap/"
-                >
+                <Link target="_blank" rel="noreferrer" href="">
                   CoinMarketCap
                 </Link>
               </VStack>
