@@ -485,9 +485,16 @@ export const tokens: Token[] = [
     decimals: 9,
   },
   {
-    name: 'DEI',
+    name: 'DEI (OLD)',
     symbol: 'DEI',
     address: '0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3',
+    chainId: 250,
+    decimals: 18,
+  },
+  {
+    name: 'DEI (NEW)',
+    symbol: 'DEI',
+    address: '0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0',
     chainId: 250,
     decimals: 18,
   },
