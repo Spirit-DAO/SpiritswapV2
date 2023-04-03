@@ -14,11 +14,13 @@ const MobileRow = ({
   resetInputs,
   onNewVote,
   cleanError,
+  showAll,
 }: {
   farm: BoostedFarm;
   onNewVote: (value: string, lpAddress: string) => void;
   resetInputs: boolean;
   cleanError: () => void;
+  showAll: boolean;
 }) => {
   const {
     bribes,
@@ -54,10 +56,11 @@ const MobileRow = ({
   }, [bribes]);
   const height = '50px';
   const heightBG = '60px';
+  const justify = showAll ? 'flex-start' : 'center';
   return (
-    <Grid templateColumns="repeat(1, 1fr)" gap={2}>
+    <Grid templateColumns={`repeat(1, ${showAll ? '1fr' : '300px'})`} gap={2}>
       <GridItem
-        w="184px"
+        w={showAll ? '184px' : '300px'}
         h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -65,12 +68,12 @@ const MobileRow = ({
         alignItems="center"
         p="8px"
       >
-        <VStack spacing={0}>
-          <HStack spacing={0} justify="flex-start" w="full">
+        <VStack w="full" spacing={0}>
+          <HStack spacing={0} justify={justify} w="full">
             <ImageLogo margin="0" symbol={tokenA} size="24px" />
             <ImageLogo symbol={tokenB} size="24px" />
           </HStack>
-          <HStack spacing={0}>
+          <HStack spacing={0} w="full" justify={justify}>
             <Text fontWeight="medium" fontSize="sm">
               {tokenA}
             </Text>
@@ -84,12 +87,12 @@ const MobileRow = ({
         </VStack>
       </GridItem>
       <GridItem
-        w="184px"
+        w={showAll ? '184px' : '300px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
-        alignItems="flex-start"
+        alignItems={justify}
         justifyContent="center"
         flexDirection="column"
         p="8px"
@@ -97,12 +100,12 @@ const MobileRow = ({
         <Text fontSize="sm">{`${rewardAPR.toFixed(2)}%`}</Text>
       </GridItem>
       <GridItem
-        w="184px"
+        w={showAll ? '184px' : '300px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
-        alignItems="flex-start"
+        alignItems={justify}
         justifyContent="center"
         flexDirection="column"
         p="8px"
@@ -112,12 +115,12 @@ const MobileRow = ({
         })}`}</Text>
       </GridItem>
       <GridItem
-        w="184px"
+        w={showAll ? '184px' : '300px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
-        alignItems="flex-start"
+        alignItems={justify}
         justifyContent="center"
         flexDirection="column"
         p="8px"
@@ -125,12 +128,13 @@ const MobileRow = ({
         <Text fontSize="sm">{`${convertAmount(liquidityPer10kInspirit)}`}</Text>
       </GridItem>
       <GridItem
-        w="184px"
+        w={showAll ? '184px' : '300px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
         alignItems="center"
+        justifyContent={justify}
         p="8px"
       >
         <Text fontSize="sm">{`$${formatNumber({
@@ -138,12 +142,13 @@ const MobileRow = ({
         })}`}</Text>
       </GridItem>
       <GridItem
-        w="184px"
+        w={showAll ? '184px' : '300px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
         alignItems="center"
+        justifyContent={justify}
         p="8px"
       >
         <HStack>
@@ -153,7 +158,7 @@ const MobileRow = ({
           </Text>
         </HStack>
       </GridItem>
-      <GridItem w="184px" h={heightBG}>
+      <GridItem w={showAll ? '184px' : '300px'} h={heightBG}>
         <VotingInput
           yourVote={value}
           onNewVote={onNewVote}
