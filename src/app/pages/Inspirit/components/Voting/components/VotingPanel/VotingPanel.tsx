@@ -124,7 +124,7 @@ const VotingPanel = ({
 
   const onToggle = () => {
     setShowAll(!showAll);
-    if (finalSelectedFarms) {
+    if (finalSelectedFarms && finalSelectedFarms.length) {
       setUniqueFarm(finalSelectedFarms[0]);
     }
   };

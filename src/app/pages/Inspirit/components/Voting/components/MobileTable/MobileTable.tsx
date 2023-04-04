@@ -78,7 +78,7 @@ const MobileTable: FC<MobileTableProps> = ({
               ))
             : null}
         </HStack>
-      ) : (
+      ) : uniqueFarm ? (
         <HStack w="full">
           <MobileRow
             farm={uniqueFarm}
@@ -89,7 +89,7 @@ const MobileTable: FC<MobileTableProps> = ({
             showAll={showAll}
           />
         </HStack>
-      )}
+      ) : null}
     </HStack>
   );
 };

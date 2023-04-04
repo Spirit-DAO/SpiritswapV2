@@ -85,7 +85,7 @@ export const NETWORK = {
     network: 'Fantom Opera',
     hex: 'fa',
     rpc: [
-      'https://fantom-mainnet.gateway.pokt.network/v1/lb/6261a8a154c745003bcdb0f8',
+      'https://rpc2.fantom.network',
       'https://rpc.ankr.com/fantom/',
       'https://rpc.ftm.tools',
       'https://rpcapi.fantom.network',
