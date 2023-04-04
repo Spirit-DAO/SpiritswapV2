@@ -85,8 +85,8 @@ export const NETWORK = {
     network: 'Fantom Opera',
     hex: 'fa',
     rpc: [
-      'https://rpc2.fantom.network',
       'https://rpc.ankr.com/fantom/',
+      'https://rpc2.fantom.network',
       'https://rpc.ftm.tools',
       'https://rpcapi.fantom.network',
     ],
