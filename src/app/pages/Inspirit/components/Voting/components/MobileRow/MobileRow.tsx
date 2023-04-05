@@ -58,9 +58,9 @@ const MobileRow = ({
   const heightBG = '60px';
   const justify = showAll ? 'flex-start' : 'center';
   return (
-    <Grid templateColumns={`repeat(1, ${showAll ? '1fr' : '300px'})`} gap={2}>
+    <Grid templateColumns={`repeat(1, ${showAll ? '1fr' : '290px'})`} gap={2}>
       <GridItem
-        w={showAll ? '184px' : '300px'}
+        w={showAll ? '184px' : '290px'}
         h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -87,7 +87,7 @@ const MobileRow = ({
         </VStack>
       </GridItem>
       <GridItem
-        w={showAll ? '184px' : '300px'}
+        w={showAll ? '184px' : '290px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -100,7 +100,7 @@ const MobileRow = ({
         <Text fontSize="sm">{`${rewardAPR.toFixed(2)}%`}</Text>
       </GridItem>
       <GridItem
-        w={showAll ? '184px' : '300px'}
+        w={showAll ? '184px' : '290px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -115,7 +115,7 @@ const MobileRow = ({
         })}`}</Text>
       </GridItem>
       <GridItem
-        w={showAll ? '184px' : '300px'}
+        w={showAll ? '184px' : '290px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -128,7 +128,7 @@ const MobileRow = ({
         <Text fontSize="sm">{`${convertAmount(liquidityPer10kInspirit)}`}</Text>
       </GridItem>
       <GridItem
-        w={showAll ? '184px' : '300px'}
+        w={showAll ? '184px' : '290px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -142,7 +142,7 @@ const MobileRow = ({
         })}`}</Text>
       </GridItem>
       <GridItem
-        w={showAll ? '184px' : '300px'}
+        w={showAll ? '184px' : '290px'}
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -158,7 +158,7 @@ const MobileRow = ({
           </Text>
         </HStack>
       </GridItem>
-      <GridItem w={showAll ? '184px' : '300px'} h={heightBG}>
+      <GridItem w={showAll ? '184px' : '290px'} h={heightBG}>
         <VotingInput
           yourVote={value}
           onNewVote={onNewVote}
