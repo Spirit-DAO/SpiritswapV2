@@ -74,13 +74,14 @@ export function useInfoTickData() {
 
       const {
         tick: poolCurrentTick,
+        tickSpacing: poolTickSpacing,
         liquidity,
         token0: { id: token0Address, decimals: token0Decimals },
         token1: { id: token1Address, decimals: token1Decimals },
       } = pool;
 
       const poolCurrentTickIdx = parseInt(poolCurrentTick);
-      const tickSpacing = 60;
+      const tickSpacing = Number(poolTickSpacing) || 60;
 
       const activeTickIdx =
         Math.floor(poolCurrentTickIdx / tickSpacing) * tickSpacing;

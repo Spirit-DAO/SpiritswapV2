@@ -27,6 +27,56 @@
     "anonymous": false,
     "inputs": [
       {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "alpha1",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "alpha2",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint32",
+            "name": "beta1",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "beta2",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "gamma1",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "gamma2",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "baseFee",
+            "type": "uint16"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct AlgebraFeeConfiguration",
+        "name": "newConfig",
+        "type": "tuple"
+      }
+    ],
+    "name": "DefaultFeeConfiguration",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "newFarmingAddress",
@@ -34,55 +84,6 @@
       }
     ],
     "name": "FarmingAddress",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint16",
-        "name": "alpha1",
-        "type": "uint16"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint16",
-        "name": "alpha2",
-        "type": "uint16"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "beta1",
-        "type": "uint32"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "beta2",
-        "type": "uint32"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint16",
-        "name": "gamma1",
-        "type": "uint16"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint16",
-        "name": "gamma2",
-        "type": "uint16"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint16",
-        "name": "baseFee",
-        "type": "uint16"
-      }
-    ],
-    "name": "FeeConfiguration",
     "type": "event"
   },
   {
@@ -146,6 +147,51 @@
       }
     ],
     "name": "Pool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "RenounceOwnershipFinish",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "finishTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "RenounceOwnershipStart",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "RenounceOwnershipStop",
     "type": "event"
   },
   {
@@ -224,53 +270,21 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
+    "inputs": [],
+    "name": "DEFAULT_ADMIN_ROLE",
+    "outputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
-    "name": "renounceOwnershipFinished",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "finishTimestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "renounceOwnershipStarted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "renounceOwnershipStopped",
-    "type": "event"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],
-    "name": "DEFAULT_ADMIN_ROLE",
+    "name": "POOLS_ADMINISTRATOR_ROLE",
     "outputs": [
       {
         "internalType": "bytes32",
@@ -286,49 +300,6 @@
     "name": "acceptOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "baseFeeConfiguration",
-    "outputs": [
-      {
-        "internalType": "uint16",
-        "name": "alpha1",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "alpha2",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint32",
-        "name": "beta1",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "beta2",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint16",
-        "name": "gamma1",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "gamma2",
-        "type": "uint16"
-      },
-      {
-        "internalType": "uint16",
-        "name": "baseFee",
-        "type": "uint16"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -376,6 +347,49 @@
         "internalType": "uint8",
         "name": "",
         "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "defaultFeeConfiguration",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "alpha1",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "alpha2",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint32",
+        "name": "beta1",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "beta2",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint16",
+        "name": "gamma1",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "gamma2",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "baseFee",
+        "type": "uint16"
       }
     ],
     "stateMutability": "view",
@@ -644,6 +658,19 @@
   {
     "inputs": [
       {
+        "internalType": "uint8",
+        "name": "newDefaultCommunityFee",
+        "type": "uint8"
+      }
+    ],
+    "name": "setDefaultCommunityFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "components": [
           {
             "internalType": "uint16",
@@ -681,25 +708,12 @@
             "type": "uint16"
           }
         ],
-        "internalType": "struct IAlgebraFeeConfiguration.Configuration",
-        "name": "_config",
+        "internalType": "struct AlgebraFeeConfiguration",
+        "name": "newConfig",
         "type": "tuple"
       }
     ],
-    "name": "setBaseFeeConfiguration",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "newDefaultCommunityFee",
-        "type": "uint8"
-      }
-    ],
-    "name": "setDefaultCommunityFee",
+    "name": "setDefaultFeeConfiguration",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

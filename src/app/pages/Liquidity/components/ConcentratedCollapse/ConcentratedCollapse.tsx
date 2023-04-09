@@ -209,7 +209,7 @@ const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
             endColor="bgBoxLighter"
             w={usdAmount !== undefined ? 'unset' : '150px'}
             h="21px"
-            isLoaded={Boolean(usdAmount)}
+            isLoaded={usdAmount !== undefined}
           >
             <Text fontSize="sm" color="grayDarker">
               {usdAmount && usdAmount > 0 && usdAmount < 0.01

@@ -27,10 +27,18 @@ export const filterByState = (
   filterByStaked,
   filterByInactive,
   farmsStaked,
+  concentratedFarmsStaked,
 ) => {
   const lpFarmId = `${pool.lpAddress?.toLowerCase()}`;
+  const concentratedFarmsId = pool.id;
+  const hasConcentratedPositions = concentratedFarmsStaked.some(
+    stake => stake.eternalAvailable === concentratedFarmsId,
+  );
+
   const staked = farmsStaked[lpFarmId]
     ? parseFloat(farmsStaked[lpFarmId].amount) > 0
+    : hasConcentratedPositions
+    ? true
     : false;
   const inactive = !(parseFloat(pool.apr!) > 0);
 

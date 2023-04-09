@@ -79,7 +79,7 @@ export function SelectRange({
   } = useRangeHopCallbacks(
     currencyA ?? undefined,
     currencyB ?? undefined,
-    mintInfo.dynamicFee,
+    mintInfo.tickSpacing,
     tickLower,
     tickUpper,
     mintInfo.pool,

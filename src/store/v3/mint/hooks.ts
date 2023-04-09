@@ -72,6 +72,7 @@ export interface IDerivedMintInfo {
   dynamicFee: number;
   lowerPrice: any;
   upperPrice: any;
+  tickSpacing: number;
 }
 
 export function useV3MintState(): RootState['mintV3'] {
@@ -176,6 +177,7 @@ export function useV3DerivedMintInfo(
   dynamicFee: number;
   lowerPrice: any;
   upperPrice: any;
+  tickSpacing: number;
 } {
   const { account } = useWallets();
 
@@ -265,6 +267,8 @@ export function useV3DerivedMintInfo(
 
   const dynamicFee = pool ? pool.fee : 100;
 
+  const tickSpacing = pool ? pool.tickSpacing : 60;
+
   // note to parse inputs in reverse
   const invertPrice = Boolean(baseToken && token0 && !baseToken.equals(token0));
 
@@ -323,6 +327,7 @@ export function useV3DerivedMintInfo(
         currentSqrt,
         JSBI.BigInt(0),
         currentTick,
+        60,
         [],
       );
     } else {
@@ -333,19 +338,19 @@ export function useV3DerivedMintInfo(
   // if pool exists use it, if not use the mock pool
   const poolForPosition: Pool | undefined = pool ?? mockPool;
 
-  // lower and upper limits in the tick space for `feeAmount`
+  // lower and upper limits in the tick space
   const tickSpaceLimits: {
     [bound in Bound]: number | undefined;
   } = useMemo(
     () => ({
-      [Bound.LOWER]: feeAmount
-        ? nearestUsableTick(TickMath.MIN_TICK, 60)
+      [Bound.LOWER]: tickSpacing
+        ? nearestUsableTick(TickMath.MIN_TICK, tickSpacing)
         : undefined,
-      [Bound.UPPER]: feeAmount
-        ? nearestUsableTick(TickMath.MAX_TICK, 60)
+      [Bound.UPPER]: tickSpacing
+        ? nearestUsableTick(TickMath.MAX_TICK, tickSpacing)
         : undefined,
     }),
-    [feeAmount],
+    [tickSpacing],
   );
 
   // parse typed range values and determine closest ticks
@@ -366,12 +371,14 @@ export function useV3DerivedMintInfo(
               token0,
               feeAmount,
               rightRangeTypedValue.toString(),
+              tickSpacing,
             )
           : tryParseTick(
               token0,
               token1,
               feeAmount,
               leftRangeTypedValue.toString(),
+              tickSpacing,
             ),
       [Bound.UPPER]:
         typeof existingPosition?.tickUpper === 'number'
@@ -385,12 +392,14 @@ export function useV3DerivedMintInfo(
               token0,
               feeAmount,
               leftRangeTypedValue.toString(),
+              tickSpacing,
             )
           : tryParseTick(
               token0,
               token1,
               feeAmount,
               rightRangeTypedValue.toString(),
+              tickSpacing,
             ),
     };
   }, [
@@ -402,6 +411,7 @@ export function useV3DerivedMintInfo(
     token0,
     token1,
     tickSpaceLimits,
+    tickSpacing,
   ]);
 
   const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks || {};
@@ -687,13 +697,14 @@ export function useV3DerivedMintInfo(
     dynamicFee,
     lowerPrice,
     upperPrice,
+    tickSpacing,
   };
 }
 
 export function useRangeHopCallbacks(
   baseCurrency: Currency | undefined,
   quoteCurrency: Currency | undefined,
-  feeAmount: FeeAmount | undefined,
+  tickSpacing: number,
   tickLower: number | undefined,
   tickUpper: number | undefined,
   pool?: Pool | undefined | null,
@@ -709,12 +720,12 @@ export function useRangeHopCallbacks(
         baseToken &&
         quoteToken &&
         typeof tickLower === 'number' &&
-        feeAmount
+        tickSpacing
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          tickLower - 60 * rate,
+          tickLower - tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
@@ -724,19 +735,19 @@ export function useRangeHopCallbacks(
         !(typeof tickLower === 'number') &&
         baseToken &&
         quoteToken &&
-        feeAmount &&
+        tickSpacing &&
         pool
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          pool.tickCurrent - 60 * rate,
+          pool.tickCurrent - tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
       return '';
     },
-    [baseToken, quoteToken, tickLower, feeAmount, pool],
+    [baseToken, quoteToken, tickLower, tickSpacing, pool],
   );
 
   const getIncrementLower = useCallback(
@@ -745,12 +756,12 @@ export function useRangeHopCallbacks(
         baseToken &&
         quoteToken &&
         typeof tickLower === 'number' &&
-        feeAmount
+        tickSpacing
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          tickLower + 60 * rate,
+          tickLower + tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
@@ -759,19 +770,19 @@ export function useRangeHopCallbacks(
         !(typeof tickLower === 'number') &&
         baseToken &&
         quoteToken &&
-        feeAmount &&
+        tickSpacing &&
         pool
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          pool.tickCurrent + 60 * rate,
+          pool.tickCurrent + tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
       return '';
     },
-    [baseToken, quoteToken, tickLower, feeAmount, pool],
+    [baseToken, quoteToken, tickLower, tickSpacing, pool],
   );
 
   const getDecrementUpper = useCallback(
@@ -780,12 +791,12 @@ export function useRangeHopCallbacks(
         baseToken &&
         quoteToken &&
         typeof tickUpper === 'number' &&
-        feeAmount
+        tickSpacing
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          tickUpper - 60 * rate,
+          tickUpper - tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
@@ -794,19 +805,19 @@ export function useRangeHopCallbacks(
         !(typeof tickUpper === 'number') &&
         baseToken &&
         quoteToken &&
-        feeAmount &&
+        tickSpacing &&
         pool
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          pool.tickCurrent - 60 * rate,
+          pool.tickCurrent - tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
       return '';
     },
-    [baseToken, quoteToken, tickUpper, feeAmount, pool],
+    [baseToken, quoteToken, tickUpper, tickSpacing, pool],
   );
 
   const getIncrementUpper = useCallback(
@@ -815,12 +826,12 @@ export function useRangeHopCallbacks(
         baseToken &&
         quoteToken &&
         typeof tickUpper === 'number' &&
-        feeAmount
+        tickSpacing
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          tickUpper + 60 * rate,
+          tickUpper + tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
@@ -829,24 +840,24 @@ export function useRangeHopCallbacks(
         !(typeof tickUpper === 'number') &&
         baseToken &&
         quoteToken &&
-        feeAmount &&
+        tickSpacing &&
         pool
       ) {
         const newPrice = tickToPrice(
           baseToken,
           quoteToken,
-          pool.tickCurrent + 60 * rate,
+          pool.tickCurrent + tickSpacing * rate,
         );
         return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
       }
       return '';
     },
-    [baseToken, quoteToken, tickUpper, feeAmount, pool],
+    [baseToken, quoteToken, tickUpper, tickSpacing, pool],
   );
 
   const getSetRange = useCallback(
     (numTicks: number) => {
-      if (baseToken && quoteToken && feeAmount && pool) {
+      if (baseToken && quoteToken && tickSpacing && pool) {
         // calculate range around current price given `numTicks`
         const newPriceLower = tickToPrice(
           baseToken,
@@ -866,7 +877,7 @@ export function useRangeHopCallbacks(
       }
       return ['', ''];
     },
-    [baseToken, quoteToken, feeAmount, pool],
+    [baseToken, quoteToken, tickSpacing, pool],
   );
 
   const getSetFullRange = useCallback(() => {

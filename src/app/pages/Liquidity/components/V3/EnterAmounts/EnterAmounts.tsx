@@ -6,7 +6,6 @@ import { Currency, CurrencyAmount } from '../../../../../../v3-sdk';
 import { Field } from 'store/v3/mint/actions';
 import {
   IDerivedMintInfo,
-  useRangeHopCallbacks,
   useV3MintActionHandlers,
   useV3MintState,
 } from 'store/v3/mint/hooks';

@@ -40,6 +40,7 @@ export class Pool {
   public readonly liquidity: JSBI;
   public readonly tickCurrent: number;
   public readonly tickDataProvider: TickDataProvider;
+  public readonly _tickSpacing: number;
 
   /**
    * Construct a pool
@@ -50,6 +51,7 @@ export class Pool {
    * @param liquidity The current value of in range liquidity
    * @param tickCurrent The current tick of the pool
    * @param ticks The current state of the pool ticks or a data provider that can return tick data
+   * @param _tickSpacing The spacing between ticks
    */
   public constructor(
     tokenA: Token,
@@ -58,6 +60,7 @@ export class Pool {
     sqrtRatioX96: BigintIsh,
     liquidity: BigintIsh,
     tickCurrent: number,
+    _tickSpacing: number,
     ticks:
       | TickDataProvider
       | (Tick | TickConstructorArgs)[] = NO_TICK_DATA_PROVIDER_DEFAULT,
@@ -83,8 +86,9 @@ export class Pool {
     this.liquidity = JSBI.BigInt(liquidity);
     this.tickCurrent = tickCurrent;
     this.tickDataProvider = Array.isArray(ticks)
-      ? new TickListDataProvider(ticks, 60)
+      ? new TickListDataProvider(ticks, _tickSpacing)
       : ticks;
+    this._tickSpacing = _tickSpacing;
   }
 
   private _token0Price?: Price<Token, Token>;
@@ -129,7 +133,7 @@ export class Pool {
   }
 
   public get tickSpacing(): number {
-    return 60;
+    return this._tickSpacing;
   }
 
   public static getAddress(
@@ -198,6 +202,7 @@ export class Pool {
         sqrtRatioX96,
         liquidity,
         tickCurrent,
+        this.tickSpacing,
         this.tickDataProvider,
       ),
     ];
@@ -241,6 +246,7 @@ export class Pool {
         sqrtRatioX96,
         liquidity,
         tickCurrent,
+        this.tickSpacing,
         this.tickDataProvider,
       ),
     ];

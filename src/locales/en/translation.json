@@ -363,7 +363,10 @@
         "inputLabel": "Paying",
         "priceLabel": "Price",
         "total": "Receiving",
-        "actions": "Actions"
+        "action": "Action",
+        "youBuy": "You Buy",
+        "youSell": "You Sell",
+        "status": "Status"
       }
     },
     "settings": {

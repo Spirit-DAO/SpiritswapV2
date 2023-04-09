@@ -1,12 +1,9 @@
-import { GelattoLimitOrder } from 'utils/swap/types';
+import { AlgebraLimitOrder } from 'utils/swap/types';
 
 export interface OpenLimitOrder {
-  price?: string;
-  paying?: string;
-  receiving?: string;
-  pair?: [string, string];
+  [key: string]: any;
 }
 
 export interface LimitOrdersPanelProps {
-  limitOrders: GelattoLimitOrder[];
+  limitOrders: AlgebraLimitOrder[];
 }

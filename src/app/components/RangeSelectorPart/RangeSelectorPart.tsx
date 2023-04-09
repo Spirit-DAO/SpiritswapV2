@@ -2,7 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from 'store/hooks';
 import { updateSelectedPreset } from 'store/v3/mint/actions';
 import { useInitialTokenPrice } from 'store/v3/mint/hooks';
-import { Button, Flex, HStack, Input, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  HStack,
+  Input,
+  NumberInput,
+  NumberInputField,
+  Text,
+} from '@chakra-ui/react';
 import type { Props } from './RangeSelectorPart.d';
 
 function RangeSelectorPart({
@@ -76,18 +84,29 @@ function RangeSelectorPart({
         </Flex>
       </Flex>
       <Flex pos={'relative'}>
-        <Input
+        <NumberInput
           value={localTokenValue}
           id={title}
-          size={'sm'}
+          clampValueOnBlur={false}
           onBlur={handleOnBlur}
-          disabled={disabled || locked}
+          border="none"
+          isDisabled={disabled || locked}
           onChange={val => {
-            setLocalTokenValue(val.target.value.trim());
+            setLocalTokenValue(val.trim());
             dispatch(updateSelectedPreset({ preset: null }));
           }}
           placeholder="0.00"
-        />
+          w={'full'}
+        >
+          <NumberInputField
+            inputMode="numeric"
+            paddingInline="8px"
+            fontSize="sm"
+            placeholder="0.00"
+            _placeholder={{ color: 'gray' }}
+            w={'full'}
+          />
+        </NumberInput>
       </Flex>
     </div>
   );

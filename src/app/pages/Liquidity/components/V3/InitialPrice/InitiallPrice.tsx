@@ -3,7 +3,14 @@ import { useEffect } from 'react';
 import { useAppDispatch } from 'store/hooks';
 import { updateCurrentStep } from 'store/v3/mint/actions';
 import { IDerivedMintInfo, useV3MintActionHandlers } from 'store/v3/mint/hooks';
-import { Box, Flex, Input, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Input,
+  NumberInput,
+  NumberInputField,
+  Text,
+} from '@chakra-ui/react';
 import { StartingPrice } from 'app/components/StartingPrice';
 
 interface IInitialPrice {
@@ -29,11 +36,22 @@ export function InitialPrice({
         <Text whiteSpace="nowrap">{`1 ${currencyA?.symbol}`}</Text>
       </Box>
       <Box mx={4}>=</Box>
-      <Input
+      <NumberInput
+        clampValueOnBlur={false}
+        border="none"
+        onChange={value => onStartPriceInput(value)}
         mr={4}
-        onChange={e => onStartPriceInput(e.target.value)}
-        placeholder={'Initial price'}
-      />
+        w={'full'}
+      >
+        <NumberInputField
+          inputMode="numeric"
+          paddingInline="8px"
+          placeholder="Initial Price"
+          fontSize="xl2"
+          _placeholder={{ color: 'gray' }}
+          w={'full'}
+        />
+      </NumberInput>
       <Box>
         <Text whiteSpace="nowrap">{currencyB?.symbol}</Text>
       </Box>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Flex,
   InputGroup,
@@ -7,12 +7,15 @@ import {
   NumberInputField,
   InputRightElement,
   Skeleton,
+  Button,
 } from '@chakra-ui/react';
 import { Props } from './LimitOrders.d';
 import { LimitOrderPanelFooterWrapper, InputIcon } from './styles';
 import { ReactComponent as Refresh } from 'app/assets/images/refresh.svg';
 import { useTranslation } from 'react-i18next';
 import { checkInvalidValue, validateInput } from 'app/utils';
+import { tryParseTick } from 'store/v3/mint/utils';
+import { getTickToPrice } from '../../../v3-sdk/utils/getTickToPrice';
 
 const LimitOrders = ({
   onChange,
@@ -22,6 +25,14 @@ const LimitOrders = ({
   isLoading,
   getLimitTokenSymbol,
   baseLimit,
+  limitValue,
+  token0,
+  token1,
+  tickSpacing,
+  initialSellPrice,
+  tickStep,
+  plusDisabled,
+  minusDisabled,
 }: Props) => {
   const { t } = useTranslation();
   const translationPath = 'common.tokenAmountPanel';
@@ -55,12 +66,33 @@ const LimitOrders = ({
   const handleInputChange = value => {
     const pruneValue = validateInput(value);
     setInputLimit(pruneValue);
-    onChange(pruneValue);
+  };
+
+  const handleInputBlur = () => {
+    const limitOrderPrice = getLimitOrderPrice(inputLimit);
+    setInputLimit(limitOrderPrice);
+    onChange(limitOrderPrice);
+  };
+
+  const getLimitOrderPrice = value => {
+    let limitOrderPrice = '0';
+
+    if (Number(value)) {
+      const tick = tryParseTick(token0, token1, 500, inputLimit, tickSpacing);
+      const newPrice = getTickToPrice(token0, token1, tick);
+      limitOrderPrice = newPrice ? newPrice.toSignificant(4) : '0';
+    }
+
+    return limitOrderPrice;
   };
 
   if (!inputLimit && baseLimit) {
     handleInputChange(numberLimit.toFixed(6));
   }
+
+  useEffect(() => {
+    setInputLimit(limitValue);
+  }, [limitValue]);
 
   const getPriceImpact = priceImpact => {
     if (priceImpact === 1) return null;
@@ -88,7 +120,7 @@ const LimitOrders = ({
 
   return (
     <LimitOrderPanelFooterWrapper>
-      <Flex direction="column">
+      <Flex alignItems={'center'} gap={2}>
         <Text fontSize="base">
           {t(`${translationPath}.setLimit.${typeLimit}`)}
         </Text>
@@ -103,37 +135,47 @@ const LimitOrders = ({
           </Text>
         </Skeleton>
       </Flex>
-      <InputGroup w="60%" p="4px">
-        <InputIcon
-          ml={3}
-          w="16px"
-          color="ci"
-          children={<Refresh />}
-          onClick={() => {
-            handleInputChange(numberLimit.toFixed(6));
-          }}
-        />
-        <NumberInput
-          border="none"
-          size="sm"
-          value={inputLimit}
-          onChange={handleInputChange}
-          isInvalid={!(Math.abs(Number(priceImpact)) > 0)}
-          mr="20px"
-        >
-          <NumberInputField
-            fontSize="base"
-            w="100%"
-            textAlign="right"
-            paddingInlineEnd={`${remLength.toString()}rem`}
-            _invalid={{ borderColor: 'danger' }}
-            _placeholder={{ color: 'gray' }}
+      <Flex alignItems={'center'} gap={2}>
+        <InputGroup w="100%" p="4px">
+          <InputIcon
+            ml={3}
+            w="16px"
+            color="ci"
+            children={<Refresh />}
+            onClick={() => {
+              setInputLimit(initialSellPrice);
+              onChange(initialSellPrice);
+            }}
           />
-          <InputRightElement fontSize="base" h="2.05rem" mr={4}>
-            {limitTokenSymbol}
-          </InputRightElement>
-        </NumberInput>
-      </InputGroup>
+          <NumberInput
+            border="none"
+            size="sm"
+            width={'100%'}
+            value={inputLimit}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            isInvalid={!(Math.abs(Number(priceImpact)) > 0)}
+          >
+            <NumberInputField
+              fontSize="base"
+              w="100%"
+              textAlign="right"
+              paddingInlineEnd={`${remLength.toString()}rem`}
+              _invalid={{ borderColor: 'danger' }}
+              _placeholder={{ color: 'gray' }}
+            />
+            <InputRightElement fontSize="base" h="2.05rem" mr={4}>
+              {limitTokenSymbol}
+            </InputRightElement>
+          </NumberInput>
+        </InputGroup>
+        <Button onClick={() => tickStep(1)} disabled={plusDisabled}>
+          +
+        </Button>
+        <Button onClick={() => tickStep(-1)} disabled={minusDisabled}>
+          -
+        </Button>
+      </Flex>
     </LimitOrderPanelFooterWrapper>
   );
 };

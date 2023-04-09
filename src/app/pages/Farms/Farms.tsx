@@ -194,6 +194,7 @@ export const Farms = () => {
           farmFilters.staked,
           farmFilters.inactive,
           farmsStaked,
+          positionsOnFarming,
         ),
       );
       const sortedFarms = sortFarms(

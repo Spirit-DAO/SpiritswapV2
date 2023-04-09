@@ -787,11 +787,11 @@ export const loadConcentratedFarmsList = async () => {
 
     return {
       title:
-        `${pools[index].token0.symbol} + ${pools[index].token1.symbol}`.replace(
+        `${pools[index]?.token0.symbol} + ${pools[index]?.token1.symbol}`.replace(
           'WFTM',
           'FTM',
         ),
-      tokens: [pools[index].token0.symbol, pools[index].token1.symbol],
+      tokens: [pools[index]?.token0.symbol, pools[index]?.token1.symbol],
       label: 'concentrated',
       totalLiquidity: 0,
       aprLabel: 'APR',
@@ -807,7 +807,7 @@ export const loadConcentratedFarmsList = async () => {
       dailyBonusRewardRate,
       pool: pools[index],
       valid: true,
-      lpAddress: pools[index].id,
+      lpAddress: pools[index]?.id,
       aprRange: ['0', '1'],
       rangeLength: farming.minRangeLength,
       // apr: aprs && aprs[farming.id] ? aprs[farming.id] : 0,

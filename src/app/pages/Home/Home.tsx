@@ -64,7 +64,7 @@ import { setPortfolioValue, setShowPortfolio } from 'store/user';
 import MiniFooter from './components/MiniFooter';
 import DexStatistics from './components/DexStatistics';
 import { LendAndBorrowIcon, ApeIcon } from './../../assets/icons/index';
-import { GelattoLimitOrder } from 'utils/swap/types';
+import { AlgebraLimitOrder } from 'utils/swap/types';
 import { openInNewTab } from 'app/utils/redirectTab';
 import useMobile from 'utils/isMobile';
 import { Animation } from 'app/components/Animations';
@@ -153,7 +153,7 @@ const Home = () => {
     totalValueNumber: 0,
     total24ValueNumber: 0,
   });
-  const [limitOrdersData, setLimitOrdersData] = useState<GelattoLimitOrder[]>(
+  const [limitOrdersData, setLimitOrdersData] = useState<AlgebraLimitOrder[]>(
     [],
   );
 

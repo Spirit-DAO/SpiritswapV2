@@ -89,6 +89,23 @@ export function usePools(
     return liquidities;
   }, [poolAddresses, liquidities]);
 
+  const tickSpacings = usePoolsGlobalState(poolAddresses, 'tickSpacing');
+
+  const prevTickSpacings = usePreviousNonErroredArray(tickSpacings);
+
+  const _tickSpacings = useMemo(() => {
+    if (!prevTickSpacings || !tickSpacings || tickSpacings.length === 1)
+      return tickSpacings;
+
+    if (
+      tickSpacings.every(el => el.error) &&
+      !prevTickSpacings.every(el => el.error)
+    )
+      return prevTickSpacings;
+
+    return tickSpacings;
+  }, [poolAddresses, tickSpacings]);
+
   return useMemo(() => {
     return poolKeys.map((_key, index) => {
       const [token0, token1] = transformed[index] ?? [];
@@ -106,12 +123,19 @@ export function usePools(
         valid: liquidityValid,
       } = _liquidities[index];
 
-      if (!globalStateValid || !liquidityValid)
+      const {
+        result: tickSpacing,
+        loading: tickSpacingLoading,
+        valid: tickSpacingValid,
+      } = _tickSpacings[index];
+
+      if (!globalStateValid || !liquidityValid || !tickSpacingValid)
         return [PoolState.INVALID, null];
-      if (globalStateLoading || liquidityLoading)
+      if (globalStateLoading || liquidityLoading || tickSpacingLoading)
         return [PoolState.LOADING, null];
 
-      if (!globalState || !liquidity) return [PoolState.NOT_EXISTS, null];
+      if (!globalState || !liquidity || !tickSpacing)
+        return [PoolState.NOT_EXISTS, null];
 
       if (!globalState.price || globalState.price.eq(0))
         return [PoolState.NOT_EXISTS, null];
@@ -127,13 +151,14 @@ export function usePools(
             //@ts-ignore
             liquidity,
             globalState.tick,
+            tickSpacing,
           ),
         ];
       } catch (error) {
         return [PoolState.NOT_EXISTS, null];
       }
     });
-  }, [_liquidities, poolKeys, _globalState0s, transformed]);
+  }, [_liquidities, poolKeys, _globalState0s, _tickSpacings, transformed]);
 }
 
 export function usePool(

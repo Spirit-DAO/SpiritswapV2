@@ -443,7 +443,9 @@ export const Farm = ({
     return `${LIQUIDITY.path}/${token0}/${token1}/${type || 'concentrated'}`;
   };
 
-  const staked = Number(farmUserData.lpTokens) > 0;
+  const staked = farm.concentrated
+    ? concentratedStakedPositions.length > 0
+    : Number(farmUserData.lpTokens) > 0;
 
   const disableConcentratedFarm =
     farm.concentrated &&

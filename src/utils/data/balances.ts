@@ -755,7 +755,9 @@ export const getV3Balances = async (_address: string, provider?: any) => {
         eternalAvailable: eternalFarmingId,
       };
     } else {
-      const farmingForPool = await getEternalFarmingFromPool(_position.pool.id);
+      const farmingForPool = await getEternalFarmingFromPool(
+        _position.pool?.id,
+      );
 
       _position = {
         ..._position,

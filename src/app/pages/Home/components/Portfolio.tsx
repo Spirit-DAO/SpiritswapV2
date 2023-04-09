@@ -24,7 +24,7 @@ import { balanceReturnData } from 'utils/data';
 import { SPIRIT } from 'constants/tokens';
 import { LendAndBorrowPanel } from 'app/pages/Portfolio/components/LendAndBorrowPanel';
 import { ChartStyles } from 'app/components/Chart/Chart.d';
-import { GelattoLimitOrder } from 'utils/swap/types';
+import { AlgebraLimitOrder } from 'utils/swap/types';
 import useMobile from 'utils/isMobile';
 import portfolioBackground from '../assets/portfolio.png';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
@@ -42,7 +42,7 @@ interface PortfolioProps {
   tokensData: balanceReturnData;
   inSpiritData: inSpiritDataInterface;
   liquidityData: balanceReturnData;
-  limitOrdersData: GelattoLimitOrder[];
+  limitOrdersData: AlgebraLimitOrder[];
   onClickLandingButton?: () => void;
 }
 

@@ -8,7 +8,7 @@ import {
   FarmRewardInfo,
   balanceReturnData,
 } from 'utils/data';
-import { GelattoLimitOrder } from 'utils/swap/types';
+import { AlgebraLimitOrder } from 'utils/swap/types';
 import { Web3TxData, BalanceUpdate } from 'utils/web3/types';
 
 const initialState: {
@@ -36,7 +36,7 @@ const initialState: {
   inspirit_allowance: number;
   pending_transactions: Web3TxData[];
   farm_rewards: FarmRewardInfo[] | null;
-  limit_orders: GelattoLimitOrder[];
+  limit_orders: AlgebraLimitOrder[];
   tracked_tokens: Token[];
   bridge_chains: string[];
   bridge_wallet_from: Array<tokenData>;

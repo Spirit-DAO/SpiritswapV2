@@ -42,8 +42,9 @@ export function tryParseTick(
   quoteToken?: Token,
   feeAmount?: FeeAmount,
   value?: string,
+  tickSpacing?: number,
 ): number | undefined {
-  if (!baseToken || !quoteToken || !feeAmount || !value) {
+  if (!baseToken || !quoteToken || !feeAmount || !value || !tickSpacing) {
     return undefined;
   }
 
@@ -67,5 +68,5 @@ export function tryParseTick(
     tick = priceToClosestTick(price);
   }
 
-  return nearestUsableTick(tick, 60);
+  return nearestUsableTick(tick, tickSpacing);
 }

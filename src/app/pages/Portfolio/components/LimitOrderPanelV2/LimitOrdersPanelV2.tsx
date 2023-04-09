@@ -1,11 +1,13 @@
 import { HStack, Text, VStack } from '@chakra-ui/react';
 import UseIsLoading from 'app/hooks/UseIsLoading';
-import { getRoundedSFs, truncateTokenValue } from 'app/utils';
-import { BASE_TOKEN_ADDRESS, WFTM } from 'constants/index';
+import { useTokens } from 'app/hooks/useTokens';
+import { truncateTokenValue } from 'app/utils';
+import { CHAIN_ID } from 'constants/index';
 import { formatUnits } from 'ethers/lib/utils';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { getTokenUsdPrice } from 'utils/data';
-import { GelattoLimitOrder } from 'utils/swap/types';
+import { AlgebraLimitOrder } from 'utils/swap/types';
+import { algebraLimitOrderManagerContract } from 'utils/web3';
 import LimitFooter from './Fotter';
 import LimitHeader from './Header';
 import { LimitOrdersPanelProps, OpenLimitOrder } from './LimitOrdersPanelV2.d';
@@ -23,70 +25,106 @@ const LimitOrdersPanelV2 = ({ limitOrders }: LimitOrdersPanelProps) => {
     setSearchValue(e.target.value);
   };
 
+  const { getAddressTokenInfo } = useTokens(CHAIN_ID, undefined);
+
   useEffect(() => {
-    let openLimitOrders: OpenLimitOrder[] = [];
+    if (!limitOrders) return;
+
     let posValueAmount: number = 0;
 
-    const getOpenOrders = async (orders: GelattoLimitOrder[]) => {
-      loadingOn();
-      await Promise.all(
-        orders.map(async order => {
-          if (order.status === 'open') {
-            const {
-              inputTokenData,
-              outputTokenData,
-              bought,
-              adjustedMinReturn,
-              inputAmount,
-            } = order;
+    async function fetchAmounts(id, ...rest) {
+      const limitOrderManagerContract =
+        await algebraLimitOrderManagerContract();
 
-            const inputDecimals = inputTokenData?.decimals || 18;
-            const outputDecimals = outputTokenData?.decimals || 18;
-
-            const inputSymbol = inputTokenData?.symbol || 'Unknown';
-            const outputSymbol = outputTokenData?.symbol || 'Unknown';
-
-            let payingAmount = parseFloat(
-              formatUnits(inputAmount || '0', inputDecimals),
-            );
-
-            let receivingAmount = parseFloat(
-              formatUnits(bought || adjustedMinReturn || '0', outputDecimals),
-            );
-
-            let priceAmount = payingAmount / receivingAmount;
-
-            if (inputTokenData) {
-              const { address: inputAddress, chainId } = inputTokenData;
-
-              let address = inputAddress;
-              if (inputAddress === BASE_TOKEN_ADDRESS) address = WFTM.address;
-              const tokenUsdPrice = await getTokenUsdPrice(address, chainId);
-
-              posValueAmount += payingAmount * tokenUsdPrice;
-            }
-            const paying = `${getRoundedSFs(`${payingAmount}`)} ${inputSymbol}`;
-            const price = `${getRoundedSFs(`${priceAmount}`)} ${outputSymbol}`;
-            const receiving = `${getRoundedSFs(
-              `${receivingAmount}`,
-            )} ${outputSymbol}`;
-
-            openLimitOrders.push({
-              paying,
-              price,
-              receiving,
-              pair: [inputSymbol, outputSymbol],
-            });
-          }
-        }),
+      const decrease = limitOrderManagerContract.interface.encodeFunctionData(
+        'decreaseLimitOrder',
+        [id, 0],
       );
-      setOpenOrder(openLimitOrders);
-      setTotalValue(posValueAmount);
-      loadingOff();
-    };
+      const limitPosition =
+        limitOrderManagerContract.interface.encodeFunctionData(
+          'limitPositions',
+          [id],
+        );
 
-    if (limitOrders.length && openOrder.length === 0)
-      getOpenOrders(limitOrders);
+      const calls = await limitOrderManagerContract?.callStatic.multicall([
+        decrease,
+        limitPosition,
+      ]);
+
+      const amounts = limitOrderManagerContract.interface.decodeFunctionResult(
+        'decreaseLimitOrder',
+        calls[0],
+      );
+      const position = limitOrderManagerContract.interface.decodeFunctionResult(
+        'limitPositions',
+        calls[1],
+      );
+
+      if (!amounts || !position) return;
+
+      const {
+        liquidity: amount,
+        depositedToken,
+        depositedAmount,
+        tokensOwed0,
+        tokensOwed1,
+      } = position.limitPosition;
+
+      const { token0, token1 } = rest[0];
+
+      const isClosed = !+amount && !+tokensOwed0 && !+tokensOwed1;
+      const isCompleted = !Boolean(+amount);
+
+      if (isClosed || isCompleted) return;
+
+      const completedPercent = String(
+        100 - (+amount * 100) / depositedAmount,
+      ).slice(0, 4);
+
+      const tokenA = await getAddressTokenInfo(token0);
+      const tokenB = await getAddressTokenInfo(token1);
+
+      const inputToken = depositedToken ? tokenB[0] : tokenA[0];
+
+      const inputAmount = formatUnits(depositedAmount, inputToken?.decimals);
+
+      const tokenUsdPrice = await getTokenUsdPrice(
+        inputToken?.address,
+        CHAIN_ID,
+      );
+
+      posValueAmount += Number(inputAmount || 0) * tokenUsdPrice;
+
+      return {
+        ...rest[0],
+        id,
+        status: 'open',
+        isCompleted,
+        isClosed,
+        amount,
+        depositedToken,
+        tokensOwed0,
+        tokensOwed1,
+        completedPercent,
+        pair: [tokenA[0].symbol, tokenB[0].symbol],
+      };
+    }
+
+    loadingOn();
+
+    const ordersState = limitOrders.map(({ tokenId, ...rest }: any) =>
+      fetchAmounts(tokenId, rest),
+    );
+
+    Promise.all(ordersState).then(orders => {
+      const openOrders = orders.filter(order => Boolean(order));
+
+      if (openOrders) {
+        setOpenOrder(openOrders);
+        setTotalValue(posValueAmount);
+      }
+      loadingOff();
+    });
   }, [limitOrders]);
 
   return (

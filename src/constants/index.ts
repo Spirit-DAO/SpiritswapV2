@@ -18,11 +18,9 @@ export enum ConnectorNames {
 export const CHAIN_ID = 250; // I think this should be refactored
 export const DEFAULT_HANDLER = 'spiritswap';
 
-export const COVALENT_API_KEY = 'ckey_ce0907ce545344edb6d203df10e';
+// export const COVALENT_API_KEY = 'ckey_ce0907ce545344edb6d203df10e';
+export const COVALENT_API_KEY = 'ckey_e2298965ff8f4e6095ed956274a';
 
-export const GELATO_ADDRESS = '0x59e61b95f20e940ac777e88fa2dfa0a6a4c40fa0';
-export const GELATO_APPROVE_ADDRESS =
-  '0x97C1af451407e266fD57168e61D4B5af31894244';
 // 20 minutes, denominated in seconds
 export const DEFAULT_DEADLINE_FROM_NOW = 60 * 20;
 export const CONNECTOR_LOCAL_STORAGE_KEY = 'SPIRIT_CONNECTOR_KEY';
@@ -171,7 +169,7 @@ export const STABLE = 'Stable';
 export const TOKENS_WITH_HIGH_SLIPPAGE = [wBOMB.address.toLowerCase()];
 
 export const V3_POOL_INIT_CODE_HASH =
-  '0x6ec6c9c8091d160c0aa74b2b14ba9c1717e95093bd3ac085cee99a49aab294a4';
+  '0x50ae108e3389bad870d88c010a776d44dfaeb89980e3adcb5c2a123d27bd555d';
 
 export const BIG_INT_ZERO = JSBI.BigInt(0);
 
