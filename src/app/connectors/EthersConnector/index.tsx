@@ -75,7 +75,7 @@ const EthersConnector = ({ children }) => {
     const [currentProvider] = await initProvider();
 
     const _provider = JSON.stringify(currentProvider, getCircularReplacer());
-    // const calls: WorkerCall[] = [];
+    const calls: WorkerCall[] = [];
 
     // Prioritize the page we are on
     Object.keys(pageData).forEach(pageKey => {
@@ -88,35 +88,34 @@ const EthersConnector = ({ children }) => {
             isLoggedIn,
           });
         });
+      } else {
+        // Add it to the queue for later
+        pageData[pageKey].forEach(data => {
+          calls.push({
+            type: data,
+            network: currentProvider!._network,
+            provider: _provider,
+            isLoggedIn,
+          });
+        });
       }
     });
-    // else {
-    //   // Add it to the queue for later
-    //   pageData[pageKey].forEach(data => {
-    //     calls.push({
-    //       type: data,
-    //       network: currentProvider!._network,
-    //       provider: _provider,
-    //       isLoggedIn,
-    //     });
-    //   });
-    // }
 
-    // // Fetch the rest of the data
-    // calls.forEach(async call => {\
-    //   try {
-    //     dataWorker.postMessage(call);
-    //   } catch (e) {
-    //     console.error(e);
-    //   }
-    // });
+    // Fetch the rest of the data
+    calls.forEach(async call => {
+      try {
+        dataWorker.postMessage(call);
+      } catch (e) {
+        console.error(e);
+      }
+    });
   }, [dataWorker, initProvider, isLoggedIn, page, pageData]);
 
   const fetchUserData = useCallback(async () => {
     const [currentProvider, currentSigner] = await initProvider();
 
     const signerJson = JSON.stringify(currentSigner, getCircularReplacer());
-    // const calls: WorkerCall[] = [];
+    const calls: WorkerCall[] = [];
 
     const _provider = JSON.stringify(currentProvider, getCircularReplacer());
 
@@ -130,26 +129,26 @@ const EthersConnector = ({ children }) => {
             provider: _provider,
           });
         });
+      } else {
+        // Add it to the queue for later
+        pageUserData[pageKey].forEach(data => {
+          calls.push({
+            userAddress: account,
+            type: data,
+            signer: signerJson,
+            provider: _provider,
+          });
+        });
       }
     });
-    // else {
-    //   // Add it to the queue for later
-    //   pageUserData[pageKey].forEach(data => {
-    //     calls.push({
-    //       userAddress: account,
-    //       type: data,
-    //       signer: signerJson,
-    //       provider: _provider,
-    //     });
-    //   });
-    // }
 
     // Fetch the rest of the data
-    // calls.forEach(async call => {
-    //   try {
-    //     userDataWorker.postMessage(call);
-    //   } catch (e) {}
-    // });
+
+    calls.forEach(async call => {
+      try {
+        userDataWorker.postMessage(call);
+      } catch (e) {}
+    });
   }, [account, initProvider, page, pageUserData, userDataWorker]);
 
   useEffect(() => {
