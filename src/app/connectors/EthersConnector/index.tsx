@@ -172,11 +172,11 @@ const EthersConnector = ({ children }) => {
     console.log('START - FERCHING DATA APP');
 
     fetchAppData();
-    if (account) {
+    if (isLoggedIn) {
       console.log('START - FERCHING DATA USER');
       fetchUserData();
     }
-  }, [fetchAppData, fetchUserData, account]);
+  }, [fetchAppData, fetchUserData, isLoggedIn]);
 
   const removeFromQueue = (hash: string) => {
     const inQueueCopy = { ...inQueue };
