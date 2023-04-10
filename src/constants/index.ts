@@ -89,16 +89,6 @@ export const SPIRIT_DOCS_URL = 'https://docs.spiritswap.finance/';
 
 export const SPIRIT_WHITELISTING_FORMS = 'https://forms.gle/LqrWp7cGi7eXc6UR7';
 
-export const BRIDGE_NAMES = {
-  nxtp: 'Connext',
-  hop: 'Hop',
-  debridge: 'Debridge',
-  anyswap: 'Anyswap',
-  hyphen: 'Hyphen',
-  across: 'across',
-  wormhole: 'Wormhole',
-};
-
 export const BRIDGES_ALLOWED = [
   'hop',
   'cbridge',
@@ -106,8 +96,10 @@ export const BRIDGES_ALLOWED = [
   'hyphen',
   'optimism',
   'polygon',
-  'avalanche',
   'arbitrum',
+  'stargate',
+  'across',
+  'amarok',
 ];
 export const EXCHANGE_ALLOWED = [
   'spiritswap',

@@ -87,7 +87,7 @@ export const useLiFi = ({
         integrator: 'SpiritSwap',
         allowBridges:
           bridgeMode === BRIDGE_MODE.cheap
-            ? [...BRIDGES_ALLOWED, 'connext']
+            ? [...BRIDGES_ALLOWED]
             : BRIDGES_ALLOWED,
       });
       try {
