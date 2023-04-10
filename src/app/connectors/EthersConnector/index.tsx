@@ -57,6 +57,8 @@ const EthersConnector = ({ children }) => {
   }, []);
 
   const initProvider = useCallback(async ({ rpcId }: { rpcId?: number }) => {
+    console.log(rpcId, 'aca');
+
     const { provider: currentProvider, signer: currentSigner } = await connect({
       rpcID: rpcId,
     });
@@ -109,8 +111,16 @@ const EthersConnector = ({ children }) => {
     // let currentProvider = provider;
     // let currentSigner = signer;
     // if (!currentProvider || !currentSigner) {
-    const [currentProvider, currentSigner] = await initProvider({ rpcId: 0 });
+    const randomInt_0_to_4 = () => {
+      return Math.floor(Math.random() * 4) + 1;
+    };
+
+    const [currentProvider, currentSigner] = await initProvider({
+      rpcId: randomInt_0_to_4(),
+    });
     // }
+
+    console.log();
 
     const signerJson = JSON.stringify(currentSigner, getCircularReplacer());
     // const calls: WorkerCall[] = [];
