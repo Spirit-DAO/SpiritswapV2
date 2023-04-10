@@ -29,7 +29,6 @@ export const swapTransaction = async (
 
   const { signer } = await connect({
     _connection,
-    rpcID: 2,
   });
   const MIN_GAS_LIMIT = BigNumber.from('300000');
 
@@ -115,7 +114,7 @@ export const placeOrderLimit = async (
   _chainId = undefined,
 ) => {
   const _connection = getProvider();
-  const { signer } = await connect({ _connection, rpcID: 3 });
+  const { signer } = await connect({ _connection });
   const inputAmount = parseUnits(_trade.inputAmount, _trade.inputDecimals);
   const outputAmount = parseUnits(_trade.minReturn, _trade.outputDecimals);
 
@@ -137,7 +136,7 @@ export const wrappedFTMaction = async (
 ) => {
   try {
     const _connection = getProvider();
-    const { signer } = await connect({ _connection, rpcID: 3 });
+    const { signer } = await connect({ _connection });
     const contract = await Contract(
       WFTM.address,
       'wrappedFTM',

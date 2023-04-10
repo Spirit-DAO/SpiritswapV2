@@ -107,7 +107,6 @@ export const getNativeTokenBalance = async (
   const { provider } = await connect({
     _connection: 'rpc',
     _chainId,
-    rpcID: 2,
   });
   const balance = await provider.getBalance(_address);
 

@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  memo,
+} from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { Web3Provider, connect, Web3TxData } from 'utils/web3';
 import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
@@ -56,18 +63,16 @@ const EthersConnector = ({ children }) => {
     };
   }, []);
 
-  const initProvider = useCallback(async ({ rpcId }: { rpcId?: number }) => {
-    console.log(rpcId, 'aca');
-
-    const { provider: currentProvider, signer: currentSigner } = await connect({
-      rpcID: rpcId,
-    });
+  const initProvider = useCallback(async () => {
+    const { provider: currentProvider, signer: currentSigner } = await connect(
+      {},
+    );
 
     return [currentProvider, currentSigner];
   }, []);
 
   const fetchAppData = useCallback(async () => {
-    const [currentProvider] = await initProvider({ rpcId: 1 });
+    const [currentProvider] = await initProvider();
 
     const _provider = JSON.stringify(currentProvider, getCircularReplacer());
     // const calls: WorkerCall[] = [];
@@ -98,7 +103,7 @@ const EthersConnector = ({ children }) => {
     // }
 
     // // Fetch the rest of the data
-    // calls.forEach(async call => {
+    // calls.forEach(async call => {\
     //   try {
     //     dataWorker.postMessage(call);
     //   } catch (e) {
@@ -108,19 +113,7 @@ const EthersConnector = ({ children }) => {
   }, [dataWorker, initProvider, isLoggedIn, page, pageData]);
 
   const fetchUserData = useCallback(async () => {
-    // let currentProvider = provider;
-    // let currentSigner = signer;
-    // if (!currentProvider || !currentSigner) {
-    const randomInt_0_to_4 = () => {
-      return Math.floor(Math.random() * 4) + 1;
-    };
-
-    const [currentProvider, currentSigner] = await initProvider({
-      rpcId: randomInt_0_to_4(),
-    });
-    // }
-
-    console.log();
+    const [currentProvider, currentSigner] = await initProvider();
 
     const signerJson = JSON.stringify(currentSigner, getCircularReplacer());
     // const calls: WorkerCall[] = [];
@@ -179,10 +172,8 @@ const EthersConnector = ({ children }) => {
     console.log('START - FERCHING DATA APP');
 
     fetchAppData();
-
     if (account) {
       console.log('START - FERCHING DATA USER');
-
       fetchUserData();
     }
   }, [fetchAppData, fetchUserData, account]);
@@ -287,29 +278,21 @@ const EthersConnector = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending, inQueue]);
 
-  // useEffect(() => {
-  //   const unionFetch = () => {
-  //     console.log('fetching data unionFetch');
+  useEffect(() => {
+    const unionFetch = () => {
+      fetchAppData();
+      if (isLoggedIn) {
+        fetchUserData();
+      }
+    };
 
-  //     // fetchAppData();
-  //     if (isLoggedIn) {
-  //       console.log('fetching data unionFetch isLoggedIn');
+    const intervalId = setInterval(() => unionFetch(), 50000);
 
-  //       fetchUserData();
-  //     }
-  //   };
-
-  //   const intervalId = setInterval(() => {
-  //     //assign interval to a variable to clear it.
-  //     unionFetch();
-  //   }, 45000);
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [fetchAppData, fetchUserData, isLoggedIn]);
+    return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <>{children}</>;
 };
 
-export default EthersConnector;
+export default memo(EthersConnector);
