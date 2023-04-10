@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { Web3Provider, connect, Web3TxData } from 'utils/web3';
 import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
@@ -8,7 +8,7 @@ import { CHAIN_ID, NOTIFICATIONS_STATE } from 'constants/index';
 import { ethers } from 'ethers';
 import { DataContext } from 'contexts/DataContext';
 import useLogin from './login';
-import { resetUserStatistics } from 'store/user';
+import user, { resetUserStatistics } from 'store/user';
 import { useToast } from '@chakra-ui/react';
 import { WorkerCall } from 'types';
 import useWallets from 'app/hooks/useWallets';
@@ -16,25 +16,18 @@ import getNotificationIcon from '../getNotificationIcon';
 import { selectAddress, selectPendingTransactions } from 'store/user/selectors';
 
 const EthersConnector = ({ children }) => {
+  const toast = useToast();
   const { isLoggedIn } = useWallets();
-  const account = useAppSelector(selectAddress);
   const { handleLogin } = useLogin();
   const dispatch = useAppDispatch();
-  const toast = useToast();
-
   const { showToast } = useProgressToast();
   const { showSuggestion } = useSuggestion();
 
+  const account = useAppSelector(selectAddress);
   const pending = useAppSelector(selectPendingTransactions);
 
   const { dataWorker, userDataWorker } = useContext(DataContext);
 
-  const [provider, setProvider] = useState<Web3Provider | undefined>(
-    window.ethereum
-      ? new ethers.providers.Web3Provider(window.ethereum, 'any')
-      : undefined,
-  );
-  const [signer, setSigner] = useState<ethers.Signer | undefined>();
   const [inQueue, setInQueue] = useState<{ [key: string]: Web3TxData }>({});
 
   const page = useMemo(() => {
@@ -45,29 +38,37 @@ const EthersConnector = ({ children }) => {
     }
 
     return page[1].toLowerCase();
-  }, [window.location]);
+  }, []);
 
-  const pageData = {
-    home: ['getSpiritStatistics'],
-    farms: ['getFarms'],
-    spiritwars: ['getSpiritWarsData'],
-    inspirit: ['getBoostedGauges'],
-  };
+  const pageData = useMemo(() => {
+    return {
+      home: ['getSpiritStatistics'],
+      farms: ['getFarms'],
+      spiritwars: ['getSpiritWarsData'],
+      inspirit: ['getBoostedGauges'],
+    };
+  }, []);
 
-  const pageUserData = {
-    home: ['updatePortfolioData'],
-    swap: ['checkLimitOrders', 'checkAllowances'],
-  };
+  const pageUserData = useMemo(() => {
+    return {
+      home: ['updatePortfolioData'],
+      swap: ['checkLimitOrders', 'checkAllowances'],
+    };
+  }, []);
 
-  const fetchAppData = async () => {
-    let currentProvider = provider;
-    if (!currentProvider) {
-      // Deny race condition
-      [currentProvider] = await initProvider();
-    }
+  const initProvider = useCallback(async ({ rpcId }: { rpcId?: number }) => {
+    const { provider: currentProvider, signer: currentSigner } = await connect({
+      rpcID: rpcId,
+    });
+
+    return [currentProvider, currentSigner];
+  }, []);
+
+  const fetchAppData = useCallback(async () => {
+    const [currentProvider] = await initProvider({ rpcId: 1 });
 
     const _provider = JSON.stringify(currentProvider, getCircularReplacer());
-    const calls: WorkerCall[] = [];
+    // const calls: WorkerCall[] = [];
 
     // Prioritize the page we are on
     Object.keys(pageData).forEach(pageKey => {
@@ -80,38 +81,42 @@ const EthersConnector = ({ children }) => {
             isLoggedIn,
           });
         });
-      } else {
-        // Add it to the queue for later
-        pageData[pageKey].forEach(data => {
-          calls.push({
-            type: data,
-            network: currentProvider!._network,
-            provider: _provider,
-            isLoggedIn,
-          });
-        });
       }
     });
+    // else {
+    //   // Add it to the queue for later
+    //   pageData[pageKey].forEach(data => {
+    //     calls.push({
+    //       type: data,
+    //       network: currentProvider!._network,
+    //       provider: _provider,
+    //       isLoggedIn,
+    //     });
+    //   });
+    // }
 
-    // Fetch the rest of the data
-    calls.forEach(async call => {
-      try {
-        dataWorker.postMessage(call);
-      } catch (e) {}
-    });
-  };
+    // // Fetch the rest of the data
+    // calls.forEach(async call => {
+    //   try {
+    //     dataWorker.postMessage(call);
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // });
+  }, [dataWorker, initProvider, isLoggedIn, page, pageData]);
 
-  const fetchUserData = async () => {
-    let currentProvider = provider;
-    let currentSigner = signer;
-    if (!currentProvider || !currentSigner) {
-      [currentProvider, currentSigner] = await initProvider();
-    }
+  const fetchUserData = useCallback(async () => {
+    // let currentProvider = provider;
+    // let currentSigner = signer;
+    // if (!currentProvider || !currentSigner) {
+    const [currentProvider, currentSigner] = await initProvider({ rpcId: 0 });
+    // }
 
     const signerJson = JSON.stringify(currentSigner, getCircularReplacer());
-    const calls: WorkerCall[] = [];
+    // const calls: WorkerCall[] = [];
 
     const _provider = JSON.stringify(currentProvider, getCircularReplacer());
+
     Object.keys(pageUserData).forEach(pageKey => {
       if (pageKey === page) {
         pageUserData[pageKey].forEach(data => {
@@ -122,70 +127,51 @@ const EthersConnector = ({ children }) => {
             provider: _provider,
           });
         });
-      } else {
-        // Add it to the queue for later
-        pageUserData[pageKey].forEach(data => {
-          calls.push({
-            userAddress: account,
-            type: data,
-            signer: signerJson,
-            provider: _provider,
-          });
-        });
       }
     });
+    // else {
+    //   // Add it to the queue for later
+    //   pageUserData[pageKey].forEach(data => {
+    //     calls.push({
+    //       userAddress: account,
+    //       type: data,
+    //       signer: signerJson,
+    //       provider: _provider,
+    //     });
+    //   });
+    // }
 
     // Fetch the rest of the data
-    calls.forEach(async call => {
-      try {
-        userDataWorker.postMessage(call);
-      } catch (e) {}
-    });
-  };
-
-  const initProvider = async () => {
-    const [
-      { chainId: web3ChainId },
-      { provider: currentProvider, signer: currentSigner },
-    ] = await Promise.all([
-      provider
-        ? provider.getNetwork()
-        : {
-            chainId: CHAIN_ID,
-          },
-      connect(),
-    ]);
-
-    if (web3ChainId === CHAIN_ID || !web3ChainId) {
-      setProvider(currentProvider);
-      setSigner(currentSigner);
-    }
-
-    return [currentProvider, currentSigner];
-  };
+    // calls.forEach(async call => {
+    //   try {
+    //     userDataWorker.postMessage(call);
+    //   } catch (e) {}
+    // });
+  }, [account, initProvider, page, pageUserData, userDataWorker]);
 
   useEffect(() => {
-    initProvider();
-
-    if (isLoggedIn && account) {
-      if (window.ethereum) {
-        window.ethereum.on('accountsChanged', async () => {
-          dispatch(resetUserStatistics());
-          handleLogin();
-          fetchUserData();
-        });
-      }
-      fetchUserData();
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', async () => {
+        dispatch(resetUserStatistics());
+        handleLogin();
+        fetchUserData();
+      });
     }
-
-    fetchAppData();
 
     return () => {
       if (window.ethereum) {
         window.ethereum.removeListener('accountsChanged', () => {});
       }
     };
-  }, [connect, isLoggedIn, pending, account]);
+  }, [dispatch, fetchUserData, handleLogin]);
+
+  useEffect(() => {
+    fetchAppData();
+
+    if (account) {
+      fetchUserData();
+    }
+  }, [fetchAppData, fetchUserData, account]);
 
   const removeFromQueue = (hash: string) => {
     const inQueueCopy = { ...inQueue };
@@ -270,7 +256,9 @@ const EthersConnector = ({ children }) => {
 
     Object.keys(inQueue).forEach(hash => {
       if (!hash) return;
-
+      const provider = window.ethereum
+        ? new ethers.providers.Web3Provider(window.ethereum, 'any')
+        : undefined;
       const receiptPromise = provider!.getTransactionReceipt(hash);
 
       const match = pending.find(
@@ -282,25 +270,30 @@ const EthersConnector = ({ children }) => {
         removeFromQueue(hash);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending, inQueue]);
 
-  useEffect(() => {
-    const unionFetch = () => {
-      fetchAppData();
-      if (isLoggedIn) {
-        fetchUserData();
-      }
-    };
+  // useEffect(() => {
+  //   const unionFetch = () => {
+  //     console.log('fetching data unionFetch');
 
-    const intervalId = setInterval(() => {
-      //assign interval to a variable to clear it.
-      unionFetch();
-    }, 45000);
+  //     // fetchAppData();
+  //     if (isLoggedIn) {
+  //       console.log('fetching data unionFetch isLoggedIn');
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+  //       fetchUserData();
+  //     }
+  //   };
+
+  //   const intervalId = setInterval(() => {
+  //     //assign interval to a variable to clear it.
+  //     unionFetch();
+  //   }, 45000);
+
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [fetchAppData, fetchUserData, isLoggedIn]);
 
   return <>{children}</>;
 };

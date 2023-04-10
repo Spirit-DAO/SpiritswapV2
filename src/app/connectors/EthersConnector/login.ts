@@ -92,7 +92,10 @@ const useLogin = () => {
 
         localStorage.setItem('CONNECTOR', _connector);
 
-        connect(localConnector, _signer => updateLogin(_signer, true));
+        connect({
+          _connection: localConnector,
+          _callback: _signer => updateLogin(_signer, true),
+        });
       });
     },
     [updateLogin],

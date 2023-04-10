@@ -90,7 +90,10 @@ export async function Contract(
   if (typeof _connectionUrl === 'object' && _connectionUrl.connection) {
     provider = _connectionUrl;
   } else {
-    ({ provider, signer } = await connect(_connectionUrl, undefined, _network));
+    ({ provider, signer } = await connect({
+      _connection: _connectionUrl,
+      _chainId: _network,
+    }));
   }
 
   if (isSigner) {
@@ -163,7 +166,7 @@ export async function MulticallV2(
   _network = CHAIN_ID,
   _rpc = 'rpc',
 ) {
-  const { provider } = await connect();
+  const { provider } = await connect({});
   const ethCallProvider = new MulticallProvider();
   ethCallProvider.init(provider);
 
