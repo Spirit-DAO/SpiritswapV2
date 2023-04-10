@@ -166,9 +166,13 @@ const EthersConnector = ({ children }) => {
   }, [dispatch, fetchUserData, handleLogin]);
 
   useEffect(() => {
+    console.log('START - FERCHING DATA APP');
+
     fetchAppData();
 
     if (account) {
+      console.log('START - FERCHING DATA USER');
+
       fetchUserData();
     }
   }, [fetchAppData, fetchUserData, account]);
