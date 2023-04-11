@@ -49,13 +49,22 @@ export const wallet = async (
   };
 };
 
+const randomInt_0_to_3 = () => {
+  return Math.floor(Math.random() * 4);
+};
+
 // Connects to either a wallet or external rpc
-export const connect = async (
-  _connection: any = 'rpc',
-  _callback?: Function,
+export const connect = async ({
+  _connection = 'rpc',
+  _callback,
   _chainId = CHAIN_ID,
-  rpcID: number = 0,
-) => {
+  rpcID = 0,
+}: {
+  _connection?: any;
+  _callback?: Function;
+  _chainId?: number;
+  rpcID?: number;
+}) => {
   if (CONNECTIONS().includes(_connection)) {
     try {
       if (_connection instanceof WalletConnectProvider) {
@@ -70,7 +79,7 @@ export const connect = async (
   if (connectionUrl === 'rpc') {
     const chainID = _chainId !== 0 ? _chainId : CHAIN_ID;
     const chain = NETWORK[chainID];
-    connectionUrl = chain.rpc[rpcID];
+    connectionUrl = chain.rpc[randomInt_0_to_3()];
   }
 
   const provider = new ethers.providers.JsonRpcProvider(connectionUrl);

@@ -11,7 +11,6 @@ import {
   FarmsIcon,
   BridgeIcon,
   InspiritIcon,
-  Ape,
   Swap,
   Earn,
   Main,
@@ -49,7 +48,6 @@ import {
   FARMS,
   BRIDGE,
   INSPIRIT,
-  resolveRoutePath,
 } from 'app/router/routes';
 import { ConnectWallet } from 'app/components/ConnectWallet';
 import {
@@ -63,7 +61,7 @@ import { SPIRIT, SPIRIT_DOCS_URL, TOKENS_TO_SHOW } from 'constants/index';
 import { setPortfolioValue, setShowPortfolio } from 'store/user';
 import MiniFooter from './components/MiniFooter';
 import DexStatistics from './components/DexStatistics';
-import { LendAndBorrowIcon, ApeIcon } from './../../assets/icons/index';
+import { LendAndBorrowIcon } from './../../assets/icons/index';
 import { GelattoLimitOrder } from 'utils/swap/types';
 import { openInNewTab } from 'app/utils/redirectTab';
 import useMobile from 'utils/isMobile';

@@ -482,7 +482,7 @@ export function LiquidityPage() {
           });
         }
 
-        const { provider } = await connect('rpc', undefined, CHAIN_ID, 3);
+        const { provider } = await connect({ _connection: 'rpc' });
 
         userDataWorker.postMessage({
           userAddress: account,

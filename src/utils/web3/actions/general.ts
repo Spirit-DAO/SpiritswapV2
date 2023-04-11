@@ -14,7 +14,11 @@ export const transaction = async (
   txHash: string,
   networkId: string | number | undefined = CHAIN_ID,
 ) => {
-  const external = await connect('rpc', () => null, Number(networkId));
+  const external = await connect({
+    _connection: 'rpc',
+    _chainId: Number(networkId),
+    _callback: () => null,
+  });
 
   const externalCheck = await external.provider.getTransactionReceipt(txHash);
 
@@ -100,7 +104,10 @@ export const getNativeTokenBalance = async (
   _address: string,
   _chainId = CHAIN_ID,
 ) => {
-  const { provider } = await connect('rpc', undefined, _chainId, 2);
+  const { provider } = await connect({
+    _connection: 'rpc',
+    _chainId,
+  });
   const balance = await provider.getBalance(_address);
 
   return formatEther(balance);
