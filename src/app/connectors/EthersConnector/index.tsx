@@ -7,15 +7,15 @@ import {
   memo,
 } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
-import { Web3Provider, connect, Web3TxData } from 'utils/web3';
+import { connect, Web3Provider, Web3TxData } from 'utils/web3';
 import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
 import { getCircularReplacer } from 'app/utils';
 import { useSuggestion } from 'app/hooks/Suggestions/useSuggestion';
-import { CHAIN_ID, NOTIFICATIONS_STATE } from 'constants/index';
+import { NOTIFICATIONS_STATE } from 'constants/index';
 import { ethers } from 'ethers';
 import { DataContext } from 'contexts/DataContext';
 import useLogin from './login';
-import user, { resetUserStatistics } from 'store/user';
+import { resetUserStatistics } from 'store/user';
 import { useToast } from '@chakra-ui/react';
 import { WorkerCall } from 'types';
 import useWallets from 'app/hooks/useWallets';
@@ -31,10 +31,13 @@ const EthersConnector = ({ children }) => {
   const { showSuggestion } = useSuggestion();
 
   const account = useAppSelector(selectAddress);
+
+  const provider = window.ethereum
+    ? new ethers.providers.Web3Provider(window.ethereum, 'any')
+    : undefined;
+
   const pending = useAppSelector(selectPendingTransactions);
-
   const { dataWorker, userDataWorker } = useContext(DataContext);
-
   const [inQueue, setInQueue] = useState<{ [key: string]: Web3TxData }>({});
 
   const page = useMemo(() => {
@@ -63,18 +66,23 @@ const EthersConnector = ({ children }) => {
     };
   }, []);
 
-  const initProvider = useCallback(async () => {
-    const { provider: currentProvider, signer: currentSigner } = await connect(
-      {},
-    );
+  console.log('renderrrr');
 
-    return [currentProvider, currentSigner];
+  const initProvider = useCallback(async () => {
+    const { provider, signer } = await connect({});
+
+    let currentProvider = provider;
+    if (!provider) {
+      currentProvider = provider;
+    }
+
+    return { currentProvider, signer };
   }, []);
 
   const fetchAppData = useCallback(async () => {
-    const [currentProvider] = await initProvider();
+    const { currentProvider } = await initProvider();
 
-    const _provider = JSON.stringify(currentProvider, getCircularReplacer());
+    const _provider = JSON.stringify(provider, getCircularReplacer());
     const calls: WorkerCall[] = [];
 
     // Prioritize the page we are on
@@ -102,19 +110,20 @@ const EthersConnector = ({ children }) => {
     });
 
     // Fetch the rest of the data
-    calls.forEach(async call => {
-      try {
+
+    setTimeout(() => {
+      calls.forEach(async call => {
         dataWorker.postMessage(call);
-      } catch (e) {
-        console.error(e);
-      }
-    });
-  }, [dataWorker, initProvider, isLoggedIn, page, pageData]);
+      });
+    }, 8000);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, account]);
 
   const fetchUserData = useCallback(async () => {
-    const [currentProvider, currentSigner] = await initProvider();
+    const { currentProvider, signer } = await initProvider();
 
-    const signerJson = JSON.stringify(currentSigner, getCircularReplacer());
+    const signerJson = JSON.stringify(signer, getCircularReplacer());
     const calls: WorkerCall[] = [];
 
     const _provider = JSON.stringify(currentProvider, getCircularReplacer());
@@ -143,13 +152,22 @@ const EthersConnector = ({ children }) => {
     });
 
     // Fetch the rest of the data
-
-    calls.forEach(async call => {
-      try {
+    setTimeout(() => {
+      calls.forEach(async call => {
         userDataWorker.postMessage(call);
-      } catch (e) {}
-    });
-  }, [account, initProvider, page, pageUserData, userDataWorker]);
+      });
+    }, 8000);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, account]);
+
+  useEffect(() => {
+    fetchAppData();
+    if (isLoggedIn) {
+      fetchUserData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchAppData, fetchUserData]);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -166,16 +184,6 @@ const EthersConnector = ({ children }) => {
       }
     };
   }, [dispatch, fetchUserData, handleLogin]);
-
-  useEffect(() => {
-    console.log('START - FERCHING DATA APP');
-
-    fetchAppData();
-    if (isLoggedIn) {
-      console.log('START - FERCHING DATA USER');
-      fetchUserData();
-    }
-  }, [fetchAppData, fetchUserData, isLoggedIn]);
 
   const removeFromQueue = (hash: string) => {
     const inQueueCopy = { ...inQueue };
@@ -276,20 +284,6 @@ const EthersConnector = ({ children }) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending, inQueue]);
-
-  useEffect(() => {
-    const unionFetch = () => {
-      fetchAppData();
-      if (isLoggedIn) {
-        fetchUserData();
-      }
-    };
-
-    const intervalId = setInterval(() => unionFetch(), 50000);
-
-    return () => clearInterval(intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return <>{children}</>;
 };

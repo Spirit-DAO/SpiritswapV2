@@ -87,8 +87,8 @@ export const NETWORK = {
     rpc: [
       'https://rpc.ftm.tools',
       'https://rpc.ankr.com/fantom',
-      'https://rpc2.fantom.network',
       'https://rpcapi.fantom.network',
+      'https://rpc2.fantom.network',
     ],
     wss: [
       'wss://rpc.ankr.com/fantom/ws/f8894f061b2982e7af3f627c607ef8e55df530ee60cbcfa04c4cec910775a4ee/',
