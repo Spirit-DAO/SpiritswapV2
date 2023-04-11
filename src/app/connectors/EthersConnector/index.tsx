@@ -109,14 +109,12 @@ const EthersConnector = ({ children }) => {
 
     // Fetch the rest of the data
 
-    setTimeout(() => {
-      calls.forEach(async call => {
-        dataWorker.postMessage(call);
-      });
-    }, 8000);
+    calls.forEach(async call => {
+      dataWorker.postMessage(call);
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, account]);
+  }, [page, account, dataWorker]);
 
   const fetchUserData = useCallback(async () => {
     const { currentProvider, signer } = await initProvider();
@@ -150,14 +148,12 @@ const EthersConnector = ({ children }) => {
     });
 
     // Fetch the rest of the data
-    setTimeout(() => {
-      calls.forEach(async call => {
-        userDataWorker.postMessage(call);
-      });
-    }, 8000);
+    calls.forEach(async call => {
+      userDataWorker.postMessage(call);
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, account]);
+  }, [page, account, userDataWorker]);
 
   useEffect(() => {
     fetchAppData();
