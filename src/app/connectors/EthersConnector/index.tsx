@@ -66,8 +66,6 @@ const EthersConnector = ({ children }) => {
     };
   }, []);
 
-  console.log('renderrrr');
-
   const initProvider = useCallback(async () => {
     const { provider, signer } = await connect({});
 
