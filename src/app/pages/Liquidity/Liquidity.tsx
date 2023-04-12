@@ -31,7 +31,7 @@ import {
 } from './styles';
 import { Select } from 'app/components/Select';
 import { Slippage } from './components/Slippage';
-import tokens, { SPIRIT, FTM, USDC, FRAX } from 'constants/tokens';
+import tokens, { WFTM, SPIRIT, FTM, USDC, FRAX } from 'constants/tokens';
 import { ConfirmModal } from './components/ConfirmModal';
 import SpiritsBackground from './components/SpiritsBackground';
 import CollapseItem from './components/Collapse/Collapse';
@@ -902,18 +902,42 @@ export function LiquidityPage() {
     if (!tokenSelected) {
       return null;
     }
+
     if (!type) {
       if (
-        tokenSelected.name !== firstToken.tokenSelected.name &&
-        tokenSelected.name !== secondToken.tokenSelected.name
-      )
+        tokenSelected.address !== firstToken.tokenSelected.address &&
+        tokenSelected.address !== secondToken.tokenSelected.address
+      ) {
+        if (isConcentratedSelected) {
+          if (
+            (tokenSelected.address === BASE_TOKEN_ADDRESS &&
+              secondToken.tokenSelected.address === WFTM.address) ||
+            (tokenSelected.address === WFTM.address &&
+              secondToken.tokenSelected.address === BASE_TOKEN_ADDRESS)
+          ) {
+            return null;
+          }
+        }
         setFirstToken({ ...firstToken, tokenSelected });
+      }
     } else {
       if (
-        tokenSelected.name !== firstToken.tokenSelected.name &&
-        tokenSelected.name !== secondToken.tokenSelected.name
-      )
+        tokenSelected.address !== firstToken.tokenSelected.address &&
+        tokenSelected.address !== secondToken.tokenSelected.address
+      ) {
+        if (isConcentratedSelected) {
+          if (
+            (tokenSelected.address === BASE_TOKEN_ADDRESS &&
+              firstToken.tokenSelected.address === WFTM.address) ||
+            (tokenSelected.address === WFTM.address &&
+              firstToken.tokenSelected.address === BASE_TOKEN_ADDRESS)
+          ) {
+            return null;
+          }
+        }
+
         setSecondToken({ ...secondToken, tokenSelected });
+      }
     }
     if (onClose) onClose();
   };
@@ -1375,7 +1399,10 @@ export function LiquidityPage() {
               onClose={onClose}
               isOpen={isOpen}
               disabled={
-                !liquidityTrade && !isStableSelected && !isWeightedSelected
+                !liquidityTrade &&
+                !isStableSelected &&
+                !isWeightedSelected &&
+                !isConcentratedSelected
               }
               nextStep={() => void 0}
               notifications={notifications}

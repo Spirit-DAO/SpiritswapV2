@@ -102,7 +102,7 @@ export function usePositionData(
         const sum = rates[0] * Number(amount0) + rates[1] * Number(amount1);
 
         const fees0 = feeValue0 ? Number(feeValue0?.toSignificant(4)) : 0;
-        const fees1 = feeValue0 ? Number(feeValue1?.toSignificant(4)) : 0;
+        const fees1 = feeValue1 ? Number(feeValue1?.toSignificant(4)) : 0;
 
         const feesSum = rates[0] * fees0 + rates[1] * fees1;
 

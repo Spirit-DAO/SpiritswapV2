@@ -209,7 +209,7 @@ export function useV3DerivedMintInfo(
 
   const [token0, token1] = useMemo(
     () =>
-      tokenA && tokenB
+      tokenA && tokenB && !tokenA.equals(tokenB)
         ? tokenA.sortsBefore(tokenB)
           ? [tokenA, tokenB]
           : [tokenB, tokenA]
@@ -219,13 +219,13 @@ export function useV3DerivedMintInfo(
 
   const { token: token0Balance } = useTokenBalance(
     CHAIN_ID,
-    currencyA?.isNative ? ADDRESS_ZERO : token0?.address || '',
+    currencyA?.isNative ? ADDRESS_ZERO : currencyA?.address || '',
     'token',
   );
 
   const { token: token1Balance } = useTokenBalance(
     CHAIN_ID,
-    currencyB?.isNative ? ADDRESS_ZERO : token1?.address || '',
+    currencyB?.isNative ? ADDRESS_ZERO : currencyB?.address || '',
     'token',
   );
 

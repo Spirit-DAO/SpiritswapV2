@@ -254,14 +254,17 @@ const Home = () => {
   }, [rewards, isLoggedIn]);
 
   useEffect(() => {
-    if (!tokens?.tokenList || !liquidity || !limitOrders || !account) return;
+    if (!tokens?.tokenList || !liquidity || !account) return;
 
     setLiquidityData({
       ...liquidity,
       stakeList: walletLiquidity,
       v3LiquidityList: concentratedLiqudiity,
     });
-    setLimitOrdersData(limitOrders);
+
+    if (limitOrders) {
+      setLimitOrdersData(limitOrders);
+    }
 
     switch (tokensToShow) {
       case TOKENS_TO_SHOW.ALL:
