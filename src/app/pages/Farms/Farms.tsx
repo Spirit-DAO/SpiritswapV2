@@ -62,8 +62,28 @@ export const Farms = () => {
   const [collectedRewards, setCollectedRewards] = useState('0');
   const [hashRewards, setHashRewards] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const farmMasterData = useAppSelector(selectFarmMasterData);
+  const [updatedFarmMasterData, setUpdatedFarmMasterData] =
+    useState<IFarm[]>(farmMasterData);
+
+  useEffect(() => {
+    const newData = farmMasterData.map(farm => {
+      if (
+        farm.title === 'SCARAB + GSCARAB' ||
+        farm.title === 'SPIRIT + sinSPIRIT'
+      ) {
+        return {
+          ...farm,
+          apr: '0.00',
+          aprRange: ['0.00', '0.00'],
+          yourApr: '0',
+        };
+      }
+      return farm;
+    });
+    setUpdatedFarmMasterData(newData);
+  }, [farmMasterData, updatedFarmMasterData]);
+
   const spiritPriceInfo = useAppSelector(selectSpiritInfo);
   const ecosystemValues = useAppSelector(selectEcosystemValues);
   const ecosystemFarmAddress = useAppSelector(selectFarmAddress);
@@ -104,16 +124,16 @@ export const Farms = () => {
   }, [ecosystemFarmAddress]);
 
   useEffect(() => {
-    if (farmMasterData.length !== 0) {
+    if (updatedFarmMasterData.length !== 0) {
       if (address) {
-        const getFarmByAddress = farmMasterData?.filter(
+        const getFarmByAddress = updatedFarmMasterData?.filter(
           pool => pool?.lpAddress?.toLowerCase() === address?.toLowerCase(),
         );
         setFarmData(getFarmByAddress);
         setIsLoading(false);
       }
     }
-  }, [farmMasterData, address, setFarmData]);
+  }, [farmMasterData, address, setFarmData, updatedFarmMasterData]);
 
   useEffect(() => {
     const updateCollectedRewards = () => {
@@ -201,12 +221,11 @@ export const Farms = () => {
   };
 
   useEffect(() => {
-    if (!address && farmMasterData && farmMasterData.length > 0) {
-      let result: any = farmMasterData;
+    if (!address && updatedFarmMasterData && updatedFarmMasterData.length > 0) {
+      let result: any = updatedFarmMasterData;
       if (result.length === 0) {
-        result = farmMasterData;
+        result = updatedFarmMasterData;
       }
-
       result = onFarmFilterChange(result);
       result = handleFarmData(result, selectedTab);
       if (searchTerm.length > 0) {
@@ -222,14 +241,14 @@ export const Farms = () => {
     farmFilters,
     searchTerm,
     sortType,
-    farmMasterData,
+    updatedFarmMasterData,
     farmsStaked,
     hashRewards,
   ]);
 
   const handleBackToFarms = () => {
     navigate(FARMS_ROUTE.path);
-    setFarmData(farmMasterData);
+    setFarmData(updatedFarmMasterData);
     setIsLoading(false);
   };
 
