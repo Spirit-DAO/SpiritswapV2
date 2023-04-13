@@ -9,6 +9,7 @@ import { NewBribeModal } from '../../../Bribes/NewBribeModal';
 import { PieChart } from '../PieChart';
 import sortFn from '../TokensTable/sortUtils';
 import { TokenTableV3 } from '../TokenTableV3';
+import { inactiveFarms, inactiveInspirit } from 'constants/farms';
 
 interface VotingFarms {
   farms: BoostedFarm[];
@@ -78,9 +79,15 @@ const VotingPanel = ({
       );
     }
     if (farmType.index === 1) {
+      const filterInactivesFarms = v2Farms.farms.filter(
+        farm => !inactiveInspirit.includes(farm.name),
+      );
+      const filterInactivesUserFarms = v2Farms.userFarms.filter(
+        farm => !inactiveInspirit.includes(farm.name),
+      );
       setSelectedFarms(
         sortFn(
-          userOnly ? v2Farms.userFarms : v2Farms.farms,
+          userOnly ? filterInactivesUserFarms : filterInactivesFarms,
           sortBy,
           sortDirection,
         ),
@@ -92,8 +99,10 @@ const VotingPanel = ({
 
   const allFarms = useAppSelector(selectFarmMasterData);
 
+  const farmsWithApr = allFarms.filter(farm => farm.apr !== '0');
+
   const finalSelectedFarms: BoostedFarm[] = selectedFarms.map(listFarm => {
-    const find = allFarms.find(
+    const find = farmsWithApr.find(
       farmInAllFarmList =>
         farmInAllFarmList.lpAddress === listFarm.fulldata.farmAddress,
     );

@@ -30,7 +30,8 @@ export const filterByState = (
   const staked = farmsStaked[lpFarmId]
     ? parseFloat(farmsStaked[lpFarmId].amount) > 0
     : false;
-  const inactive = !(parseFloat(pool.apr!) > 0);
+
+  const inactive: boolean = !(parseFloat(pool.apr!) > 0);
 
   const filterType = [filterByStaked, filterByInactive];
   const filterValue = [staked, inactive];
