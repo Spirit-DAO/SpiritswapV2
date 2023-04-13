@@ -1,9 +1,10 @@
-import { Flex, Skeleton } from '@chakra-ui/react';
+import { Flex, HStack, Skeleton, Text } from '@chakra-ui/react';
 import usePieChartData from 'app/hooks/usePieChartData';
 import { BoostedFarm } from 'app/interfaces/Inspirit';
 import { useEffect, useState } from 'react';
 import { selectFarmMasterData } from 'store/farms/selectors';
 import { useAppSelector } from 'store/hooks';
+import { FarmsDropdown } from '../../../Bribes/FarmsDropdown';
 import { NewBribeModal } from '../../../Bribes/NewBribeModal';
 import { PieChart } from '../PieChart';
 import sortFn from '../TokensTable/sortUtils';
@@ -40,7 +41,9 @@ const VotingPanel = ({
   const [selectedFarms, setSelectedFarms] = useState<BoostedFarm[]>([]);
   const [sortBy, setSortBy] = useState();
   const [sortDirection, setSortDirection] = useState();
-
+  const [selectedFarm, setSelectedFarm] = useState<string>('');
+  const [uniqueFarm, setUniqueFarm] = useState<BoostedFarm>();
+  const [showAll, setShowAll] = useState(true);
   const toggleUserFarm = () => {
     setUserOnly(!userOnly);
   };
@@ -109,6 +112,23 @@ const VotingPanel = ({
     farmsList: finalSelectedFarms,
   });
 
+  const handleFarm = (lpAddress: string) => {
+    setSelectedFarm(lpAddress);
+    const findFarm = finalSelectedFarms.find(
+      farm => farm.fulldata.farmAddress === lpAddress,
+    );
+    if (findFarm) {
+      setUniqueFarm(findFarm);
+    }
+  };
+
+  const onToggle = () => {
+    setShowAll(!showAll);
+    if (finalSelectedFarms && finalSelectedFarms.length) {
+      setUniqueFarm(finalSelectedFarms[0]);
+    }
+  };
+
   return (
     <>
       <Flex justifyContent="center">
@@ -124,6 +144,16 @@ const VotingPanel = ({
         </Skeleton>
       </Flex>
 
+      {showAll ? null : (
+        <HStack w="full" p="20px 15px">
+          <Text w="50%">Select a Farm</Text>
+          <FarmsDropdown
+            value={selectedFarm}
+            farms={selectedFarms}
+            onChange={handleFarm}
+          />
+        </HStack>
+      )}
       <TokenTableV3
         errorMessage={errorMessage}
         handleVote={handleVote}
@@ -136,6 +166,9 @@ const VotingPanel = ({
         userOnly={userOnly}
         toggleUserFarm={toggleUserFarm}
         cleanError={cleanError}
+        showAll={showAll}
+        toggleShow={onToggle}
+        uniqueFarm={uniqueFarm}
       />
 
       {newBribeDisclosure.isOpen ? (

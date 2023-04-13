@@ -69,21 +69,23 @@ onmessage = ({ data: { type, provider, isLoggedIn } }) => {
 // =========================
 
 export async function getSpiritStatistics(provider) {
-  const data = await getInspiritStatistics(provider);
-  const { spiritPerBlock } = await getMasterChefPoolInfoWithMultiCall(provider);
+  const [data, spiritPerBlock] = await Promise.all([
+    getInspiritStatistics(provider),
+    getMasterChefPoolInfoWithMultiCall(provider),
+  ]);
 
   // new BigNumber(spiritPerBlock).toNumber()
   const { totalLocked, spiritInfo, totalLockedValue } = data;
-  const { marketCap, spiritTotalSupply: totalSupply } = await getMarketCap(
-    +totalLocked,
-    spiritInfo.price,
-  );
-  const TVL = await getTVL(totalLockedValue);
 
-  data['marketCap'] = marketCap;
-  data['tvl'] = TVL;
-  data['spiritperblock'] = spiritPerBlock;
-  data['spiritssupply'] = totalSupply;
+  const [marketCapRes, tvl] = await Promise.all([
+    getMarketCap(+totalLocked, spiritInfo.price),
+    getTVL(totalLockedValue),
+  ]);
+
+  data['marketCap'] = marketCapRes?.marketCap;
+  data['tvl'] = tvl;
+  data['spiritperblock'] = spiritPerBlock?.spiritPerBlock;
+  data['spiritssupply'] = marketCapRes?.spiritTotalSupply;
 
   self.postMessage({
     type: 'setSpiritStatistics',
