@@ -7,7 +7,11 @@ import { useQuery, useQueryClient } from 'react-query';
 import { LiFi } from 'config/lifi';
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { BRIDGES_ALLOWED, BRIDGE_MODE } from 'constants/index';
-import { NON_ROUTE, NOT_ENOUGH_AMOUNT } from 'constants/errors';
+import {
+  NON_ROUTE,
+  NOT_ENOUGH_AMOUNT,
+  NOT_ENOUGH_AMOUNT_ETH,
+} from 'constants/errors';
 import UseIsLoading from './UseIsLoading';
 
 interface Props {
@@ -91,7 +95,10 @@ export const useLiFi = ({
             : BRIDGES_ALLOWED,
       });
       try {
-        if (tokenUSDAmount <= 10 && tokenUSDAmount !== 0) {
+        if (toChainId === 1 && tokenUSDAmount < 100) {
+          loadingOff();
+          handleError(NOT_ENOUGH_AMOUNT_ETH);
+        } else if (tokenUSDAmount <= 10 && tokenUSDAmount !== 0) {
           loadingOff();
           handleError(NOT_ENOUGH_AMOUNT);
         } else {

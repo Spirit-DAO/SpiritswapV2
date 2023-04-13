@@ -87,6 +87,7 @@
       "non_zero": "Set an amount please.",
       "non_route": "Route not available, please select different tokens.",
       "not_enough_amount": "The amount needs to be greater than $10.",
+      "not_enough_amounteth": "The amount needs to be greater than $100.",
       "not_enough_funds": "Amount exceeds wallet balance.",
       "not_enough_funds_from_inputs": "Insufficient wallet balance",
       "404": {
