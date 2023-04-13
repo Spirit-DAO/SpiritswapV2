@@ -232,11 +232,11 @@ export const networkList = [
     value: 'Arbitrum',
     type: 'network',
   },
-  {
-    id: 43114,
-    value: 'Avalanche',
-    type: 'network',
-  },
+  // {
+  //   id: 43114,
+  //   value: 'Avalanche',
+  //   type: 'network',
+  // },
   // {
   //   id: 1666600000,
   //   value: 'Harmony',
