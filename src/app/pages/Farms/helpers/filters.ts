@@ -30,10 +30,17 @@ export const filterByState = (
   const staked = farmsStaked[lpFarmId]
     ? parseFloat(farmsStaked[lpFarmId].amount) > 0
     : false;
-  const inactive = !(parseFloat(pool.apr!) > 0);
+  const inactiveFarms: boolean = [
+    'SPIRIT + sinSPIRIT',
+    'SCARAB + GSCARAB',
+    'FTM + GOHM',
+  ].includes(pool.title);
+  const inactive: boolean = !(parseFloat(pool.apr!) > 0);
+
+  const globalInactive = inactiveFarms ? inactiveFarms : inactive;
 
   const filterType = [filterByStaked, filterByInactive];
-  const filterValue = [staked, inactive];
+  const filterValue = [staked, globalInactive];
 
   const filterResult = filterType.every((type, index) => {
     if (type) {
@@ -43,5 +50,5 @@ export const filterByState = (
     return true;
   });
 
-  return filterByInactive ? filterResult : filterResult && !inactive;
+  return filterByInactive ? filterResult : filterResult && !globalInactive;
 };
