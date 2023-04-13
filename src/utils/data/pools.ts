@@ -693,6 +693,12 @@ export const loadFarmsList = async (
 
       const type = farm?.stable ? 'stable' : 'variable';
 
+      const isIncative = [
+        'SPIRIT-sinSPIRIT',
+        'SCARAB-GSCARAB',
+        'WFTM-GOHM',
+      ].includes(farm.lpSymbol);
+
       const lp: IFarm = {
         title: farm?.lpSymbol
           .replace('WFTM', 'FTM')
@@ -702,16 +708,22 @@ export const loadFarmsList = async (
         lpAddress: farm.address,
         gaugeAddress: farm?.gaugeAddress,
         aprLabel: 'APY',
-        apr: maxApy.toFormat(2) === 'NaN' ? '0' : maxApy.toFormat(2),
+        apr:
+          maxApy.toFormat(2) === 'NaN' || isIncative ? '0' : maxApy.toFormat(2),
         boosted: true,
         lpApr: '0',
         label: farm.label || '',
         rewardToken: farm?.rewardToken,
         totalLiquidity,
         totalSupply: farm.liquidityShare,
-        aprRange: maxApy.toFormat(2) === 'NaN' ? ['0', '0'] : AprRange,
+        aprRange:
+          maxApy.toFormat(2) === 'NaN' || isIncative ? ['0', '0'] : AprRange,
         boostFactor: '1',
-        yourApr: minApy.isFinite() ? minApy.toString() : '0',
+        yourApr: minApy.isFinite()
+          ? isIncative
+            ? '0'
+            : minApy.toString()
+          : '0',
         valid: tokens.length > 0,
         multiplier: farm.multiplier
           ? farm.multiplier.isFinite()
