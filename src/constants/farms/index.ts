@@ -12,6 +12,12 @@ export const farmsRouterV2 = farmsRouterV2List;
 
 export const allV1farms = farms.concat(farmsV2);
 
+export const inactiveFarms = [
+  'SPIRIT-sinSPIRIT',
+  'SCARAB-GSCARAB',
+  'WFTM-GOHM',
+];
+export const inactiveInspirit = ['WFTM GOHM', 'SCARAB GSCARAB'];
 const allFarms = allV1farms.concat(farmsRouterV2);
 
 export default allFarms;

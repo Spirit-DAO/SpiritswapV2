@@ -9,7 +9,7 @@ import {
   USDC_FTM_LP_ADDRESS,
   WFTM,
 } from 'constants/index';
-import { farms } from 'constants/farms';
+import { farms, inactiveFarms } from 'constants/farms';
 import Contracts from 'constants/contracts';
 import addresses from 'constants/contracts';
 import { IFarm } from 'app/interfaces/Farm';
@@ -693,11 +693,7 @@ export const loadFarmsList = async (
 
       const type = farm?.stable ? 'stable' : 'variable';
 
-      const isIncative = [
-        'SPIRIT-sinSPIRIT',
-        'SCARAB-GSCARAB',
-        'WFTM-GOHM',
-      ].includes(farm.lpSymbol);
+      const isIncative = inactiveFarms.includes(farm.lpSymbol);
 
       const lp: IFarm = {
         title: farm?.lpSymbol
