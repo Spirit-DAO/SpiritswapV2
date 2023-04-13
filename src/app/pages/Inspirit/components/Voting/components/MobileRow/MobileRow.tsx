@@ -57,38 +57,43 @@ const MobileRow = ({
   const height = '50px';
   const heightBG = '60px';
   const justify = showAll ? 'flex-start' : 'center';
+
   return (
-    <Grid templateColumns={`repeat(1, ${showAll ? '1fr' : '290px'})`} gap={2}>
-      <GridItem
-        w={showAll ? '184px' : '290px'}
+    <VStack w="full">
+      {/* TOKENS SECTION */}
+      <VStack
+        w="full"
+        minW="180px"
         h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
         alignItems="center"
         p="8px"
+        spacing={0}
       >
-        <VStack w="full" spacing={0}>
-          <HStack spacing={0} justify={justify} w="full">
-            <ImageLogo margin="0" symbol={tokenA} size="24px" />
-            <ImageLogo symbol={tokenB} size="24px" />
-          </HStack>
-          <HStack spacing={0} w="full" justify={justify}>
-            <Text fontWeight="medium" fontSize="sm">
-              {tokenA}
-            </Text>
-            <Text color="grayDarker" fontSize="sm">
-              +
-            </Text>
-            <Text fontWeight="medium" fontSize="sm">
-              {tokenB}
-            </Text>
-          </HStack>
-        </VStack>
-      </GridItem>
-      <GridItem
-        w={showAll ? '184px' : '290px'}
-        h={height}
+        <HStack spacing={0} justify={justify} w="full">
+          <ImageLogo margin="0" symbol={tokenA} size="24px" />
+          <ImageLogo symbol={tokenB} size="24px" />
+        </HStack>
+        <HStack spacing={0} w="full" justify={justify}>
+          <Text fontWeight="medium" fontSize="sm">
+            {tokenA}
+          </Text>
+          <Text color="grayDarker" fontSize="sm">
+            +
+          </Text>
+          <Text fontWeight="medium" fontSize="sm">
+            {tokenB}
+          </Text>
+        </HStack>
+      </VStack>
+
+      {/* APR */}
+      <VStack
+        w="full"
+        minW="180px"
+        h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
@@ -98,10 +103,13 @@ const MobileRow = ({
         p="8px"
       >
         <Text fontSize="sm">{`${rewardAPR.toFixed(2)}%`}</Text>
-      </GridItem>
-      <GridItem
-        w={showAll ? '184px' : '290px'}
-        h={height}
+      </VStack>
+
+      {/* Rewards 10 inspirit */}
+      <VStack
+        w="full"
+        minW="180px"
+        h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
@@ -113,10 +121,13 @@ const MobileRow = ({
         <Text fontSize="sm">{`$${formatNumber({
           value: Number(bribes),
         })}`}</Text>
-      </GridItem>
-      <GridItem
-        w={showAll ? '184px' : '290px'}
-        h={height}
+      </VStack>
+
+      {/* Liquidity 10 inspirit */}
+      <VStack
+        w="full"
+        minW="180px"
+        h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
@@ -126,9 +137,12 @@ const MobileRow = ({
         p="8px"
       >
         <Text fontSize="sm">{`${convertAmount(liquidityPer10kInspirit)}`}</Text>
-      </GridItem>
-      <GridItem
-        w={showAll ? '184px' : '290px'}
+      </VStack>
+
+      {/* Voting fee */}
+      <VStack
+        w="full"
+        minW="180px"
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -140,9 +154,11 @@ const MobileRow = ({
         <Text fontSize="sm">{`$${formatNumber({
           value: Number(feeEarns),
         })}`}</Text>
-      </GridItem>
-      <GridItem
-        w={showAll ? '184px' : '290px'}
+      </VStack>
+      {/* Voting  */}
+      <VStack
+        w="full"
+        minW="180px"
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
@@ -157,8 +173,9 @@ const MobileRow = ({
             {totalVotesOnFarm}
           </Text>
         </HStack>
-      </GridItem>
-      <GridItem w={showAll ? '184px' : '290px'} h={heightBG}>
+      </VStack>
+      {/* Input  */}
+      <VStack w="full" minW="180px" h={heightBG}>
         <VotingInput
           yourVote={value}
           onNewVote={onNewVote}
@@ -166,8 +183,8 @@ const MobileRow = ({
           cleanError={cleanError}
           resetVoting={resetInputs}
         />
-      </GridItem>
-    </Grid>
+      </VStack>
+    </VStack>
   );
 };
 
