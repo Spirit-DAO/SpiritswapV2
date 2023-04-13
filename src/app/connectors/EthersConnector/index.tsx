@@ -1,10 +1,17 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  memo,
+} from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
-import { Web3Provider, connect, Web3TxData } from 'utils/web3';
+import { connect, Web3Provider, Web3TxData } from 'utils/web3';
 import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
 import { getCircularReplacer } from 'app/utils';
 import { useSuggestion } from 'app/hooks/Suggestions/useSuggestion';
-import { CHAIN_ID, NOTIFICATIONS_STATE } from 'constants/index';
+import { NOTIFICATIONS_STATE } from 'constants/index';
 import { ethers } from 'ethers';
 import { DataContext } from 'contexts/DataContext';
 import useLogin from './login';
@@ -16,25 +23,21 @@ import getNotificationIcon from '../getNotificationIcon';
 import { selectAddress, selectPendingTransactions } from 'store/user/selectors';
 
 const EthersConnector = ({ children }) => {
+  const toast = useToast();
   const { isLoggedIn } = useWallets();
-  const account = useAppSelector(selectAddress);
   const { handleLogin } = useLogin();
   const dispatch = useAppDispatch();
-  const toast = useToast();
-
   const { showToast } = useProgressToast();
   const { showSuggestion } = useSuggestion();
 
+  const account = useAppSelector(selectAddress);
+
+  const provider = window.ethereum
+    ? new ethers.providers.Web3Provider(window.ethereum, 'any')
+    : undefined;
+
   const pending = useAppSelector(selectPendingTransactions);
-
   const { dataWorker, userDataWorker } = useContext(DataContext);
-
-  const [provider, setProvider] = useState<Web3Provider | undefined>(
-    window.ethereum
-      ? new ethers.providers.Web3Provider(window.ethereum, 'any')
-      : undefined,
-  );
-  const [signer, setSigner] = useState<ethers.Signer | undefined>();
   const [inQueue, setInQueue] = useState<{ [key: string]: Web3TxData }>({});
 
   const page = useMemo(() => {
@@ -45,28 +48,39 @@ const EthersConnector = ({ children }) => {
     }
 
     return page[1].toLowerCase();
-  }, [window.location]);
+  }, []);
 
-  const pageData = {
-    home: ['getSpiritStatistics'],
-    farms: ['getFarms'],
-    spiritwars: ['getSpiritWarsData'],
-    inspirit: ['getBoostedGauges'],
-  };
+  const pageData = useMemo(() => {
+    return {
+      home: ['getSpiritStatistics'],
+      farms: ['getFarms'],
+      spiritwars: ['getSpiritWarsData'],
+      inspirit: ['getBoostedGauges'],
+    };
+  }, []);
 
-  const pageUserData = {
-    home: ['updatePortfolioData'],
-    swap: ['checkLimitOrders', 'checkAllowances'],
-  };
+  const pageUserData = useMemo(() => {
+    return {
+      home: ['updatePortfolioData'],
+      swap: ['checkLimitOrders', 'checkAllowances'],
+    };
+  }, []);
 
-  const fetchAppData = async () => {
+  const initProvider = useCallback(async () => {
+    const { provider, signer } = await connect({});
+
     let currentProvider = provider;
-    if (!currentProvider) {
-      // Deny race condition
-      [currentProvider] = await initProvider();
+    if (!provider) {
+      currentProvider = provider;
     }
 
-    const _provider = JSON.stringify(currentProvider, getCircularReplacer());
+    return { currentProvider, signer };
+  }, []);
+
+  const fetchAppData = useCallback(async () => {
+    const { currentProvider } = await initProvider();
+
+    const _provider = JSON.stringify(provider, getCircularReplacer());
     const calls: WorkerCall[] = [];
 
     // Prioritize the page we are on
@@ -94,24 +108,22 @@ const EthersConnector = ({ children }) => {
     });
 
     // Fetch the rest of the data
+
     calls.forEach(async call => {
-      try {
-        dataWorker.postMessage(call);
-      } catch (e) {}
+      dataWorker.postMessage(call);
     });
-  };
 
-  const fetchUserData = async () => {
-    let currentProvider = provider;
-    let currentSigner = signer;
-    if (!currentProvider || !currentSigner) {
-      [currentProvider, currentSigner] = await initProvider();
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, account, dataWorker]);
 
-    const signerJson = JSON.stringify(currentSigner, getCircularReplacer());
+  const fetchUserData = useCallback(async () => {
+    const { currentProvider, signer } = await initProvider();
+
+    const signerJson = JSON.stringify(signer, getCircularReplacer());
     const calls: WorkerCall[] = [];
 
     const _provider = JSON.stringify(currentProvider, getCircularReplacer());
+
     Object.keys(pageUserData).forEach(pageKey => {
       if (pageKey === page) {
         pageUserData[pageKey].forEach(data => {
@@ -137,55 +149,35 @@ const EthersConnector = ({ children }) => {
 
     // Fetch the rest of the data
     calls.forEach(async call => {
-      try {
-        userDataWorker.postMessage(call);
-      } catch (e) {}
+      userDataWorker.postMessage(call);
     });
-  };
 
-  const initProvider = async () => {
-    const [
-      { chainId: web3ChainId },
-      { provider: currentProvider, signer: currentSigner },
-    ] = await Promise.all([
-      provider
-        ? provider.getNetwork()
-        : {
-            chainId: CHAIN_ID,
-          },
-      connect(),
-    ]);
-
-    if (web3ChainId === CHAIN_ID || !web3ChainId) {
-      setProvider(currentProvider);
-      setSigner(currentSigner);
-    }
-
-    return [currentProvider, currentSigner];
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, account, userDataWorker]);
 
   useEffect(() => {
-    initProvider();
-
-    if (isLoggedIn && account) {
-      if (window.ethereum) {
-        window.ethereum.on('accountsChanged', async () => {
-          dispatch(resetUserStatistics());
-          handleLogin();
-          fetchUserData();
-        });
-      }
+    fetchAppData();
+    if (isLoggedIn) {
       fetchUserData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchAppData, fetchUserData]);
 
-    fetchAppData();
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', async () => {
+        dispatch(resetUserStatistics());
+        handleLogin();
+        fetchUserData();
+      });
+    }
 
     return () => {
       if (window.ethereum) {
         window.ethereum.removeListener('accountsChanged', () => {});
       }
     };
-  }, [connect, isLoggedIn, pending, account]);
+  }, [dispatch, fetchUserData, handleLogin]);
 
   const removeFromQueue = (hash: string) => {
     const inQueueCopy = { ...inQueue };
@@ -270,7 +262,9 @@ const EthersConnector = ({ children }) => {
 
     Object.keys(inQueue).forEach(hash => {
       if (!hash) return;
-
+      const provider = window.ethereum
+        ? new ethers.providers.Web3Provider(window.ethereum, 'any')
+        : undefined;
       const receiptPromise = provider!.getTransactionReceipt(hash);
 
       const match = pending.find(
@@ -282,27 +276,10 @@ const EthersConnector = ({ children }) => {
         removeFromQueue(hash);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending, inQueue]);
-
-  useEffect(() => {
-    const unionFetch = () => {
-      fetchAppData();
-      if (isLoggedIn) {
-        fetchUserData();
-      }
-    };
-
-    const intervalId = setInterval(() => {
-      //assign interval to a variable to clear it.
-      unionFetch();
-    }, 45000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
 
   return <>{children}</>;
 };
 
-export default EthersConnector;
+export default memo(EthersConnector);

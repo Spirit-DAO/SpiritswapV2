@@ -41,6 +41,9 @@ const TokenTableV3 = ({
   userOnly,
   toggleUserFarm,
   cleanError,
+  showAll,
+  toggleShow,
+  uniqueFarm,
 }) => {
   const { t } = useTranslation();
   const { account, isLoggedIn } = useWallets();
@@ -156,6 +159,8 @@ const TokenTableV3 = ({
         toggleUserFarm={toggleUserFarm}
         userFarmsOnly={userOnly}
         farmsSize={farmsSize}
+        showAll={showAll}
+        toggleShow={toggleShow}
       />
       {showMobileTableFilters && (
         <ToggleFilter toggleFarms={toggleUserFarm} userFarmsOnly={userOnly} />
@@ -168,6 +173,8 @@ const TokenTableV3 = ({
           resetInputs={resetInputs}
           onNewVote={onNewVote}
           cleanError={cleanError}
+          uniqueFarm={uniqueFarm}
+          showAll={showAll}
         />
       ) : (
         <TableContainer w="full">

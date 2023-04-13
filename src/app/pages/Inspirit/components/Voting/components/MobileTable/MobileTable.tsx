@@ -1,4 +1,4 @@
-import { Grid, GridItem, HStack, Text } from '@chakra-ui/react';
+import { HStack, Text, VStack } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 import { MobileTableProps } from './MobileTable.d';
 import { MobileRow } from '../MobileRow';
@@ -10,9 +10,12 @@ const MobileTable: FC<MobileTableProps> = ({
   resetInputs,
   onNewVote,
   cleanError,
+  showAll,
+  uniqueFarm,
 }) => {
   const [direction, setDirection] = useState('des');
-
+  const height = '50px';
+  const heightBG = '60px';
   const handleOnSort = (by, onSort) => {
     onSort(by, direction);
     setDirection(prevDir => (prevDir === 'des' ? 'asc' : 'des'));
@@ -20,16 +23,16 @@ const MobileTable: FC<MobileTableProps> = ({
 
   return (
     <HStack w="full" p="8px" alignItems="start">
-      <Grid templateColumns="repeat(1, 90px)" gap={2}>
+      <VStack minW="80px" justifyContent="center">
         {labelData.map(labelItem => {
           const isLiquidityPer10kInspirit = labelItem.id === 4;
           const isRewardsPer10kInspirit = labelItem.id === 3;
           return (
-            <GridItem
+            <HStack
               display="flex"
               key={`${labelItem.label}-label`}
               w="full"
-              h={[1].includes(labelItem.id) ? '60px' : '50px'}
+              h={[1, 2, 3, 4].includes(labelItem.id) ? heightBG : height}
             >
               <Text
                 display="flex"
@@ -57,23 +60,38 @@ const MobileTable: FC<MobileTableProps> = ({
                   }
                 />
               ) : null}
-            </GridItem>
+            </HStack>
           );
         })}
-      </Grid>
-      <HStack overflow="scroll">
-        {filteredBribes.length
-          ? filteredBribes.map((farm, i) => (
-              <MobileRow
-                farm={farm}
-                key={`farm-${farm.name}-${i}`}
-                resetInputs={resetInputs}
-                onNewVote={onNewVote}
-                cleanError={cleanError}
-              />
-            ))
-          : null}
-      </HStack>
+      </VStack>
+
+      {showAll ? (
+        <HStack overflow="scroll">
+          {filteredBribes.length
+            ? filteredBribes.map((farm, i) => (
+                <MobileRow
+                  farm={farm}
+                  key={`farm-${farm.name}-${i}`}
+                  resetInputs={resetInputs}
+                  onNewVote={onNewVote}
+                  cleanError={cleanError}
+                  showAll={showAll}
+                />
+              ))
+            : null}
+        </HStack>
+      ) : uniqueFarm ? (
+        <HStack w="full">
+          <MobileRow
+            farm={uniqueFarm}
+            key={`farm-${uniqueFarm?.name}`}
+            resetInputs={resetInputs}
+            onNewVote={onNewVote}
+            cleanError={cleanError}
+            showAll={showAll}
+          />
+        </HStack>
+      ) : null}
     </HStack>
   );
 };

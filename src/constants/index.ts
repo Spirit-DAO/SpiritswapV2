@@ -1,5 +1,5 @@
 import contracts from './contracts';
-import { wBOMB } from './tokens';
+import { JEFE, rainSPIRIT, wBOMB } from './tokens';
 
 export { NETWORK } from './networks';
 export * from './tokens';
@@ -16,7 +16,7 @@ export enum ConnectorNames {
 export const CHAIN_ID = 250; // I think this should be refactored
 export const DEFAULT_HANDLER = 'spiritswap';
 
-export const COVALENT_API_KEY = 'ckey_ce0907ce545344edb6d203df10e';
+export const COVALENT_API_KEY = 'ckey_d86797acadb64dc28689f380b74';
 
 export const GELATO_ADDRESS = '0x59e61b95f20e940ac777e88fa2dfa0a6a4c40fa0';
 export const GELATO_APPROVE_ADDRESS =
@@ -89,16 +89,6 @@ export const SPIRIT_DOCS_URL = 'https://docs.spiritswap.finance/';
 
 export const SPIRIT_WHITELISTING_FORMS = 'https://forms.gle/LqrWp7cGi7eXc6UR7';
 
-export const BRIDGE_NAMES = {
-  nxtp: 'Connext',
-  hop: 'Hop',
-  debridge: 'Debridge',
-  anyswap: 'Anyswap',
-  hyphen: 'Hyphen',
-  across: 'across',
-  wormhole: 'Wormhole',
-};
-
 export const BRIDGES_ALLOWED = [
   'hop',
   'cbridge',
@@ -106,8 +96,10 @@ export const BRIDGES_ALLOWED = [
   'hyphen',
   'optimism',
   'polygon',
-  'avalanche',
   'arbitrum',
+  'stargate',
+  'across',
+  'amarok',
 ];
 export const EXCHANGE_ALLOWED = [
   'spiritswap',
@@ -168,4 +160,8 @@ export const FTM_TOKEN_NULL_ADDRESS = {
 export const VARIABLE = 'Variable';
 export const STABLE = 'Stable';
 
-export const TOKENS_WITH_HIGH_SLIPPAGE = [wBOMB.address.toLowerCase()];
+export const TOKENS_WITH_HIGH_SLIPPAGE = [
+  wBOMB.address.toLowerCase(),
+  JEFE.address.toLowerCase(),
+  rainSPIRIT.address.toLowerCase(),
+];

@@ -18,7 +18,6 @@ import { useAppSelector } from 'store/hooks';
 import ScrollToTop from 'app/components/ScrollToTop';
 import { SpiritWars } from 'app/pages/SpiritWars';
 import {
-  APEMODE,
   BRIDGE,
   FARMS,
   HOME,

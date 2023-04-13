@@ -162,6 +162,7 @@ const TopBar = () => {
   const percentaje24hsFtm: number = ftmPriceData
     ? ftmPriceData.percentajeChange24
     : 0;
+
   const tokenInfos = () => {
     let info = [
       {
