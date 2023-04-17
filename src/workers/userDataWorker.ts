@@ -1,4 +1,4 @@
-import { CHAIN_ID, FTM } from 'constants/index';
+import { CHAIN_ID, FTM, HIDE_CHART_PORTFOLIO } from 'constants/index';
 import addresses from 'constants/contracts';
 import {
   getBoostedFarmVotes,
@@ -284,7 +284,7 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
     await Promise.all([
       stakesAndLiquidity(),
       inSpiritData(),
-      getHistoricalData(),
+      HIDE_CHART_PORTFOLIO ? null : getHistoricalData(),
       getLendAndBorrowData(),
       checkRewards(),
     ]);

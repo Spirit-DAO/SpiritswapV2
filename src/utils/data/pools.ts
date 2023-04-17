@@ -1,10 +1,9 @@
 import BigNumber from 'bignumber.js';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 import {
   CHAIN_ID,
   SPIRIT,
   SPIRIT_FTM_LP_ADDRESS,
-  tokens,
   USDC,
   USDC_FTM_LP_ADDRESS,
   WFTM,
@@ -15,12 +14,7 @@ import addresses from 'constants/contracts';
 import { IFarm } from 'app/interfaces/Farm';
 import { getSplitCalls, formatFarmsCalls } from 'utils/data';
 import { Multicall, Call, Contract } from 'utils/web3';
-import { FarmChainData } from './types';
-import {
-  request,
-  getHistoricalPortfolioValue,
-  getLiquidityPoolsDataV2,
-} from './covalent';
+import { request, getLiquidityPoolsDataV2 } from './covalent';
 import { stableSobPools } from 'constants/sobpools';
 import { TokenAmount } from 'app/interfaces/General';
 import { checkAddress, GetVerifiedTokenFromAddres } from 'app/utils/methods';
@@ -539,29 +533,6 @@ export const getMasterChefPoolInfoWithMultiCall = async (_provider = null) => {
   return {
     spiritPerBlock,
   };
-};
-
-export const getLiquityPoolStatistics24hs = async (_address: string) => {
-  const pool24hsDataFromCovanlent = await getHistoricalPortfolioValue(
-    _address,
-    true,
-  );
-  const finalDataArray: {
-    lpAddress: string;
-    quoteRate24hs: number;
-  }[] = [];
-
-  pool24hsDataFromCovanlent.forEach(item => {
-    const quoteRate24hs = item.holdings[1].quote_rate;
-    if (quoteRate24hs) {
-      finalDataArray.push({
-        lpAddress: item.contract_address,
-        quoteRate24hs: quoteRate24hs,
-      });
-    }
-  });
-
-  return finalDataArray;
 };
 
 export const getLiquityPoolStatistics = async (chainId = CHAIN_ID) => {
