@@ -165,3 +165,5 @@ export const TOKENS_WITH_HIGH_SLIPPAGE = [
   JEFE.address.toLowerCase(),
   rainSPIRIT.address.toLowerCase(),
 ];
+
+export const HIDE_CHART_PORTFOLIO = true;

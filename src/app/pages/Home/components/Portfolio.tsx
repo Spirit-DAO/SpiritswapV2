@@ -28,13 +28,11 @@ import { GelattoLimitOrder } from 'utils/swap/types';
 import useMobile from 'utils/isMobile';
 import portfolioBackground from '../assets/portfolio.png';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
-import { CHAIN_ID } from 'constants/index';
+import { CHAIN_ID, HIDE_CHART_PORTFOLIO } from 'constants/index';
 import { useAppSelector } from 'store/hooks';
 import { selectHistoricalPortfolioValue } from 'store/user/selectors';
 import { FadeInAnimationBox } from 'app/components/FadeInAnimationBox';
 import LimitOrdersPanelV2 from 'app/pages/Portfolio/components/LimitOrderPanelV2/LimitOrdersPanelV2';
-import { useSelector } from 'react-redux';
-import { selectLpPrices } from 'store/general/selectors';
 
 interface PortfolioProps {
   translationPath: string;
@@ -117,27 +115,32 @@ const Portfolio = ({
             </PortfolioPriceWrapper>
           </PortfolioHeader1Wrapper>
 
-          <PortfolioSelectorWrapper>
-            <PortfolioChartStyleSelect
-              labels={chartStylesSelectIcons}
-              selected={selectedChartStyle.ID}
-              onChange={updateSelectedChartStyle}
-            />
-          </PortfolioSelectorWrapper>
+          {HIDE_CHART_PORTFOLIO ? null : (
+            <PortfolioSelectorWrapper>
+              <PortfolioChartStyleSelect
+                labels={chartStylesSelectIcons}
+                selected={selectedChartStyle.ID}
+                onChange={updateSelectedChartStyle}
+              />
+            </PortfolioSelectorWrapper>
+          )}
         </PortfolioHeaderWrapper>
-        <Skeleton
-          isLoaded={!!chartData.length && !!chartDates.length}
-          startColor="grayBorderBox"
-          endColor="bgBoxLighter"
-          h="220px"
-          w="auto"
-        >
-          <Chart
-            type={selectedChartStyle.name as ChartStyles}
-            durationLabels={chartDates}
-            data={chartData}
-          />
-        </Skeleton>
+
+        {HIDE_CHART_PORTFOLIO ? null : (
+          <Skeleton
+            isLoaded={!!chartData.length && !!chartDates.length}
+            startColor="grayBorderBox"
+            endColor="bgBoxLighter"
+            h="220px"
+            w="auto"
+          >
+            <Chart
+              type={selectedChartStyle.name as ChartStyles}
+              durationLabels={chartDates}
+              data={chartData}
+            />
+          </Skeleton>
+        )}
       </PortfolioTopWrapper>
 
       <SimpleGrid

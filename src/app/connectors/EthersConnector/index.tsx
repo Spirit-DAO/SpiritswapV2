@@ -7,7 +7,7 @@ import {
   memo,
 } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
-import { connect, Web3Provider, Web3TxData } from 'utils/web3';
+import { connect, Web3TxData } from 'utils/web3';
 import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
 import { getCircularReplacer } from 'app/utils';
 import { useSuggestion } from 'app/hooks/Suggestions/useSuggestion';
