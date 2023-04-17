@@ -342,6 +342,7 @@ const GetInSpirit = () => {
     if (errorMessage?.canApprove) return DISABLED;
     if (errorMessage?.msg) return DISABLED;
     if (lockMode === 0 && lockAmount === '') return DISABLED;
+    if (lockMode === 0 && lockAmount !== '' && !lockPeriod) return DISABLED;
     if (lockMode === 1 && estimate.date?.unix() === lockedInSpiritEndDate)
       return DISABLED;
     if (lockMode === 1 && lockPeriod === '') return DISABLED;
@@ -382,8 +383,12 @@ const GetInSpirit = () => {
       inspiritAllowance &&
       !hasLock &&
       inspiritAllowance >= Number(lockAmount)
-    )
+    ) {
+      if (!lockPeriod && lockAmount) {
+        return 'Select the period of time to lock';
+      }
       return 'Lock SPIRIT for inSPIRIT';
+    }
 
     if (hasLock && lockMode === 0 && inspiritAllowance >= Number(lockAmount))
       return 'Lock more SPIRIT';
