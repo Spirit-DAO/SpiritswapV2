@@ -102,7 +102,14 @@ const GetInSpirit = () => {
     '2Y': { value: 2, scale: 'years' },
     MAX: { value: 4, scale: 'years' },
   };
-  const hasLock = isLoggedIn && lockedInSpiritEndDate !== 0;
+
+  const [hasLock, setHasLock] = useState(false);
+
+  useEffect(() => {
+    const hasLock = isLoggedIn && lockedInSpiritEndDate !== 0;
+    setHasLock(hasLock);
+  }, [isLoggedIn, lockedInSpiritEndDate]);
+
   const [lockMode, setLockMode] = useState(0);
   const [lockAmount, setLockAmount] = useState<string>('');
   const [lockPeriod, setLockPeriod] = useState<string>('');
@@ -343,7 +350,9 @@ const GetInSpirit = () => {
     if (errorMessage?.msg) return DISABLED;
     if (lockMode === 0 && !lockAmount) return DISABLED;
     if (lockMode === 0 && !lockAmount && !lockPeriod) return DISABLED;
-    if (lockMode === 0 && lockAmount && !lockPeriod) return DISABLED;
+    if (lockMode === 0 && lockAmount && !hasLock && !lockPeriod)
+      return DISABLED;
+
     if (lockMode === 1 && estimate.date?.unix() === lockedInSpiritEndDate)
       return DISABLED;
     if (lockMode === 1 && lockPeriod === '') return DISABLED;
