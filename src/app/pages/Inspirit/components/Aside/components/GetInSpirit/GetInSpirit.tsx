@@ -66,7 +66,6 @@ const GetInSpirit = () => {
   const translationPathHelper = 'inSpirit.modalHelper';
   const lockedInSpiritEndDate = useAppSelector(selectLockedInsSpiritEndDate);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
-  const [steps, setSteps] = useState<StepStateProps[]>([]);
   const inspiritAllowance = useAppSelector(selectInspiritAllowance);
   const { isLoggedIn, account } = useWallets();
   const [loadingText, setLoadingText] = useState('');
@@ -362,22 +361,30 @@ const GetInSpirit = () => {
   };
 
   const handleTransactionFlow = () => {
-    const approveStep: StepStateProps = {
-      action: approveSpiritAmount,
-      label: 'Approve SPIRIT',
-      status: getIsNotApproved()
-        ? TransactionStatus.UPCOMING
-        : TransactionStatus.SUCCESS,
-    };
+    // const approveStep: StepStateProps = {
+    //   action: approveSpiritAmount,
+    //   label: 'Approve SPIRIT',
+    //   status: getIsNotApproved()
+    //     ? TransactionStatus.UPCOMING
+    //     : TransactionStatus.SUCCESS,
+    // };
 
-    const actionStep: StepStateProps = {
-      action: handleInspiritAction,
-      label: handleInspiritLabel(),
-      status: TransactionStatus.UPCOMING,
-    };
+    // const actionStep: StepStateProps = {
+    //   action: handleInspiritAction,
+    //   label: handleInspiritLabel(),
+    //   status: TransactionStatus.UPCOMING,
+    // };
 
-    if (lockMode === 1) setSteps([actionStep]);
-    else setSteps([approveStep, actionStep]);
+    // console.log('lockMode', lockMode);
+
+    if (lockMode === 1) {
+      handleInspiritAction();
+    } else {
+      if (getIsNotApproved()) {
+        approveSpiritAmount();
+      }
+      handleInspiritAction();
+    }
 
     onOpen();
   };
@@ -537,7 +544,7 @@ const GetInSpirit = () => {
           )}
         </HStack>
       </StyledButtonsContainer>
-      {steps.length ? (
+      {/* {steps.length ? (
         <TransactionFlowV2
           isOpen={isOpen}
           onClose={onClose}
@@ -545,7 +552,7 @@ const GetInSpirit = () => {
           description="Confirm all transactions to finish the claiming process."
           steps={steps}
         />
-      ) : null}
+      ) : null} */}
     </Box>
   );
 };
