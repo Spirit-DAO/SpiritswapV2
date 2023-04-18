@@ -127,7 +127,7 @@ export async function Multicall(
     _provider,
   );
 
-  const formattedCalls = _calls.map(_call => {
+  const formattedCalls = _calls?.map(_call => {
     const call = _call;
 
     if (!call.address) {
