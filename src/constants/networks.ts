@@ -86,7 +86,6 @@ export const NETWORK = {
     hex: 'fa',
     rpc: [
       'https://rpc.ftm.tools',
-      'https://rpc.ankr.com/fantom',
       'https://rpcapi.fantom.network',
       'https://rpc2.fantom.network',
     ],
