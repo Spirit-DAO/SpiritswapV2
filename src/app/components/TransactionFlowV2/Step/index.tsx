@@ -2,20 +2,16 @@ import { HStack, Square, Text } from '@chakra-ui/react';
 import { TFFailed, TFRefresh, TFSuccess, TFUpcoming } from 'app/assets/icons';
 import { StyledLoadingIcon } from 'app/components/TransactionFlow/styles';
 import { TransactionStatus } from 'app/components/TransactionFlow/TransactionFlow';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { StepProps } from '../TransactionFlowV2.d';
 
-const Step: FC<StepProps> = ({
-  prevStep,
-  index,
-  onComplete,
-  step,
-  isFinish,
-}) => {
+const Step = ({ prevStep, index, onComplete, step, isFinish }: StepProps) => {
   const { action, label, status } = step;
+
   const [txStatus, setTxStatus] = useState(
     isFinish ? TransactionStatus.SUCCESS : status,
   );
+
   const getStatusFromType = (type: string) => {
     switch (type) {
       case TransactionStatus.SUCCESS:
@@ -36,10 +32,16 @@ const Step: FC<StepProps> = ({
   const handleAction = async () => {
     try {
       setTxStatus(TransactionStatus.LOADING);
-      await action();
 
-      onComplete();
-      setTxStatus(TransactionStatus.SUCCESS);
+      const res = await action();
+
+      if (res.success) {
+        onComplete();
+        setTxStatus(TransactionStatus.SUCCESS);
+        return;
+      }
+
+      setTxStatus(TransactionStatus.FAILED);
     } catch (error) {
       setTxStatus(TransactionStatus.FAILED);
     }
@@ -66,6 +68,7 @@ const Step: FC<StepProps> = ({
         handleAction();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevStep]);
 
   return (

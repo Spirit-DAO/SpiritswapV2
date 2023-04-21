@@ -23,7 +23,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DetailBox, NumberBox, StyledLoadingIcon } from './styles';
 import { TransactionFlowProps, StepProps } from './TransactionFlow.d';
-import { useDispatch } from 'react-redux';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 
 export enum TransactionStatus {
@@ -61,7 +60,6 @@ export const TransactionFlow = ({
   isOpen,
   disabled,
   nextStep,
-  hasNext,
   stepsLeft,
   leftText,
   notifications,

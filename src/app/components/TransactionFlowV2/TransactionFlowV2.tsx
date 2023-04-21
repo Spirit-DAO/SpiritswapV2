@@ -1,16 +1,16 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import type { Props } from './TransactionFlowV2.d';
 import { Modal, ModalContent, ModalOverlay } from '@chakra-ui/react';
 import TransactionCancel from '../TransactionCancel/TransactionCancel';
 import ContentModal from './ContentModal';
 
-const TransactionFlowV2: FC<Props> = ({
+const TransactionFlowV2 = ({
   isOpen,
   onClose,
   title,
   description,
   steps,
-}) => {
+}: Props) => {
   const [cancelIsOpen, setCancelIsOpen] = useState(false);
   const [stepCompleted, setStepCompleted] = useState<number>(0);
 
