@@ -74,8 +74,6 @@ const GetInSpirit = () => {
   const lockedInSpiritEndDate = useAppSelector(selectLockedInsSpiritEndDate);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
 
-  console.log('lockedSpiritBalance', lockedSpiritBalance);
-
   const isLoadingLockedSpiritBalance = lockedSpiritBalance === '0';
 
   const inspiritAllowance = useAppSelector(selectInspiritAllowance);
