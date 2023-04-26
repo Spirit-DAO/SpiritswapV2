@@ -49,8 +49,8 @@ export const wallet = async (
   };
 };
 
-const randomInt_0_to_3 = () => {
-  return Math.floor(Math.random() * 4);
+const randomInt_0_to_2 = () => {
+  return Math.floor(Math.random() * 3);
 };
 
 // Connects to either a wallet or external rpc
@@ -79,7 +79,7 @@ export const connect = async ({
   if (connectionUrl === 'rpc') {
     const chainID = _chainId !== 0 ? _chainId : CHAIN_ID;
     const chain = NETWORK[chainID];
-    connectionUrl = chain.rpc[randomInt_0_to_3()];
+    connectionUrl = chain.rpc[randomInt_0_to_2()];
   }
 
   const provider = new ethers.providers.JsonRpcProvider(connectionUrl);

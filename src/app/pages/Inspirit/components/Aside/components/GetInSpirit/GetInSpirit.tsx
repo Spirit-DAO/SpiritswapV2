@@ -41,7 +41,14 @@ import {
   selectInspiritAllowance,
   selectLockedInSpiritAmount,
 } from 'store/user/selectors';
-import { Button, Box, HStack, useDisclosure, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Box,
+  HStack,
+  useDisclosure,
+  Text,
+  Skeleton,
+} from '@chakra-ui/react';
 import { CardHeader } from 'app/components/CardHeader';
 import { INSPIRIT } from 'constants/icons';
 import UseIsLoading from 'app/hooks/UseIsLoading';
@@ -61,16 +68,17 @@ const INITIAL_ERROR_MESSAGE = {
 const GetInSpirit = () => {
   const { t } = useTranslation();
   const { addToQueue } = Web3Monitoring();
-  const { isLoading, loadingOff, loadingOn } = UseIsLoading();
+  const { isLoading } = UseIsLoading();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const translationPathHelper = 'inSpirit.modalHelper';
   const lockedInSpiritEndDate = useAppSelector(selectLockedInsSpiritEndDate);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
-  const [steps, setSteps] = useState<StepStateProps[]>([]);
+
+  const isLoadingLockedSpiritBalance = lockedSpiritBalance === '0';
+
   const inspiritAllowance = useAppSelector(selectInspiritAllowance);
   const { isLoggedIn, account } = useWallets();
-  const [loadingText, setLoadingText] = useState('');
-
+  const [steps, setSteps] = useState<StepStateProps[]>([]);
   const [errorMessage, setErrorMessage] = useState<{
     msg: string;
     canApprove: boolean;
@@ -102,7 +110,14 @@ const GetInSpirit = () => {
     '2Y': { value: 2, scale: 'years' },
     MAX: { value: 4, scale: 'years' },
   };
-  const hasLock = isLoggedIn && lockedInSpiritEndDate !== 0;
+
+  const [hasLock, setHasLock] = useState(false);
+
+  useEffect(() => {
+    const hasLock = isLoggedIn && lockedInSpiritEndDate !== 0;
+    setHasLock(hasLock);
+  }, [isLoggedIn, lockedInSpiritEndDate]);
+
   const [lockMode, setLockMode] = useState(0);
   const [lockAmount, setLockAmount] = useState<string>('');
   const [lockPeriod, setLockPeriod] = useState<string>('');
@@ -170,26 +185,21 @@ const GetInSpirit = () => {
 
   const approveSpiritAmount = async () => {
     try {
-      loadingOn();
-      setLoadingText('Pending Approval');
       const response = await approveSpirit(
         addresses.inspirit[CHAIN_ID],
         lockAmount,
       );
       addToQueue(response);
       await response.tx.wait();
-      loadingOff();
-      setLoadingText('');
+      return { success: true };
     } catch (error) {
-      loadingOff();
       console.error(error);
+      return { success: false };
     }
   };
 
   const lockSpiritForInSpirit = async () => {
     try {
-      loadingOn();
-      setLoadingText('Pending');
       const response = await createInspiritLock(
         account,
         lockAmount,
@@ -197,19 +207,15 @@ const GetInSpirit = () => {
       );
       addToQueue(response);
       await response.tx.wait();
-      loadingOff();
-      setLoadingText('');
+      return { success: true };
     } catch (error) {
-      loadingOff();
-      setLoadingText('');
       console.error(error);
+      return { success: false };
     }
   };
 
   const lockMoreSpirit = async () => {
     try {
-      loadingOn();
-      setLoadingText('Pending');
       const response = await increaseLockAmount(account, lockAmount);
       const suggestionData = {
         type: SuggestionsTypes.INSPIRIT,
@@ -218,27 +224,22 @@ const GetInSpirit = () => {
       };
       addToQueue(response, suggestionData);
       await response.tx.wait();
-      loadingOff();
-      setLoadingText('');
+      return { success: true };
     } catch (error) {
-      loadingOff();
-      setLoadingText('');
       console.error(error);
+      return { success: false };
     }
   };
 
   const extendLockingPeriod = async () => {
     try {
-      loadingOn();
       const response = await increaseLockTime(account, estimate.date?.unix());
       addToQueue(response);
       await response.tx.wait();
-      loadingOff();
-      setLoadingText('');
+      return { success: true };
     } catch (error) {
-      loadingOff();
-      setLoadingText('');
       console.error(error);
+      return { success: false };
     }
   };
 
@@ -341,7 +342,11 @@ const GetInSpirit = () => {
     if (!isLoggedIn) return DISABLED;
     if (errorMessage?.canApprove) return DISABLED;
     if (errorMessage?.msg) return DISABLED;
-    if (lockMode === 0 && lockAmount === '') return DISABLED;
+    if (lockMode === 0 && !lockAmount) return DISABLED;
+    if (lockMode === 0 && !lockAmount && !lockPeriod) return DISABLED;
+    if (lockMode === 0 && lockAmount && !hasLock && !lockPeriod)
+      return DISABLED;
+
     if (lockMode === 1 && estimate.date?.unix() === lockedInSpiritEndDate)
       return DISABLED;
     if (lockMode === 1 && lockPeriod === '') return DISABLED;
@@ -375,15 +380,23 @@ const GetInSpirit = () => {
     if (
       (!inspiritAllowance && !hasLock) ||
       inspiritAllowance < Number(lockAmount)
-    )
+    ) {
+      if (lockMode === 0 && !lockPeriod) {
+        return 'Select the period of time to lock';
+      }
       return 'Approve SPIRIT';
+    }
 
     if (
       inspiritAllowance &&
       !hasLock &&
       inspiritAllowance >= Number(lockAmount)
-    )
+    ) {
+      if (!lockPeriod && lockAmount) {
+        return 'Select the period of time to lock';
+      }
       return 'Lock SPIRIT for inSPIRIT';
+    }
 
     if (hasLock && lockMode === 0 && inspiritAllowance >= Number(lockAmount))
       return 'Lock more SPIRIT';
@@ -417,43 +430,61 @@ const GetInSpirit = () => {
 
       {!hasLock || lockMode === 0 ? (
         <StyledStepWrapper>
-          <StyledStepHeader>
-            <StyledStepNumber>1</StyledStepNumber>
-            <StyledLabel>{`Choose ${
-              hasLock ? 'additional' : ''
-            } SPIRIT amount to lock`}</StyledLabel>
-          </StyledStepHeader>
-          <TokenAmountPanel
-            token={SPIRIT}
-            isSelectable={false}
-            inputValue={lockAmount}
-            context="token"
-            onChange={handleSetLockAmount}
-            showPercentage
-            errorMessage={errorMessage?.msg}
-            setErrorMessage={setErrorMessage}
-            setBalance={setBalance}
-          />
+          <Skeleton
+            startColor="grayBorderBox"
+            endColor="bgBoxLighter"
+            isLoaded={!isLoadingLockedSpiritBalance}
+            height="100%"
+            width="100%"
+          >
+            <StyledStepHeader>
+              <StyledStepNumber>1</StyledStepNumber>
+              <StyledLabel>{`Choose ${
+                hasLock ? 'additional' : ''
+              } SPIRIT amount to lock`}</StyledLabel>
+            </StyledStepHeader>
+
+            <TokenAmountPanel
+              token={SPIRIT}
+              isSelectable={false}
+              inputValue={lockAmount}
+              context="token"
+              isLoading={isLoadingLockedSpiritBalance}
+              onChange={handleSetLockAmount}
+              showPercentage
+              errorMessage={errorMessage?.msg}
+              setErrorMessage={setErrorMessage}
+              setBalance={setBalance}
+            />
+          </Skeleton>
         </StyledStepWrapper>
       ) : null}
 
       {!hasLock ? <StyledHr /> : null}
 
       {!hasLock || lockMode === 1 ? (
-        <StyledStepWrapper>
-          <StyledStepHeader>
-            <StyledStepNumber>{hasLock ? '1' : '2'}</StyledStepNumber>
-            <StyledLabel>{`Choose ${
-              hasLock ? 'extended' : ''
-            } locking period of your SPIRIT`}</StyledLabel>
-          </StyledStepHeader>
+        <Skeleton
+          startColor="grayBorderBox"
+          endColor="bgBoxLighter"
+          isLoaded={!isLoadingLockedSpiritBalance}
+          height="100%"
+          width="100%"
+        >
+          <StyledStepWrapper>
+            <StyledStepHeader>
+              <StyledStepNumber>{hasLock ? '1' : '2'}</StyledStepNumber>
+              <StyledLabel>{`Choose ${
+                hasLock ? 'extended' : ''
+              } locking period of your SPIRIT`}</StyledLabel>
+            </StyledStepHeader>
 
-          <StepSlider
-            onChange={onStepSliderHandler}
-            steps={filterTime}
-            currentValue={lockPeriod}
-          />
-        </StyledStepWrapper>
+            <StepSlider
+              onChange={onStepSliderHandler}
+              steps={filterTime}
+              currentValue={lockPeriod}
+            />
+          </StyledStepWrapper>
+        </Skeleton>
       ) : null}
       <StyledHr />
 
@@ -496,8 +527,6 @@ const GetInSpirit = () => {
             w="100%"
             onClick={handleTransactionFlow}
             disabled={getStatusButton()}
-            isLoading={isLoading}
-            loadingText={loadingText}
             display="flex"
             alignItems="center"
           >
@@ -511,7 +540,7 @@ const GetInSpirit = () => {
               size="lg"
               w="100%"
               isDisabled={!hasUnlocked}
-              isLoading={isLoadingUnlock}
+              isLoading={isLoadingUnlock || isLoadingLockedSpiritBalance}
             >
               <Text fontSize="sm">Unlock your SPIRIT</Text>
             </Button>
