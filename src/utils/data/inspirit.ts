@@ -195,7 +195,7 @@ export const getUserInspiritBalances = async (userAddress: string) => {
   const userClaim = await feeDisributorContract.callStatic['claim(address)'](
     userAddress,
     {
-      gasLimit: 1000000,
+      gasLimit: 300000,
     },
   );
 
