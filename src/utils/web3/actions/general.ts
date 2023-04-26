@@ -8,7 +8,7 @@ import { formatEther } from 'ethers/lib/utils';
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { BigNumber } from 'ethers';
 
-export const DEFAULT_GAS_LIMIT = 350000;
+export const DEFAULT_GAS_LIMIT = 5000000;
 
 export const transaction = async (
   txHash: string,
