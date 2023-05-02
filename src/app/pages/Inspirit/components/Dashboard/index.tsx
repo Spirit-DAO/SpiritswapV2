@@ -202,7 +202,10 @@ export default function Dashboard() {
       const claimBribes: StepStateProps = {
         action: claimBribeRewards,
         label: 'Claim bribes rewards',
-        status: TransactionStatus.UPCOMING,
+        status:
+          totalBribeRewards === 0
+            ? TransactionStatus.SUCCESS
+            : TransactionStatus.UPCOMING,
       };
       steps = [claimSpirits, claimBribes];
       txLabels = [
