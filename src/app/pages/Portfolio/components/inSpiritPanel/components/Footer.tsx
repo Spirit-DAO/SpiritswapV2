@@ -26,8 +26,10 @@ const Footer = ({ userClaimableAmount }) => {
       const response = await claimSpirit(
         `${truncateTokenValue(userClaimableAmount, spiritPrice)}`,
       );
-      addToQueue(response);
-      loadingOff();
+      if (response) {
+        addToQueue(response);
+        loadingOff();
+      }
     } catch (error) {
       loadingOff();
     }

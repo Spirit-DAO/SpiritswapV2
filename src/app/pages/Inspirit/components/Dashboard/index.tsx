@@ -105,20 +105,24 @@ export default function Dashboard() {
     try {
       loadingOn();
       const response = await claimSpirit(claimableSpiritRewards);
-      const suggestionData = {
-        type: SuggestionsTypes.INSPIRIT,
-        data: {
-          claimSpirit: true,
-          tokensToLink: { tokenA: 'SPIRIT', tokenB: 'FTM' },
-        },
-        id: response.tx.hash,
-      };
-      addToQueue(response, suggestionData);
-      await response.tx.wait();
+      if (response) {
+        const suggestionData = {
+          type: SuggestionsTypes.INSPIRIT,
+          data: {
+            claimSpirit: true,
+            tokensToLink: { tokenA: 'SPIRIT', tokenB: 'FTM' },
+          },
+          id: response.tx.hash,
+        };
+        addToQueue(response, suggestionData);
+        await response.tx.wait();
+        loadingOff();
+        return { success: true };
+      }
       loadingOff();
-    } catch {
+    } catch (error) {
       loadingOff();
-      throw new Error('Claim rewards failed');
+      console.error(error);
     }
   };
 
@@ -182,6 +186,7 @@ export default function Dashboard() {
 
   const [steps, setSteps] = useState<StepStateProps[]>([]);
   const [txFlowData, setTxFlowData] = useState<string[]>([]);
+
   const handleTransactionFlow = (type: string) => {
     let steps: StepStateProps[] = [];
     let txLabels: string[] = [];

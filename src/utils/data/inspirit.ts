@@ -18,8 +18,9 @@ import {
   getBribeContract,
   MulticallV2,
   MulticallSingleResponse,
+  DEFAULT_GAS_LIMIT,
 } from 'utils/web3';
-import { getTokensDetails, getTokenUsdPrice } from './covalent';
+import { getTokensDetails } from './covalent';
 import { BoostedFarmData, BoostedFarmVoteData } from './types';
 import {
   formatBoostedFarms,
@@ -176,36 +177,47 @@ export const getUserInspiritBalances = async (userAddress: string) => {
     },
   ];
 
-  const multicall = await Multicall(balanceParams, 'inspirit');
-  const userLocked = multicall[0]
-    ? formatUnits(multicall[0]?.response[0], 18)
-    : '0';
-  const userLockEndDate = multicall[0] ? multicall[0]?.response[1] : 0;
-  const userBalance = multicall[1]
-    ? formatUnits(multicall[1]?.response[0], 18)
-    : '0';
+  try {
+    const multicall = await Multicall(balanceParams, 'inspirit');
+    const userLocked = multicall[0]
+      ? formatUnits(multicall[0]?.response[0], 18)
+      : '0.0';
+    const userLockEndDate = multicall[0] ? multicall[0]?.response[1] : 0;
+    const userBalance = multicall[1]
+      ? formatUnits(multicall[1]?.response[0], 18)
+      : '0.0';
 
-  const feeDistributorAddress = addresses.feedistributor[CHAIN_ID];
+    const feeDistributorAddress = addresses.feedistributor[CHAIN_ID];
 
-  const feeDisributorContract = await Contract(
-    feeDistributorAddress,
-    'feedistributor',
-  );
+    const feeDisributorContract = await Contract(
+      feeDistributorAddress,
+      'feedistributor',
+    );
 
-  const userClaim = await feeDisributorContract.callStatic['claim(address)'](
-    userAddress,
-    {
-      gasLimit: 300000,
-    },
-  );
+    const userClaim = await feeDisributorContract.callStatic['claim(address)'](
+      userAddress,
+      {
+        gasLimit: DEFAULT_GAS_LIMIT * 2,
+      },
+    );
 
-  const userClaimableAmount = formatUnits(userClaim, 18);
+    const userClaimableAmount = formatUnits(userClaim, 18);
+
+    return {
+      userLocked,
+      userBalance,
+      userClaimableAmount,
+      userLockEndDate,
+    };
+  } catch (error) {
+    console.error(error);
+  }
 
   return {
-    userLocked,
-    userBalance,
-    userClaimableAmount,
-    userLockEndDate,
+    userLocked: '0.0',
+    userBalance: '0.0',
+    userClaimableAmount: '0.0',
+    userLockEndDate: 0,
   };
 };
 
