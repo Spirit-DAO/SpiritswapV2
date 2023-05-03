@@ -87,6 +87,7 @@ const LimitOrdersPanelV2 = ({ limitOrders }: LimitOrdersPanelProps) => {
 
     if (limitOrders.length && openOrder.length === 0)
       getOpenOrders(limitOrders);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limitOrders]);
 
   return (
