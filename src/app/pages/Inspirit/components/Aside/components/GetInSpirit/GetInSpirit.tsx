@@ -73,7 +73,6 @@ const GetInSpirit = () => {
   const translationPathHelper = 'inSpirit.modalHelper';
   const lockedInSpiritEndDate = useAppSelector(selectLockedInsSpiritEndDate);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
-
   const isLoadingLockedSpiritBalance = lockedSpiritBalance === '0';
 
   const inspiritAllowance = useAppSelector(selectInspiritAllowance);
