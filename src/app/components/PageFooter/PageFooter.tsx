@@ -196,7 +196,7 @@ export default function PageFooter() {
                   rel="noreferrer"
                   href="https://defillama.com/protocol/spiritswap"
                 >
-                  Defi Llama
+                  DefiLlama
                 </Link>
                 <Link
                   target="_blank"
@@ -239,13 +239,6 @@ export default function PageFooter() {
                   Exchanges
                 </Box>
 
-                <Link
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://trade.felix.com/en/trade/basic/SPIRIT_USDT"
-                >
-                  Felix
-                </Link>
                 <Link
                   target="_blank"
                   rel="noreferrer"
