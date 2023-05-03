@@ -46,6 +46,7 @@ export const useClaimBribes = (boostedV2, boostedStable) => {
           }),
         );
         await txV2.wait();
+        if (!stableAddress.length) return { success: true };
       }
       if (stableAddress.length) {
         const txStable = await claimBribes(stableAddress, userAddress, 0);
@@ -61,11 +62,13 @@ export const useClaimBribes = (boostedV2, boostedStable) => {
           }),
         );
         await txStable.wait();
+        setIsLoading(false);
+        return { success: true };
       }
-      setIsLoading(false);
     } catch (error) {
+      console.error(error);
+    } finally {
       setIsLoading(false);
-      throw '';
     }
   };
 
