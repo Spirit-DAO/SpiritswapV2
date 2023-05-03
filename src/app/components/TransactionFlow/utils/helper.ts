@@ -515,10 +515,6 @@ export const claimRewards = async ({
 }) => {
   let tx;
   try {
-    // if (!farm.gaugeAddress) {
-    //   tx = await harvest(farm.pid);
-    // }
-
     if (farm.gaugeAddress) {
       tx = await gaugeHarvest(farm.gaugeAddress);
     }
@@ -536,7 +532,8 @@ export const claimRewards = async ({
     addToQueue(response);
 
     await tx.wait();
+    return { success: true };
   } catch (e) {
-    throw new Error('');
+    return { success: false };
   }
 };
