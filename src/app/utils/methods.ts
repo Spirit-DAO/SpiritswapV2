@@ -471,29 +471,6 @@ export const GetFarms = () => {
   return boosted;
 };
 
-export const getChartUrl = ({
-  pairAddress,
-  inTokenAddress,
-  outTokenAddress,
-  currency,
-}: ChartProps) => {
-  let url = '';
-  const defaultUrl = `https://kek.tools/t/${WFTM.address}/chart?pair=0x30748322B6E34545DBe0788C421886AEB5297789&exchange=spiritswap&accent=101726&background=101726&theme=dark&currencyToggle=off&currencyType=${currency}&fallback=
-  ${SPIRIT.address}`;
-
-  if (inTokenAddress && outTokenAddress) {
-    const inputAddress =
-      inTokenAddress === BASE_TOKEN_ADDRESS ? WFTM.address : inTokenAddress;
-    const outputAddress =
-      outTokenAddress === BASE_TOKEN_ADDRESS ? WFTM.address : outTokenAddress;
-
-    url = `https://kek.tools/t/${outputAddress}/chart?pair=${pairAddress}&exchange=spiritswap&accent=101726&background=101726&theme=dark&currencyToggle=off&currencyType=${currency}&fallback=
-    ${inputAddress}`;
-  } else return defaultUrl;
-
-  return url;
-};
-
 export const getLpAddress = (
   outTokenAddress: string,
   inTokenAddress: string,
