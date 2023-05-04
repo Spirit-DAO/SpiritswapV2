@@ -41,9 +41,8 @@ import {
   LIMIT_RECIEVE,
   WFTM,
 } from 'constants/index';
-import { checkInvalidValue, getChartUrl, getLpAddress } from 'app/utils';
+import { checkInvalidValue, getLpAddress } from 'app/utils';
 import ImageLogo from 'app/components/ImageLogo';
-import useGetLpFromApollo from 'app/hooks/useGetLpFromApollo';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import {
   selectSwapModeIndex,
@@ -73,8 +72,6 @@ const SwapPage = () => {
   const [trade, setTrade] = useState<SwapQuote | undefined>(undefined);
   const [routes, setRoutes] = useState<Token[]>([]);
   const [chartUrl, setChartUrl] = useState<string>('');
-  const [chartCurrency, setChartCurrency] = useState<string>('stable');
-  const [makeCallToTheGraph, setMakeCallToTheGraph] = useState<boolean>(false);
   const { loadingOff, loadingOn, isLoading } = UseIsLoading();
   const isMobile = useMobile();
   const { token1, token2 } = useParams();
@@ -184,12 +181,6 @@ const SwapPage = () => {
 
   const { quoteRateEstimation: tx, txError } = useQuoteRate(quoteRateParams);
 
-  const lpAddressFromTheGraph = useGetLpFromApollo(
-    firstToken.tokenSelected.address,
-    secondToken.tokenSelected.address,
-    makeCallToTheGraph,
-  );
-
   useEffect(() => {
     if (queriedTokenOne && !queriedTokenTwo) {
       return navigate(
@@ -219,29 +210,15 @@ const SwapPage = () => {
     );
 
     if (!LPAddressFromConstants) {
-      setMakeCallToTheGraph(true);
       LPAddressFromConstants = getLpAddress(
         WFTM.address,
         secondToken.tokenSelected.address,
       );
     }
 
-    const url = getChartUrl({
-      pairAddress: !LPAddressFromConstants
-        ? lpAddressFromTheGraph.lpAddress
-        : LPAddressFromConstants,
-      inTokenAddress: firstToken.tokenSelected.address,
-      outTokenAddress: secondToken.tokenSelected.address,
-      currency: chartCurrency,
-    });
+    const url = `https://dexscreener.com/fantom/${LPAddressFromConstants}?embed=1&theme=dark&trades=0&info=0`;
     setChartUrl(url);
-    setMakeCallToTheGraph(false);
-  }, [
-    firstToken.tokenSelected.address,
-    secondToken.tokenSelected.address,
-    lpAddressFromTheGraph,
-    chartCurrency,
-  ]);
+  }, [firstToken.tokenSelected.address, secondToken.tokenSelected.address]);
 
   useEffect(() => {
     setIsLimit(modeIndex !== 0);
@@ -252,7 +229,6 @@ const SwapPage = () => {
       setTrade(undefined);
       setRoutes([]);
       setChartUrl('');
-      setMakeCallToTheGraph(false);
     }
   }, [modeIndex, globalSwapModeIndex, dispatch, isLoggedIn]);
 
@@ -733,22 +709,16 @@ const SwapPage = () => {
 
     if (isLimit) {
       if (isLessThan1100px) columns['md'] = '520px';
-      else columns['md'] = '520px 1fr';
+      else columns['md'] = '500px 1fr';
       return columns;
     }
 
-    columns['md'] = showChart ? '520px 1fr' : '520px';
+    columns['md'] = showChart ? '500px 1fr' : '520px';
     return columns;
   };
 
   const memorizedChart = useCallback(() => {
-    return (
-      <Chart
-        islimit={isLimit}
-        url={chartUrl}
-        onCurrencyChange={setChartCurrency}
-      />
-    );
+    return <Chart islimit={isLimit} url={chartUrl} />;
   }, [chartUrl, isLimit]);
 
   return (
@@ -769,6 +739,7 @@ const SwapPage = () => {
           m="0 auto"
           mb="250px"
           minH="75vh"
+          gap="10px"
           placeContent="center"
           maxW={{ md: breakpoints.xl }}
         >
@@ -859,7 +830,7 @@ const SwapPage = () => {
                           />
                         </HStack>
 
-                        <HStack w="full" placeContent="center">
+                        <HStack w="full" mt="10px" placeContent="center">
                           {defaultRoutes.map((route, index) => (
                             <HStack key={`routes-${route.address}-${index}`}>
                               <Flex
@@ -902,7 +873,7 @@ const SwapPage = () => {
             {isLimit && modeIndex !== 3 ? (
               <LimitOrders showChart={showChart} />
             ) : modeIndex === 3 ? (
-              <TWAPOrders />
+              <TWAPOrders showChart={showChart} />
             ) : null}
           </GridItem>
         </Grid>
