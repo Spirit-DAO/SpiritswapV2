@@ -9,7 +9,7 @@ export const LimitOrderContainer = styled(Box)<{
   background: ${({ theme }) => `${theme.colors.bgBox}`};
   border: 1px solid ${({ theme }) => `${theme.colors.grayBorderBox}`};
   padding: 16px 8px;
-  margin-left: ${({ theme }) => theme.space.spacing03};
+  margin-top: ${props => (props.showChart ? '8px' : 0)};
   border-radius: ${({ theme }) => `${theme.borderRadius.md}`};
   overflow: scroll;
   overflow-y: hidden;

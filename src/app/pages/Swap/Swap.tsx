@@ -709,7 +709,7 @@ const SwapPage = () => {
 
     if (isLimit) {
       if (isLessThan1100px) columns['md'] = '520px';
-      else columns['md'] = '520px 1fr';
+      else columns['md'] = '500px 1fr';
       return columns;
     }
 
@@ -868,12 +868,12 @@ const SwapPage = () => {
                 : null}
             </Box>
           </GridItem>
-          <GridItem rowSpan={1} minW="100%" colSpan={1}>
+          <GridItem rowSpan={1} colSpan={1}>
             {showChart && memorizedChart()}
             {isLimit && modeIndex !== 3 ? (
               <LimitOrders showChart={showChart} />
             ) : modeIndex === 3 ? (
-              <TWAPOrders />
+              <TWAPOrders showChart={showChart} />
             ) : null}
           </GridItem>
         </Grid>
