@@ -5,12 +5,12 @@ import { getProvider } from 'app/connectors/EthersConnector/login';
 import { LimitOrderContainer } from 'app/pages/Swap/components/LimitOrders/styles';
 import { getTokenImageUrl } from '../ImageLogo';
 
-function TWAPOrders({ showChart }: { showChart: boolean }) {
+function TWAPOrders() {
   const { account } = useWallets();
   const { tokens } = useTokens(undefined, undefined);
 
   return (
-    <LimitOrderContainer showChart={showChart} isTWAP>
+    <LimitOrderContainer>
       <Orders
         dappTokens={tokens || []}
         account={account}

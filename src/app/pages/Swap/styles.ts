@@ -5,7 +5,7 @@ export const SwapContainer = styled(Box)<{ isLimit: boolean }>`
   border-radius: 8px;
   border: 1px solid ${({ theme }) => `${theme.colors.grayBorderBox}`};
   background: ${({ theme }) => theme.colors.bgBox};
-  padding: 26px 24px;
+  padding: ${({ theme }) => theme.space.spacing03};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: 24px;
@@ -23,7 +23,7 @@ export const RouteContainer = styled(HStack)<{ showchart: boolean }>`
   @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     padding: 10px 25px;
   }
-  margin-top: 8px;
+  margin-top: ${({ theme }) => theme.space.spacing03};
   width: 100%;
   padding: 10px;
   justify-content: space-between;
