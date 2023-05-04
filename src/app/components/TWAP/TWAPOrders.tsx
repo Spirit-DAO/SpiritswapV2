@@ -10,7 +10,7 @@ function TWAPOrders({ showChart }: { showChart: boolean }) {
   const { tokens } = useTokens(undefined, undefined);
 
   return (
-    <LimitOrderContainer showChart={showChart}>
+    <LimitOrderContainer showChart={showChart} isTWAP>
       <Orders
         dappTokens={tokens || []}
         account={account}
