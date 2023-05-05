@@ -57,54 +57,9 @@ export function usePools(
 
   const globalState0s = usePoolsGlobalState(poolAddresses, 'globalState');
 
-  const prevGlobalState0s = usePreviousNonErroredArray(globalState0s);
-
-  const _globalState0s = useMemo(() => {
-    if (!prevGlobalState0s || !globalState0s || globalState0s.length === 1)
-      return globalState0s;
-
-    if (
-      globalState0s.every(el => el.error) &&
-      !prevGlobalState0s.every(el => el.error)
-    )
-      return prevGlobalState0s;
-
-    return globalState0s;
-  }, [poolAddresses, globalState0s]);
-
   const liquidities = usePoolsGlobalState(poolAddresses, 'liquidity');
 
-  const prevLiquidities = usePreviousNonErroredArray(liquidities);
-
-  const _liquidities = useMemo(() => {
-    if (!prevLiquidities || !liquidities || liquidities.length === 1)
-      return liquidities;
-
-    if (
-      liquidities.every(el => el.error) &&
-      !prevLiquidities.every(el => el.error)
-    )
-      return prevLiquidities;
-
-    return liquidities;
-  }, [poolAddresses, liquidities]);
-
   const tickSpacings = usePoolsGlobalState(poolAddresses, 'tickSpacing');
-
-  const prevTickSpacings = usePreviousNonErroredArray(tickSpacings);
-
-  const _tickSpacings = useMemo(() => {
-    if (!prevTickSpacings || !tickSpacings || tickSpacings.length === 1)
-      return tickSpacings;
-
-    if (
-      tickSpacings.every(el => el.error) &&
-      !prevTickSpacings.every(el => el.error)
-    )
-      return prevTickSpacings;
-
-    return tickSpacings;
-  }, [poolAddresses, tickSpacings]);
 
   return useMemo(() => {
     return poolKeys.map((_key, index) => {
@@ -116,18 +71,19 @@ export function usePools(
         result: globalState,
         loading: globalStateLoading,
         valid: globalStateValid,
-      } = _globalState0s[index];
+      } = globalState0s[index];
+
       const {
         result: liquidity,
         loading: liquidityLoading,
         valid: liquidityValid,
-      } = _liquidities[index];
+      } = liquidities[index];
 
       const {
         result: tickSpacing,
         loading: tickSpacingLoading,
         valid: tickSpacingValid,
-      } = _tickSpacings[index];
+      } = tickSpacings[index];
 
       if (!globalStateValid || !liquidityValid || !tickSpacingValid)
         return [PoolState.INVALID, null];
@@ -158,7 +114,7 @@ export function usePools(
         return [PoolState.NOT_EXISTS, null];
       }
     });
-  }, [_liquidities, poolKeys, _globalState0s, _tickSpacings, transformed]);
+  }, [liquidities, poolKeys, globalState0s, tickSpacings, transformed]);
 }
 
 export function usePool(

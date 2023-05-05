@@ -23,6 +23,7 @@ import {
   Heading,
   Container,
   Skeleton,
+  SliderMark,
 } from './components';
 import { CustomChakraSteps } from './custom/customChakraSteps';
 import { inputStyles } from './components/inputStyles';
@@ -50,6 +51,7 @@ const theme = extendTheme({
     Button,
     Input,
     NumberInput,
+    SliderMark,
     Accordion,
     Tabs,
     Table,

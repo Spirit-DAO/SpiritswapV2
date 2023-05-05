@@ -17,6 +17,6 @@ export default function useIsTickAtLimit(
           tickUpper === nearestUsableTick(TickMath.MAX_TICK, tickSpacing || 60)
         : undefined,
     }),
-    [tickLower, tickUpper],
+    [tickLower, tickUpper, tickSpacing],
   );
 }

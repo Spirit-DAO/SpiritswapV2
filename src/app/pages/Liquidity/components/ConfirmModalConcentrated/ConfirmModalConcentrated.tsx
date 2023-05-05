@@ -9,7 +9,7 @@ import { ARROWBACK } from 'constants/icons';
 import NewTokenAmountPanel from 'app/components/NewTokenAmountPanel/NewTokenAmountPanel';
 import { Switch } from 'app/components/Switch';
 import { QuestionHelper } from 'app/components/QuestionHelper';
-import { Field } from 'store/v3/mint/actions';
+import { Bound, Field } from 'store/v3/mint/actions';
 import { ADDRESS_ZERO } from '../../../../../v3-sdk';
 import { Heading } from 'app/components/Typography';
 
@@ -30,8 +30,12 @@ const ConfirmModalConcentrated = ({
   const amountA = mintInfo?.parsedAmounts[Field.CURRENCY_A]?.toSignificant(4);
   const amountB = mintInfo?.parsedAmounts[Field.CURRENCY_B]?.toSignificant(4);
 
-  const lowerPrice = mintInfo?.lowerPrice?.toSignificant(4);
-  const upperPrice = mintInfo?.upperPrice?.toSignificant(4);
+  const lowerPrice = currencyA.wrapped.sortsBefore(currencyB)
+    ? mintInfo?.lowerPrice?.toSignificant(4)
+    : mintInfo?.lowerPrice?.invert().toSignificant(4);
+  const upperPrice = currencyA.wrapped.sortsBefore(currencyB)
+    ? mintInfo?.upperPrice?.toSignificant(4)
+    : mintInfo?.upperPrice?.invert().toSignificant(4);
 
   return (
     <Box
@@ -85,7 +89,9 @@ const ConfirmModalConcentrated = ({
 
         <Flex justifyContent="space-between">
           <Heading level={3}>Range:</Heading>
-          <Box>{`${lowerPrice} — ${upperPrice}`}</Box>
+          <Box>{`${mintInfo.ticksAtLimit[Bound.LOWER] ? '0' : lowerPrice} — ${
+            mintInfo.ticksAtLimit[Bound.UPPER] ? '∞' : upperPrice
+          }`}</Box>
         </Flex>
       </Flex>
 

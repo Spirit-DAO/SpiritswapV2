@@ -155,12 +155,16 @@ const LiquidityPanel = ({
       ['desc'],
     ),
     _.orderBy(
-      concentratedData.filter(position => !position.onFarmingCenter),
+      concentratedData.filter(
+        position => !position.onFarmingCenter && !position.isRemoved,
+      ),
       ['liquidity'],
       ['desc'],
     ),
     _.orderBy(
-      concentratedData.filter(position => position.onFarmingCenter),
+      concentratedData.filter(
+        position => position.onFarmingCenter && !position.isRemoved,
+      ),
       ['liquidity'],
       ['desc'],
     ),

@@ -66,33 +66,33 @@ const ConcentratedPanel = ({
       ? undefined
       : currencyB;
 
-  const derivedMintInfo = useV3DerivedMintInfo(
+  const mintInfo = useV3DerivedMintInfo(
     baseCurrency ?? undefined,
     quoteCurrency ?? undefined,
     100,
     baseCurrency ?? undefined,
     undefined,
   );
-  const prevDerivedMintInfo = usePrevious({ ...derivedMintInfo });
+  // const prevDerivedMintInfo = usePrevious({ ...derivedMintInfo });
 
-  const mintInfo = useMemo(() => {
-    if (
-      (!derivedMintInfo.pool ||
-        !derivedMintInfo.price ||
-        derivedMintInfo.noLiquidity) &&
-      prevDerivedMintInfo
-    ) {
-      return {
-        ...prevDerivedMintInfo,
-        pricesAtTicks: derivedMintInfo.pricesAtTicks,
-        ticks: derivedMintInfo.ticks,
-        parsedAmounts: derivedMintInfo.parsedAmounts,
-      };
-    }
-    return {
-      ...derivedMintInfo,
-    };
-  }, [derivedMintInfo, baseCurrency, quoteCurrency]);
+  // const mintInfo = useMemo(() => {
+  //   if (
+  //     (!derivedMintInfo.pool ||
+  //       !derivedMintInfo.price ||
+  //       derivedMintInfo.noLiquidity) &&
+  //     prevDerivedMintInfo
+  //   ) {
+  //     return {
+  //       ...prevDerivedMintInfo,
+  //       pricesAtTicks: derivedMintInfo.pricesAtTicks,
+  //       ticks: derivedMintInfo.ticks,
+  //       parsedAmounts: derivedMintInfo.parsedAmounts,
+  //     };
+  //   }
+  //   return {
+  //     ...derivedMintInfo,
+  //   };
+  // }, [derivedMintInfo, baseCurrency, quoteCurrency]);
 
   const {
     onFieldAInput,

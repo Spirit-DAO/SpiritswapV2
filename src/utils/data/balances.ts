@@ -838,7 +838,28 @@ export const getV3Balances = async (_address: string, provider?: any) => {
         }`,
       }));
 
+  const [openedPositions, closedPositions] = positions.reduce(
+    ([_opened, _closed]: [any, any], position) => {
+      if (Number(position.liquidity._hex) === 0) {
+        _closed.push(position);
+      } else {
+        _opened.push(position);
+      }
+      return [_opened, _closed];
+    },
+    [[], []],
+  );
+
   return {
-    v3PositionsArray: positions && positions.length > 0 ? positions : null,
+    v3PositionsArray:
+      positions && positions.length > 0
+        ? [
+            ...openedPositions,
+            ...closedPositions.map(position => ({
+              ...position,
+              isRemoved: true,
+            })),
+          ]
+        : null,
   };
 };

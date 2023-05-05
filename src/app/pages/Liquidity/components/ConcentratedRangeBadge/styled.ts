@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 
-export const StyledRangeBadge = styled.div<{ inRange: boolean }>`
+export const StyledRangeBadge = styled.div<{
+  inRange: boolean;
+  isRemoved: boolean;
+}>`
   color: white;
   position: relative;
   font-size: 14px;
@@ -12,7 +15,11 @@ export const StyledRangeBadge = styled.div<{ inRange: boolean }>`
     border-radius: 50%;
     position: absolute;
     top: calc(50% - 4px);
-    background-color: ${({ theme, inRange }) =>
-      inRange ? theme.colors.teal[400] : theme.colors.red[500]};
+    background-color: ${({ theme, inRange, isRemoved }) =>
+      isRemoved
+        ? theme.colors.gray
+        : inRange
+        ? theme.colors.teal[400]
+        : theme.colors.red[500]};
   }
 `;

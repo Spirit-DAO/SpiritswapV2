@@ -9,3 +9,4 @@ export { default as Modal } from './modal';
 export { default as Tag } from './tag';
 export { default as Heading } from './heading';
 export { default as Skeleton } from './skeleton';
+export { default as SliderMark } from './sliderMark';

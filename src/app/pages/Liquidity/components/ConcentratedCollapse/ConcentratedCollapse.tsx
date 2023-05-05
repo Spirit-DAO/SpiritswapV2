@@ -33,8 +33,13 @@ import {
 } from 'utils/web3';
 import useWallets from 'app/hooks/useWallets';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
+import { Bound } from 'store/v3/mint/actions';
 
-const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
+const ConcentratedCollapseItem = ({
+  position,
+  setLPToken,
+  showClosed,
+}: Props) => {
   const isMobile = useMobile();
 
   const { t } = useTranslation();
@@ -56,6 +61,8 @@ const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
     pool,
     feeValue0,
     feeValue1,
+    tickAtLimit,
+    isRemoved,
   } = usePositionData(position);
 
   const lowerPrice =
@@ -67,10 +74,34 @@ const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
       ? tickToPrice(token0.wrapped, token1.wrapped, position.tickUpper)
       : 0;
 
+  const positionHealth = useMemo(() => {
+    if (!position || !pool) return undefined;
+
+    const halfRange = Math.round((position.tickUpper - position.tickLower) / 2);
+
+    const midRange = position.tickLower + halfRange;
+
+    if (pool.tickCurrent === midRange) return 100;
+
+    if (pool.tickCurrent < midRange)
+      return (
+        (100 * (pool.tickCurrent - position.tickLower)) /
+        (midRange - position.tickLower)
+      ).toFixed(2);
+
+    if (pool.tickCurrent > midRange)
+      return (
+        (100 * (position.tickUpper - pool.tickCurrent)) /
+        (position.tickUpper - midRange)
+      ).toFixed(2);
+  }, [position, pool]);
+
   const priceRange = useMemo(() => {
     if (!lowerPrice || !upperPrice) return '-';
 
-    return `${lowerPrice.toSignificant(4)} — ${upperPrice.toSignificant(4)}`;
+    return `${tickAtLimit[Bound.LOWER] ? '0' : lowerPrice.toSignificant(4)} — ${
+      tickAtLimit[Bound.UPPER] ? '∞' : upperPrice.toSignificant(4)
+    }`;
   }, [lowerPrice, upperPrice]);
 
   const tokenList = useMemo(() => {
@@ -161,7 +192,7 @@ const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
     ];
   }, [[amount0String, amount1String, token0, token1, pool, priceRange]]);
 
-  return (
+  return !isRemoved || (isRemoved && showClosed) ? (
     <AccordionItem>
       <AccordionButton>
         <Box flex={1} textAlign="left">
@@ -184,7 +215,25 @@ const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
               </Skeleton>
             ))}
             <Flex key="f2" ml="spacing04" alignItems="center">
-              <ConcentreatedRangeBadge inRange={!outOfRange} />
+              <ConcentreatedRangeBadge
+                inRange={!outOfRange}
+                isRemoved={isRemoved}
+              />
+              {!outOfRange && !isRemoved && (
+                <Skeleton
+                  startColor="grayBorderBox"
+                  endColor="bgBoxLighter"
+                  w="70px"
+                  h="20px"
+                  isLoaded={Boolean(positionHealth)}
+                  ml={1.5}
+                >
+                  <Text
+                    size="sm"
+                    fontSize={'14px'}
+                  >{`( ${positionHealth}% )`}</Text>
+                </Skeleton>
+              )}
               {isOnFarmingCenter && (
                 <Box ml={4}>
                   <ConcentratedFarmingBadge />
@@ -204,90 +253,94 @@ const ConcentratedCollapseItem = ({ position, setLPToken }: Props) => {
               mt="5px"
             >{`Position #${position.tokenId}`}</Heading>
           </Skeleton>
-          <Skeleton
-            startColor="grayBorderBox"
-            endColor="bgBoxLighter"
-            w={usdAmount !== undefined ? 'unset' : '150px'}
-            h="21px"
-            isLoaded={usdAmount !== undefined}
-          >
-            <Text fontSize="sm" color="grayDarker">
-              {usdAmount && usdAmount > 0 && usdAmount < 0.01
-                ? '<$0.01'
-                : `≈ $${(usdAmount || 0).toFixed(2)}`}
-            </Text>
-          </Skeleton>
+          {!isRemoved ? (
+            <Skeleton
+              startColor="grayBorderBox"
+              endColor="bgBoxLighter"
+              w={usdAmount !== undefined ? 'unset' : '150px'}
+              h="21px"
+              isLoaded={usdAmount !== undefined}
+            >
+              <Text fontSize="sm" color="grayDarker">
+                {usdAmount && usdAmount > 0 && usdAmount < 0.01
+                  ? '<$0.01'
+                  : `≈ $${(usdAmount || 0).toFixed(2)}`}
+              </Text>
+            </Skeleton>
+          ) : null}
         </Box>
 
-        <AccordionIcon />
+        {!isRemoved ? <AccordionIcon /> : null}
       </AccordionButton>
 
-      <AccordionPanel
-        py="spacing03"
-        px={isMobile ? 'spacing03' : 'spacing05'}
-        bgColor="bgBoxDarker"
-      >
-        <Skeleton
-          key={position.tokenId}
-          startColor="grayBorderBox"
-          endColor="bgBoxLighter"
-          w={'full'}
-          h={'100px'}
-          isLoaded={detailData.length > 1}
-        >
-          {detailData?.map((item: any, index) => {
-            return (
-              <Flex
-                px={isMobile ? 'spacing03' : 'spacing05'}
-                fontSize="h5"
-                color="gray"
-                key={`position-${position.tokenId}-${index}-detail-item`}
-              >
-                {item.detailTitle}
-                <Spacer />
-                {item.detailValue}
-              </Flex>
-            );
-          })}
-        </Skeleton>
-        <HStack
-          spacing="spacing03"
-          w="full"
-          mt="spacing03"
+      {!isRemoved ? (
+        <AccordionPanel
+          py="spacing03"
           px={isMobile ? 'spacing03' : 'spacing05'}
+          bgColor="bgBoxDarker"
         >
-          <Button
-            variant="secondary"
-            w="full"
-            size="sm"
-            onClick={() => setLPToken(position)}
-            disabled={isOnFarmingCenter}
+          <Skeleton
+            key={position.tokenId}
+            startColor="grayBorderBox"
+            endColor="bgBoxLighter"
+            w={'full'}
+            h={'100px'}
+            isLoaded={detailData.length > 1}
           >
-            {removeLiquidityText}
-          </Button>
-          <Button
-            variant="secondary"
+            {detailData?.map((item: any, index) => {
+              return (
+                <Flex
+                  px={isMobile ? 'spacing03' : 'spacing05'}
+                  fontSize="h5"
+                  color="gray"
+                  key={`position-${position.tokenId}-${index}-detail-item`}
+                >
+                  {item.detailTitle}
+                  <Spacer />
+                  {item.detailValue}
+                </Flex>
+              );
+            })}
+          </Skeleton>
+          <HStack
+            spacing="spacing03"
             w="full"
-            size="sm"
-            onClick={handleCollectFees}
-            disabled={!isFeesToCollect}
+            mt="spacing03"
+            px={isMobile ? 'spacing03' : 'spacing05'}
           >
-            {claimFeesText}
-          </Button>
-          {position.eternalAvailable && (
             <Button
-              variant="inverted"
+              variant="secondary"
               w="full"
               size="sm"
-              onClick={handleNavigateFarm}
+              onClick={() => setLPToken(position)}
+              disabled={isOnFarmingCenter}
             >
-              {t(`${translationPath}.farm`)}
+              {removeLiquidityText}
             </Button>
-          )}
-        </HStack>
-      </AccordionPanel>
+            <Button
+              variant="secondary"
+              w="full"
+              size="sm"
+              onClick={handleCollectFees}
+              disabled={!isFeesToCollect}
+            >
+              {claimFeesText}
+            </Button>
+            {position.eternalAvailable && (
+              <Button
+                variant="inverted"
+                w="full"
+                size="sm"
+                onClick={handleNavigateFarm}
+              >
+                {t(`${translationPath}.farm`)}
+              </Button>
+            )}
+          </HStack>
+        </AccordionPanel>
+      ) : null}
     </AccordionItem>
-  );
+  ) : null;
 };
 
 export default ConcentratedCollapseItem;

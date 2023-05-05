@@ -12,7 +12,7 @@ import {
   Skeleton,
   HStack,
 } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Token,
   TokenPool,
@@ -28,6 +28,7 @@ import {
   YourLiquidityWrapper,
   CollapseSection,
   StyledLiquiditySetting,
+  StyledConcentratedLiqudityLabel,
 } from './styles';
 import { Select } from 'app/components/Select';
 import { Slippage } from './components/Slippage';
@@ -37,6 +38,7 @@ import SpiritsBackground from './components/SpiritsBackground';
 import CollapseItem from './components/Collapse/Collapse';
 import { CardHeader } from 'app/components/CardHeader';
 import { LIQUIDITY } from 'constants/icons';
+import { LIQUIDITY as LIQUIDITY_ROUTE } from 'app/router/routes';
 import Settings from '../Swap/components/Settings';
 import {
   pairTradingData,
@@ -107,6 +109,7 @@ import ConcentratedCollapseItem from './components/ConcentratedCollapse/Concentr
 import { RemoveConcentratedLiquidityPanel } from './components/RemoveConcentratedLiquidityPanel';
 import { Heading } from 'app/components/Typography';
 import { ConfirmModalConcentrated } from './components/ConfirmModalConcentrated';
+import { Switch } from 'app/components/Switch';
 
 // TODO: [DEV2-591] refactor liquidity component
 
@@ -121,6 +124,8 @@ const TOKEN_TYPE_WEIGHTED_LABEL = 'Weighted';
 
 export function LiquidityPage() {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   const pageTitle = `${t('common.name')} - ${t('common.menu.liquidity')}`;
   const { addToQueue } = Web3Monitoring();
@@ -225,6 +230,7 @@ export function LiquidityPage() {
   const [pairNotCreated, setPairNotCreated] = useState<boolean>(false);
   const [poolData, setPoolData] = useState<any>({});
   const [altPoolData, setAltPoolData] = useState<any>({});
+  const [showClosed, setShowClosed] = useState(false);
 
   const { token: tokenOneBalance } = useTokenBalance(
     CHAIN_ID,
@@ -491,6 +497,7 @@ export function LiquidityPage() {
 
   const hideRemoveLiquidity = (_reset = false) => {
     setshowRemoveLiquidiy(false);
+    navigate(`/${LIQUIDITY_ROUTE.path}`);
   };
 
   const { isLoading, loadingOff, loadingOn } = UseIsLoading();
@@ -554,6 +561,12 @@ export function LiquidityPage() {
             token1: liquidityTrade?.tokenB.address,
             stable: isStableSelected,
           },
+          provider: JSON.stringify(provider, getCircularReplacer()),
+        });
+
+        userDataWorker.postMessage({
+          userAddress: account,
+          type: 'getV3Liquidity',
           provider: JSON.stringify(provider, getCircularReplacer()),
         });
 
@@ -1457,7 +1470,10 @@ export function LiquidityPage() {
                         labels={[
                           TOKEN_TYPE_CLASSIC_LABEL,
                           TOKEN_TYPE_STABLE_LABEL,
-                          TOKEN_TYPE_CONCENTRATED_LABEL,
+                          <StyledConcentratedLiqudityLabel>
+                            Concentrated Liquidity
+                          </StyledConcentratedLiqudityLabel>,
+                          // TOKEN_TYPE_CONCENTRATED_LABEL,
                           // TOKEN_TYPE_WEIGHTED_LABEL,
                         ]}
                         selected={tokenTypeFilter}
@@ -1777,11 +1793,17 @@ export function LiquidityPage() {
                   )}
                   {isLoggedIn && concentratedLiqudiity ? (
                     <>
-                      <Box my={3}>
+                      <Flex my={3} align={'center'}>
                         <Heading level={5}>
                           {t(`${translationPath}.concentratedPositions`)}
                         </Heading>
-                      </Box>
+                        <Switch
+                          label={'Show closed'}
+                          checked={showClosed}
+                          onChange={() => setShowClosed(v => !v)}
+                          ml={'auto'}
+                        />
+                      </Flex>
                       <Box maxH="460px" overflowY="scroll">
                         <Accordion
                           defaultIndex={[-1]}
@@ -1796,6 +1818,7 @@ export function LiquidityPage() {
                                 // userAddress={account}
                                 hideRemoveLiquidity={hideRemoveLiquidity}
                                 handleChangeToken={handleChangeToken}
+                                showClosed={showClosed}
                                 setLPToken={position => {
                                   showRemoveConcentratedLiquidity(position);
                                 }}

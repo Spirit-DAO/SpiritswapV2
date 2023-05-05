@@ -3,4 +3,5 @@ export interface Props {
   hideRemoveLiquidity: any;
   handleChangeToken: any;
   setLPToken: any;
+  showClosed: boolean;
 }

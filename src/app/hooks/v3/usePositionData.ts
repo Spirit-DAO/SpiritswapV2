@@ -1,4 +1,4 @@
-import { usePrevious } from '@chakra-ui/react';
+import usePrevious from './usePrevious';
 import { formatAmount } from 'app/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { getTokenUsdPrice } from 'utils/data';
@@ -7,14 +7,15 @@ import { Position } from '../../../v3-sdk';
 import { useTokenV3 } from './useCurrency';
 import { usePool } from './usePools';
 import { useV3PositionFees } from './useV3PositionFees';
+import useIsTickAtLimit from './useIsTickAtLimit';
 
 export function usePositionData(
   positionDetails: any,
   updateRates?: (rate) => void,
   updateFees?: (fees) => void,
 ) {
-  const [usdAmount, setUsdAmount] = useState<number | undefined>();
-  const [feesAmount, setFeesAmount] = useState<number | undefined>();
+  const [usdAmount, setUsdAmount] = useState<number | undefined>(0);
+  const [feesAmount, setFeesAmount] = useState<number | undefined>(0);
 
   const prevPositionDetails = usePrevious({ ...positionDetails });
   const {
@@ -116,9 +117,27 @@ export function usePositionData(
         if (updateFees) {
           updateFees(feesSum);
         }
+      } else {
+        setUsdAmount(0);
+        setFeesAmount(0);
+        if (updateRates) {
+          updateRates(0);
+        }
+
+        if (updateFees) {
+          updateFees(0);
+        }
       }
     });
   }, [token0, token1, amount0, amount1, feeValue0, feeValue1]);
+
+  const tickAtLimit = useIsTickAtLimit(
+    _tickLower,
+    _tickUpper,
+    _pool?.tickSpacing,
+  );
+
+  const isRemoved = Number(_liquidity?._hex) === 0;
 
   return useMemo(() => {
     return {
@@ -134,6 +153,8 @@ export function usePositionData(
       pool,
       feeValue0,
       feeValue1,
+      tickAtLimit,
+      isRemoved,
     };
   }, [
     usdAmount,
@@ -148,5 +169,7 @@ export function usePositionData(
     pool,
     feeValue0,
     feeValue1,
+    tickAtLimit,
+    isRemoved,
   ]);
 }

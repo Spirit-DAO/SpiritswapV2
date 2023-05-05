@@ -27,6 +27,7 @@ export default function PositionListItem({
     token1,
     feeValue0,
     feeValue1,
+    isRemoved,
   } = usePositionData(positionDetails);
 
   const isOnFarmingCenter = positionDetails.onFarmingCenter;
@@ -98,7 +99,10 @@ export default function PositionListItem({
       <Flex align="center">
         <Flex direction="column" align="flex-end">
           <HStack>
-            <ConcentratedRangeBadge inRange={!outOfRange} />
+            <ConcentratedRangeBadge
+              inRange={!outOfRange}
+              isRemoved={isRemoved}
+            />
             <Text>{`Position #${positionDetails.tokenId}`}</Text>
           </HStack>
           {isOnFarmingCenterAndNotDeposited ? (

@@ -45,6 +45,8 @@ onmessage = ({ data: { type, provider, userAddress, signer, params } }) => {
     case 'fetchIndividualLP':
       fetchIndividualLP(userAddress, params, loadedProvider);
       break;
+    case 'getV3Liquidity':
+      getV3Liquidity(userAddress, loadedProvider);
   }
 };
 

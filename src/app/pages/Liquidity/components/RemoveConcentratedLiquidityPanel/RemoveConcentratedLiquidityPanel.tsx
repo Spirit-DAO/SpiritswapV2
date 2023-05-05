@@ -157,6 +157,11 @@ export default function RemoveConcentratedLiquidityPanel({
     }
   }
 
+  function changeSliderValue(val) {
+    setSliderValue(val);
+    onPercentSelect(val);
+  }
+
   return (
     <Box
       bgColor="bgBox"
@@ -199,20 +204,45 @@ export default function RemoveConcentratedLiquidityPanel({
         <Slider
           aria-label="slider-ex-6"
           colorScheme="teal"
-          onChange={val => {
-            setSliderValue(val);
-            onPercentSelect(val);
-          }}
+          onChange={val => changeSliderValue(val)}
           defaultValue={0}
         >
-          <SliderMark value={25} {...labelStyles}>
+          <SliderMark
+            value={0}
+            {...labelStyles}
+            ml={'1px'}
+            onClick={() => changeSliderValue(0)}
+          >
+            0%
+          </SliderMark>
+          <SliderMark
+            value={25}
+            {...labelStyles}
+            onClick={() => changeSliderValue(25)}
+          >
             25%
           </SliderMark>
-          <SliderMark value={50} {...labelStyles}>
+          <SliderMark
+            value={50}
+            {...labelStyles}
+            onClick={() => changeSliderValue(50)}
+          >
             50%
           </SliderMark>
-          <SliderMark value={75} {...labelStyles}>
+          <SliderMark
+            value={75}
+            {...labelStyles}
+            onClick={() => changeSliderValue(75)}
+          >
             75%
+          </SliderMark>
+          <SliderMark
+            value={100}
+            {...labelStyles}
+            ml={'-2rem'}
+            onClick={() => changeSliderValue(100)}
+          >
+            100%
           </SliderMark>
           <SliderMark
             value={sliderValue}

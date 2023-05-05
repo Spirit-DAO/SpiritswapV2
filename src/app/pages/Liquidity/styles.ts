@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ReactComponent as Setting } from 'app/assets/images/title-setting.svg';
 import { Icon } from 'app/components/Icon';
 
@@ -100,4 +100,42 @@ export const StyledFarmIcon = styled(Icon)`
   background: ${({ theme }) => theme.color.ciTrans15};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   padding: 6px;
+`;
+
+const concentratedAnimation = keyframes`
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+`;
+
+export const StyledConcentratedLiqudityLabel = styled.h4`
+  padding: 0.25rem 0.75rem;
+  background: ${({ theme }) => theme.color.bgBox};
+  position: relative;
+  border-radius: 3px;
+  margin-left: 4px;
+
+  &:hover {
+    background: ${({ theme }) => theme.color.grayBorderBox};
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * 3px);
+    left: calc(-1 * 3px);
+    height: calc(100% + 3px * 2);
+    width: calc(100% + 3px * 2);
+    background: linear-gradient(60deg, #60e6c5, #a86dee, #6088e6);
+    border-radius: calc(2 * 3px);
+    z-index: -1;
+    animation: ${concentratedAnimation} 3s ease alternate infinite;
+    background-size: 300% 300%;
+  }
 `;
