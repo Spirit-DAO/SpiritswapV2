@@ -169,7 +169,7 @@ export const STABLE = 'Stable';
 export const TOKENS_WITH_HIGH_SLIPPAGE = [wBOMB.address.toLowerCase()];
 
 export const V3_POOL_INIT_CODE_HASH =
-  '0xe72bebd8b70e089fdcb38ed7e5940e8839837b4cdd27c69ff2461ff057192b81';
+  '0xa360004fb86ddf4cd7fe9aa67d0c6a7f7812d9069142659003dc503e1d7d241f';
 
 export const BIG_INT_ZERO = JSBI.BigInt(0);
 
