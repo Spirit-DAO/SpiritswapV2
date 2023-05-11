@@ -9,7 +9,7 @@ import { NewBribeModal } from '../../../Bribes/NewBribeModal';
 import { PieChart } from '../PieChart';
 import sortFn from '../TokensTable/sortUtils';
 import { TokenTableV3 } from '../TokenTableV3';
-import { inactiveFarms, inactiveInspirit } from 'constants/farms';
+import { inactiveInspirit } from 'constants/farms';
 
 interface VotingFarms {
   farms: BoostedFarm[];
@@ -70,9 +70,15 @@ const VotingPanel = ({
 
   useEffect(() => {
     if (farmType.index === 0) {
+      const filterInactivesFarms = stableFarms.farms.filter(
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
+      );
+      const filterInactivesUserFarms = stableFarms.userFarms.filter(
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
+      );
       setSelectedFarms(
         sortFn(
-          userOnly ? stableFarms.userFarms : stableFarms.farms,
+          userOnly ? filterInactivesUserFarms : filterInactivesFarms,
           sortBy,
           sortDirection,
         ),
@@ -80,10 +86,10 @@ const VotingPanel = ({
     }
     if (farmType.index === 1) {
       const filterInactivesFarms = v2Farms.farms.filter(
-        farm => !inactiveInspirit.includes(farm.name),
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
       );
       const filterInactivesUserFarms = v2Farms.userFarms.filter(
-        farm => !inactiveInspirit.includes(farm.name),
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
       );
       setSelectedFarms(
         sortFn(
