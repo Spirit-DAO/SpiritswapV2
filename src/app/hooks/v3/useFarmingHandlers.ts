@@ -35,7 +35,7 @@ export function useFarmingHandlers() {
   const farmingCenterInterface = new Interface(FarmingCenterABI);
 
   const nonfungiblePositionManagerContract = new Contract(
-    contracts.v3FarmingCenter[CHAIN_ID],
+    contracts.v3NonfungiblePositionManager[CHAIN_ID],
     NonfungiblePositionManagerABI,
   );
   const farmingCenterContract = new Contract(

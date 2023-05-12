@@ -369,7 +369,12 @@ export function LiquidityPage() {
 
   useEffect(() => {
     const init = () => {
-      if (matchedLpTokens && matchedLpTokens.length && walletLiquidity.length) {
+      if (
+        matchedLpTokens &&
+        matchedLpTokens.length &&
+        walletLiquidity &&
+        walletLiquidity.length
+      ) {
         let lpMatch;
 
         for (let x = 0; x < matchedLpTokens.length; x += 1) {
@@ -396,6 +401,7 @@ export function LiquidityPage() {
       if (
         positionId &&
         window.location.href.includes('/remove') &&
+        concentratedLiqudiity &&
         concentratedLiqudiity.length
       ) {
         const positionToRemove = concentratedLiqudiity.find(

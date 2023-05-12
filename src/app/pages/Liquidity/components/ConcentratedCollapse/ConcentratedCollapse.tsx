@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import ImageLogo from 'app/components/ImageLogo';
 import { usePositionData } from 'app/hooks/v3/usePositionData';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { Props } from './ConcentratedCollapse.d';
 import useMobile from 'utils/isMobile';
 import { useTranslation } from 'react-i18next';
@@ -34,6 +34,9 @@ import {
 import useWallets from 'app/hooks/useWallets';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { Bound } from 'store/v3/mint/actions';
+import { DataContext } from 'contexts/DataContext';
+import { getCircularReplacer } from 'app/utils';
+import { connect } from 'utils/web3';
 
 const ConcentratedCollapseItem = ({
   position,
@@ -47,6 +50,8 @@ const ConcentratedCollapseItem = ({
   const { isLoading, loadingOn, loadingOff } = UseIsLoading();
   const { account } = useWallets();
   const { addToQueue } = Web3Monitoring();
+
+  const { userDataWorker } = useContext(DataContext);
 
   const translationPath = 'liquidity.common';
 
@@ -135,19 +140,31 @@ const ConcentratedCollapseItem = ({
         isOnFarmingCenter,
       );
 
-      const response = transactionResponse('liquidity.remove', {
+      const response = transactionResponse('liquidity.collect', {
         operation: 'LIQUIDITY',
         tx: tx,
         update: 'liquidity',
         updateTarget: 'user',
         uniqueMessage: {
-          text: `Collected $${feesAmount} fees`,
+          text: `Collected ${
+            (feesAmount || 0) < 0.01 ? '< $0.01' : `$${feesAmount}`
+          } fees`,
           secondText: `Position #${position.tokenId}`,
         },
       });
 
       addToQueue(response);
+
       await tx.wait();
+
+      const { provider } = await connect();
+
+      userDataWorker.postMessage({
+        userAddress: account,
+        type: 'getV3Liquidity',
+        provider: JSON.stringify(provider, getCircularReplacer()),
+      });
+
       loadingOff();
     } catch (error) {
       console.error(error);
@@ -174,7 +191,7 @@ const ConcentratedCollapseItem = ({
       },
       {
         detailTitle: `Earned fees`,
-        detailValue: feesAmount,
+        detailValue: (feesAmount || 0) < 0.01 ? '< $0.01' : `$${feesAmount}`,
       },
       // {
       //   detailTitle: `Pool APR`,

@@ -26,6 +26,7 @@ import usePrevious from 'app/hooks/v3/usePrevious';
 import { ARROWBACK } from 'constants/icons';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'app/hooks/Routing';
 import {
   useBurnV3ActionHandlers,
   useBurnV3State,
@@ -33,6 +34,7 @@ import {
 } from 'store/v3/burn/hooks';
 import { removeConcentratedLiquidity, transactionResponse } from 'utils/web3';
 import { WETH9 } from '../../../../../v3-sdk';
+import { HOME } from 'app/router/routes';
 
 export default function RemoveConcentratedLiquidityPanel({
   position,
@@ -51,7 +53,7 @@ export default function RemoveConcentratedLiquidityPanel({
 
   const { addToQueue } = Web3Monitoring();
 
-  function onChange() {}
+  const navigate = useNavigate();
 
   const translationPath = 'liquidity.removeLiquidity';
   const translationPathCommon = 'liquidity.common';
@@ -177,7 +179,13 @@ export default function RemoveConcentratedLiquidityPanel({
         hidebackground
         title={t(`${translationPath}.title`)}
         id={ARROWBACK}
-        onIconClick={onCancel}
+        onIconClick={() => {
+          if (window.location.href.includes('/remove')) {
+            navigate(HOME.path);
+          } else {
+            onCancel();
+          }
+        }}
         hideQuestionIcon
       />
 
@@ -191,7 +199,6 @@ export default function RemoveConcentratedLiquidityPanel({
         <NewTokenAmountPanel
           showPercentage
           context="liquidity"
-          onChange={onChange}
           inputValue={`${String(sliderValue)}%`}
           showTokenSelection={false}
           showBalance={false}

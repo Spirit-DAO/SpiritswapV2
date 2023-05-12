@@ -147,7 +147,8 @@ export const TokenOptions = (
     };
 
     if (target === 'concentrated-liquidity') {
-      options.push(farm, removeLiquidity);
+      // options.push(farm, removeLiquidity);
+      options.push(removeLiquidity);
     } else {
       options.push(addLiquidityOption, farm, removeLiquidity);
     }
