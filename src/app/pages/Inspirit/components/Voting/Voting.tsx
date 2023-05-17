@@ -19,7 +19,6 @@ import { BoostedFarm } from 'app/interfaces/Inspirit';
 import { PlusIcon } from 'app/assets/icons';
 import useWallets from 'app/hooks/useWallets';
 import useMobile from 'utils/isMobile';
-import useGetGasPrice from 'app/hooks/useGetGasPrice';
 
 function Voting() {
   const { t } = useTranslation();
@@ -32,8 +31,6 @@ function Voting() {
   const { isLoading, loadingOff, loadingOn } = UseIsLoading();
   const newBribeDisclosure = useDisclosure();
   const isMobile = useMobile('1076px');
-
-  const { gasPrice } = useGetGasPrice({ speed: 'Fast' });
 
   const cleanErrorMessage = () => {
     if (errorMessage) {
@@ -89,7 +86,6 @@ function Voting() {
         const response = await voteForBoostedDistributions({
           vaults,
           version: versionId,
-          gasPrice,
         });
         await response.tx.wait();
         loadingOff();
