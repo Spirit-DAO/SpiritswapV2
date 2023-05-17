@@ -664,7 +664,7 @@ export const loadFarmsList = async (
 
       const type = farm?.stable ? 'stable' : 'variable';
 
-      const isIncative = inactiveFarms.includes(farm.lpSymbol);
+      const isIncative = inactiveFarms.includes(farm.lpSymbol.toUpperCase());
 
       const lp: IFarm = {
         title: farm?.lpSymbol

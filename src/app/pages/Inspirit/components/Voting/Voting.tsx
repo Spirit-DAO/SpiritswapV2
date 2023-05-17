@@ -90,7 +90,8 @@ function Voting() {
         await response.tx.wait();
         loadingOff();
         addToQueue(response);
-      } catch {
+      } catch (e) {
+        console.error(e, 'error');
         loadingOff();
       }
     }
