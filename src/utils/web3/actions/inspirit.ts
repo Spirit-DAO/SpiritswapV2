@@ -328,9 +328,11 @@ export const claimSpirit = async (claimableSpiritRewards: string) => {
 export const voteForBoostedDistributions = async ({
   vaults,
   version = 1,
+  gasPrice,
 }: {
   vaults: BoostedFarm[];
   version?: number;
+  gasPrice?: string;
 }) => {
   const tokenList: string[] = [];
   const valueList: BigNum[] = [];
@@ -355,7 +357,8 @@ export const voteForBoostedDistributions = async ({
   const contract = await gaugeContractProxy({ version });
 
   const tx = await contract.vote(tokenList, valueList, {
-    gasLimit: DEFAULT_GAS_LIMIT * 3,
+    gasLimit: DEFAULT_GAS_LIMIT * 2,
+    gasPrice,
   });
 
   return transactionResponse('inspirit.vote', {
