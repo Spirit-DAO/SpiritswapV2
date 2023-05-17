@@ -354,11 +354,8 @@ export const voteForBoostedDistributions = async ({
 
   const contract = await gaugeContractProxy({ version });
 
-  console.log('tokenList', tokenList);
-  console.log('valueList', valueList[0].toString());
-
   const tx = await contract.vote(tokenList, valueList, {
-    gasLimit: DEFAULT_GAS_LIMIT,
+    gasLimit: DEFAULT_GAS_LIMIT * 1.5,
   });
 
   return transactionResponse('inspirit.vote', {
