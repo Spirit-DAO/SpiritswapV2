@@ -23,8 +23,7 @@ const useAllHarvest = (farmPidsV1, farmAddressesV2, eternalFarmings) => {
             eternalFarming.rewardToken.id,
             eternalFarming.bonusRewardToken.id,
             eternalFarming.pool.id,
-            eternalFarming.startTime,
-            eternalFarming.endTime,
+            eternalFarming.nonce,
             tokenId,
           ),
         ];

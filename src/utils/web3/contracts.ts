@@ -43,7 +43,6 @@ import V3AlgebraQuoterABI from './abis/v3/algebraQuoter.json';
 import V3NonfungiblePositionManagerABI from './abis/v3/nonfungiblePositionManager.json';
 import V3SwapRouterABI from './abis/v3/swapRouter.json';
 import V3EternalFarmingABI from './abis/v3/eternalFarming.json';
-import V3LimitFarmingABI from './abis/v3/limitFarming.json';
 import V3FarmingCenterABI from './abis/v3/farmingCenter.json';
 import V3LimitOrderManagerABI from './abis/v3/limitOrderManager.json';
 import V3MulticallABI from './abis/v3/multicall.json';
@@ -93,7 +92,6 @@ export const ABIS = {
   v3NonfungiblePositionManager: V3NonfungiblePositionManagerABI,
   v3SwapRouter: V3SwapRouterABI,
   v3EternalFarming: V3EternalFarmingABI,
-  v3LimitFarming: V3LimitFarmingABI,
   v3FarmingCenter: V3FarmingCenterABI,
   v3LimitOrderManager: V3LimitOrderManagerABI,
   v3Multicall: V3MulticallABI,

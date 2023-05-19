@@ -36,6 +36,11 @@
   },
   {
     "inputs": [],
+    "name": "invalidAmountForLimitOrder",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "invalidAmountRequired",
     "type": "error"
   },
@@ -52,6 +57,11 @@
   {
     "inputs": [],
     "name": "invalidNewTickSpacing",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "invalidTickForLimitOrder",
     "type": "error"
   },
   {

@@ -59,6 +59,7 @@ export interface IConcentratedFarm extends IFarm {
   bonusRewardToken: any;
   rewardRate: any;
   bonusRewardRate: any;
+  nonce: number;
   wallet?: any[];
 }
 

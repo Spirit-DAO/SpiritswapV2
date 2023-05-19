@@ -16,6 +16,56 @@
     "type": "constructor"
   },
   {
+    "inputs": [],
+    "name": "anotherFarmingIsActive",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "farmDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "farmingAlreadyExists",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "incentiveNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "incentiveStopped",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "invalidPool",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "minimalPositionWidthTooWide",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "positionIsTooNarrow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "tokenAlreadyFarmed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "zeroLiquidity",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -45,13 +95,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "endTime",
+        "name": "nonce",
         "type": "uint256"
       },
       {
@@ -65,50 +109,6 @@
         "internalType": "uint256",
         "name": "bonusReward",
         "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier1",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier2",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier3",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier1Multiplier",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier2Multiplier",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier3Multiplier",
-            "type": "uint32"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct IAlgebraFarming.Tiers",
-        "name": "tiers",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "multiplierToken",
-        "type": "address"
       },
       {
         "indexed": false,
@@ -189,12 +189,6 @@
         "internalType": "uint128",
         "name": "liquidity",
         "type": "uint128"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tokensLocked",
-        "type": "uint256"
       }
     ],
     "name": "FarmEntered",
@@ -218,85 +212,12 @@
     "inputs": [
       {
         "indexed": true,
-        "internalType": "contract IERC20Minimal",
-        "name": "rewardToken",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IERC20Minimal",
-        "name": "bonusRewardToken",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IAlgebraPool",
-        "name": "pool",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "virtualPool",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "endTime",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "incentiveId",
+        "type": "bytes32"
       }
     ],
-    "name": "IncentiveAttached",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "contract IERC20Minimal",
-        "name": "rewardToken",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IERC20Minimal",
-        "name": "bonusRewardToken",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "contract IAlgebraPool",
-        "name": "pool",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "virtualPool",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "endTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "IncentiveDetached",
+    "name": "IncentiveDeactivated",
     "type": "event"
   },
   {
@@ -310,6 +231,31 @@
       }
     ],
     "name": "IncentiveMaker",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bonusReward",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "incentiveId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RewardAmountsDecreased",
     "type": "event"
   },
   {
@@ -425,53 +371,29 @@
     "type": "event"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "FARMINGS_ADMINISTRATOR_ROLE",
+    "outputs": [
       {
-        "components": [
-          {
-            "internalType": "contract IERC20Minimal",
-            "name": "rewardToken",
-            "type": "address"
-          },
-          {
-            "internalType": "contract IERC20Minimal",
-            "name": "bonusRewardToken",
-            "type": "address"
-          },
-          {
-            "internalType": "contract IAlgebraPool",
-            "name": "pool",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
-        "name": "key",
-        "type": "tuple"
-      },
-      {
-        "internalType": "uint256",
-        "name": "rewardAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "bonusRewardAmount",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
-    "name": "addRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "INCENTIVE_MAKER_ROLE",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -495,21 +417,26 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
+      },
+      {
+        "internalType": "uint128",
+        "name": "rewardAmount",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "bonusRewardAmount",
+        "type": "uint128"
       }
     ],
-    "name": "attachIncentive",
+    "name": "addRewards",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -598,16 +525,11 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
       },
@@ -659,30 +581,25 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
       },
       {
         "components": [
           {
-            "internalType": "uint256",
+            "internalType": "uint128",
             "name": "reward",
-            "type": "uint256"
+            "type": "uint128"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint128",
             "name": "bonusReward",
-            "type": "uint256"
+            "type": "uint128"
           },
           {
             "internalType": "uint128",
@@ -698,52 +615,10 @@
             "internalType": "uint24",
             "name": "minimalPositionWidth",
             "type": "uint24"
-          },
-          {
-            "internalType": "address",
-            "name": "multiplierToken",
-            "type": "address"
           }
         ],
         "internalType": "struct IAlgebraEternalFarming.IncentiveParams",
         "name": "params",
-        "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier1",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier2",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier3",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier1Multiplier",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier2Multiplier",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier3Multiplier",
-            "type": "uint32"
-          }
-        ],
-        "internalType": "struct IAlgebraFarming.Tiers",
-        "name": "tiers",
         "type": "tuple"
       }
     ],
@@ -756,19 +631,6 @@
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "deployer",
-    "outputs": [
-      {
-        "internalType": "contract IAlgebraPoolDeployer",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -792,21 +654,16 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
       }
     ],
-    "name": "detachIncentive",
+    "name": "deactivateIncentive",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -832,27 +689,62 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
+        "name": "key",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint128",
+        "name": "rewardAmount",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "bonusRewardAmount",
+        "type": "uint128"
+      }
+    ],
+    "name": "decreaseRewardsAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "contract IERC20Minimal",
+            "name": "rewardToken",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IERC20Minimal",
+            "name": "bonusRewardToken",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IAlgebraPool",
+            "name": "pool",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nonce",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
       },
       {
         "internalType": "uint256",
         "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokensLocked",
         "type": "uint256"
       }
     ],
@@ -882,16 +774,11 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
       },
@@ -989,16 +876,11 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
       },
@@ -1035,14 +917,14 @@
     "name": "incentives",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint128",
         "name": "totalReward",
-        "type": "uint256"
+        "type": "uint128"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint128",
         "name": "bonusReward",
-        "type": "uint256"
+        "type": "uint128"
       },
       {
         "internalType": "address",
@@ -1060,46 +942,9 @@
         "type": "uint224"
       },
       {
-        "internalType": "address",
-        "name": "multiplierToken",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier1",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier2",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tokenAmountForTier3",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier1Multiplier",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier2Multiplier",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "tier3Multiplier",
-            "type": "uint32"
-          }
-        ],
-        "internalType": "struct IAlgebraFarming.Tiers",
-        "name": "tiers",
-        "type": "tuple"
+        "internalType": "bool",
+        "name": "deactivated",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -1113,6 +958,19 @@
         "internalType": "contract INonfungiblePositionManager",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "numOfIncentives",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1158,19 +1016,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_incentiveMaker",
-        "type": "address"
-      }
-    ],
-    "name": "setIncentiveMaker",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "components": [
           {
             "internalType": "contract IERC20Minimal",
@@ -1189,16 +1034,11 @@
           },
           {
             "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
+            "name": "nonce",
             "type": "uint256"
           }
         ],
-        "internalType": "struct IIncentiveKey.IncentiveKey",
+        "internalType": "struct IncentiveKey",
         "name": "key",
         "type": "tuple"
       },

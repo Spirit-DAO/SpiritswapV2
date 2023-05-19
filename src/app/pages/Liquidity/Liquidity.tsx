@@ -406,8 +406,7 @@ export function LiquidityPage() {
       ) {
         const positionToRemove = concentratedLiqudiity.find(
           position =>
-            !position.onFarmingCenter &&
-            position.tokenId === Number(positionId),
+            !position.eternalFarming && position.tokenId === Number(positionId),
         );
 
         if (positionToRemove) {

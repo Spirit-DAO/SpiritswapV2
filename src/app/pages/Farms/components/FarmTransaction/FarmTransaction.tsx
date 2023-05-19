@@ -261,8 +261,7 @@ const FarmTransaction = ({
                 eternalFarming: {
                   earned: 0,
                   bonusEarned: 0,
-                  startTime: farm.startTime,
-                  endTime: farm.endTime,
+                  nonce: farm.nonce,
                   rewardToken: farm.rewardToken,
                   bonusRewardToken: farm.bonusRewardToken,
                   id: farm.id,

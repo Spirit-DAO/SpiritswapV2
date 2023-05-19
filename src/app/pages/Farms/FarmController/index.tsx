@@ -29,9 +29,12 @@ import {
 import { transactionResponse } from 'utils/web3';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { useDisclosure } from '@chakra-ui/react';
-import { memo, useEffect, useState } from 'react';
+import { memo, useContext, useEffect, useState } from 'react';
 import { TokenList } from '../components/TokenList';
 import useWallets from 'app/hooks/useWallets';
+import { DataContext } from 'contexts/DataContext';
+import { getCircularReplacer } from 'app/utils';
+import { connect } from 'utils/web3';
 
 const MemorizeTokenList = memo(({ farm }: IFarm) => (
   <TokenList
@@ -60,6 +63,7 @@ export const FarmController = ({
   const [currentStatus, setCurrentStatus] = useState<any>();
   const { addToQueue } = Web3Monitoring();
   const { isOpen, onOpen: openFarm, onClose: closeFarm } = useDisclosure();
+  const { userDataWorker } = useContext(DataContext);
 
   const { account } = useWallets();
 
@@ -79,7 +83,7 @@ export const FarmController = ({
         let tx;
 
         if (farm.concentrated && positionId) {
-          tx = await approveConcentratedFarm(account, positionId);
+          tx = await approveConcentratedFarm(positionId);
         } else {
           tx = await approveFarm(farm.lpAddress, farm.gaugeAddress, 250);
         }
@@ -111,10 +115,17 @@ export const FarmController = ({
           _farm.rewardToken.id,
           _farm.bonusRewardToken.id,
           _farm.pool.id,
-          _farm.startTime,
-          _farm.endTime,
+          _farm.nonce,
           _value,
         );
+
+        const { provider } = await connect();
+
+        userDataWorker.postMessage({
+          userAddress: account,
+          type: 'getV3Liquidity',
+          provider: JSON.stringify(provider, getCircularReplacer()),
+        });
       } else if (farm.gaugeAddress) {
         tx = await stakeGaugePoolToken(farm?.gaugeAddress, _value);
       } else {
@@ -140,8 +151,7 @@ export const FarmController = ({
           _farm.rewardToken.id,
           _farm.bonusRewardToken.id,
           _farm.pool.id,
-          _farm.startTime,
-          _farm.endTime,
+          _farm.nonce,
           stake.eternalFarming.earned,
           stake.eternalFarming.bonusEarned,
           _value,
@@ -172,8 +182,7 @@ export const FarmController = ({
               _farm.rewardToken.id,
               _farm.bonusRewardToken.id,
               _farm.pool.id,
-              _farm.startTime,
-              _farm.endTime,
+              _farm.nonce,
               position.tokenId,
               true,
             ),
