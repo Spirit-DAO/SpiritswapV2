@@ -18,7 +18,7 @@ import { useContext, useMemo } from 'react';
 import { Props } from './ConcentratedCollapse.d';
 import useMobile from 'utils/isMobile';
 import { useTranslation } from 'react-i18next';
-import ConcentreatedRangeBadge from '../ConcentratedRangeBadge/ConcentratedRangeBadge';
+import ConcentratedRangeBadge from '../ConcentratedRangeBadge/ConcentratedRangeBadge';
 import { ConcentratedFarmingBadge } from '../ConcentratedFarmingBadge';
 import { useToken } from 'app/hooks/useToken';
 import { CHAIN_ID } from 'constants/index';
@@ -68,6 +68,7 @@ const ConcentratedCollapseItem = ({
     feeValue1,
     tickAtLimit,
     isRemoved,
+    isFullRange,
   } = usePositionData(position);
 
   const lowerPrice =
@@ -232,11 +233,12 @@ const ConcentratedCollapseItem = ({
               </Skeleton>
             ))}
             <Flex key="f2" ml="spacing04" alignItems="center">
-              <ConcentreatedRangeBadge
+              <ConcentratedRangeBadge
                 inRange={!outOfRange}
                 isRemoved={isRemoved}
+                isFullRange={isFullRange}
               />
-              {!outOfRange && !isRemoved && (
+              {!outOfRange && !isRemoved && !isFullRange && (
                 <Skeleton
                   startColor="grayBorderBox"
                   endColor="bgBoxLighter"

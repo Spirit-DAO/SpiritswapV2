@@ -28,6 +28,7 @@ export default function PositionListItem({
     feeValue0,
     feeValue1,
     isRemoved,
+    isFullRange,
   } = usePositionData(positionDetails);
 
   const isOnFarmingCenter = positionDetails.onFarmingCenter;
@@ -102,6 +103,7 @@ export default function PositionListItem({
             <ConcentratedRangeBadge
               inRange={!outOfRange}
               isRemoved={isRemoved}
+              isFullRange={isFullRange}
             />
             <Text>{`Position #${positionDetails.tokenId}`}</Text>
           </HStack>

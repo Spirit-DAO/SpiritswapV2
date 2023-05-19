@@ -220,7 +220,9 @@ export const concentratedFarmStatus = async (positionId: string) => {
   const farmingApproval =
     await nonfungiblePositionManager.callStatic.farmingApprovals(positionId);
 
-  return farmingApproval !== ADDRESS_ZERO;
+  if (farmingApproval === ADDRESS_ZERO) return 0;
+
+  return 1;
 };
 
 export const getPairs = async (
@@ -380,10 +382,17 @@ export const approveConcentratedFarm = async (positionId: string) => {
     signer,
   );
 
-  const approve = await nonfungiblePositionManagerContract.approveForFarming(
-    positionId,
-    true,
-  );
+  console.log('APPROVING HERE', positionId, signer);
+
+  let approve;
+  try {
+    approve = await nonfungiblePositionManagerContract.approveForFarming(
+      positionId,
+      true,
+    );
+  } catch (err) {
+    console.log('EEEE', err);
+  }
 
   return approve;
 };

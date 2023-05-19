@@ -780,6 +780,8 @@ export const getV3Balances = async (_address: string, provider?: any) => {
     availableFarmings.push(availableFarming[0]?.id);
   }
 
+  console.log('FARMINGPOS', farmingPositions);
+
   const positions = farmingPositions
     .map(result => ({
       ...result,

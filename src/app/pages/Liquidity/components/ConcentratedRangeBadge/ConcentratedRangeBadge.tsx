@@ -2,11 +2,17 @@ import { Text } from '@chakra-ui/react';
 import { Props } from './ConcentratedRangeBadge.d';
 import { StyledRangeBadge } from './styled';
 
-export const ConcentreatedRangeBadge = ({ inRange, isRemoved }: Props) => {
+export const ConcentratedRangeBadge = ({
+  inRange,
+  isRemoved,
+  isFullRange,
+}: Props) => {
   const badgeText = isRemoved
     ? 'Closed'
     : inRange
-    ? 'In Range'
+    ? isFullRange
+      ? 'Full range'
+      : 'In Range'
     : 'Out of range';
 
   return (
@@ -18,4 +24,4 @@ export const ConcentreatedRangeBadge = ({ inRange, isRemoved }: Props) => {
   );
 };
 
-export default ConcentreatedRangeBadge;
+export default ConcentratedRangeBadge;

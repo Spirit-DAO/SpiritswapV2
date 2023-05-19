@@ -16,7 +16,8 @@ export default function ConcentratedPositionsPanelItem({
   const input = getInputProps();
   const checkbox = getCheckboxProps();
 
-  const { usdAmount, outOfRange, isRemoved } = usePositionData(position);
+  const { usdAmount, outOfRange, isRemoved, isFullRange } =
+    usePositionData(position);
 
   return (
     <Box as="label">
@@ -40,6 +41,7 @@ export default function ConcentratedPositionsPanelItem({
             <ConcentratedRangeBadge
               inRange={!outOfRange}
               isRemoved={isRemoved}
+              isFullRange={isFullRange}
             />
           </Box>
         </HStack>

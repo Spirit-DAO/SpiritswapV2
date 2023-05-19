@@ -137,6 +137,8 @@ export function usePositionData(
     _pool?.tickSpacing,
   );
 
+  const isFullRange = tickAtLimit.LOWER && tickAtLimit.UPPER;
+
   const isRemoved = Number(_liquidity?._hex) === 0;
 
   return useMemo(() => {
@@ -155,6 +157,7 @@ export function usePositionData(
       feeValue1,
       tickAtLimit,
       isRemoved,
+      isFullRange,
     };
   }, [
     usdAmount,
@@ -171,5 +174,6 @@ export function usePositionData(
     feeValue1,
     tickAtLimit,
     isRemoved,
+    isFullRange,
   ]);
 }

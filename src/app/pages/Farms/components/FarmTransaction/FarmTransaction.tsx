@@ -210,6 +210,8 @@ const FarmTransaction = ({
         status = await farmStatus(lpAddress, gaugeAddress, account);
       }
 
+      console.log('STATUS', status.toString());
+
       setLoadingText('Approve');
       if (status.toString() === '0') {
         const txApprove = await onApproveTransaction(

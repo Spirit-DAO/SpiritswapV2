@@ -28,12 +28,19 @@ export default function ConcentratedPositionsPanel({
   const positions = useMemo(() => {
     if (!wallet || !farm) return;
 
+    console.log('WALLET', wallet);
+
     const positionsForFarming = wallet.filter(position => {
       if (type === FarmTransactionType.DEPOSIT) {
+        if (position.tokenId === 37 || position.tokenId === 3) {
+          console.log('POS', position);
+        }
+
         return (
           position.rangeLength >= farm.rangeLength &&
-          !position.eternalFarming &&
-          position.eternalAvailable === farm.id
+          !position.onFarmingCenter &&
+          position.eternalAvailable === farm.id &&
+          !position.isRemoved
         );
       } else {
         return (
