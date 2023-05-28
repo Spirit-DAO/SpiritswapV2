@@ -32,6 +32,8 @@ import {
   handleSpiritWarsCache,
 } from 'utils/data/spiritwars';
 
+let gaugesPromise;
+
 onmessage = ({ data: { type, provider, isLoggedIn } }) => {
   const loadedProvider = JSON.parse(provider);
   if (!loadedProvider._network) {
@@ -40,7 +42,9 @@ onmessage = ({ data: { type, provider, isLoggedIn } }) => {
     };
   }
   // Save a process, write a promise
-  const gaugesPromise = getGaugeBasicInfo(loadedProvider);
+  if (!gaugesPromise) {
+    gaugesPromise = getGaugeBasicInfo(loadedProvider);
+  }
 
   switch (type) {
     case 'getFarms':

@@ -11,6 +11,7 @@ import {
   formatFrom,
   getNativeTokenBalance,
   Multicall,
+  MultiCallArray,
   MulticallSingleResponse,
 } from 'utils/web3';
 import { Call, balanceReturnData, tokenData } from './types';
@@ -226,32 +227,14 @@ export const getGaugeBalances = async (
     });
   });
 
-  const [variableGauges, stableGauges, adminGauges, tokens] = await Promise.all(
-    [
-      Multicall(
-        variableGaugeCalls,
-        'gaugeproxyV3',
-        undefined,
-        undefined,
-        _provider,
-      ),
-      Multicall(
-        stableGaugeCalls,
-        'gaugeproxyV3',
-        undefined,
-        undefined,
-        _provider,
-      ),
-      Multicall(
-        adminGaugeCalls,
-        'gaugeproxyV3',
-        undefined,
-        undefined,
-        _provider,
-      ),
-      Multicall(tokenCalls, 'pairV2', undefined, undefined, _provider),
-    ],
-  );
+  const [variableGauges, stableGauges, adminGauges, tokens] =
+    await MultiCallArray(
+      [variableGaugeCalls, stableGaugeCalls, adminGaugeCalls, tokenCalls],
+      ['gaugeproxyV3', 'gaugeproxyV3', 'gaugeproxyV3', 'pairV2'],
+      undefined,
+      undefined,
+      _provider,
+    );
 
   const balanceCalls: Call[] = [];
 
@@ -408,14 +391,9 @@ export const getBalancesFromChain = async (
     });
   });
 
-  const balancesCall = Multicall(calls, 'erc20', chainId);
-  const decimalsCall = Multicall(decimalCalls, 'erc20', chainId);
-  const nativeBalanceCall = getNativeTokenBalance(_userWalletAddress, chainId);
-
-  const [balances, decimals, nativeBalance] = await Promise.all([
-    balancesCall,
-    decimalsCall,
-    nativeBalanceCall,
+  const [[balances, decimals], nativeBalance] = await Promise.all([
+    MultiCallArray([calls, decimalCalls], ['erc20', 'erc20'], chainId),
+    getNativeTokenBalance(_userWalletAddress, chainId),
   ]);
 
   // Now that we have the balances, we tie them to the wallet data so they have latest balances
