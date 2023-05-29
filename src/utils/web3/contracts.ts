@@ -76,6 +76,8 @@ export const ABIS = {
   wrappedFTM: wrappedFTMABI,
 };
 
+let multicallContract;
+
 export async function Contract(
   _address: string,
   _abi: string = 'erc20',
@@ -119,13 +121,15 @@ export async function Multicall(
   _rpc: Web3Provider | string | undefined = 'rpc',
   _provider: any = null,
 ) {
-  const contract = await Contract(
-    mulltiCall[_network],
-    'multicall',
-    _rpc,
-    _network,
-    _provider,
-  );
+  if (!multicallContract) {
+    multicallContract = await Contract(
+      mulltiCall[_network],
+      'multicall',
+      _rpc,
+      _network,
+      _provider,
+    );
+  }
 
   const formattedCalls = _calls?.map(_call => {
     const call = _call;
@@ -143,7 +147,7 @@ export async function Multicall(
     return [_call.address, itf.encodeFunctionData(_call.name, _call.params)];
   });
 
-  const fulldata = await contract.callStatic.aggregate(calls);
+  const fulldata = await multicallContract.callStatic.aggregate(calls);
   const { returnData } = fulldata;
 
   const response: Array<MulticallSingleResponse> = returnData.map(
@@ -167,13 +171,15 @@ export async function MultiCallArray(
   _rpc: Web3Provider | string | undefined = 'rpc',
   _provider: any = null,
 ) {
-  const contract = await Contract(
-    mulltiCall[_network],
-    'multicall',
-    _rpc,
-    _network,
-    _provider,
-  );
+  if (!multicallContract) {
+    multicallContract = await Contract(
+      mulltiCall[_network],
+      'multicall',
+      _rpc,
+      _network,
+      _provider,
+    );
+  }
 
   let allCalls: (string | undefined)[][] = [];
   let allABIInterfaces: {
@@ -209,7 +215,7 @@ export async function MultiCallArray(
     callLengths.push(calls.length);
   }
 
-  const fulldata = await contract.callStatic.aggregate(allCalls);
+  const fulldata = await multicallContract.callStatic.aggregate(allCalls);
   const { returnData } = fulldata;
 
   let responses: Array<MulticallSingleResponse>[] = [];

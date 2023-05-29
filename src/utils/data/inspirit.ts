@@ -693,10 +693,6 @@ export const getBoostedFarmVotes = async ({
   version = 1,
   provider = null,
 }) => {
-  if (!userAddress) {
-    return [];
-  }
-
   let gaugesSelected = gauges;
   let gaugeProxy = 'gaugeproxy';
   let gaugeAddress = addresses.gauge[CHAIN_ID];
@@ -729,19 +725,11 @@ export const getBoostedFarmVotes = async ({
     });
   });
 
-  // We retrieve all data in 2 calls rather than 60+ like in previous one
-  const gaugesMulticall = await Multicall(
-    gaugesParams,
-    gaugeProxy,
-    undefined,
-    undefined,
-    provider,
-  );
-  const votesMulticall = await Multicall(
-    votesParams,
-    gaugeProxy,
-    undefined,
-    undefined,
+  const [gaugesMulticall, votesMulticall] = await MultiCallArray(
+    [gaugesParams, votesParams],
+    [gaugeProxy, gaugeProxy],
+    CHAIN_ID,
+    'rpc',
     provider,
   );
 

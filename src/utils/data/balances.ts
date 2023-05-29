@@ -167,17 +167,19 @@ export const getGaugeBalances = async (
   const stableAddress = Contracts.stableProxy[CHAIN_ID];
   const adminAddress = Contracts.adminProxy[CHAIN_ID];
 
-  const [variableContract, stableContract, adminContract] = await Promise.all([
-    Contract(variableAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-    Contract(stableAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-    Contract(adminAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-  ]);
+  const callsArray = [variableAddress, stableAddress, adminAddress].map(
+    address => ({
+      name: 'tokens',
+      params: [],
+      address,
+    }),
+  );
 
-  const [variableLps, stableLps, adminLps] = await Promise.all([
-    variableContract.tokens(),
-    stableContract.tokens(),
-    adminContract.tokens(),
-  ]);
+  const response = await Multicall(callsArray, 'gaugeproxyV3', _network);
+
+  const variableLps = response[0].response[0];
+  const stableLps = response[1].response[0];
+  const adminLps = response[2].response[0];
 
   variableLps.forEach(variableLp => {
     variableGaugeCalls.push({
@@ -510,22 +512,44 @@ export const getPendingRewards = async (
   const unionGauges = [...variableGauges, ...stableGauges, ...adminGauges];
   const unionLps = [...variableLps, ...stableLps, ...adminLps];
 
-  const Promises = unionGauges.map(async gauge => {
-    const gaugeContract = await Contract(
-      gauge,
+  const callsArray = unionGauges.map(gauge => ({
+    name: 'earned',
+    params: [_userAddress],
+    address: gauge,
+  }));
+
+  let rewardData;
+
+  // Try fast method
+  try {
+    const responses = await Multicall(
+      callsArray,
       'gauge',
-      'rpc',
       CHAIN_ID,
+      'rpc',
       _provider,
     );
-    try {
-      return await gaugeContract.earned(_userAddress);
-    } catch (e) {
-      return Promise.resolve();
-    }
-  });
+    rewardData = responses.map(response => response.response[0]);
+    // Fallback to standard
+  } catch (e) {
+    console.warn('User balance call failed, trying standard method');
+    const Promises = unionGauges.map(async gauge => {
+      const gaugeContract = await Contract(
+        gauge,
+        'gauge',
+        'rpc',
+        CHAIN_ID,
+        _provider,
+      );
+      try {
+        return await gaugeContract.earned(_userAddress);
+      } catch (e) {
+        return Promise.resolve();
+      }
+    });
 
-  const rewardData = await Promise.all(Promises);
+    rewardData = await Promise.all(Promises);
+  }
 
   const rewards: any[] = [];
 
