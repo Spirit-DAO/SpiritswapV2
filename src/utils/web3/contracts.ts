@@ -101,11 +101,12 @@ export async function Contract(
   if (isSigner) {
     provider = _provider;
   }
+
   const instance = new ethers.Contract(
     _address,
     ABIS[_abi],
     _provider
-      ? provider
+      ? _provider
       : CONNECTIONS().includes(_connectionUrl)
       ? signer
       : provider,

@@ -47,12 +47,6 @@ export const getGaugeBasicInfo = async (_provider = null) => {
   const stableAddress = Contracts.stableProxy[CHAIN_ID];
   const adminAddress = Contracts.adminProxy[CHAIN_ID];
 
-  const [variableContract, stableContract, adminContract] = await Promise.all([
-    Contract(variableAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-    Contract(stableAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-    Contract(adminAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-  ]);
-
   const [
     { response: variableLpsResponse },
     { response: stableLpsResponse },
@@ -160,9 +154,6 @@ export const getGaugeBasicInfo = async (_provider = null) => {
     variableLps,
     stableLps,
     adminLps,
-    variableContract,
-    stableContract,
-    adminContract,
   };
 };
 
@@ -182,9 +173,6 @@ export const getGaugesPoolInfoWithMulticall = async (
     variableLps,
     stableLps,
     adminLps,
-    variableContract,
-    stableContract,
-    adminContract,
     variableTokens,
     stableTokens,
     adminTokens,
@@ -304,41 +292,54 @@ export const getGaugesPoolInfoWithMulticall = async (
   ];
 
   // [variableGaugeData, stableGaugeData, adminGaugeData, variableLockedWeights, stableLockedWeights, adminLockedWeights, variableTotalWeight, stableTotalWeight, adminTotalWeight]
-  const [chainResponse, variableWeights, stableWeights, adminWeights] =
-    await Promise.all([
-      MultiCallArray(
-        [
-          variableDataCalls,
-          stableDataCalls,
-          adminDataCalls,
-          variableERC20Calls,
-          stableERC20Calls,
-          adminERC20Calls,
-          variableLockedWeightsCalls,
-          stableLockedWeightsCalls,
-          adminWeightsCalls,
-          masterChefCalls,
-        ],
-        [
-          'gauge',
-          'gauge',
-          'gauge',
-          'pairV2',
-          'pairV2',
-          'pairV2',
-          'gaugeproxyV3',
-          'gaugeproxyV3',
-          'gaugeproxyV3',
-          'masterchef',
-        ],
-        CHAIN_ID,
-        'rpc',
-        _provider,
-      ),
-      variableContract.lockedTotalWeight(),
-      stableContract.lockedTotalWeight(),
-      adminContract.totalWeight(),
-    ]);
+  const chainResponse = await MultiCallArray(
+    [
+      variableDataCalls,
+      stableDataCalls,
+      adminDataCalls,
+      variableERC20Calls,
+      stableERC20Calls,
+      adminERC20Calls,
+      variableLockedWeightsCalls,
+      stableLockedWeightsCalls,
+      adminWeightsCalls,
+      masterChefCalls,
+      [
+        {
+          name: 'lockedTotalWeight',
+          address: variableAddress,
+        },
+        {
+          name: 'lockedTotalWeight',
+          address: stableAddress,
+        },
+        {
+          name: 'totalWeight',
+          address: adminAddress,
+        },
+      ],
+    ],
+    [
+      'gauge',
+      'gauge',
+      'gauge',
+      'pairV2',
+      'pairV2',
+      'pairV2',
+      'gaugeproxyV3',
+      'gaugeproxyV3',
+      'gaugeproxyV3',
+      'masterchef',
+      'gaugeproxyV3',
+    ],
+    CHAIN_ID,
+    'rpc',
+    _provider,
+  );
+
+  const variableWeights = chainResponse[10][0].response[0];
+  const stableWeights = chainResponse[10][1].response[0];
+  const adminWeights = chainResponse[10][2].response[0];
 
   const totalAllocPoint = new BigNumber(
     chainResponse[9][3].response[0].toString(),
