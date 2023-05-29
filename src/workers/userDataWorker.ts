@@ -87,8 +87,6 @@ const getStakedBalance = async (
   await Promise.all([stakesPromise, farmsPromise]);
 };
 
-let gaugePromise;
-
 /**
  * Helper method - Updates portfolio related data
  *  - userWalletAddress: Address of user in the blockchain
