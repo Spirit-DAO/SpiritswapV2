@@ -6,6 +6,9 @@ import {
 } from 'app/connectors/EthersConnector/login';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 
+const providers = {};
+const signers = {};
+
 // Creates a basic connection to the blockchain through a wallet such as metamask
 export const wallet = async (
   _connection,
@@ -82,10 +85,17 @@ export const connect = async ({
     connectionUrl = chain.rpc[randomInt_0_to_2()];
   }
 
-  const provider = new ethers.providers.JsonRpcProvider(connectionUrl);
-  const signer = await provider.getSigner();
+  if (!providers[connectionUrl]) {
+    providers[connectionUrl] = new ethers.providers.JsonRpcProvider(
+      connectionUrl,
+    );
+  }
 
-  return { provider, signer };
+  if (!signers[connectionUrl]) {
+    signers[connectionUrl] = providers[connectionUrl].getSigner();
+  }
+
+  return { provider: providers[connectionUrl], signer: signers[connectionUrl] };
 };
 
 export const web3Socket = (_chainId = CHAIN_ID) => {

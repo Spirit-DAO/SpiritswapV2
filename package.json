@@ -108,7 +108,7 @@
     "lint": "cross-env NODE_ENV=production eslint src",
     "lint:fix": "cross-env NODE_ENV=production eslint --fix src",
     "lint:css": "stylelint src/**/*.css",
-    "prettify": "prettier --write",
+    "prettify": "prettier --write src/**/*.{ts,tsx,js,jsx}",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
