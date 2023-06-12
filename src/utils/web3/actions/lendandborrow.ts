@@ -13,6 +13,8 @@ const getSupplyAPY = (
   reserveFactor: BigNumber,
   totalSupply: BigNumber,
 ) => {
+  if (!borrowRate) return new BigNumber(0);
+
   const borrowApy = getBorrowAPY(borrowRate);
   const formatedReserveFactor = formatUnits(`${reserveFactor}`, 18);
   const formatedTotalSupply = formatUnits(`${totalSupply}`, 18);
@@ -27,7 +29,9 @@ const getSupplyAPY = (
 };
 
 const getBorrowAPY = (borrowRate: BigNumber) => {
-  const formatedBorrowRate = formatUnits(borrowRate.toString(), 18);
+  if (!borrowRate) return new BigNumber(0);
+
+  const formatedBorrowRate = formatUnits(borrowRate?.toString(), 18);
 
   const borrowApr = new BigNumber(formatedBorrowRate).multipliedBy(
     YEAR_IN_SECONDS,
