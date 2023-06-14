@@ -9,9 +9,8 @@ import {
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { connect, Web3TxData } from 'utils/web3';
 import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
-import { getCircularReplacer } from 'app/utils';
 import { useSuggestion } from 'app/hooks/Suggestions/useSuggestion';
-import { NOTIFICATIONS_STATE } from 'constants/index';
+import { CHAIN_ID, NOTIFICATIONS_STATE } from 'constants/index';
 import { ethers } from 'ethers';
 import { DataContext } from 'contexts/DataContext';
 import useLogin from './login';
@@ -78,9 +77,6 @@ const EthersConnector = ({ children }) => {
   }, []);
 
   const fetchAppData = useCallback(async () => {
-    const { currentProvider } = await initProvider();
-
-    const _provider = JSON.stringify(provider, getCircularReplacer());
     const calls: WorkerCall[] = [];
 
     // Prioritize the page we are on
@@ -89,8 +85,7 @@ const EthersConnector = ({ children }) => {
         pageData[pageKey].forEach(async data => {
           dataWorker.postMessage({
             type: data,
-            network: currentProvider!._network,
-            provider: _provider,
+            network: CHAIN_ID,
             isLoggedIn,
           });
         });
@@ -99,8 +94,7 @@ const EthersConnector = ({ children }) => {
         pageData[pageKey].forEach(data => {
           calls.push({
             type: data,
-            network: currentProvider!._network,
-            provider: _provider,
+            network: CHAIN_ID,
             isLoggedIn,
           });
         });
@@ -117,12 +111,7 @@ const EthersConnector = ({ children }) => {
   }, [page, account, dataWorker]);
 
   const fetchUserData = useCallback(async () => {
-    const { currentProvider, signer } = await initProvider();
-
-    const signerJson = JSON.stringify(signer, getCircularReplacer());
     const calls: WorkerCall[] = [];
-
-    const _provider = JSON.stringify(currentProvider, getCircularReplacer());
 
     Object.keys(pageUserData).forEach(pageKey => {
       if (pageKey === page) {
@@ -130,8 +119,7 @@ const EthersConnector = ({ children }) => {
           userDataWorker.postMessage({
             userAddress: account,
             type: data,
-            signer: signerJson,
-            provider: _provider,
+            network: CHAIN_ID,
           });
         });
       } else {
@@ -140,8 +128,7 @@ const EthersConnector = ({ children }) => {
           calls.push({
             userAddress: account,
             type: data,
-            signer: signerJson,
-            provider: _provider,
+            network: CHAIN_ID,
           });
         });
       }

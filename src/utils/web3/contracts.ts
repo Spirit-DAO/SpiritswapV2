@@ -76,6 +76,8 @@ export const ABIS = {
   wrappedFTM: wrappedFTMABI,
 };
 
+let multicallContract;
+
 export async function Contract(
   _address: string,
   _abi: string = 'erc20',
@@ -99,11 +101,12 @@ export async function Contract(
   if (isSigner) {
     provider = _provider;
   }
+
   const instance = new ethers.Contract(
     _address,
     ABIS[_abi],
     _provider
-      ? provider
+      ? _provider
       : CONNECTIONS().includes(_connectionUrl)
       ? signer
       : provider,
@@ -119,13 +122,15 @@ export async function Multicall(
   _rpc: Web3Provider | string | undefined = 'rpc',
   _provider: any = null,
 ) {
-  const contract = await Contract(
-    mulltiCall[_network],
-    'multicall',
-    _rpc,
-    _network,
-    _provider,
-  );
+  if (!multicallContract) {
+    multicallContract = await Contract(
+      mulltiCall[_network],
+      'multicall',
+      _rpc,
+      _network,
+      _provider,
+    );
+  }
 
   const formattedCalls = _calls?.map(_call => {
     const call = _call;
@@ -139,11 +144,11 @@ export async function Multicall(
 
   const itf = new ethers.utils.Interface(ABIS[_connectABI]);
 
-  const calls = formattedCalls.map(_call => {
+  const calls = formattedCalls?.map(_call => {
     return [_call.address, itf.encodeFunctionData(_call.name, _call.params)];
   });
 
-  const fulldata = await contract.callStatic.aggregate(calls);
+  const fulldata = await multicallContract.callStatic.aggregate(calls);
   const { returnData } = fulldata;
 
   const response: Array<MulticallSingleResponse> = returnData.map(
@@ -158,6 +163,89 @@ export async function Multicall(
   );
 
   return response;
+}
+
+export async function MultiCallArray(
+  _callsArray: Call[][],
+  _connectABIs: string[],
+  _network = CHAIN_ID,
+  _rpc: Web3Provider | string | undefined = 'rpc',
+  _provider: any = null,
+) {
+  if (!multicallContract) {
+    multicallContract = await Contract(
+      mulltiCall[_network],
+      'multicall',
+      _rpc,
+      _network,
+      _provider,
+    );
+  }
+
+  let allCalls: (string | undefined)[][] = [];
+  let allABIInterfaces: {
+    interface: ethers.utils.Interface;
+    callName: string;
+  }[] = [];
+  let callLengths: number[] = [];
+
+  for (let i = 0; i < _callsArray.length; i++) {
+    const _calls = _callsArray[i];
+    const _connectABI = _connectABIs[i];
+
+    const formattedCalls = _calls.map(_call => {
+      const call = _call;
+      if (!call.address) {
+        call.address = addresses[_connectABI][_network];
+      }
+      return call;
+    });
+
+    const itf = new ethers.utils.Interface(ABIS[_connectABI]);
+    const calls = formattedCalls.map(_call => {
+      return [_call.address, itf.encodeFunctionData(_call.name, _call.params)];
+    });
+
+    allCalls.push(...calls);
+    allABIInterfaces.push(
+      ...formattedCalls.map(_call => ({
+        interface: itf,
+        callName: _call.name,
+      })),
+    );
+    callLengths.push(calls.length);
+  }
+
+  const fulldata = await multicallContract.callStatic.aggregate(allCalls);
+  const { returnData } = fulldata;
+
+  let responses: Array<MulticallSingleResponse>[] = [];
+  let startIndex = 0;
+
+  for (let i = 0; i < callLengths.length; i++) {
+    let endIndex = startIndex + callLengths[i];
+    let callResponses = returnData
+      .slice(startIndex, endIndex)
+      // eslint-disable-next-line no-loop-func
+      .map((_call, j) => {
+        const decoding = allABIInterfaces[
+          startIndex + j
+        ].interface.decodeFunctionResult(
+          allABIInterfaces[startIndex + j].callName,
+          _call,
+        );
+        const res: MulticallSingleResponse = {
+          response: decoding,
+          call: _call,
+        };
+        return res;
+      });
+
+    responses.push(callResponses);
+    startIndex = endIndex;
+  }
+
+  return responses;
 }
 
 export async function MulticallV2(

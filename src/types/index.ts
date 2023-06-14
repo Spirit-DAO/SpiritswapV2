@@ -9,8 +9,7 @@ export interface PayloadedAction<T = any> extends Action {
 
 export interface WorkerCall {
   type: string;
-  provider: string;
-  network?: any;
+  network?: number;
   isLoggedIn?: boolean;
   signer?: string;
   userAddress?: string;

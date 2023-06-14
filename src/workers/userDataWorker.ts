@@ -1,4 +1,4 @@
-import { CHAIN_ID, FTM, HIDE_CHART_PORTFOLIO } from 'constants/index';
+import { CHAIN_ID, FTM, HIDE_CHART_PORTFOLIO, NETWORK } from 'constants/index';
 import addresses from 'constants/contracts';
 import {
   getBoostedFarmVotes,
@@ -15,7 +15,7 @@ import {
   saturateGauges,
 } from 'utils/data';
 import { getLimitOrders } from 'utils/swap/gelato';
-import { checkSpiritAllowance, formatFrom } from 'utils/web3';
+import { checkSpiritAllowance, connect, formatFrom } from 'utils/web3';
 import { UNIDEX_ETH_ADDRESS } from 'utils/swap';
 import { formatUnits } from 'ethers/lib/utils';
 import { getRoundedSFs } from 'app/utils';
@@ -23,28 +23,35 @@ import { LendAndBorrowItem } from 'app/pages/Portfolio/components/LendAndBorrowP
 import { getOlaFinanceData } from 'utils/web3/actions/lendandborrow';
 import { getPricesByPools } from 'utils/apollo/queries';
 
-onmessage = ({ data: { type, provider, userAddress, signer, params } }) => {
-  const loadedProvider = JSON.parse(provider);
-  if (!loadedProvider._network) {
-    loadedProvider._network = {
-      chainId: CHAIN_ID,
-    };
-  }
+let provider;
 
-  switch (type) {
-    case 'updatePortfolioData':
-      updatePortfolioData(userAddress, loadedProvider);
-      break;
-    case 'checkLimitOrders':
-      checkLimitOrders(userAddress, JSON.parse(signer));
-      break;
-    case 'checkAllowances':
-      checkAllowances(userAddress, loadedProvider);
-      break;
-    case 'fetchIndividualLP':
-      fetchIndividualLP(userAddress, params, loadedProvider);
-      break;
-  }
+onmessage = ({ data: { type, network, userAddress, params } }) => {
+  return new Promise<void>(async resolve => {
+    if (!provider) {
+      const { provider: loadedProvider } = await connect({
+        _connection: NETWORK[network].rpc[0],
+        _chainId: network,
+      });
+      provider = loadedProvider;
+    }
+
+    switch (type) {
+      case 'updatePortfolioData':
+        updatePortfolioData(userAddress, provider);
+        break;
+      case 'checkLimitOrders':
+        checkLimitOrders(userAddress, provider.getSigner());
+        break;
+      case 'checkAllowances':
+        checkAllowances(userAddress, provider);
+        break;
+      case 'fetchIndividualLP':
+        fetchIndividualLP(userAddress, params, provider);
+        break;
+    }
+
+    resolve();
+  });
 };
 
 const getStakedBalance = async (
