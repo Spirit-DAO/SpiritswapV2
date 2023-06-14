@@ -144,7 +144,7 @@ export async function Multicall(
 
   const itf = new ethers.utils.Interface(ABIS[_connectABI]);
 
-  const calls = formattedCalls.map(_call => {
+  const calls = formattedCalls?.map(_call => {
     return [_call.address, itf.encodeFunctionData(_call.name, _call.params)];
   });
 
@@ -226,6 +226,7 @@ export async function MultiCallArray(
     let endIndex = startIndex + callLengths[i];
     let callResponses = returnData
       .slice(startIndex, endIndex)
+      // eslint-disable-next-line no-loop-func
       .map((_call, j) => {
         const decoding = allABIInterfaces[
           startIndex + j
