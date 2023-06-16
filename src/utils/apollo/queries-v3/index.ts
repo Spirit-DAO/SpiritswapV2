@@ -175,17 +175,25 @@ export const fetchPoolQuery = gql`
 
 export const fetchEternalFarmingsQuery = gql`
   query fetchEternalFarmings {
-    eternalFarmings(where: { isDeactivated: false }) {
+    eternalFarmings(where: { isDetached: false }) {
       id
       rewardToken
       bonusRewardToken
       pool
+      startTime
+      endTime
       reward
       bonusReward
       rewardRate
       bonusRewardRate
       minRangeLength
-      nonce
+      tokenAmountForTier1
+      tokenAmountForTier2
+      tokenAmountForTier3
+      tier1Multiplier
+      tier2Multiplier
+      tier3Multiplier
+      multiplierToken
     }
   }
 `;
@@ -197,12 +205,20 @@ export const fetchEternalFarmingQuery = gql`
       rewardToken
       bonusRewardToken
       pool
-      nonce
+      startTime
+      endTime
       reward
       bonusReward
       rewardRate
       bonusRewardRate
-      isDeactivated
+      isDetached
+      tier1Multiplier
+      tier2Multiplier
+      tier3Multiplier
+      tokenAmountForTier1
+      tokenAmountForTier2
+      tokenAmountForTier3
+      multiplierToken
     }
   }
 `;
@@ -212,12 +228,15 @@ export const fetchTransferredPositionsQuery = gql`
     deposits(
       orderBy: id
       orderDirection: desc
-      where: { owner: $account, eternalFarming_not: null }
+      where: { owner: $account, onFarmingCenter: true }
     ) {
       id
       owner
       pool
+      L2tokenId
+      limitFarming
       eternalFarming
+      onFarmingCenter
       rangeLength
     }
   }
@@ -228,12 +247,19 @@ export const fetchPositionsOnEternalFarmingQuery = gql`
     deposits(
       orderBy: id
       orderDirection: desc
-      where: { owner: $account, eternalFarming_not: null }
+      where: {
+        owner: $account
+        onFarmingCenter: true
+        eternalFarming_not: null
+      }
     ) {
       id
       owner
       pool
+      L2tokenId
       eternalFarming
+      onFarmingCenter
+      enteredInEternalFarming
     }
   }
 `;
@@ -248,7 +274,15 @@ export const fetchTransferredPositionsForPoolQuery = gql`
       id
       owner
       pool
+      L2tokenId
+      limitFarming
       eternalFarming
+      onFarmingCenter
+      enteredInEternalFarming
+      tokensLockedLimit
+      tokensLockedEternal
+      tierLimit
+      tierEternal
     }
   }
 `;
@@ -282,18 +316,24 @@ export const fetchAllV3TicksQuery = gql`
 export const fetchEternalFarmingFromPool = gql`
   query eternalFarmingFromPools($poolAddress: String!) {
     eternalFarmings(
-      where: { pool: $poolAddress, isDeactivated: false, rewardRate_gt: 0 }
+      where: {
+        pool: $poolAddress
+        isDetached: false
+        rewardRate_gt: 0
+        bonusRewardRate_gt: 0
+      }
     ) {
       id
       rewardToken
       bonusRewardToken
       pool
-      nonce
+      startTime
+      endTime
       reward
       bonusReward
       rewardRate
       bonusRewardRate
-      isDeactivated
+      isDetached
     }
   }
 `;

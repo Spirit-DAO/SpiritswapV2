@@ -11,7 +11,6 @@ import { transactionResponse } from './utils';
 import { approve } from './general';
 import { parseUnits } from 'ethers/lib/utils';
 import { nonfungiblePositionManagerContract } from './liquidity';
-import { ADDRESS_ZERO } from '../../../v3-sdk/constants';
 
 export const gaugeContract = async (
   _farmGaugeAddress: string,
@@ -217,12 +216,12 @@ export const farmStatus = async (
 export const concentratedFarmStatus = async (positionId: string) => {
   const nonfungiblePositionManager = await nonfungiblePositionManagerContract();
 
-  const farmingApproval =
-    await nonfungiblePositionManager.callStatic.farmingApprovals(positionId);
+  const owner = await nonfungiblePositionManager.callStatic.ownerOf(positionId);
 
-  if (farmingApproval === ADDRESS_ZERO) return 0;
-
-  return 1;
+  return owner.toLowerCase() ===
+    contracts.v3FarmingCenter[CHAIN_ID].toLowerCase()
+    ? 1
+    : 0;
 };
 
 export const getPairs = async (
@@ -372,7 +371,10 @@ export const getEcosystemFarmAddress = async (
   }
 };
 
-export const approveConcentratedFarm = async (positionId: string) => {
+export const approveConcentratedFarm = async (
+  account: string,
+  positionId: string,
+) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = await provider.getSigner();
 
@@ -381,19 +383,9 @@ export const approveConcentratedFarm = async (positionId: string) => {
     NONFUNGIBLE_POSITION_MANAGER_ABI,
     signer,
   );
-
-  console.log('APPROVING HERE', positionId, signer);
-
-  let approve;
-  try {
-    approve = await nonfungiblePositionManagerContract.approveForFarming(
-      positionId,
-      true,
-    );
-  } catch (err) {
-    console.log('EEEE', err);
-  }
-
+  const approve = await nonfungiblePositionManagerContract[
+    'safeTransferFrom(address,address,uint256)'
+  ](account, contracts.v3FarmingCenter[CHAIN_ID], positionId);
   return approve;
 };
 
@@ -401,14 +393,17 @@ export const stakeConcentratedFarm = async (
   rewardToken: string,
   bonusRewardToken: string,
   pool: string,
-  nonce: number,
+  startTime: number,
+  endTime: number,
   positionId: string,
 ) => {
   const algebraFarmingCenter = await algebraFarmingCenterContract();
 
   const tx = await algebraFarmingCenter.enterFarming(
-    [rewardToken, bonusRewardToken, pool, nonce],
+    [rewardToken, bonusRewardToken, pool, startTime, endTime],
     positionId,
+    0,
+    false,
   );
 
   return tx;
@@ -419,7 +414,8 @@ export const unstakeConcentratedFarm = async (
   rewardToken: string,
   bonusRewardToken: string,
   pool: string,
-  nonce: number,
+  startTime: number,
+  endTime: number,
   rewardsEarned: number,
   bonusRewardsEarned: number,
   positionId: string,
@@ -428,8 +424,9 @@ export const unstakeConcentratedFarm = async (
 
   let callDatas: string[] = [
     algebraFarmingCenter.interface.encodeFunctionData('exitFarming', [
-      [rewardToken, bonusRewardToken, pool, nonce],
+      [rewardToken, bonusRewardToken, pool, startTime, endTime],
       positionId,
+      false,
     ]),
   ];
 
@@ -438,6 +435,7 @@ export const unstakeConcentratedFarm = async (
       algebraFarmingCenter.interface.encodeFunctionData('claimReward', [
         rewardToken,
         account,
+        0,
         MaxUint128,
       ]),
     );
@@ -448,10 +446,19 @@ export const unstakeConcentratedFarm = async (
       algebraFarmingCenter.interface.encodeFunctionData('claimReward', [
         bonusRewardToken,
         account,
+        0,
         MaxUint128,
       ]),
     );
   }
+
+  callDatas.push(
+    algebraFarmingCenter.interface.encodeFunctionData('withdrawToken', [
+      positionId,
+      account,
+      0x0,
+    ]),
+  );
 
   const tx = await algebraFarmingCenter.multicall(callDatas);
 
@@ -463,7 +470,8 @@ export const harvestConcentratedFarm = async (
   rewardToken: string,
   bonusRewardToken: string,
   pool: string,
-  nonce: number,
+  startTime: number,
+  endTime: number,
   positionId: string,
   returnCalldata: boolean = false,
 ) => {
@@ -471,15 +479,15 @@ export const harvestConcentratedFarm = async (
 
   const collectRewards = algebraFarmingCenter.interface.encodeFunctionData(
     'collectRewards',
-    [[rewardToken, bonusRewardToken, pool, nonce], positionId],
+    [[rewardToken, bonusRewardToken, pool, startTime, endTime], positionId],
   );
   const claimReward1 = algebraFarmingCenter.interface.encodeFunctionData(
     'claimReward',
-    [rewardToken, account, MaxUint128],
+    [rewardToken, account, 0, MaxUint128],
   );
   const claimReward2 = algebraFarmingCenter.interface.encodeFunctionData(
     'claimReward',
-    [bonusRewardToken, account, MaxUint128],
+    [bonusRewardToken, account, 0, MaxUint128],
   );
 
   let calldata;

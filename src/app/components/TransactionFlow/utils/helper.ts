@@ -543,7 +543,8 @@ export const claimRewards = async ({
         _farm.eternalFarming.rewardToken.id,
         _farm.eternalFarming.bonusRewardToken.id,
         _farm.eternalFarming.pool.id,
-        _farm.eternalFarming.nonce,
+        _farm.eternalFarming.startTime,
+        _farm.eternalFarming.endTime,
         _farm.tokenId,
       );
 

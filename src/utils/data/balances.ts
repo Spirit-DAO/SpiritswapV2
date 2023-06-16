@@ -717,7 +717,8 @@ export const getV3Balances = async (_address: string, provider?: any) => {
         rewardToken,
         bonusRewardToken,
         pool,
-        nonce,
+        startTime,
+        endTime,
         id: eternalFarmingId,
       } = eternalFarmingFromPositions[i];
 
@@ -726,7 +727,7 @@ export const getV3Balances = async (_address: string, provider?: any) => {
 
       try {
         const rewards = await farmingCenter.callStatic.collectRewards(
-          [rewardToken, bonusRewardToken, pool, nonce],
+          [rewardToken, bonusRewardToken, pool, startTime, endTime],
           positionsOnFarming[i].id,
           { from: _address },
         );
@@ -741,7 +742,8 @@ export const getV3Balances = async (_address: string, provider?: any) => {
           id: eternalFarmingId,
           rewardToken: rewardTokens[i],
           bonusRewardToken: bonusRewardTokens[i],
-          nonce,
+          startTime: startTime,
+          endTime: endTime,
           earned: formatUnits(reward.toString(), rewardTokens[i]?.decimals),
           bonusEarned: formatUnits(
             bonusReward.toString(),
@@ -753,6 +755,8 @@ export const getV3Balances = async (_address: string, provider?: any) => {
         eternalAvailable: eternalFarmingId,
       };
     } else {
+      console.log('POSITIONS', _position.pool?.id);
+
       const farmingForPool = await getEternalFarmingFromPool(
         _position.pool?.id,
       );

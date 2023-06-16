@@ -85,7 +85,7 @@ const LiquidityPanel = ({
   const isLoading =
     liquidityData.farmList !== null && !liquidityData.farmList?.length;
 
-  const { positionsOnFarming } = useEternalFarmingRewards();
+  // const { positionsOnFarming } = useEternalFarmingRewards();
 
   const onSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
@@ -206,9 +206,8 @@ const LiquidityPanel = ({
         label={t(`${farmsTranslationPath}.claimRewards`)}
         icon={<SparklesIcon />}
         disabled={
-          !farmsWithRewards ||
-          (!farmsWithRewards.length &&
-            (!positionsOnFarming || !positionsOnFarming.length))
+          !farmsWithRewards || !farmsWithRewards.length
+          // && (!positionsOnFarming || !positionsOnFarming.length)
         }
         onClick={openHarvestManager}
       />
@@ -435,7 +434,8 @@ const LiquidityPanel = ({
 
     return (
       <HarvestManager
-        farmsWithRewards={farmsWithRewards.concat(positionsOnFarming)}
+        // farmsWithRewards={farmsWithRewards.concat(positionsOnFarming)}
+        farmsWithRewards={farmsWithRewards}
         isOpen={isOpen}
         onClose={onClose}
       />

@@ -83,7 +83,7 @@ export const FarmController = ({
         let tx;
 
         if (farm.concentrated && positionId) {
-          tx = await approveConcentratedFarm(positionId);
+          tx = await approveConcentratedFarm(account, positionId);
         } else {
           tx = await approveFarm(farm.lpAddress, farm.gaugeAddress, 250);
         }
@@ -115,7 +115,8 @@ export const FarmController = ({
           _farm.rewardToken.id,
           _farm.bonusRewardToken.id,
           _farm.pool.id,
-          _farm.nonce,
+          _farm.startTime,
+          _farm.endTime,
           _value,
         );
 
@@ -151,7 +152,8 @@ export const FarmController = ({
           _farm.rewardToken.id,
           _farm.bonusRewardToken.id,
           _farm.pool.id,
-          _farm.nonce,
+          _farm.startTime,
+          _farm.endTime,
           stake.eternalFarming.earned,
           stake.eternalFarming.bonusEarned,
           _value,
@@ -182,7 +184,8 @@ export const FarmController = ({
               _farm.rewardToken.id,
               _farm.bonusRewardToken.id,
               _farm.pool.id,
-              _farm.nonce,
+              _farm.startTime,
+              _farm.endTime,
               position.tokenId,
               true,
             ),
