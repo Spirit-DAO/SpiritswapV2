@@ -60,7 +60,7 @@ export function usePoolsGlobalState(
       );
 
       const results = globalStates.map(result => ({
-        loading: result === undefined,
+        loading: false,
         valid: true,
         error: false,
         syncing: false,
