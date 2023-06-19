@@ -31,16 +31,11 @@ export default function FarmControls({
       <Select
         selected={selectedTab}
         labels={[
-          // t(`${translationPath}.all`),
-          // t(`${translationPath}.classic`),
-          // t(`${translationPath}.stable`),
-          // t(`${translationPath}.weighted`),
-          // t(`${translationPath}.ecosystem`),
           t(`${translationPath}.all`),
           t(`${translationPath}.classicV2`),
           t(`${translationPath}.stable`),
           t(`${translationPath}.concentrated`),
-          //t(`${translationPath}.admin`),
+          'Combine',
         ]}
         onChange={onFarmTabChange}
       />

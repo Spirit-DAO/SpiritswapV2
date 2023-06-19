@@ -1,7 +1,5 @@
 import { FARMS } from 'constants/icons';
-
-import { useState, useEffect, useMemo } from 'react';
-
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Box, Button, HStack, useDisclosure } from '@chakra-ui/react';
 import { CardHeader } from 'app/components/CardHeader';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
@@ -90,7 +88,6 @@ export const Farms = () => {
 
   const onCreateFarm = () => {
     if (!account) handleLogin();
-
     farmCreate.onOpen();
   };
 
@@ -141,17 +138,13 @@ export const Farms = () => {
 
       if (spirit) {
         const formattedRewards = formatUnits(spirit, 18);
-
         setCollectedRewards(formattedRewards);
       }
-
       setHashRewards(rewardsMapping);
     };
-    if (rewards && rewards.length > 0) {
-      updateCollectedRewards();
-    } else {
-      setHashRewards({});
-    }
+
+    if (rewards && rewards.length) updateCollectedRewards();
+    else setHashRewards({});
   }, [rewards]);
 
   // Sorting options
@@ -186,26 +179,38 @@ export const Farms = () => {
     };
   });
 
-  const onFarmFilterChange = array => {
-    if (!address && array.length > 0) {
-      const filterDataByState = array.filter(pool =>
-        filterByState(
-          pool,
-          farmFilters.staked,
-          farmFilters.inactive,
+  const onFarmFilterChange = useCallback(
+    array => {
+      if (!address && array.length) {
+        const filterDataByState = array.filter(pool =>
+          filterByState(
+            pool,
+            farmFilters.staked,
+            farmFilters.inactive,
+            farmsStaked,
+            positionsOnFarming,
+          ),
+        );
+
+        const sortedFarms = sortFarms(
+          filterDataByState,
+          sortType,
+          hashRewards,
           farmsStaked,
-          positionsOnFarming,
-        ),
-      );
-      const sortedFarms = sortFarms(
-        filterDataByState,
-        sortType,
-        hashRewards,
-        farmsStaked,
-      );
-      return sortedFarms;
-    }
-  };
+        );
+
+        return sortedFarms;
+      }
+    },
+    [
+      address,
+      farmFilters,
+      sortType,
+      hashRewards,
+      farmsStaked,
+      positionsOnFarming,
+    ],
+  );
 
   const onFilterByQueryChange = (result, searchTerm) => {
     const filteredDataByQuery = result.filter(pool =>
@@ -229,11 +234,9 @@ export const Farms = () => {
       if (searchTerm.length > 0) {
         result = onFilterByQueryChange(result, searchTerm);
       }
-      // setIsLoadingFarms(true);
       setFarmData(result);
       setIsLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     selectedTab,
     farmFilters,
@@ -243,6 +246,8 @@ export const Farms = () => {
     concentratedData,
     farmsStaked,
     hashRewards,
+    onFarmFilterChange,
+    address,
   ]);
 
   const handleBackToFarms = () => {

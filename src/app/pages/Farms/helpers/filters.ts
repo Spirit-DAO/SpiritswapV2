@@ -1,4 +1,4 @@
-import { IFarm, FarmType, EcosystemFarmType } from 'app/interfaces/Farm';
+import { IFarm, FarmType } from 'app/interfaces/Farm';
 
 export const handleFarmData = (data, index) => {
   switch (index) {
@@ -8,11 +8,10 @@ export const handleFarmData = (data, index) => {
       return data.filter(farm => farm.type === 'variable');
     case FarmType.STABLE:
       return data.filter(farm => farm.type === 'stable');
-    // case FarmType.ADMIN:
-    //   return data.filter(farm => farm.type === 'admin');
     case FarmType.CONCENTRATED:
       return data.filter(farm => farm.type === 'concentrated');
-
+    case FarmType.COMBINE:
+      return data.filter(farm => farm.type === 'combine');
     default:
       return data;
   }
@@ -44,6 +43,7 @@ export const filterByState = (
   const inactive: boolean = !(parseFloat(pool.apr!) > 0);
 
   const filterType = [filterByStaked, filterByInactive];
+
   const filterValue = [staked, inactive];
 
   const filterResult = filterType.every((type, index) => {
