@@ -60,24 +60,32 @@ export const verifiedLpTokenData = () => {
 export const getGaugeBasicInfo = async (_provider = null) => {
   const variableGaugeCalls: Call[] = [];
   const variableTokensCalls: Call[] = [];
+
   const stableGaugeCalls: Call[] = [];
   const stableTokensCalls: Call[] = [];
+
   const adminGaugeCalls: Call[] = [];
   const adminTokensCalls: Call[] = [];
+
+  const combineGaugeCalls: Call[] = [];
+  const combineTokensCalls: Call[] = [];
 
   const variableAddress = Contracts.variableProxy[CHAIN_ID];
   const stableAddress = Contracts.stableProxy[CHAIN_ID];
   const adminAddress = Contracts.adminProxy[CHAIN_ID];
+  const combineProxyAddress = Contracts.combineProxy[CHAIN_ID];
 
   const [
     { response: variableLpsResponse },
     { response: stableLpsResponse },
     { response: adminLpsResponse },
+    { response: combineGaugesResponse },
   ] = await Multicall(
     [
       { name: 'tokens', params: [], address: variableAddress },
       { name: 'tokens', params: [], address: stableAddress },
       { name: 'tokens', params: [], address: adminAddress },
+      { name: 'tokens', params: [], address: combineProxyAddress },
     ],
     'gaugeproxyV3',
     undefined,
@@ -88,6 +96,7 @@ export const getGaugeBasicInfo = async (_provider = null) => {
   const variableLps = variableLpsResponse[0];
   const stableLps = stableLpsResponse[0];
   const adminLps = adminLpsResponse[0];
+  const combineLps = combineGaugesResponse[0];
 
   variableLps.forEach(variableLp => {
     variableGaugeCalls.push({
@@ -137,10 +146,28 @@ export const getGaugeBasicInfo = async (_provider = null) => {
     });
   });
 
+  combineLps.forEach(combineLp => {
+    combineGaugeCalls.push({
+      address: combineProxyAddress,
+      name: 'gauges',
+      params: [combineLp],
+    });
+    combineTokensCalls.push({
+      address: combineLp,
+      name: 'token0',
+    });
+    combineTokensCalls.push({
+      address: combineLp,
+      name: 'token1',
+    });
+  });
+
   const [
     variableGauges,
     stableGauges,
     adminGauges,
+    combineGauges,
+    combineTokens,
     variableTokens,
     stableTokens,
     adminTokens,
@@ -149,6 +176,8 @@ export const getGaugeBasicInfo = async (_provider = null) => {
       variableGaugeCalls,
       stableGaugeCalls,
       adminGaugeCalls,
+      combineGaugeCalls,
+      combineTokensCalls,
       variableTokensCalls,
       stableTokensCalls,
       adminTokensCalls,
@@ -157,6 +186,8 @@ export const getGaugeBasicInfo = async (_provider = null) => {
       'gaugeproxyV3',
       'gaugeproxyV3',
       'gaugeproxyV3',
+      'gaugeproxyV3',
+      'pairV2',
       'pairV2',
       'pairV2',
       'pairV2',
@@ -173,6 +204,9 @@ export const getGaugeBasicInfo = async (_provider = null) => {
     variableTokens: variableTokens.map(token => token.response[0]),
     stableTokens: stableTokens.map(token => token.response[0]),
     adminTokens: adminTokens.map(token => token.response[0]),
+    combineGauges: combineGauges.map(gauge => gauge.response[0]),
+    combineTokens: combineTokens.map(token => token.response[0]),
+    combineLps,
     variableLps,
     stableLps,
     adminLps,
@@ -188,27 +222,40 @@ export const getGaugesPoolInfoWithMulticall = async (
   const adminAddress = Contracts.adminProxy[CHAIN_ID];
   const masterchefAddress = Contracts.masterchef[CHAIN_ID];
 
+  const combineProxyAddress = Contracts.combineProxy[CHAIN_ID];
+
   const {
     variableGauges,
     stableGauges,
     adminGauges,
+    combineGauges,
+
     variableLps,
     stableLps,
     adminLps,
+    combineLps,
+
     variableTokens,
     stableTokens,
     adminTokens,
+    combineTokens,
   } = await gaugesPromise;
 
   const variableDataCalls: Call[] = [];
   const variableLockedWeightsCalls: Call[] = [];
   const variableERC20Calls: Call[] = [];
+
   const stableDataCalls: Call[] = [];
   const stableLockedWeightsCalls: Call[] = [];
   const stableERC20Calls: Call[] = [];
+
   const adminDataCalls: Call[] = [];
   const adminWeightsCalls: Call[] = [];
   const adminERC20Calls: Call[] = [];
+
+  const combineDataCalls: Call[] = [];
+  const combineERC20Calls: Call[] = [];
+  const combineLockedWeightsCalls: Call[] = [];
 
   variableGauges.forEach((variableGauge, i) => {
     const address = variableGauge;
@@ -291,6 +338,34 @@ export const getGaugesPoolInfoWithMulticall = async (
     });
   });
 
+  combineGauges.forEach((combineGauge, i) => {
+    const address = combineGauge;
+    const lpAddress = combineLps[i];
+
+    combineDataCalls.push({
+      address,
+      name: 'rewardRate',
+    });
+    combineDataCalls.push({
+      address,
+      name: 'derivedSupply',
+    });
+    combineLockedWeightsCalls.push({
+      address: adminAddress,
+      name: 'gaugeWeights',
+      params: [lpAddress],
+    });
+    combineERC20Calls.push({
+      address: lpAddress,
+      name: 'balanceOf',
+      params: [address],
+    });
+    combineERC20Calls.push({
+      address: lpAddress,
+      name: 'stable',
+    });
+  });
+
   const masterChefCalls: Call[] = [
     {
       address: masterchefAddress,
@@ -309,6 +384,11 @@ export const getGaugesPoolInfoWithMulticall = async (
     },
     {
       address: masterchefAddress,
+      name: 'poolInfo',
+      params: ['72'],
+    },
+    {
+      address: masterchefAddress,
       name: 'totalAllocPoint',
     },
   ];
@@ -319,12 +399,15 @@ export const getGaugesPoolInfoWithMulticall = async (
       variableDataCalls,
       stableDataCalls,
       adminDataCalls,
+      combineDataCalls,
       variableERC20Calls,
       stableERC20Calls,
       adminERC20Calls,
+      combineERC20Calls,
       variableLockedWeightsCalls,
       stableLockedWeightsCalls,
       adminWeightsCalls,
+      combineLockedWeightsCalls,
       masterChefCalls,
       [
         {
@@ -339,15 +422,22 @@ export const getGaugesPoolInfoWithMulticall = async (
           name: 'totalWeight',
           address: adminAddress,
         },
+        {
+          name: 'lockedTotalWeight',
+          address: combineProxyAddress,
+        },
       ],
     ],
     [
       'gauge',
       'gauge',
       'gauge',
+      'gauge',
       'pairV2',
       'pairV2',
       'pairV2',
+      'pairV2',
+      'gaugeproxyV3',
       'gaugeproxyV3',
       'gaugeproxyV3',
       'gaugeproxyV3',
@@ -359,28 +449,48 @@ export const getGaugesPoolInfoWithMulticall = async (
     _provider,
   );
 
-  const variableWeights = chainResponse[10][0].response[0];
-  const stableWeights = chainResponse[10][1].response[0];
-  const adminWeights = chainResponse[10][2].response[0];
+  const variableWeights = chainResponse[13][0].response[0];
+  const stableWeights = chainResponse[13][1].response[0];
+  const adminWeights = chainResponse[13][2].response[0];
+  const combineWeights = chainResponse[13][3].response[0];
 
-  const totalAllocPoint = new BigNumber(
-    chainResponse[9][3].response[0].toString(),
-  );
   const variableAlloc = new BigNumber(
-    chainResponse[9][0].response[1].toString(),
+    chainResponse[12][0]?.response[1]?.toString(),
   );
-  const stableAlloc = new BigNumber(chainResponse[9][1].response[1].toString());
-  const adminAlloc = new BigNumber(chainResponse[9][2].response[1].toString());
+  const stableAlloc = new BigNumber(
+    chainResponse[12][1]?.response[1]?.toString(),
+  );
+  const adminAlloc = new BigNumber(
+    chainResponse[12][2]?.response[1]?.toString(),
+  );
+  const combineAlloc = new BigNumber(
+    chainResponse[12][3]?.response[1]?.toString(),
+  );
+  const totalAllocPoint = new BigNumber(
+    chainResponse[12][4]?.response[0]?.toString(),
+  );
 
   const variableShare = variableAlloc.div(totalAllocPoint);
   const stableShare = stableAlloc.div(totalAllocPoint);
   const adminShare = adminAlloc.div(totalAllocPoint);
+  const combineShare = combineAlloc.div(totalAllocPoint);
 
-  const data: any = [[], [], []];
-  const unionGauges = [variableGauges, stableGauges, adminGauges];
-  const unionTokens = [variableTokens, stableTokens, adminTokens];
+  const data: any = [[], [], [], []];
 
-  [variableLps, stableLps, adminLps].forEach((lps, x) => {
+  const unionGauges = [
+    variableGauges,
+    stableGauges,
+    adminGauges,
+    combineGauges,
+  ];
+  const unionTokens = [
+    variableTokens,
+    stableTokens,
+    adminTokens,
+    combineTokens,
+  ];
+
+  [variableLps, stableLps, adminLps, combineLps].forEach((lps, x) => {
     const loc = data[x];
     let doubleCountEven = 0;
     let doubleCountOdd = 1;
@@ -388,40 +498,50 @@ export const getGaugesPoolInfoWithMulticall = async (
       loc.push({
         address: lp,
         gaugeAddress: unionGauges[x][y],
-        rewardRate: chainResponse[x][doubleCountEven].response[0].toString(),
-        derivedSupply: chainResponse[x][doubleCountOdd].response[0].toString(),
-        weight: chainResponse[x + 6].length
-          ? chainResponse[x + 6][y].response[0].toString()
+        rewardRate: chainResponse[x][doubleCountEven]?.response[0]?.toString(),
+        derivedSupply:
+          chainResponse[x][doubleCountOdd]?.response[0]?.toString(),
+        weight: chainResponse[x + 8].length
+          ? chainResponse[x + 8][y]?.response[0]?.toString()
           : null,
         liquidityShare: formatUnits(
-          chainResponse[x + 3][doubleCountEven].response[0].toString(),
+          chainResponse[x + 4][doubleCountEven]?.response[0]?.toString() || '0',
           18,
-        ).toString(),
-        stable: chainResponse[x + 3][doubleCountOdd].response[0],
+        )?.toString(),
+        stable: chainResponse[x + 4][doubleCountOdd]?.response[0],
         token0: unionTokens[x][doubleCountEven],
         token1: unionTokens[x][doubleCountOdd],
-        type: ['variable', 'stable', 'admin'][x],
+        type: ['variable', 'stable', 'admin', 'combine'][x],
       });
       doubleCountOdd += 2;
       doubleCountEven += 2;
     });
   });
 
-  const [variableGaugesData, stableGaugesData, adminGaugesData] = data;
-  const variableTotalLocked = variableWeights.toString();
-  const stableTotalLocked = stableWeights.toString();
-  const adminTotalLocked = adminWeights.toString();
+  const [
+    variableGaugesData,
+    stableGaugesData,
+    adminGaugesData,
+    combineGaugesData,
+  ] = data;
+  const variableTotalLocked = variableWeights?.toString();
+  const stableTotalLocked = stableWeights?.toString();
+  const adminTotalLocked = adminWeights?.toString();
+  const combineTotalLocked = combineWeights?.toString();
 
   return {
     variableGauges: variableGaugesData,
     stableGauges: stableGaugesData,
     adminGauges: adminGaugesData,
+    combineGauges: combineGaugesData,
     variableTotalLocked,
     stableTotalLocked,
     adminTotalLocked,
+    combineTotalLocked,
     variableShare,
     stableShare,
     adminShare,
+    combineShare,
   };
 };
 
@@ -523,12 +643,12 @@ export const getLpTokenPrices = async (
     if (tokenAddresses.includes(WFTM.address.toLowerCase())) {
       const ftmReserve = (
         checkAddress(token0, WFTM.address) ? reserve0 : reserve1
-      ).toString();
+      )?.toString();
       return usdcFTMValue.times(reconcileReserves(ftmReserve, totalSupply));
     } else if (tokenAddresses.includes(USDC.address.toLowerCase())) {
       const usdcReserve = (
         checkAddress(token0, USDC.address) ? reserve0 : reserve1
-      ).toString();
+      )?.toString();
       return reconcileReserves(
         formatUnits(usdcReserve, 6),
         formatUnits(totalSupply, 18),
@@ -536,7 +656,7 @@ export const getLpTokenPrices = async (
     } else if (tokenAddresses.includes(SPIRIT.address.toLowerCase())) {
       const spiritReserve = (
         checkAddress(token0, SPIRIT.address) ? reserve0 : reserve1
-      ).toString();
+      )?.toString();
       return usdcSpiritValue.times(
         reconcileReserves(spiritReserve, totalSupply),
       );
@@ -553,9 +673,9 @@ export const getLpTokenPrices = async (
       const rate = determineUSDCValue(
         chainTokens[doubleCountEven],
         chainTokens[doubleCountOdd],
-        reserves[doubleCountEven].response[0].toString(),
-        reserves[doubleCountOdd].response[0].toString(),
-        supply[count].response[0].toString(),
+        reserves[doubleCountEven].response[0]?.toString(),
+        reserves[doubleCountOdd].response[0]?.toString(),
+        supply[count].response[0]?.toString(),
       );
       data[lp.toLowerCase()] = rate;
       doubleCountOdd += 2;
@@ -645,19 +765,38 @@ export const loadFarmsList = async (
     variableGauges,
     stableGauges,
     adminGauges,
+    combineGauges,
+
     variableTotalLocked,
     stableTotalLocked,
     adminTotalLocked,
+    combineTotalLocked,
+
     variableShare,
     stableShare,
     adminShare,
+    combineShare,
   } = gaugeChainData;
 
-  const totalData = [...variableGauges, ...stableGauges, ...adminGauges];
+  const totalData = [
+    ...variableGauges,
+    ...stableGauges,
+    ...adminGauges,
+    ...combineGauges,
+  ];
 
   // Here's where we call stable and weighted data
   const masterFarms: (IFarm | null)[] = await Promise.all(
     totalData.map(async (farm, i) => {
+      const share =
+        farm.type === 'variable'
+          ? variableShare
+          : farm.type === 'stable'
+          ? stableShare
+          : farm.type === 'admin'
+          ? adminShare
+          : combineShare;
+
       const lowerLp = farm.lpAddresses
         ? farm.lpAddresses[chainId].toLowerCase()
         : farm.lpAddress
@@ -675,35 +814,28 @@ export const loadFarmsList = async (
       const gaugeRewardPerYear = gaugeRewardPerSecond.times(
         new BigNumber('31536000'),
       );
-      const rewardBase = gaugeRewardPerYear.div(totalDerivedBalance).toString();
+      const rewardBase = gaugeRewardPerYear
+        .div(totalDerivedBalance)
+        ?.toString();
 
       let totalLocked;
       if (farm.type === 'admin') {
         totalLocked = new BigNumber(adminTotalLocked);
       } else if (farm.type === 'stable') {
         totalLocked = new BigNumber(stableTotalLocked);
+      } else if (farm.type === 'combine') {
+        totalLocked = new BigNumber(combineTotalLocked);
       } else {
         totalLocked = new BigNumber(variableTotalLocked);
       }
 
-      farm.multiplier = gaugeWeight
-        .div(totalLocked)
-        .times(
-          farm.type === 'variable'
-            ? variableShare
-            : farm.type === 'stable'
-            ? stableShare
-            : adminShare,
-        )
-        .times(100);
+      farm.multiplier = gaugeWeight.div(totalLocked).times(share).times(100);
 
       if (tokens[0] && tokens[1]) {
         farm.lpSymbol = `${tokens[0].symbol}-${tokens[1].symbol}`;
       } else {
         farm.lpSymbol = '';
       }
-
-      farm.label = farm.type || 'NMC';
 
       const maxApy = new BigNumber(
         rewardBase && rewardBase !== 'Infinity'
@@ -718,8 +850,6 @@ export const loadFarmsList = async (
       const totalLiquidity = new BigNumber(farm.liquidityShare)
         .times(rate)
         .toNumber();
-
-      const type = farm?.stable ? 'stable' : 'variable';
 
       const isIncative = inactiveFarms.includes(farm.lpSymbol.toUpperCase());
 
@@ -736,7 +866,7 @@ export const loadFarmsList = async (
           maxApy.toFormat(2) === 'NaN' || isIncative ? '0' : maxApy.toFormat(2),
         boosted: true,
         lpApr: '0',
-        label: farm.label || '',
+        label: farm.type || 'NMC',
         rewardToken: farm?.rewardToken,
         totalLiquidity,
         totalSupply: farm.liquidityShare,
@@ -746,12 +876,12 @@ export const loadFarmsList = async (
         yourApr: minApy.isFinite()
           ? isIncative
             ? '0'
-            : minApy.toString()
+            : minApy?.toString()
           : '0',
         valid: tokens.length > 0,
         multiplier: farm.multiplier
           ? farm.multiplier.isFinite()
-            ? farm.multiplier.toString()
+            ? farm.multiplier?.toString()
             : '0.00'
           : '0.00',
         holdAmountForMaxBoost: '1',
@@ -761,7 +891,7 @@ export const loadFarmsList = async (
         lpTokens: '0.00',
         stable: farm.stable,
         lpTokensMoney: '0.00',
-        type,
+        type: farm.stable ? 'stable' : 'variable',
         pid: farm?.pid || 0,
       };
 
