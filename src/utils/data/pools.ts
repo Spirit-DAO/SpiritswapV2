@@ -868,7 +868,7 @@ export const loadFarmsList = async (
         lpTokens: '0.00',
         stable: farm.stable,
         lpTokensMoney: '0.00',
-        type: farm.stable ? 'stable' : 'variable',
+        type: farm.type,
         pid: farm?.pid || 0,
       };
 

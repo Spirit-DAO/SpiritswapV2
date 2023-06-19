@@ -35,6 +35,7 @@ export default function FarmControls({
           t(`${translationPath}.classicV2`),
           t(`${translationPath}.stable`),
           t(`${translationPath}.concentrated`),
+          'Combine',
         ]}
         onChange={onFarmTabChange}
       />
