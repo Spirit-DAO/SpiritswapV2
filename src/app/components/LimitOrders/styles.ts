@@ -10,7 +10,7 @@ export const LimitOrderPanelFooterWrapper = styled.div`
   border-bottom-left-radius: ${({ theme }) => theme.borderRadius.md};
   border-bottom-right-radius: ${({ theme }) => theme.borderRadius.md};
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.xs}) {

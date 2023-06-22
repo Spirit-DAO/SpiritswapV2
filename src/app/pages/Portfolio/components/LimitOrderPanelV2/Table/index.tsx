@@ -4,24 +4,22 @@ import {
   Table,
   TableContainer,
   Tbody,
+  Td,
   Text,
   Th,
   Thead,
   Tr,
   Flex,
 } from '@chakra-ui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useMobile from 'utils/isMobile';
 import { OpenLimitOrder } from '../LimitOrdersPanelV2.d';
-import LimitOrderRow from './LimitOrderRow';
-import Col from './Col';
-import Cell from './Cell';
 
 const LimitTable = ({ isLoading, openOrders, searchValue }) => {
   const isMobile = useMobile();
   const [filterOrders, setFilterOrders] =
     useState<OpenLimitOrder[]>(openOrders);
-  const TableHeadings = ['Pair', 'You sell', 'Price', 'You buy'];
+  const TableHeadings = ['Pair', 'Paying', 'Price', 'Receiving'];
 
   const getSorted = (type: string) => {
     try {
@@ -39,10 +37,10 @@ const LimitTable = ({ isLoading, openOrders, searchValue }) => {
           return 0;
         });
       }
-      if (type === 'You sell') {
+      if (type === 'Paying') {
         filterOrders.sort((a, b) => {
-          const [fValue]: string[] = a.amount ? a.amount : ['0'];
-          const [sValue]: string[] = b.amount ? b.amount : ['0'];
+          const [fValue]: string[] = a.paying ? a.paying.split(' ') : ['0'];
+          const [sValue]: string[] = b.paying ? b.paying.split(' ') : ['0'];
           return Number(fValue) - Number(sValue);
         });
       }
@@ -53,7 +51,7 @@ const LimitTable = ({ isLoading, openOrders, searchValue }) => {
           return Number(fValue) - Number(sValue);
         });
       }
-      if (type === 'You buy') {
+      if (type === 'Receiving') {
         filterOrders.sort((a, b) => {
           const [fValue]: string[] = a.receiving
             ? a.receiving.split(' ')
@@ -90,6 +88,26 @@ const LimitTable = ({ isLoading, openOrders, searchValue }) => {
       />
     );
   }
+  const Cell = ({ autoHeight = true, heading = false, children, ...props }) => (
+    <Flex
+      alignItems={'center'}
+      w={'full'}
+      bg={heading ? 'transparent' : 'bgBoxLighter'}
+      h={autoHeight ? '2rem' : '2.5rem'}
+      p={heading ? '0 0.5rem 0 0' : 'spacing03'}
+      borderRadius={'.25rem'}
+      minW={heading ? 'max-content' : '150px'}
+      {...props}
+    >
+      {children}
+    </Flex>
+  );
+
+  const Col = ({ children, ...props }) => (
+    <Flex flexDir="column" alignItems="flex-start" {...props} gap="4px">
+      {children}
+    </Flex>
+  );
 
   if (isMobile)
     return (
@@ -126,9 +144,18 @@ const LimitTable = ({ isLoading, openOrders, searchValue }) => {
           w="360px"
         >
           {filterOrders.map((limitOrder, i) => (
-            <Fragment key={`${limitOrder.pair}-${i}`}>
-              <LimitOrderRow limitOrder={limitOrder} isMobile={true} />
-            </Fragment>
+            <Col fontSize="sm" key={`${limitOrder.pair}-${i}`}>
+              <Cell autoHeight={false}>
+                <Flex flexDir="column">
+                  {limitOrder.pair?.map((token, i) => (
+                    <Text key={`${token}-${i}`}>{token}</Text>
+                  ))}
+                </Flex>
+              </Cell>
+              <Cell>{limitOrder.paying}</Cell>
+              <Cell>{limitOrder.price}</Cell>
+              <Cell>{limitOrder.receiving}</Cell>
+            </Col>
           ))}
         </Flex>
       </Flex>
@@ -162,9 +189,18 @@ const LimitTable = ({ isLoading, openOrders, searchValue }) => {
           </Thead>
           <Tbody>
             {filterOrders.map((limitOrder, i) => (
-              <Fragment key={`${limitOrder.pair?.[0]}${i}`}>
-                <LimitOrderRow limitOrder={limitOrder} isMobile={false} />
-              </Fragment>
+              <Tr fontSize="sm" key={`${limitOrder.pair?.[0]}${i}`} h="54px">
+                <Td>
+                  {limitOrder.pair?.map((token, i) => (
+                    <Text key={`${token}-${i}`} flexGrow={1}>
+                      {token}
+                    </Text>
+                  ))}
+                </Td>
+                <Td>{limitOrder.paying}</Td>
+                <Td>{limitOrder.price}</Td>
+                <Td>{limitOrder.receiving}</Td>
+              </Tr>
             ))}
           </Tbody>
         </Table>

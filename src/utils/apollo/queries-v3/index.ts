@@ -316,12 +316,7 @@ export const fetchAllV3TicksQuery = gql`
 export const fetchEternalFarmingFromPool = gql`
   query eternalFarmingFromPools($poolAddress: String!) {
     eternalFarmings(
-      where: {
-        pool: $poolAddress
-        isDetached: false
-        rewardRate_gt: 0
-        bonusRewardRate_gt: 0
-      }
+      where: { pool: $poolAddress, isDetached: false, rewardRate_gt: 0 }
     ) {
       id
       rewardToken

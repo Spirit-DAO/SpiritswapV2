@@ -15,7 +15,7 @@ import {
   getUserInspiritBalances,
   saturateGauges,
 } from 'utils/data';
-import { getLimitOrders } from 'utils/swap/algebra-limit-orders';
+import { getLimitOrders } from 'utils/swap/gelato';
 import { checkSpiritAllowance, formatFrom } from 'utils/web3';
 import { UNIDEX_ETH_ADDRESS } from 'utils/swap';
 import { formatUnits } from 'ethers/lib/utils';
@@ -45,8 +45,6 @@ onmessage = ({ data: { type, provider, userAddress, signer, params } }) => {
     case 'fetchIndividualLP':
       fetchIndividualLP(userAddress, params, loadedProvider);
       break;
-    case 'getV3Liquidity':
-      getV3Liquidity(userAddress, loadedProvider);
   }
 };
 
@@ -297,13 +295,18 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
 };
 
 /**
- * Helper method - Checks for existing limit orders associated with the user
+ * Helper method - Checks for existing limit orders associated with the user in gelato
  *  - userWalletAddress: Address of user in the blockchain
  *  - dispatch: callback hook method that allows update of app state
  */
 const checkLimitOrders = async (userWalletAddress, signer) => {
   // Checks if allowance exists for
-  const limitOrders = await getLimitOrders(userWalletAddress, signer);
+  const limitOrders = await getLimitOrders(
+    userWalletAddress,
+    undefined,
+    undefined,
+    signer,
+  );
 
   self.postMessage({
     type: 'setLimitOrders',

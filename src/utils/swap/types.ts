@@ -1,5 +1,5 @@
 // Types related to unidex and swap page
-
+import { Order } from '@gelatonetwork/limit-orders-lib';
 import { Token } from 'app/interfaces/General';
 import { OptimalRate } from 'paraswap-core';
 
@@ -21,7 +21,16 @@ export interface OrderLimitParams {
   buyToken: string;
   buyAmount?: number;
 }
-
+export interface GeletoLimitParams {
+  chainId?: number;
+  account: string;
+  inputToken: string;
+  outputToken: string;
+  inputAmount: string;
+  minReturn: string;
+  inputDecimals: number;
+  outputDecimals: number;
+}
 export interface QuoteOrderData {
   fillData: {
     router?: string;
@@ -106,6 +115,7 @@ export interface TradeArrayItem {
   tradingLogo: string;
 }
 
-export interface AlgebraLimitOrder {
-  [key: string]: any;
+export interface GelattoLimitOrder extends Order {
+  inputTokenData?: Token;
+  outputTokenData?: Token;
 }

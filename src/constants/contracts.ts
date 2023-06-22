@@ -362,10 +362,10 @@ const contracts = {
     250: '0xB4cAdb88629f2A06755175d43dEEad8d4DEA9b76',
   },
   v3FarmingCenter: {
-    250: '0xCe6828Dd425A752a9134B93dC66c01336a90a2fF',
+    250: '0x9D02f0263Ae37a320405BEb0C4E56f95d964FD10',
   },
   v3EternalFarming: {
-    250: '0xa4c780Bcb29Afafee4425644472be3C92c14806A',
+    250: '0xeD28b17b1045E8E7bCc96b640945Fca1344b5194',
   },
 };
 

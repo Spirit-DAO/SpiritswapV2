@@ -28,6 +28,8 @@ export default function ConcentratedPositionsPanel({
   const positions = useMemo(() => {
     if (!wallet || !farm) return;
 
+    console.log('Wallet', wallet);
+
     const positionsForFarming = wallet.filter(position => {
       if (type === FarmTransactionType.DEPOSIT) {
         return (

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Stack, useMediaQuery } from '@chakra-ui/react';
 import { LimitOrderContainer } from './styles';
 import { CardHeader } from 'app/components/CardHeader';
@@ -16,11 +16,7 @@ const LimitOrders = ({ showChart }: LimitOrderProps) => {
   const { t } = useTranslation();
   const { isLoggedIn } = useWallets();
   const [limitOrderIndex, setLimitOrderIndex] = useState(0);
-
-  const existingOrders = GetLimitOrders();
-
-  const orders = useMemo(() => existingOrders || [], [existingOrders]);
-
+  const orders = GetLimitOrders();
   const { addToQueue } = Web3Monitoring();
 
   const translationPath = 'swap.panels.limit';
@@ -28,24 +24,28 @@ const LimitOrders = ({ showChart }: LimitOrderProps) => {
   const columns = useMemo(
     () => [
       {
-        Header: t(`${translationPath}.youSell`, 'You Sell'),
-        accessor: 'sell',
+        Header: t(`${translationPath}.tokensLabel`, 'Tokens'),
+        accessor: 'tokens',
       },
       {
-        Header: t(`${translationPath}.youBuy`, 'You Buy'),
-        accessor: 'buy',
+        Header: t(`${translationPath}.createdLabel`, 'Created'),
+        accessor: 'created',
+      },
+      {
+        Header: t(`${translationPath}.inputLabel`, 'Input'),
+        accessor: 'input',
       },
       {
         Header: t(`${translationPath}.priceLabel`, 'Price'),
         accessor: 'price',
       },
       {
-        Header: t(`${translationPath}.status`, 'Status'),
+        Header: t(`${translationPath}.total`, 'Total'),
         accessor: 'total',
       },
       {
-        Header: t(`${translationPath}.action`, 'Action'),
-        accessor: 'action',
+        Header: t(`${translationPath}.actions`, 'Actions'),
+        accessor: 'actions',
       },
     ],
     [t],
@@ -71,7 +71,7 @@ const LimitOrders = ({ showChart }: LimitOrderProps) => {
         <TabSelect
           index={limitOrderIndex}
           setIndex={setLimitOrderIndex}
-          names={['Open', 'Completed', 'Cancelled']}
+          names={['Open', 'Closed', 'Cancelled']}
           w="fit-content"
         />
       </Stack>

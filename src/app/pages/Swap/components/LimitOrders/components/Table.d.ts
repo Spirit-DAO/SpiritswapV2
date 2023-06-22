@@ -1,10 +1,10 @@
-import { AlgebraLimitOrder } from 'utils/swap/types';
+import { GelattoLimitOrder } from 'utils/swap/types';
 
 export interface Props {
   columns?: column[];
   variantTable: string;
   limitOrderIndex: number;
-  orders: AlgebraLimitOrder[];
+  orders: GelattoLimitOrder[];
   monitor: Function;
 }
 

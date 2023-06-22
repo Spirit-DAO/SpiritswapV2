@@ -1,31 +1,17 @@
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { Token } from 'app/interfaces/General';
 import { formatAmount } from 'app/utils';
-import contracts from 'constants/contracts';
-import { CHAIN_ID, TOKENS_WITH_HIGH_SLIPPAGE } from 'constants/index';
+import { TOKENS_WITH_HIGH_SLIPPAGE } from 'constants/index';
 import { WFTM } from 'constants/tokens';
 import { BigNumber } from 'ethers';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { SLIPPAGE_TOLERANCES, SwapQuote } from 'utils/swap';
+import { placeLimitOrder } from 'utils/swap/gelato';
 import { buildSwapForParaSwap } from 'utils/swap/paraswap';
+import { GeletoLimitParams } from 'utils/swap/types';
 import { connect } from '../connection';
 import { Contract } from '../contracts';
 import { transactionResponse } from './utils';
-import { Token as TokenV3, toHex } from '../../../v3-sdk';
-
-export const algebraLimitOrderManagerContract = async () => {
-  const _connector = getProvider();
-  let contract = 'v3LimitOrderManager';
-
-  const limitOrderManagerContract = await Contract(
-    contracts[contract][CHAIN_ID],
-    contract,
-    _connector,
-    CHAIN_ID,
-  );
-
-  return limitOrderManagerContract;
-};
 
 export const swapTransaction = async (
   senderAddress,
@@ -103,6 +89,29 @@ export const swapTransaction = async (
   });
 };
 
+export const placeOrderLimit = async (
+  _userAddress,
+  _trade: GeletoLimitParams,
+  _handler = undefined,
+  _chainId = undefined,
+) => {
+  const _connection = getProvider();
+  const { signer } = await connect(_connection);
+
+  const inputAmount = parseUnits(_trade.inputAmount, _trade.inputDecimals);
+  const outputAmount = parseUnits(_trade.minReturn, _trade.outputDecimals);
+
+  return placeLimitOrder(
+    _userAddress,
+    signer,
+    _trade.inputToken,
+    _trade.outputToken,
+    inputAmount,
+    outputAmount,
+    parseUnits(_trade.inputAmount, _trade.inputDecimals).toString(),
+  );
+};
+
 export const wrappedFTMaction = async (
   isDeposit: boolean,
   value: string,
@@ -158,64 +167,4 @@ export const wrappedFTMaction = async (
   } catch (error) {
     throw '';
   }
-};
-
-export const placeAlgebraLimitOrdrer = async (
-  token0: TokenV3,
-  token1: TokenV3,
-  amount,
-  tick,
-  isNative,
-  currentTick,
-) => {
-  const limitOrderManagerContract = await algebraLimitOrderManagerContract();
-
-  const sorted = token0?.sortsBefore(token1);
-
-  const [_token0, _token1] = sorted ? [token0, token1] : [token1, token0];
-
-  const value = isNative
-    ? toHex(parseUnits(amount.toString(), 18).toString())
-    : 0;
-
-  console.log(
-    _token0.address,
-    _token1.address,
-    !sorted,
-    parseUnits(amount.toString(), token0.decimals).toString(),
-    tick,
-    currentTick,
-    value,
-  );
-  const tx = await limitOrderManagerContract.addLimitOrder(
-    {
-      token0: _token0.address,
-      token1: _token1.address,
-      depositedToken: !sorted,
-      amount: parseUnits(amount.toString(), token0.decimals).toString(),
-      tick,
-    },
-    { value },
-  );
-
-  return tx;
-};
-
-export const collectAlgebraLimitOrder = async (tokenId, amount, account) => {
-  const limitOrderManagerContract = await algebraLimitOrderManagerContract();
-
-  const decrease = limitOrderManagerContract.interface.encodeFunctionData(
-    'decreaseLimitOrder',
-    [tokenId, amount],
-  );
-  const collect = limitOrderManagerContract.interface.encodeFunctionData(
-    'collectLimitOrder',
-    [tokenId, account],
-  );
-
-  const callDatas = [decrease, collect];
-
-  const tx = await limitOrderManagerContract.multicall(callDatas);
-
-  return tx;
 };

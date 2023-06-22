@@ -20,7 +20,6 @@
     "source.fixAll.eslint": true
   },
   "emmet.triggerExpansionOnTab": true,
-  "typescript.enablePromptUseWorkspaceTsdk": true,
   "cSpell.words": [
     "ARROWBACK",
     "chakra",
