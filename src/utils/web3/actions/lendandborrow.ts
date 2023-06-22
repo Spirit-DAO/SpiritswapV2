@@ -1,6 +1,6 @@
 import { CHAIN_ID, SPIRITSWAP_UNITROLLER_OLA_FINANCE } from 'constants/index';
 import contracts from 'constants/contracts';
-import { Contract } from '../contracts';
+import { Contract, Multicall } from '../contracts';
 import BigNumber from 'bignumber.js';
 import { formatUnits } from 'ethers/lib/utils';
 
@@ -13,6 +13,8 @@ const getSupplyAPY = (
   reserveFactor: BigNumber,
   totalSupply: BigNumber,
 ) => {
+  if (!borrowRate) return new BigNumber(0);
+
   const borrowApy = getBorrowAPY(borrowRate);
   const formatedReserveFactor = formatUnits(`${reserveFactor}`, 18);
   const formatedTotalSupply = formatUnits(`${totalSupply}`, 18);
@@ -27,7 +29,9 @@ const getSupplyAPY = (
 };
 
 const getBorrowAPY = (borrowRate: BigNumber) => {
-  const formatedBorrowRate = formatUnits(borrowRate.toString(), 18);
+  if (!borrowRate) return new BigNumber(0);
+
+  const formatedBorrowRate = formatUnits(borrowRate?.toString(), 18);
 
   const borrowApr = new BigNumber(formatedBorrowRate).multipliedBy(
     YEAR_IN_SECONDS,
@@ -49,12 +53,23 @@ export const getOlaFinanceData = async (userAddress: string) => {
     userAddress,
   );
 
-  const markets = await Promise.all(
-    lendAndBorrowData.map(async market => {
-      const info = await contract.callStatic.viewMarket(market.oToken);
-      return { oToken: market.oToken, data: info };
-    }),
+  const marketCallsArray = lendAndBorrowData.map(market => ({
+    name: 'viewMarket',
+    params: [market.oToken],
+    address: contracts.olaLendingLend[CHAIN_ID],
+  }));
+
+  const rawMarkets = await Multicall(
+    marketCallsArray,
+    'lendAndBorrow',
+    CHAIN_ID,
+    'rpc',
   );
+
+  const markets = rawMarkets.map((response, index) => ({
+    oToken: lendAndBorrowData[index].oToken,
+    data: response.response,
+  }));
 
   const borrowAPYValues: { [oToken: string]: string } = {};
   const supplyAPYValues: { [oToken: string]: string } = {};

@@ -40,7 +40,8 @@ export const filterByState = (
     : hasConcentratedPositions
     ? true
     : false;
-  const inactive = !(parseFloat(pool.apr!) > 0);
+
+  const inactive: boolean = !(parseFloat(pool.apr!) > 0);
 
   const filterType = [filterByStaked, filterByInactive];
   const filterValue = [staked, inactive];

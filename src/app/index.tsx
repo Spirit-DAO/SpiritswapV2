@@ -16,6 +16,7 @@ export function App() {
   const { i18n } = useTranslation();
   const [spiritPrice, setSpiritPrice] = useState(0);
   const rootPath = document.documentElement.dataset['rootPath'] || '/';
+
   useEffect(() => {
     const fetchPrice = async () => {
       const data = await getTokenUsdPrice(SPIRIT.address, CHAIN_ID);

@@ -6,6 +6,9 @@ import {
 } from 'app/connectors/EthersConnector/login';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 
+const providers = {};
+const signers = {};
+
 // Creates a basic connection to the blockchain through a wallet such as metamask
 export const wallet = async (
   _connection,
@@ -49,12 +52,22 @@ export const wallet = async (
   };
 };
 
+const randomInt_0_to_2 = () => {
+  return Math.floor(Math.random() * 3);
+};
+
 // Connects to either a wallet or external rpc
-export const connect = async (
-  _connection: any = 'rpc',
-  _callback?: Function,
+export const connect = async ({
+  _connection = 'rpc',
+  _callback,
   _chainId = CHAIN_ID,
-) => {
+  rpcID = 0,
+}: {
+  _connection?: any;
+  _callback?: Function;
+  _chainId?: number;
+  rpcID?: number;
+}) => {
   if (CONNECTIONS().includes(_connection)) {
     try {
       if (_connection instanceof WalletConnectProvider) {
@@ -69,13 +82,20 @@ export const connect = async (
   if (connectionUrl === 'rpc') {
     const chainID = _chainId !== 0 ? _chainId : CHAIN_ID;
     const chain = NETWORK[chainID];
-    connectionUrl = chain.rpc[0];
+    connectionUrl = chain.rpc[randomInt_0_to_2()];
   }
 
-  const provider = new ethers.providers.JsonRpcProvider(connectionUrl);
-  const signer = await provider.getSigner();
+  if (!providers[connectionUrl]) {
+    providers[connectionUrl] = new ethers.providers.JsonRpcProvider(
+      connectionUrl,
+    );
+  }
 
-  return { provider, signer };
+  if (!signers[connectionUrl]) {
+    signers[connectionUrl] = providers[connectionUrl].getSigner();
+  }
+
+  return { provider: providers[connectionUrl], signer: signers[connectionUrl] };
 };
 
 export const web3Socket = (_chainId = CHAIN_ID) => {

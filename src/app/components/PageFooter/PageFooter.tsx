@@ -33,6 +33,7 @@ import {
   ZOKYO_AUDIT_URL,
   PECK_SHIELD_AUDIT_URL,
   SPIRIT_DOCS_URL,
+  SPIRIT_WHITELISTING_FORMS,
 } from 'constants/index';
 import { PeckShiledAuditLogo, ZokyoAuditLogo } from 'app/assets/icons';
 
@@ -126,6 +127,18 @@ export default function PageFooter() {
                 >
                   <TelegramSvg />
                 </Link>
+
+                {isMobile ? null : (
+                  <Button fontSize="base" fontWeight="normal">
+                    <Link
+                      target="_blank"
+                      rel="noreferrer"
+                      href={SPIRIT_WHITELISTING_FORMS}
+                    >
+                      <Text>Whitelist Application</Text>
+                    </Link>
+                  </Button>
+                )}
               </HStack>
               <Box
                 display={isMobile ? 'flex' : 'block'}
@@ -157,7 +170,17 @@ export default function PageFooter() {
                 </Box>
               </Box>
             </VStack>
-
+            {!isMobile ? null : (
+              <Button fontSize="base" fontWeight="normal" mt="25px">
+                <Link
+                  target="_blank"
+                  rel="noreferrer"
+                  href={SPIRIT_WHITELISTING_FORMS}
+                >
+                  <Text>Whitelist Application</Text>
+                </Link>
+              </Button>
+            )}
             <SimpleGrid
               columns={isMobile ? 2 : 4}
               gap="20px"
@@ -173,7 +196,7 @@ export default function PageFooter() {
                   rel="noreferrer"
                   href="https://defillama.com/protocol/spiritswap"
                 >
-                  Defi Llama
+                  DefiLlama
                 </Link>
                 <Link
                   target="_blank"
@@ -216,13 +239,6 @@ export default function PageFooter() {
                   Exchanges
                 </Box>
 
-                <Link
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://trade.felix.com/en/trade/basic/SPIRIT_USDT"
-                >
-                  Felix
-                </Link>
                 <Link
                   target="_blank"
                   rel="noreferrer"

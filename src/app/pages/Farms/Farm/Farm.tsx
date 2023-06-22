@@ -477,10 +477,13 @@ export const Farm = ({
                 ecosystem={ecosystem}
                 isBoosted={boosted}
                 isMax={isMax}
+                isExpanded={isExpanded}
+                farmUserData={farmUserData}
                 lpApr={lpApr}
                 staked={staked}
                 concentrated={farm.concentrated}
               />
+
               <IconTooltipPanel staked={staked} items={infoPanelItems} />
               <AccordionPanel p={0}>
                 {concentrated ? (
@@ -547,16 +550,6 @@ export const Farm = ({
                     />
                   }
                 />
-                {boosted && (
-                  <BoostFactor
-                    key="boostfactor"
-                    currentBoost={farmUserData.currentBoost || '0'}
-                    holdAmountForMaxBoost={
-                      farmUserData.spiritNeededForMax || '0'
-                    }
-                    lpTokens={farmUserData.lpTokens}
-                  />
-                )}
               </AccordionPanel>
               <AccordionButton
                 justifyContent={'center'}

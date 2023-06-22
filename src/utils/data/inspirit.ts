@@ -18,8 +18,10 @@ import {
   getBribeContract,
   MulticallV2,
   MulticallSingleResponse,
+  DEFAULT_GAS_LIMIT,
+  MultiCallArray,
 } from 'utils/web3';
-import { getTokensDetails, getTokenUsdPrice } from './covalent';
+import { getTokensDetails } from './covalent';
 import { BoostedFarmData, BoostedFarmVoteData } from './types';
 import {
   formatBoostedFarms,
@@ -176,36 +178,47 @@ export const getUserInspiritBalances = async (userAddress: string) => {
     },
   ];
 
-  const multicall = await Multicall(balanceParams, 'inspirit');
-  const userLocked = multicall[0]
-    ? formatUnits(multicall[0]?.response[0], 18)
-    : '0';
-  const userLockEndDate = multicall[0] ? multicall[0]?.response[1] : 0;
-  const userBalance = multicall[1]
-    ? formatUnits(multicall[1]?.response[0], 18)
-    : '0';
+  try {
+    const multicall = await Multicall(balanceParams, 'inspirit');
+    const userLocked = multicall[0]
+      ? formatUnits(multicall[0]?.response[0], 18)
+      : '0.0';
+    const userLockEndDate = multicall[0] ? multicall[0]?.response[1] : 0;
+    const userBalance = multicall[1]
+      ? formatUnits(multicall[1]?.response[0], 18)
+      : '0.0';
 
-  const feeDistributorAddress = addresses.feedistributor[CHAIN_ID];
+    const feeDistributorAddress = addresses.feedistributor[CHAIN_ID];
 
-  const feeDisributorContract = await Contract(
-    feeDistributorAddress,
-    'feedistributor',
-  );
+    const feeDisributorContract = await Contract(
+      feeDistributorAddress,
+      'feedistributor',
+    );
 
-  const userClaim = await feeDisributorContract.callStatic['claim(address)'](
-    userAddress,
-    {
-      gasLimit: 1000000,
-    },
-  );
+    const userClaim = await feeDisributorContract.callStatic['claim(address)'](
+      userAddress,
+      {
+        gasLimit: DEFAULT_GAS_LIMIT * 2,
+      },
+    );
 
-  const userClaimableAmount = formatUnits(userClaim, 18);
+    const userClaimableAmount = formatUnits(userClaim, 18);
+
+    return {
+      userLocked,
+      userBalance,
+      userClaimableAmount,
+      userLockEndDate,
+    };
+  } catch (error) {
+    console.error(error);
+  }
 
   return {
-    userLocked,
-    userBalance,
-    userClaimableAmount,
-    userLockEndDate,
+    userLocked: '0.0',
+    userBalance: '0.0',
+    userClaimableAmount: '0.0',
+    userLockEndDate: 0,
   };
 };
 
@@ -302,18 +315,34 @@ export const getUserVotingData = async (
     StableRewards1,
     stableWeights,
     v2Weights,
-  ] = await Promise.all([
-    Multicall(v2VotingCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc'),
-    Multicall(stableVotingCalls, 'stableproxy', CHAIN_ID, 'rpc'),
-    Multicall(v2BribesCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc'),
-    Multicall(stableBribesCalls, 'stableproxy', CHAIN_ID, 'rpc'),
-    Multicall(v2Rewards0Calls, 'pair', CHAIN_ID, 'rpc'),
-    Multicall(v2Rewards1Calls, 'pair', CHAIN_ID, 'rpc'),
-    Multicall(stableRewards0Calls, 'pair', CHAIN_ID, 'rpc'),
-    Multicall(stableRewards1Calls, 'pair', CHAIN_ID, 'rpc'),
-    Multicall(stableWeightsCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc'),
-    Multicall(v2WeightsCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc'),
-  ]);
+  ] = await MultiCallArray(
+    [
+      v2VotingCalls,
+      stableVotingCalls,
+      v2BribesCalls,
+      stableBribesCalls,
+      v2Rewards0Calls,
+      v2Rewards1Calls,
+      stableRewards0Calls,
+      stableRewards1Calls,
+      stableWeightsCalls,
+      v2WeightsCalls,
+    ],
+    [
+      'gaugeproxyV3',
+      'stableproxy',
+      'gaugeproxyV3',
+      'stableproxy',
+      'pair',
+      'pair',
+      'pair',
+      'pair',
+      'gaugeproxyV3',
+      'gaugeproxyV3',
+    ],
+    CHAIN_ID,
+    'rpc',
+  );
 
   return {
     v2Voting,
@@ -386,8 +415,10 @@ export const saturateGauges = async (
     stableLps,
   );
 
-  const v2Rewards = await checkRewardsTokens(v2Bribes);
-  const stableRewards = await checkRewardsTokens(stableBribes);
+  const [v2Rewards, stableRewards] = await Promise.all([
+    checkRewardsTokens(v2Bribes),
+    checkRewardsTokens(stableBribes),
+  ]);
 
   const {
     newArray: bribesV2,
@@ -454,10 +485,13 @@ export const saturateGauges = async (
     rewardDur: rewardDurParamsStable.length,
     ts: totalSupplysParamsStable.length,
   };
-  const [bribeV2Result, bribeStableResult] = await Promise.all([
-    Multicall(bribeV2Calls, 'bribe', CHAIN_ID, 'rpc'),
-    Multicall(bribeStableCalls, 'bribe', CHAIN_ID, 'rpc'),
-  ]);
+
+  const [bribeV2Result, bribeStableResult] = await MultiCallArray(
+    [bribeV2Calls, bribeStableCalls],
+    ['bribe', 'bribe'],
+    CHAIN_ID,
+    'rpc',
+  );
 
   const [earnsV2, rewardDataV2, rewardDurV2, totalSupplysV2] =
     getSplitBribesCallsV2(bribesV2Size, bribeV2Result);
@@ -555,13 +589,12 @@ export const getBoostedFarms = async (
   provider: Web3Provider | undefined,
 ) => {
   if (provider && provider._network.chainId === CHAIN_ID) {
-    let gaugeProxy = 'gaugeproxy';
     let gaugeAddress = addresses.gauge[CHAIN_ID];
     const completeBribesRewards: any = [];
 
     const gaugeContract = await Contract(
       gaugeAddress,
-      gaugeProxy,
+      'gaugeproxy',
       undefined,
       undefined,
       provider,
@@ -599,28 +632,14 @@ export const getBoostedFarms = async (
       });
     });
 
-    // We retrieve all data in 3 calls rather than 90+ like in previous one
-    const gaugesMulticall = await Multicall(
-      gaugesParams,
-      gaugeProxy,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-    const weightsMulticall = await Multicall(
-      weightParams,
-      gaugeProxy,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-    const namesMulticall = await Multicall(
-      erc20Params,
-      'erc20',
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
+    const [gaugesMulticall, weightsMulticall, namesMulticall] =
+      await MultiCallArray(
+        [gaugesParams, weightParams, erc20Params],
+        ['gaugeproxy', 'gaugeproxy', 'gaugeproxy'],
+        CHAIN_ID,
+        'rpc',
+        provider,
+      );
 
     // All data is returned based in the index. We now loop and mix it
     const farms: Array<BoostedFarmData> = tokens.map((farmAddress, i) => {
@@ -674,10 +693,6 @@ export const getBoostedFarmVotes = async ({
   version = 1,
   provider = null,
 }) => {
-  if (!userAddress) {
-    return [];
-  }
-
   let gaugesSelected = gauges;
   let gaugeProxy = 'gaugeproxy';
   let gaugeAddress = addresses.gauge[CHAIN_ID];
@@ -710,19 +725,11 @@ export const getBoostedFarmVotes = async ({
     });
   });
 
-  // We retrieve all data in 2 calls rather than 60+ like in previous one
-  const gaugesMulticall = await Multicall(
-    gaugesParams,
-    gaugeProxy,
-    undefined,
-    undefined,
-    provider,
-  );
-  const votesMulticall = await Multicall(
-    votesParams,
-    gaugeProxy,
-    undefined,
-    undefined,
+  const [gaugesMulticall, votesMulticall] = await MultiCallArray(
+    [gaugesParams, votesParams],
+    [gaugeProxy, gaugeProxy],
+    CHAIN_ID,
+    'rpc',
     provider,
   );
 

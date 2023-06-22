@@ -1,8 +1,8 @@
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { Token } from 'app/interfaces/General';
 import { formatAmount } from 'app/utils';
-import { TOKENS_WITH_HIGH_SLIPPAGE } from 'constants/index';
-import { WFTM } from 'constants/tokens';
+import { CHAIN_ID, TOKENS_WITH_HIGH_SLIPPAGE } from 'constants/index';
+import { JEFE, WFTM } from 'constants/tokens';
 import { BigNumber } from 'ethers';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { SLIPPAGE_TOLERANCES, SwapQuote } from 'utils/swap';
@@ -18,22 +18,40 @@ export const swapTransaction = async (
   quote: SwapQuote,
   firstToken?: Token, // Not filtering directly from whitelist for when using non-verified tokens
   secondToken?: Token,
-  gasPrice?: string,
+  gasPriceData?: {
+    gasPrice: string;
+    txGweiCost: string;
+    type: string;
+  },
   deadlineOffset?: number,
 ) => {
   const _connection = getProvider();
-  const { signer } = await connect(_connection);
+
+  const { signer } = await connect({
+    _connection,
+  });
   const MIN_GAS_LIMIT = BigNumber.from('300000');
 
   if (quote.priceRoute) {
     const { priceRoute } = quote;
 
-    const finalSlippage = TOKENS_WITH_HIGH_SLIPPAGE.includes(
-      quote.buyTokenAddress.toLowerCase() ||
-        quote.sellTokenAddress.toLowerCase(),
+    const srcTokenAddress = quote.buyTokenAddress.toLowerCase();
+    const destTokenAddress = quote.sellTokenAddress.toLowerCase();
+
+    let finalSlippage;
+
+    finalSlippage = TOKENS_WITH_HIGH_SLIPPAGE.includes(
+      srcTokenAddress || destTokenAddress,
     )
       ? +SLIPPAGE_TOLERANCES[2] * 100 // 1%
       : quote.slippage || +SLIPPAGE_TOLERANCES[1] * 100; // Slippage by user or 0.5% by default
+
+    if (
+      srcTokenAddress === JEFE.address.toLowerCase() ||
+      destTokenAddress === JEFE.address.toLowerCase()
+    ) {
+      finalSlippage = '3000'; // for JEFE token we set the slippage to 30%
+    }
 
     const transactionRequest = await buildSwapForParaSwap({
       side: priceRoute.side,
@@ -58,18 +76,18 @@ export const swapTransaction = async (
 
   const txGas = BigNumber.from(quote.gas);
 
-  // These are the amounts that make the unidex api work every time
-  // TODO: Sort out a more dynamic way to set these ones
-
   const tx = {
     from: senderAddress,
-    gasPrice: BigNumber.from(gasPrice ?? quote.gasPrice),
     gasLimit: MIN_GAS_LIMIT.gt(txGas) ? MIN_GAS_LIMIT : txGas,
     to: quote.to,
     value: BigNumber.from(quote.value),
     data: quote.data,
     chainId: quote.chainId,
   };
+
+  if (gasPriceData?.type !== 'standard') {
+    tx['gasPrice'] = BigNumber.from(gasPriceData?.gasPrice ?? quote.gasPrice);
+  }
 
   const transaction = await signer.sendTransaction(tx);
 
@@ -96,8 +114,7 @@ export const placeOrderLimit = async (
   _chainId = undefined,
 ) => {
   const _connection = getProvider();
-  const { signer } = await connect(_connection);
-
+  const { signer } = await connect({ _connection });
   const inputAmount = parseUnits(_trade.inputAmount, _trade.inputDecimals);
   const outputAmount = parseUnits(_trade.minReturn, _trade.outputDecimals);
 
@@ -119,7 +136,7 @@ export const wrappedFTMaction = async (
 ) => {
   try {
     const _connection = getProvider();
-    const { signer } = await connect(_connection);
+    const { signer } = await connect({ _connection });
     const contract = await Contract(
       WFTM.address,
       'wrappedFTM',

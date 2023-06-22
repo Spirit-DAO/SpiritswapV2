@@ -158,7 +158,7 @@ const ConcentratedCollapseItem = ({
 
       await tx.wait();
 
-      const { provider } = await connect();
+      const { provider } = await connect({});
 
       userDataWorker.postMessage({
         userAddress: account,

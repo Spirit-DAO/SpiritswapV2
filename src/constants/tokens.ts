@@ -168,16 +168,41 @@ export const wBOMB = {
   chainId: 250,
 };
 
+export const JEFE = {
+  name: 'JEFE TOKEN',
+  symbol: 'JEFE',
+  address: '0x5b2AF7fd27E2Ea14945c82Dd254c79d3eD34685e',
+  chainId: 250,
+  decimals: 9,
+};
+
+export const rainSPIRIT = {
+  name: 'rainSPIRIT',
+  symbol: 'rainSPIRIT',
+  address: '0xf9c6e3C123f0494A4447100bD7dbd536F43CC33A',
+  chainId: 250,
+  decimals: 18,
+};
+
 export const tokens: Token[] = [
   FTM,
   SPIRIT,
   WFTM,
+  JEFE,
+  rainSPIRIT,
   {
     name: 'Wrapped BTC',
     symbol: 'WBTC',
     address: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
     chainId: 250,
     decimals: 8,
+  },
+  {
+    name: 'Rave Names',
+    symbol: 'Rave',
+    address: '0x88888a335b1F65a79Ec56A610D865b8b25B6060B',
+    chainId: 250,
+    decimals: 18,
   },
   {
     name: 'Wrapped ETH',
@@ -229,7 +254,6 @@ export const tokens: Token[] = [
     chainId: 250,
     decimals: 18,
   },
-
   {
     name: 'Frax Share',
     symbol: 'FXS',
@@ -468,9 +492,16 @@ export const tokens: Token[] = [
     decimals: 9,
   },
   {
-    name: 'DEI',
+    name: 'DEI (OLD)',
     symbol: 'DEI',
     address: '0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3',
+    chainId: 250,
+    decimals: 18,
+  },
+  {
+    name: 'DEI (NEW)',
+    symbol: 'DEI',
+    address: '0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0',
     chainId: 250,
     decimals: 18,
   },
@@ -537,13 +568,7 @@ export const tokens: Token[] = [
     chainId: 250,
     decimals: 0,
   },
-  {
-    name: 'rainSPIRIT',
-    symbol: 'rainSPIRIT',
-    address: '0xf9c6e3C123f0494A4447100bD7dbd536F43CC33A',
-    chainId: 250,
-    decimals: 18,
-  },
+
   {
     name: 'Oath',
     symbol: 'OATH',
@@ -643,6 +668,14 @@ export const tokens: Token[] = [
     decimals: 18,
     chainId: 250,
   },
+  {
+    name: 'Ankr Staked FTM',
+    symbol: 'ankrFTM',
+    chainId: 250,
+    address: '0xCfC785741Dc0e98ad4c9F6394Bb9d43Cd1eF5179',
+    decimals: 18,
+  },
+
   wBOMB,
   MIM,
   FRAX,

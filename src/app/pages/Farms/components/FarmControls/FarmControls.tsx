@@ -8,7 +8,6 @@ import {
   StyledIconToInput,
 } from '../../styles';
 import { StyledSwitch } from './styles';
-import { FarmType } from 'app/interfaces/Farm';
 
 export default function FarmControls({
   farmFilters,

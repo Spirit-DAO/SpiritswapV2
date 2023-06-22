@@ -8,13 +8,17 @@ import { formatEther } from 'ethers/lib/utils';
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { BigNumber } from 'ethers';
 
-export const DEFAULT_GAS_LIMIT = 5000000;
+export const DEFAULT_GAS_LIMIT = 350000;
 
 export const transaction = async (
   txHash: string,
   networkId: string | number | undefined = CHAIN_ID,
 ) => {
-  const external = await connect('rpc', () => null, Number(networkId));
+  const external = await connect({
+    _connection: 'rpc',
+    _chainId: Number(networkId),
+    _callback: () => null,
+  });
 
   const externalCheck = await external.provider.getTransactionReceipt(txHash);
 
@@ -100,7 +104,10 @@ export const getNativeTokenBalance = async (
   _address: string,
   _chainId = CHAIN_ID,
 ) => {
-  const { provider } = await connect('rpc', undefined, _chainId);
+  const { provider } = await connect({
+    _connection: 'rpc',
+    _chainId,
+  });
   const balance = await provider.getBalance(_address);
 
   return formatEther(balance);

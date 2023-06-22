@@ -66,6 +66,11 @@ export const formatReturnData = (
       [];
     let symbol = item.symbol;
 
+    const oldDei = '0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3';
+    const newDei = '0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0';
+    if (checkAddress(item.token1, oldDei)) {
+      item.token1 = newDei;
+    }
     if (item.token0) {
       const token0 = tokens.find(token =>
         checkAddress(token.address, item.token0),

@@ -304,19 +304,25 @@ export const unlockInspirit = async (amount: string) => {
 };
 
 export const claimSpirit = async (claimableSpiritRewards: string) => {
-  const contract = await feeDistributorContract();
+  try {
+    const contract = await feeDistributorContract();
 
-  const tx = await contract['claim()']();
+    const tx = await contract['claim()']({
+      gasLimit: DEFAULT_GAS_LIMIT * 2,
+    });
 
-  return transactionResponse('inspirit.claim', {
-    tx: tx,
-    uniqueMessage: {
-      text: `Claiming ${parseFloat(claimableSpiritRewards).toPrecision(4)}`,
-      secondText: 'SPIRIT',
-    },
-    update: 'portfolio',
-    updateTarget: 'user',
-  });
+    return transactionResponse('inspirit.claim', {
+      tx: tx,
+      uniqueMessage: {
+        text: `Claiming ${parseFloat(claimableSpiritRewards).toPrecision(4)}`,
+        secondText: 'SPIRIT',
+      },
+      update: 'portfolio',
+      updateTarget: 'user',
+    });
+  } catch (error) {
+    console.error('Claim spirit:', error);
+  }
 };
 
 export const voteForBoostedDistributions = async ({
@@ -349,7 +355,7 @@ export const voteForBoostedDistributions = async ({
   const contract = await gaugeContractProxy({ version });
 
   const tx = await contract.vote(tokenList, valueList, {
-    gasLimit: DEFAULT_GAS_LIMIT,
+    gasLimit: DEFAULT_GAS_LIMIT * 4,
   });
 
   return transactionResponse('inspirit.vote', {

@@ -61,6 +61,14 @@ const theme = extendTheme({
     Container,
     Skeleton,
     Select: { ...inputStyles },
+    Progress: {
+      baseStyle: {
+        filledTrack: {
+          bg: colors.ci,
+          borderRadius: '12px',
+        },
+      },
+    },
   },
 });
 

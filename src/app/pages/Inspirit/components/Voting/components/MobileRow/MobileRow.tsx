@@ -14,11 +14,13 @@ const MobileRow = ({
   resetInputs,
   onNewVote,
   cleanError,
+  showAll,
 }: {
   farm: BoostedFarm;
   onNewVote: (value: string, lpAddress: string) => void;
   resetInputs: boolean;
   cleanError: () => void;
+  showAll: boolean;
 }) => {
   const {
     bribes,
@@ -54,55 +56,64 @@ const MobileRow = ({
   }, [bribes]);
   const height = '50px';
   const heightBG = '60px';
+  const justify = showAll ? 'flex-start' : 'center';
+
   return (
-    <Grid templateColumns="repeat(1, 1fr)" gap={2}>
-      <GridItem
-        w="184px"
+    <VStack w="full">
+      {/* TOKENS SECTION */}
+      <VStack
+        w="full"
+        minW="180px"
         h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
         alignItems="center"
         p="8px"
+        spacing={0}
       >
-        <VStack spacing={0}>
-          <HStack spacing={0} justify="flex-start" w="full">
-            <ImageLogo margin="0" symbol={tokenA} size="24px" />
-            <ImageLogo symbol={tokenB} size="24px" />
-          </HStack>
-          <HStack spacing={0}>
-            <Text fontWeight="medium" fontSize="sm">
-              {tokenA}
-            </Text>
-            <Text color="grayDarker" fontSize="sm">
-              +
-            </Text>
-            <Text fontWeight="medium" fontSize="sm">
-              {tokenB}
-            </Text>
-          </HStack>
-        </VStack>
-      </GridItem>
-      <GridItem
-        w="184px"
-        h={height}
+        <HStack spacing={0} justify={justify} w="full">
+          <ImageLogo margin="0" symbol={tokenA} size="24px" />
+          <ImageLogo symbol={tokenB} size="24px" />
+        </HStack>
+        <HStack spacing={0} w="full" justify={justify}>
+          <Text fontWeight="medium" fontSize="sm">
+            {tokenA}
+          </Text>
+          <Text color="grayDarker" fontSize="sm">
+            +
+          </Text>
+          <Text fontWeight="medium" fontSize="sm">
+            {tokenB}
+          </Text>
+        </HStack>
+      </VStack>
+
+      {/* APR */}
+      <VStack
+        w="full"
+        minW="180px"
+        h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
-        alignItems="flex-start"
+        alignItems={justify}
         justifyContent="center"
         flexDirection="column"
         p="8px"
       >
         <Text fontSize="sm">{`${rewardAPR.toFixed(2)}%`}</Text>
-      </GridItem>
-      <GridItem
-        w="184px"
-        h={height}
+      </VStack>
+
+      {/* Rewards 10 inspirit */}
+      <VStack
+        w="full"
+        minW="180px"
+        h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
-        alignItems="flex-start"
+        alignItems={justify}
         justifyContent="center"
         flexDirection="column"
         p="8px"
@@ -110,40 +121,50 @@ const MobileRow = ({
         <Text fontSize="sm">{`$${formatNumber({
           value: Number(bribes),
         })}`}</Text>
-      </GridItem>
-      <GridItem
-        w="184px"
-        h={height}
+      </VStack>
+
+      {/* Liquidity 10 inspirit */}
+      <VStack
+        w="full"
+        minW="180px"
+        h={heightBG}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
-        alignItems="flex-start"
+        alignItems={justify}
         justifyContent="center"
         flexDirection="column"
         p="8px"
       >
         <Text fontSize="sm">{`${convertAmount(liquidityPer10kInspirit)}`}</Text>
-      </GridItem>
-      <GridItem
-        w="184px"
+      </VStack>
+
+      {/* Voting fee */}
+      <VStack
+        w="full"
+        minW="180px"
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
         alignItems="center"
+        justifyContent={justify}
         p="8px"
       >
         <Text fontSize="sm">{`$${formatNumber({
           value: Number(feeEarns),
         })}`}</Text>
-      </GridItem>
-      <GridItem
-        w="184px"
+      </VStack>
+      {/* Voting  */}
+      <VStack
+        w="full"
+        minW="180px"
         h={height}
         bg="bgBoxLighter"
         borderRadius="md"
         display="flex"
         alignItems="center"
+        justifyContent={justify}
         p="8px"
       >
         <HStack>
@@ -152,8 +173,9 @@ const MobileRow = ({
             {totalVotesOnFarm}
           </Text>
         </HStack>
-      </GridItem>
-      <GridItem w="184px" h={heightBG}>
+      </VStack>
+      {/* Input  */}
+      <VStack w="full" minW="180px" h={heightBG}>
         <VotingInput
           yourVote={value}
           onNewVote={onNewVote}
@@ -161,8 +183,8 @@ const MobileRow = ({
           cleanError={cleanError}
           resetVoting={resetInputs}
         />
-      </GridItem>
-    </Grid>
+      </VStack>
+    </VStack>
   );
 };
 

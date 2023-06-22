@@ -128,7 +128,7 @@ const NavMenuItem = ({ menu, is_active }: NavMenuProps) => {
   );
 };
 
-const TopBar: FC<Props> = () => {
+const TopBar = () => {
   const translationPath = 'common.topBar';
   const menuTranslationPath = 'common.menu';
   const { account, isLoggedIn } = useWallets();
@@ -162,6 +162,7 @@ const TopBar: FC<Props> = () => {
   const percentaje24hsFtm: number = ftmPriceData
     ? ftmPriceData.percentajeChange24
     : 0;
+
   const tokenInfos = () => {
     let info = [
       {

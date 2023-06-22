@@ -589,7 +589,8 @@ export const claimRewards = async ({
     addToQueue(response);
 
     await tx.wait();
+    return { success: true };
   } catch (e) {
-    throw new Error('');
+    return { success: false };
   }
 };

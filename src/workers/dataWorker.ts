@@ -13,6 +13,7 @@ import {
   CHAIN_ID,
   BASE_TOKEN_ADDRESS,
   ONE_HOUR,
+  NETWORK,
 } from 'constants/index';
 import {
   getGaugeBasicInfo,
@@ -32,37 +33,48 @@ import {
   getHistoricalPegForWinSpirits,
   handleSpiritWarsCache,
 } from 'utils/data/spiritwars';
+import { connect } from 'utils/web3/connection';
 
-onmessage = ({ data: { type, provider, isLoggedIn } }) => {
-  const loadedProvider = JSON.parse(provider);
-  if (!loadedProvider._network) {
-    loadedProvider._network = {
-      chainId: CHAIN_ID,
-    };
-  }
-  // Save a process, write a promise
-  const gaugesPromise = getGaugeBasicInfo(loadedProvider);
+let gaugesPromise;
+let provider;
 
-  switch (type) {
-    case 'getFarms':
-      getFarms(loadedProvider, gaugesPromise);
-      break;
-    case 'getSpiritWarsData':
-      getSpiritWarsData(loadedProvider);
-      break;
-    case 'getSpiritStatistics':
-      getSpiritStatistics(loadedProvider);
-      break;
-    case 'getBoostedGauges':
-      if (isLoggedIn) break;
-      saturateGauges(gaugesPromise, BASE_TOKEN_ADDRESS).then(data => {
-        self.postMessage({
-          type: 'setSaturatedGauges',
-          payload: data,
-        });
+onmessage = ({ data: { type, isLoggedIn, network = CHAIN_ID } }) => {
+  return new Promise<void>(async resolve => {
+    if (!provider) {
+      const { provider: loadedProvider } = await connect({
+        _connection: NETWORK[network].rpc[0],
+        _chainId: network,
       });
-      break;
-  }
+      provider = loadedProvider;
+    }
+    // Save a process, write a promise
+    if (!gaugesPromise) {
+      gaugesPromise = getGaugeBasicInfo(provider);
+    }
+
+    switch (type) {
+      case 'getFarms':
+        getFarms(provider, gaugesPromise);
+        break;
+      case 'getSpiritWarsData':
+        getSpiritWarsData(provider);
+        break;
+      case 'getSpiritStatistics':
+        getSpiritStatistics(provider);
+        break;
+      case 'getBoostedGauges':
+        if (isLoggedIn) break;
+        saturateGauges(gaugesPromise, BASE_TOKEN_ADDRESS).then(data => {
+          self.postMessage({
+            type: 'setSaturatedGauges',
+            payload: data,
+          });
+        });
+        break;
+    }
+
+    resolve();
+  });
 };
 
 // =========================
@@ -70,21 +82,23 @@ onmessage = ({ data: { type, provider, isLoggedIn } }) => {
 // =========================
 
 export async function getSpiritStatistics(provider) {
-  const data = await getInspiritStatistics(provider);
-  const { spiritPerBlock } = await getMasterChefPoolInfoWithMultiCall(provider);
+  const [data, spiritPerBlock] = await Promise.all([
+    getInspiritStatistics(provider),
+    getMasterChefPoolInfoWithMultiCall(provider),
+  ]);
 
   // new BigNumber(spiritPerBlock).toNumber()
   const { totalLocked, spiritInfo, totalLockedValue } = data;
-  const { marketCap, spiritTotalSupply: totalSupply } = await getMarketCap(
-    +totalLocked,
-    spiritInfo.price,
-  );
-  const TVL = await getTVL(totalLockedValue);
 
-  data['marketCap'] = marketCap;
-  data['tvl'] = TVL;
-  data['spiritperblock'] = spiritPerBlock;
-  data['spiritssupply'] = totalSupply;
+  const [marketCapRes, tvl] = await Promise.all([
+    getMarketCap(+totalLocked, spiritInfo.price),
+    getTVL(totalLockedValue),
+  ]);
+
+  data['marketCap'] = marketCapRes?.marketCap;
+  data['tvl'] = tvl;
+  data['spiritperblock'] = spiritPerBlock?.spiritPerBlock;
+  data['spiritssupply'] = marketCapRes?.spiritTotalSupply;
 
   self.postMessage({
     type: 'setSpiritStatistics',
@@ -97,55 +111,53 @@ export async function getSpiritStatistics(provider) {
 // =========================
 
 async function getFarms(provider, gaugesPromise) {
-  if (provider && provider._network.chainId === CHAIN_ID) {
-    const lpTokensPricePromise = getLpTokenPrices(gaugesPromise, provider).then(
-      data => {
-        self.postMessage({
-          type: 'setLpPrices',
-          payload: JSON.stringify(data, getCircularReplacer()),
-        });
-        return data;
-      },
-    );
-
-    const spiritPricePromise = getTokenUsdPrice(SPIRIT_TOKEN_ADDRESS);
-
-    const fullGaugePromise = getGaugesPoolInfoWithMulticall(
-      gaugesPromise,
-      provider,
-    );
-
-    const [gaugeChainData, spiritPriceRaw, lpTokensPrice, mappedTokens]: [
-      any,
-      BigNumber,
-      any,
-      any,
-    ] = await Promise.all([
-      fullGaugePromise,
-      spiritPricePromise,
-      lpTokensPricePromise,
-      getMappedTokens('address'),
-    ]);
-
-    const farmData = await loadFarmsList(
-      gaugeChainData,
-      spiritPriceRaw,
-      lpTokensPrice,
-      mappedTokens,
-    );
-
-    self.postMessage({
-      type: 'setFarmMasterData',
-      payload: JSON.stringify(farmData, getCircularReplacer()),
-    });
-
-    loadConcentratedFarmsList().then(data => {
+  const lpTokensPricePromise = getLpTokenPrices(gaugesPromise, provider).then(
+    data => {
       self.postMessage({
-        type: 'setConcentratedLiquidityFarms',
-        payload: data,
+        type: 'setLpPrices',
+        payload: JSON.stringify(data, getCircularReplacer()),
       });
+      return data;
+    },
+  );
+
+  const spiritPricePromise = getTokenUsdPrice(SPIRIT_TOKEN_ADDRESS);
+
+  const fullGaugePromise = getGaugesPoolInfoWithMulticall(
+    gaugesPromise,
+    provider,
+  );
+
+  const [gaugeChainData, spiritPriceRaw, lpTokensPrice, mappedTokens]: [
+    any,
+    BigNumber,
+    any,
+    any,
+  ] = await Promise.all([
+    fullGaugePromise,
+    spiritPricePromise,
+    lpTokensPricePromise,
+    getMappedTokens('address'),
+  ]);
+
+  const farmData = await loadFarmsList(
+    gaugeChainData,
+    spiritPriceRaw,
+    lpTokensPrice,
+    mappedTokens,
+  );
+
+  self.postMessage({
+    type: 'setFarmMasterData',
+    payload: JSON.stringify(farmData, getCircularReplacer()),
+  });
+
+  loadConcentratedFarmsList().then(data => {
+    self.postMessage({
+      type: 'setConcentratedLiquidityFarms',
+      payload: data,
     });
-  }
+  });
 }
 
 // =========================

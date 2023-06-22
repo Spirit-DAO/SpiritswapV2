@@ -1,15 +1,14 @@
 import BigNumber from 'bignumber.js';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 import {
   CHAIN_ID,
   SPIRIT,
   SPIRIT_FTM_LP_ADDRESS,
-  tokens,
   USDC,
   USDC_FTM_LP_ADDRESS,
   WFTM,
 } from 'constants/index';
-import { farms } from 'constants/farms';
+import { farms, inactiveFarms } from 'constants/farms';
 import Contracts from 'constants/contracts';
 import addresses from 'constants/contracts';
 import { IFarm } from 'app/interfaces/Farm';
@@ -20,6 +19,7 @@ import {
   Contract,
   nonfungiblePositionManagerContract,
   MulticallV2,
+  MultiCallArray,
 } from 'utils/web3';
 import { FarmChainData } from './types';
 import {
@@ -69,17 +69,25 @@ export const getGaugeBasicInfo = async (_provider = null) => {
   const stableAddress = Contracts.stableProxy[CHAIN_ID];
   const adminAddress = Contracts.adminProxy[CHAIN_ID];
 
-  const [variableContract, stableContract, adminContract] = await Promise.all([
-    Contract(variableAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-    Contract(stableAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-    Contract(adminAddress, 'gaugeproxyV3', undefined, undefined, _provider),
-  ]);
+  const [
+    { response: variableLpsResponse },
+    { response: stableLpsResponse },
+    { response: adminLpsResponse },
+  ] = await Multicall(
+    [
+      { name: 'tokens', params: [], address: variableAddress },
+      { name: 'tokens', params: [], address: stableAddress },
+      { name: 'tokens', params: [], address: adminAddress },
+    ],
+    'gaugeproxyV3',
+    undefined,
+    undefined,
+    _provider,
+  );
 
-  const [variableLps, stableLps, adminLps] = await Promise.all([
-    variableContract.tokens(),
-    stableContract.tokens(),
-    adminContract.tokens(),
-  ]);
+  const variableLps = variableLpsResponse[0];
+  const stableLps = stableLpsResponse[0];
+  const adminLps = adminLpsResponse[0];
 
   variableLps.forEach(variableLp => {
     variableGaugeCalls.push({
@@ -136,14 +144,27 @@ export const getGaugeBasicInfo = async (_provider = null) => {
     variableTokens,
     stableTokens,
     adminTokens,
-  ] = await Promise.all([
-    Multicall(variableGaugeCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc', _provider),
-    Multicall(stableGaugeCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc', _provider),
-    Multicall(adminGaugeCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc', _provider),
-    Multicall(variableTokensCalls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(stableTokensCalls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(adminTokensCalls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-  ]);
+  ] = await MultiCallArray(
+    [
+      variableGaugeCalls,
+      stableGaugeCalls,
+      adminGaugeCalls,
+      variableTokensCalls,
+      stableTokensCalls,
+      adminTokensCalls,
+    ],
+    [
+      'gaugeproxyV3',
+      'gaugeproxyV3',
+      'gaugeproxyV3',
+      'pairV2',
+      'pairV2',
+      'pairV2',
+    ],
+    CHAIN_ID,
+    'rpc',
+    _provider,
+  );
 
   return {
     variableGauges: variableGauges.map(gauge => gauge.response[0]),
@@ -155,9 +176,6 @@ export const getGaugeBasicInfo = async (_provider = null) => {
     variableLps,
     stableLps,
     adminLps,
-    variableContract,
-    stableContract,
-    adminContract,
   };
 };
 
@@ -177,9 +195,6 @@ export const getGaugesPoolInfoWithMulticall = async (
     variableLps,
     stableLps,
     adminLps,
-    variableContract,
-    stableContract,
-    adminContract,
     variableTokens,
     stableTokens,
     adminTokens,
@@ -299,44 +314,63 @@ export const getGaugesPoolInfoWithMulticall = async (
   ];
 
   // [variableGaugeData, stableGaugeData, adminGaugeData, variableLockedWeights, stableLockedWeights, adminLockedWeights, variableTotalWeight, stableTotalWeight, adminTotalWeight]
-  const chainResponse = await Promise.all([
-    Multicall(variableDataCalls, 'gauge', CHAIN_ID, 'rpc', _provider),
-    Multicall(stableDataCalls, 'gauge', CHAIN_ID, 'rpc', _provider),
-    Multicall(adminDataCalls, 'gauge', CHAIN_ID, 'rpc', _provider),
-    Multicall(variableERC20Calls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(stableERC20Calls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(adminERC20Calls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(
+  const chainResponse = await MultiCallArray(
+    [
+      variableDataCalls,
+      stableDataCalls,
+      adminDataCalls,
+      variableERC20Calls,
+      stableERC20Calls,
+      adminERC20Calls,
       variableLockedWeightsCalls,
-      'gaugeproxyV3',
-      CHAIN_ID,
-      'rpc',
-      _provider,
-    ),
-    Multicall(
       stableLockedWeightsCalls,
+      adminWeightsCalls,
+      masterChefCalls,
+      [
+        {
+          name: 'lockedTotalWeight',
+          address: variableAddress,
+        },
+        {
+          name: 'lockedTotalWeight',
+          address: stableAddress,
+        },
+        {
+          name: 'totalWeight',
+          address: adminAddress,
+        },
+      ],
+    ],
+    [
+      'gauge',
+      'gauge',
+      'gauge',
+      'pairV2',
+      'pairV2',
+      'pairV2',
       'gaugeproxyV3',
-      CHAIN_ID,
-      'rpc',
-      _provider,
-    ),
-    Multicall(adminWeightsCalls, 'gaugeproxyV3', CHAIN_ID, 'rpc', _provider),
-    variableContract.lockedTotalWeight(),
-    stableContract.lockedTotalWeight(),
-    adminContract.totalWeight(),
-    Multicall(masterChefCalls, 'masterchef', CHAIN_ID, 'rpc', _provider),
-  ]);
+      'gaugeproxyV3',
+      'gaugeproxyV3',
+      'masterchef',
+      'gaugeproxyV3',
+    ],
+    CHAIN_ID,
+    'rpc',
+    _provider,
+  );
+
+  const variableWeights = chainResponse[10][0].response[0];
+  const stableWeights = chainResponse[10][1].response[0];
+  const adminWeights = chainResponse[10][2].response[0];
 
   const totalAllocPoint = new BigNumber(
-    chainResponse[12][3].response[0].toString(),
+    chainResponse[9][3].response[0].toString(),
   );
   const variableAlloc = new BigNumber(
-    chainResponse[12][0].response[1].toString(),
+    chainResponse[9][0].response[1].toString(),
   );
-  const stableAlloc = new BigNumber(
-    chainResponse[12][1].response[1].toString(),
-  );
-  const adminAlloc = new BigNumber(chainResponse[12][2].response[1].toString());
+  const stableAlloc = new BigNumber(chainResponse[9][1].response[1].toString());
+  const adminAlloc = new BigNumber(chainResponse[9][2].response[1].toString());
 
   const variableShare = variableAlloc.div(totalAllocPoint);
   const stableShare = stableAlloc.div(totalAllocPoint);
@@ -374,9 +408,9 @@ export const getGaugesPoolInfoWithMulticall = async (
   });
 
   const [variableGaugesData, stableGaugesData, adminGaugesData] = data;
-  const variableTotalLocked = chainResponse[9].toString();
-  const stableTotalLocked = chainResponse[10].toString();
-  const adminTotalLocked = chainResponse[11].toString();
+  const variableTotalLocked = variableWeights.toString();
+  const stableTotalLocked = stableWeights.toString();
+  const adminTotalLocked = adminWeights.toString();
 
   return {
     variableGauges: variableGaugesData,
@@ -450,12 +484,13 @@ export const getLpTokenPrices = async (
 
   const chainTokens = [...variableTokens, ...stableTokens, ...adminTokens];
 
-  const [reserves, supply, ftmUSDC, ftmSpirit] = await Promise.all([
-    Multicall(reserveCalls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(totalSupplyCalls, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(ftmUSDCCall, 'pairV2', CHAIN_ID, 'rpc', _provider),
-    Multicall(ftmSpiritCall, 'pairV2', CHAIN_ID, 'rpc', _provider),
-  ]);
+  const [reserves, supply, ftmUSDC, ftmSpirit] = await MultiCallArray(
+    [reserveCalls, totalSupplyCalls, ftmUSDCCall, ftmSpiritCall],
+    ['pairV2', 'pairV2', 'pairV2', 'pairV2'],
+    CHAIN_ID,
+    'rpc',
+    _provider,
+  );
 
   const usdcBaseReserves = formatUnits(ftmUSDC[0].response[0], 6);
   const ftmBaseReserves = formatUnits(ftmUSDC[1].response[0], 18);
@@ -555,29 +590,6 @@ export const getMasterChefPoolInfoWithMultiCall = async (_provider = null) => {
   return {
     spiritPerBlock,
   };
-};
-
-export const getLiquityPoolStatistics24hs = async (_address: string) => {
-  const pool24hsDataFromCovanlent = await getHistoricalPortfolioValue(
-    _address,
-    true,
-  );
-  const finalDataArray: {
-    lpAddress: string;
-    quoteRate24hs: number;
-  }[] = [];
-
-  pool24hsDataFromCovanlent.forEach(item => {
-    const quoteRate24hs = item.holdings[1].quote_rate;
-    if (quoteRate24hs) {
-      finalDataArray.push({
-        lpAddress: item.contract_address,
-        quoteRate24hs: quoteRate24hs,
-      });
-    }
-  });
-
-  return finalDataArray;
 };
 
 export const getLiquityPoolStatistics = async (chainId = CHAIN_ID) => {
@@ -709,6 +721,8 @@ export const loadFarmsList = async (
 
       const type = farm?.stable ? 'stable' : 'variable';
 
+      const isIncative = inactiveFarms.includes(farm.lpSymbol.toUpperCase());
+
       const lp: IFarm = {
         title: farm?.lpSymbol
           .replace('WFTM', 'FTM')
@@ -718,16 +732,22 @@ export const loadFarmsList = async (
         lpAddress: farm.address,
         gaugeAddress: farm?.gaugeAddress,
         aprLabel: 'APY',
-        apr: maxApy.toFormat(2) === 'NaN' ? '0' : maxApy.toFormat(2),
+        apr:
+          maxApy.toFormat(2) === 'NaN' || isIncative ? '0' : maxApy.toFormat(2),
         boosted: true,
         lpApr: '0',
         label: farm.label || '',
         rewardToken: farm?.rewardToken,
         totalLiquidity,
         totalSupply: farm.liquidityShare,
-        aprRange: maxApy.toFormat(2) === 'NaN' ? ['0', '0'] : AprRange,
+        aprRange:
+          maxApy.toFormat(2) === 'NaN' || isIncative ? ['0', '0'] : AprRange,
         boostFactor: '1',
-        yourApr: minApy.isFinite() ? minApy.toString() : '0',
+        yourApr: minApy.isFinite()
+          ? isIncative
+            ? '0'
+            : minApy.toString()
+          : '0',
         valid: tokens.length > 0,
         multiplier: farm.multiplier
           ? farm.multiplier.isFinite()
@@ -814,139 +834,6 @@ export const loadConcentratedFarmsList = async () => {
       // tvl: tvls && tvls[farming.id] && ethPrice ? Math.round(tvls[farming.id] * ethPrice) : 0
     };
   });
-};
-
-export const getGauges = async provider => {
-  if (provider && provider._network.chainId === CHAIN_ID) {
-    const gaugeProxy = 'gaugeproxy';
-    const gaugeProxyV2 = 'gaugeproxyV3';
-    const gaugeProxyStable = 'stableproxy';
-    const gaugeAddress = addresses.gauge[CHAIN_ID];
-    const gaugeAddressV2 = addresses.gaugeV3[CHAIN_ID];
-    const gaugeAddressStable = addresses.stableProxy[CHAIN_ID];
-
-    const promiseV1 = Contract(
-      gaugeAddress,
-      gaugeProxy,
-      undefined,
-      undefined,
-      provider,
-    );
-    const promiseV2 = Contract(
-      gaugeAddressV2,
-      gaugeProxyV2,
-      undefined,
-      undefined,
-      provider,
-    );
-    const promiseStable = Contract(
-      gaugeAddressStable,
-      gaugeProxyStable,
-      undefined,
-      undefined,
-      provider,
-    );
-
-    const [contractV1, contractV2, contractStable] = await Promise.all([
-      promiseV1,
-      promiseV2,
-      promiseStable,
-    ]);
-
-    const [tokens, tokensV2, tokensStable] = await Promise.all([
-      contractV1.tokens(),
-      contractV2.tokens(),
-      contractStable.tokens(),
-    ]);
-    const arrays = { tokens, tokensV2, tokensStable };
-    const gauges = { gaugeAddress, gaugeAddressV2, gaugeAddressStable };
-    const [
-      gaugesParamsV1,
-      gaugesParamsV2,
-      gaugesParamsStable,
-      weightParamsV1,
-      weightParamsV2,
-      weightParamsStable,
-    ] = formatFarmsCalls({ arrays, gauges });
-
-    const v1GaugesMulticall = Multicall(
-      gaugesParamsV1,
-      gaugeProxy,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-    const v1WeightMulticall = Multicall(
-      weightParamsV1,
-      gaugeProxy,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-    const v2GaugesMulticall = Multicall(
-      gaugesParamsV2,
-      gaugeProxyV2,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-    const v2WeightMulticall = Multicall(
-      weightParamsV2,
-      gaugeProxyV2,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-    const stableGaugesMulticall = Multicall(
-      gaugesParamsStable,
-      gaugeProxyStable,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-    const stableWeightMulticall = Multicall(
-      weightParamsStable,
-      gaugeProxyStable,
-      CHAIN_ID,
-      'rpc',
-      provider,
-    );
-
-    const [
-      v1GaugesResults,
-      v1WeightResults,
-      v2GaugesResults,
-      v2WeightResults,
-      stableGaugesResults,
-      stableWeightResults,
-    ] = await Promise.all([
-      v1GaugesMulticall,
-      v1WeightMulticall,
-      v2GaugesMulticall,
-      v2WeightMulticall,
-      stableGaugesMulticall,
-      stableWeightMulticall,
-    ]);
-
-    const { v1Gauges, v2Gauges, stableGauges } = getSplitCalls({
-      tokens,
-      v1GaugesResults,
-      v1WeightResults,
-      tokensV2,
-      v2GaugesResults,
-      v2WeightResults,
-      tokensStable,
-      stableGaugesResults,
-      stableWeightResults,
-    });
-
-    return {
-      v1Gauges,
-      v2Gauges,
-      stableGauges,
-    };
-  }
-  return { v1Gauges: [], v2Gauges: [], stableGauges: [] };
 };
 
 // TODO: [DEV2-619] analyze from where to get soob pooled data

@@ -1,7 +1,7 @@
 import contracts from './contracts';
-import { wBOMB } from './tokens';
 import JSBI from 'jsbi';
 import { toHex } from '../v3-sdk';
+import { JEFE, rainSPIRIT, wBOMB } from './tokens';
 
 export { NETWORK } from './networks';
 export * from './tokens';
@@ -89,15 +89,7 @@ export const ZOKYO_AUDIT_URL =
 
 export const SPIRIT_DOCS_URL = 'https://docs.spiritswap.finance/';
 
-export const BRIDGE_NAMES = {
-  nxtp: 'Connext',
-  hop: 'Hop',
-  debridge: 'Debridge',
-  anyswap: 'Anyswap',
-  hyphen: 'Hyphen',
-  across: 'across',
-  wormhole: 'Wormhole',
-};
+export const SPIRIT_WHITELISTING_FORMS = 'https://forms.gle/LqrWp7cGi7eXc6UR7';
 
 export const BRIDGES_ALLOWED = [
   'hop',
@@ -106,8 +98,10 @@ export const BRIDGES_ALLOWED = [
   'hyphen',
   'optimism',
   'polygon',
-  'avalanche',
   'arbitrum',
+  'stargate',
+  'across',
+  'amarok',
 ];
 export const EXCHANGE_ALLOWED = [
   'spiritswap',
@@ -168,8 +162,6 @@ export const FTM_TOKEN_NULL_ADDRESS = {
 export const VARIABLE = 'Variable';
 export const STABLE = 'Stable';
 
-export const TOKENS_WITH_HIGH_SLIPPAGE = [wBOMB.address.toLowerCase()];
-
 export const V3_POOL_INIT_CODE_HASH =
   '0x6ec6c9c8091d160c0aa74b2b14ba9c1717e95093bd3ac085cee99a49aab294a4';
 
@@ -188,3 +180,10 @@ export const MaxUint128 = toHex(
     JSBI.BigInt(1),
   ),
 );
+export const TOKENS_WITH_HIGH_SLIPPAGE = [
+  wBOMB.address.toLowerCase(),
+  JEFE.address.toLowerCase(),
+  rainSPIRIT.address.toLowerCase(),
+];
+
+export const HIDE_CHART_PORTFOLIO = true;

@@ -556,7 +556,7 @@ export function LiquidityPage() {
           });
         }
 
-        const { provider } = await connect();
+        const { provider } = await connect({ _connection: 'rpc' });
 
         userDataWorker.postMessage({
           userAddress: account,
@@ -579,7 +579,7 @@ export function LiquidityPage() {
         resetPanel();
       }
     } catch (error) {
-      console.error(error);
+      console.error('ERROR EN LIQUIDITY');
       setShowConfirmModal(false);
       setShowConcentratedConfirmModal(false);
     }

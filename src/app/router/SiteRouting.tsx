@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useContext } from 'react';
+import { lazy, useCallback, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Box } from '@chakra-ui/react';
@@ -8,7 +8,6 @@ import { FarmsPage } from 'app/pages/Farms/Loadable';
 import { SwapPage } from 'app/pages/Swap/Loadable';
 import { BridgePage } from 'app/pages/Bridge/Loadable';
 import { HomePage } from 'app/pages/Home/Loadable';
-import { ApeModePage } from 'app/pages/ApeMode/Loadable';
 import { TopBar } from 'app/layouts/TopBar';
 import { Footer as MidFooter } from 'app/layouts/Footer';
 import PageFooter from 'app/components/PageFooter';
@@ -18,7 +17,6 @@ import { useAppSelector } from 'store/hooks';
 import ScrollToTop from 'app/components/ScrollToTop';
 import { SpiritWars } from 'app/pages/SpiritWars';
 import {
-  APEMODE,
   BRIDGE,
   FARMS,
   HOME,
@@ -31,7 +29,6 @@ import {
 
 const SiteRouting = () => {
   const unexpectedError = useAppSelector(selectUnexpectedError);
-  const [showFooter, setShowFooter] = useState(false);
 
   const Pages = useCallback(
     () => (
@@ -107,24 +104,14 @@ const SiteRouting = () => {
     [unexpectedError],
   );
 
-  window.onbeforeunload = () => {
-    localStorage.setItem('scrollPosition', `${window.scrollY}`);
-    setShowFooter(false);
-  };
-
   window.onload = () => {
-    const scrollPosition = localStorage.getItem('scrollPosition');
     setTimeout(() => {
-      if (scrollPosition) {
-        window.scrollTo({
-          top: +scrollPosition,
-          behavior: 'smooth',
-        });
-      }
-      setShowFooter(true);
-    }, 500);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }, 400);
   };
-
   useEffect(() => {
     function setScroll() {
       const header = document.getElementById('top-bar');
@@ -150,7 +137,7 @@ const SiteRouting = () => {
         <ScrollToTop />
         <Page />
         <MidFooter />
-        {showFooter ? <PageFooter /> : null}
+        <PageFooter />
       </BrowserRouter>
       <div id="bottom-page" />
     </Box>

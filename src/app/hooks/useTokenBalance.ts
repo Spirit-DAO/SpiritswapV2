@@ -15,7 +15,7 @@ import useGetTokensPrices from './useGetTokensPrices';
 import { useToken } from './useToken';
 import useWallets from './useWallets';
 
-const TIME = 30_00;
+const TIME = 30000;
 export const useTokenBalance = (
   chainId: number,
   tokenAddress: string,

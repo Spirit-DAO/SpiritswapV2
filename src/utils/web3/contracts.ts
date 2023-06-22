@@ -44,7 +44,6 @@ import V3NonfungiblePositionManagerABI from './abis/v3/nonfungiblePositionManage
 import V3SwapRouterABI from './abis/v3/swapRouter.json';
 import V3EternalFarmingABI from './abis/v3/eternalFarming.json';
 import V3FarmingCenterABI from './abis/v3/farmingCenter.json';
-import V3LimitOrderManagerABI from './abis/v3/limitOrderManager.json';
 import V3MulticallABI from './abis/v3/multicall.json';
 
 import { connect } from './connection';
@@ -93,9 +92,10 @@ export const ABIS = {
   v3SwapRouter: V3SwapRouterABI,
   v3EternalFarming: V3EternalFarmingABI,
   v3FarmingCenter: V3FarmingCenterABI,
-  v3LimitOrderManager: V3LimitOrderManagerABI,
   v3Multicall: V3MulticallABI,
 };
+
+let multicallContract;
 
 export async function Contract(
   _address: string,
@@ -111,17 +111,21 @@ export async function Contract(
   if (typeof _connectionUrl === 'object' && _connectionUrl.connection) {
     provider = _connectionUrl;
   } else {
-    ({ provider, signer } = await connect(_connectionUrl, undefined, _network));
+    ({ provider, signer } = await connect({
+      _connection: _connectionUrl,
+      _chainId: _network,
+    }));
   }
 
   if (isSigner) {
     provider = _provider;
   }
+
   const instance = new ethers.Contract(
     _address,
     ABIS[_abi],
     _provider
-      ? provider
+      ? _provider
       : CONNECTIONS().includes(_connectionUrl)
       ? signer
       : provider,
@@ -137,15 +141,17 @@ export async function Multicall(
   _rpc: Web3Provider | string | undefined = 'rpc',
   _provider: any = null,
 ) {
-  const contract = await Contract(
-    mulltiCall[_network],
-    'multicall',
-    _rpc,
-    _network,
-    _provider,
-  );
+  if (!multicallContract) {
+    multicallContract = await Contract(
+      mulltiCall[_network],
+      'multicall',
+      _rpc,
+      _network,
+      _provider,
+    );
+  }
 
-  const formattedCalls = _calls.map(_call => {
+  const formattedCalls = _calls?.map(_call => {
     const call = _call;
 
     if (!call.address) {
@@ -157,11 +163,11 @@ export async function Multicall(
 
   const itf = new ethers.utils.Interface(ABIS[_connectABI]);
 
-  const calls = formattedCalls.map(_call => {
+  const calls = formattedCalls?.map(_call => {
     return [_call.address, itf.encodeFunctionData(_call.name, _call.params)];
   });
 
-  const fulldata = await contract.callStatic.aggregate(calls);
+  const fulldata = await multicallContract.callStatic.aggregate(calls);
   const { returnData } = fulldata;
 
   const response: Array<MulticallSingleResponse> = returnData.map(
@@ -178,13 +184,96 @@ export async function Multicall(
   return response;
 }
 
+export async function MultiCallArray(
+  _callsArray: Call[][],
+  _connectABIs: string[],
+  _network = CHAIN_ID,
+  _rpc: Web3Provider | string | undefined = 'rpc',
+  _provider: any = null,
+) {
+  if (!multicallContract) {
+    multicallContract = await Contract(
+      mulltiCall[_network],
+      'multicall',
+      _rpc,
+      _network,
+      _provider,
+    );
+  }
+
+  let allCalls: (string | undefined)[][] = [];
+  let allABIInterfaces: {
+    interface: ethers.utils.Interface;
+    callName: string;
+  }[] = [];
+  let callLengths: number[] = [];
+
+  for (let i = 0; i < _callsArray.length; i++) {
+    const _calls = _callsArray[i];
+    const _connectABI = _connectABIs[i];
+
+    const formattedCalls = _calls.map(_call => {
+      const call = _call;
+      if (!call.address) {
+        call.address = addresses[_connectABI][_network];
+      }
+      return call;
+    });
+
+    const itf = new ethers.utils.Interface(ABIS[_connectABI]);
+    const calls = formattedCalls.map(_call => {
+      return [_call.address, itf.encodeFunctionData(_call.name, _call.params)];
+    });
+
+    allCalls.push(...calls);
+    allABIInterfaces.push(
+      ...formattedCalls.map(_call => ({
+        interface: itf,
+        callName: _call.name,
+      })),
+    );
+    callLengths.push(calls.length);
+  }
+
+  const fulldata = await multicallContract.callStatic.aggregate(allCalls);
+  const { returnData } = fulldata;
+
+  let responses: Array<MulticallSingleResponse>[] = [];
+  let startIndex = 0;
+
+  for (let i = 0; i < callLengths.length; i++) {
+    let endIndex = startIndex + callLengths[i];
+    let callResponses = returnData
+      .slice(startIndex, endIndex)
+      // eslint-disable-next-line no-loop-func
+      .map((_call, j) => {
+        const decoding = allABIInterfaces[
+          startIndex + j
+        ].interface.decodeFunctionResult(
+          allABIInterfaces[startIndex + j].callName,
+          _call,
+        );
+        const res: MulticallSingleResponse = {
+          response: decoding,
+          call: _call,
+        };
+        return res;
+      });
+
+    responses.push(callResponses);
+    startIndex = endIndex;
+  }
+
+  return responses;
+}
+
 export async function MulticallV2(
   _calls: Call[],
   _connectABI: string,
   _network = CHAIN_ID,
   _rpc = 'rpc',
 ) {
-  const { provider } = await connect();
+  const { provider } = await connect({});
   const ethCallProvider = new MulticallProvider();
   ethCallProvider.init(provider);
 

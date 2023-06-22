@@ -120,7 +120,7 @@ export const FarmController = ({
           _value,
         );
 
-        const { provider } = await connect();
+        const { provider } = await connect({});
 
         userDataWorker.postMessage({
           userAddress: account,

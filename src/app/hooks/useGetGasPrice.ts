@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js';
-import { formatEther, formatUnits } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
 import { SPEED_PRICES } from 'utils/swap';
 
@@ -7,6 +6,7 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
   const [gasData, setGasData] = useState({
     gasPrice: '0',
     txGweiCost: '0',
+    type: '',
   });
 
   useEffect(() => {
@@ -24,7 +24,6 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
 
         if (data) {
           standardSpeed = data.SafeGasPrice;
-
           fastSppeed = data.ProposedGasPrice;
           instantSpeed = data.FastGasPrice;
         }
@@ -36,6 +35,7 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
                 .multipliedBy(1000000000)
                 .toString(),
               txGweiCost: parseFloat(fastSppeed).toFixed(2),
+              type: 'fast',
             });
 
           case SPEED_PRICES.INSTANT:
@@ -43,24 +43,23 @@ const useGetGasPrice = ({ speed }: { speed: string }) => {
               gasPrice: new BigNumber(instantSpeed)
                 .multipliedBy(1000000000)
                 .toString(),
-
               txGweiCost: parseFloat(instantSpeed).toFixed(2),
+              type: 'instant',
             });
           default:
             return setGasData({
               gasPrice: new BigNumber(standardSpeed)
                 .multipliedBy(1000000000)
                 .toString(),
-
               txGweiCost: parseFloat(standardSpeed).toFixed(2),
+              type: 'standard',
             });
         }
       } catch (error) {
-        console.log({ error });
-
         return setGasData({
           gasPrice: '0',
           txGweiCost: '0',
+          type: '',
         });
       }
     };

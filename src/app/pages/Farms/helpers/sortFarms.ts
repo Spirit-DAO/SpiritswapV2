@@ -43,10 +43,10 @@ export const sortFarms = (
     case 3:
       return farms.sort((first, second) => {
         const firstEmissions = parseFloat(
-          first.votingWeight ? first.votingWeight.replace('%', '') : '0',
+          first?.multiplier ? first?.multiplier : '0',
         );
         const secondEmissions = parseFloat(
-          second.votingWeight ? second.votingWeight.replace('%', '') : '0',
+          second?.multiplier ? second?.multiplier : '0',
         );
 
         if (secondEmissions > firstEmissions) {

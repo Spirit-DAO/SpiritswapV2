@@ -4,6 +4,7 @@ import useMobile from '../../../../../../../utils/isMobile';
 import { StyledIconToInput } from '../../../../../../pages/Farms/styles';
 import { Button, Flex, HStack } from '@chakra-ui/react';
 import ToggleFilter from './ToggleFilter';
+import { Switch } from '../../../../../../components/Switch';
 
 const HeaderTable = ({
   toggleUserFarm,
@@ -11,6 +12,8 @@ const HeaderTable = ({
   toggleMobileTableFilters,
   onFarmSearch,
   farmsSize,
+  showAll,
+  toggleShow,
 }) => {
   const isMobile = useMobile();
   const { t } = useTranslation();
@@ -30,10 +33,16 @@ const HeaderTable = ({
       <Flex gap=".5rem" alignItems="center">
         <div>
           {isMobile ? (
-            <Flex>
+            <Flex gap={4}>
+              <Switch
+                label="All Farms"
+                checked={showAll}
+                onClick={toggleShow}
+              />
               <Button
                 variant="secondary"
                 size="small"
+                padding="7px 12px"
                 onClick={toggleMobileTableFilters}
               >
                 Filters

@@ -272,7 +272,6 @@ export const Farms = () => {
         />
         <HStack justifyContent="space-between" mt="10px">
           <FarmRewards rewards={collectedRewards} spiritPrice={spiritPrice} />
-          {/* <EcosystemFarmButton onCreateEcosystemFarm={onCreateEcosystemFarm} /> */}
           <Button onClick={onCreateFarm}>Create Farm</Button>
         </HStack>{' '}
         <div id="top" />

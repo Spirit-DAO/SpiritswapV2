@@ -8,19 +8,18 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { FC } from 'react';
 import Step from '../Step';
 import type { ContentProps } from '../TransactionFlowV2.d';
 
-const ContentModal: FC<ContentProps> = ({
+const ContentModal = ({
   title,
   description,
-  handleCancel,
   steps,
   stepCompleted,
+  handleCancel,
   onComplete,
   onFinish,
-}) => {
+}: ContentProps) => {
   const isFinish: boolean = steps.length === stepCompleted;
 
   return (

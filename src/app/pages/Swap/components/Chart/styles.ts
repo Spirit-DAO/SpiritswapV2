@@ -2,12 +2,6 @@ import { VStack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 export const ChartContainer = styled(VStack)<{ isLimit: boolean }>`
-  padding: 16px 8px;
-
-  margin-top: 0;
-  margin-bottom: ${({ theme }) => `${theme.space.spacing03}`};
-  margin-left: ${({ theme }) => `${theme.space.spacing03}`};
-
   @media (max-width: 1100px) {
     margin-top: ${({ theme, isLimit }) =>
       !isLimit ? '0' : `${theme.space.spacing03}`};
@@ -24,4 +18,14 @@ export const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
+`;
+
+export const ChartBox = styled.div`
+  width: 100%;
+  height: 100%;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
 `;
