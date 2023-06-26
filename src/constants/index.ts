@@ -163,7 +163,7 @@ export const VARIABLE = 'Variable';
 export const STABLE = 'Stable';
 
 export const V3_POOL_INIT_CODE_HASH =
-  '0x6ec6c9c8091d160c0aa74b2b14ba9c1717e95093bd3ac085cee99a49aab294a4';
+  '0xbce37a54eab2fcd71913a0d40723e04238970e7fc1159bfd58ad5b79531697e7';
 
 export const BIG_INT_ZERO = JSBI.BigInt(0);
 
