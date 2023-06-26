@@ -32,6 +32,7 @@ import {
 } from 'store/user/selectors';
 import { useAppSelector } from 'store/hooks';
 import {
+  selectFtmInfo,
   selectSpiritInfo,
   selectTotalSpiritSupply,
 } from 'store/general/selectors';
@@ -90,6 +91,7 @@ export const Farm = ({
   const totalInSpirit = useAppSelector(selectTotalSpiritSupply);
   const userInSpirit = useAppSelector(selectInspiritUserBalance);
   const spiritPriceInfo = useAppSelector(selectSpiritInfo);
+  const { price: ftmPrice } = useAppSelector(selectFtmInfo);
   const { price: spiritPrice } = spiritPriceInfo;
 
   const farmReward =
@@ -348,7 +350,7 @@ export const Farm = ({
 
     infoPanelItems.push({
       label: 'TVL',
-      value: '$120k',
+      value: `$${_farm.tvl * ftmPrice}`,
     });
 
     infoPanelItems.push({
@@ -402,7 +404,11 @@ export const Farm = ({
         } else
           text = `${formatNumber({ value: Number(earned), maxDecimals: 2 })} ${
             _farm.rewardToken.symbol
-          } + ${Number(bonusEarned)} ${_farm.bonusRewardToken.symbol}`;
+          }${
+            bonusEarned
+              ? ` + ${Number(bonusEarned)} ${_farm.bonusRewardToken.symbol}`
+              : ''
+          }`;
 
         tx = await onClaim(positionsToClaim);
       } else {
@@ -425,7 +431,7 @@ export const Farm = ({
         type: SuggestionsTypes.FARMS,
         id: response.tx.hash,
         data: {
-          harvestSpirit: true,
+          harvestSpirit: !farm.concentrated,
         },
       };
       addToQueue(response, suggestionData);

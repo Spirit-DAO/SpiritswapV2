@@ -792,6 +792,13 @@ export const loadConcentratedFarmsList = async () => {
 
   if (!pools || !rewardTokens || !bonusRewardTokens) return [];
 
+  const tvls = await fetch(
+    'https://api.algebra.finance/api/TVL/eternalFarmings/?network=fantom-spirit',
+  ).then(v => v.json());
+  const aprs = await fetch(
+    'https://api.algebra.finance/api/APR/eternalFarmings/?network=fantom-spirit',
+  ).then(v => v.json());
+
   return eternalFarmings.map((farming, index) => {
     const rewardRate = formatUnits(
       new BigNumber(farming.rewardRate).toString(),
@@ -804,6 +811,8 @@ export const loadConcentratedFarmsList = async () => {
 
     const dailyRewardRate = Math.round(+rewardRate * 86_400);
     const dailyBonusRewardRate = Math.round(+bonusRewardRate * 86_400);
+
+    const yourApr = aprs && aprs[farming.id] ? aprs[farming.id] : 0;
 
     return {
       title:
@@ -819,7 +828,6 @@ export const loadConcentratedFarmsList = async () => {
       boosted: false,
       concentrated: true,
       type: 'concentrated',
-      apr: '2',
       ...farming,
       rewardToken: rewardTokens[index],
       bonusRewardToken: bonusRewardTokens[index],
@@ -830,8 +838,9 @@ export const loadConcentratedFarmsList = async () => {
       lpAddress: pools[index]?.id,
       aprRange: ['0', '1'],
       rangeLength: farming.minRangeLength,
-      // apr: aprs && aprs[farming.id] ? aprs[farming.id] : 0,
-      // tvl: tvls && tvls[farming.id] && ethPrice ? Math.round(tvls[farming.id] * ethPrice) : 0
+      apr: '2',
+      yourApr: yourApr < 0 ? 0 : yourApr,
+      tvl: tvls && tvls[farming.id] ? Math.round(tvls[farming.id]) : 0,
     };
   });
 };

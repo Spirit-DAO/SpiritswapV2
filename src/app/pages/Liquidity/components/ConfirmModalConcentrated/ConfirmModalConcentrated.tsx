@@ -30,10 +30,10 @@ const ConfirmModalConcentrated = ({
   const amountA = mintInfo?.parsedAmounts[Field.CURRENCY_A]?.toSignificant(4);
   const amountB = mintInfo?.parsedAmounts[Field.CURRENCY_B]?.toSignificant(4);
 
-  const lowerPrice = currencyA.wrapped.sortsBefore(currencyB)
+  const lowerPrice = currencyA.wrapped.sortsBefore(currencyB.wrapped)
     ? mintInfo?.lowerPrice?.toSignificant(4)
     : mintInfo?.lowerPrice?.invert().toSignificant(4);
-  const upperPrice = currencyA.wrapped.sortsBefore(currencyB)
+  const upperPrice = currencyA.wrapped.sortsBefore(currencyB.wrapped)
     ? mintInfo?.upperPrice?.toSignificant(4)
     : mintInfo?.upperPrice?.invert().toSignificant(4);
 
