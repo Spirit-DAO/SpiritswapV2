@@ -844,7 +844,7 @@
       "add": {
         "pending": "Add liquidity pending",
         "success": "Add liquidity successful",
-        "error": "Add liquidity successful"
+        "error": "Add liquidity failed"
       }
     },
     "inspirit": {
