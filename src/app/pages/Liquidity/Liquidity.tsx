@@ -1023,6 +1023,8 @@ export function LiquidityPage() {
     isWeightedSelected,
     isConcentratedSelected,
     liquidityTrade,
+    firstToken,
+    secondToken,
     tokenPoolSelected,
     weightedPoolSelected,
     tokensOfPoolInputValue,
