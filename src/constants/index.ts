@@ -18,7 +18,7 @@ export enum ConnectorNames {
 export const CHAIN_ID = 250; // I think this should be refactored
 export const DEFAULT_HANDLER = 'spiritswap';
 
-export const COVALENT_API_KEY = 'ckey_ce0907ce545344edb6d203df10e';
+export const COVALENT_API_KEY = 'ckey_d86797acadb64dc28689f380b74';
 
 export const GELATO_ADDRESS = '0x59e61b95f20e940ac777e88fa2dfa0a6a4c40fa0';
 export const GELATO_APPROVE_ADDRESS =
