@@ -1,4 +1,4 @@
-import { GaugeFarm } from 'app/interfaces/Farm';
+import { GaugeFarm, IConcentratedFarm } from 'app/interfaces/Farm';
 import { FarmToken } from 'app/interfaces/General';
 
 export type EcosystemValues = {
@@ -22,4 +22,5 @@ export interface InitialStateProps {
   customFarmTokens: FarmToken[];
   ecosystemFarms: Farm[];
   farmMasterData: Farm[];
+  concentratedLiquidityFarms: IConcentratedFarm[];
 }

@@ -76,6 +76,12 @@ const SiteRouting = () => {
             path={`${resolveRoutePath(LIQUIDITY.path)}/:token1/:token2/remove`}
             element={<LiquidityPage />}
           />
+          <Route
+            path={`${resolveRoutePath(
+              LIQUIDITY.path,
+            )}/:token1/:token2/remove/:positionId`}
+            element={<LiquidityPage />}
+          />
           <Route path={resolveRoutePath(FARMS.path)} element={<FarmsPage />}>
             <Route
               path={`${resolveRoutePath(FARMS.path)}/:address`}

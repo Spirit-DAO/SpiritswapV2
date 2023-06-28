@@ -31,6 +31,10 @@ const HarvestManagerMemo = ({
         title = farmFound.title;
       }
 
+      if (farm.isConcentrated) {
+        title = `${farm.eternalFarming.pool.token0.symbol} + ${farm.eternalFarming.pool.token1.symbol}`;
+      }
+
       return {
         label: `Claim ${title} rewards`,
         status: TransactionStatus.UPCOMING,

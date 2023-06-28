@@ -9,12 +9,14 @@ const TokenSelection: FC<Props> = ({
   handleOpen,
   src,
   isSelectable,
+  isTokenSelectorOnly,
 }: Props) => {
   return (
     <Flex
       alignItems="center"
       borderRadius="2px"
       px="spacing02"
+      width={isTokenSelectorOnly ? '100%' : ''}
       _hover={{
         bg: isSelectable ? 'grayBorderToggle' : 'none',
         cursor: isSelectable ? 'pointer' : 'default',
@@ -22,7 +24,9 @@ const TokenSelection: FC<Props> = ({
       onClick={handleOpen}
     >
       <ImageLogo symbol={symbol} src={src} size="28px" />
-      <Text fontSize="xl2">{symbol}</Text>
+      <Text fontSize="xl2" marginRight={isTokenSelectorOnly ? 'auto' : ''}>
+        {symbol}
+      </Text>
       {isSelectable && handleOpen && <CaretDownIcon />}
     </Flex>
   );

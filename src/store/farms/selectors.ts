@@ -16,3 +16,6 @@ export const selectFarmMasterData = (state: RootState) =>
 
 export const selectBoostedFarms = (state: RootState) =>
   state.farms.boostedFarms;
+
+export const selectConcentratedFarms = (state: RootState) =>
+  state.farms.concentratedLiquidityFarms;

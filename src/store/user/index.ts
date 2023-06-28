@@ -17,6 +17,7 @@ const initialState: {
   tokens: balanceReturnData;
   wallet: Array<tokenData>;
   liquidity_wallet: Array<tokenData> | null;
+  liquidity_v3_wallet: Array<any> | null;
   sob_liquidity_wallet: Array<tokenData>;
   weighted_liquidity_wallet: Array<tokenData>;
   liquidity: balanceReturnData;
@@ -74,6 +75,7 @@ const initialState: {
     total24ValueNumber: 0,
   },
   liquidity_wallet: [],
+  liquidity_v3_wallet: [],
   sob_liquidity_wallet: [],
   weighted_liquidity_wallet: [],
   farms_staked: {},
@@ -179,6 +181,9 @@ export const userReducer = createSlice({
     },
     setUserLiquidityWallet: (state, action) => {
       state.liquidity_wallet = action.payload;
+    },
+    setUserV3LiquidityWallet: (state, action) => {
+      state.liquidity_v3_wallet = action.payload;
     },
     setUserSobLiquidityWallet: (state, action) => {
       state.sob_liquidity_wallet = action.payload;
@@ -337,6 +342,7 @@ export const userReducer = createSlice({
       state.inspirit_allowance = 0;
       state.pending_transactions = [];
       state.liquidity_wallet = [];
+      state.liquidity_v3_wallet = [];
       state.limit_orders = [];
       state.tracked_tokens = [];
       state.bridge_chains = [];
@@ -402,6 +408,7 @@ export const {
   removePendingTransactions,
   removePendingTransaction,
   setUserLiquidityWallet,
+  setUserV3LiquidityWallet,
   setUserSobLiquidityWallet,
   setUserWeightedLiquidityWallet,
   setLimitOrders,

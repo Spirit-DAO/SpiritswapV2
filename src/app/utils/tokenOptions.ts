@@ -33,7 +33,8 @@ const viewOnFtmScan = (tokenAddress: string) => {
 export const TokenOptions = (
   tokenAddress: string,
   staked: boolean = false,
-  target: 'swap' | 'liquidity' = 'swap',
+  target: 'swap' | 'liquidity' | 'concentrated-liquidity' = 'swap',
+  concentratedPool?: { tokens: string; positionId: string },
 ) => {
   const options: Options[] = [];
 
@@ -61,7 +62,7 @@ export const TokenOptions = (
     options.push(swapOption);
   }
 
-  if (target === 'liquidity') {
+  if (target === 'liquidity' || target === 'concentrated-liquidity') {
     if (staked) {
       const goToFarmOption = {
         id: 'add_stacking',
@@ -89,7 +90,7 @@ export const TokenOptions = (
           Tokens[`${tokenAddress}`.toLowerCase()] ||
           LPTokens[`${tokenAddress}`.toLowerCase()];
 
-        if (!token) {
+        if (!token && target === 'liquidity') {
           return null;
         }
 
@@ -97,7 +98,8 @@ export const TokenOptions = (
           return navigate(SWAP.path);
         }
 
-        const targetPath = ROUTE_LOOKUP[target]?.path;
+        const targetPath = ROUTE_LOOKUP['liquidity']?.path;
+
         navigate(
           `${targetPath}/${token.lpSymbol
             .replace(' LP', '')
@@ -125,24 +127,40 @@ export const TokenOptions = (
       onSelect: (tokenAddress: string, navigate: (url: string) => void) => {
         const token = LPTokens[`${tokenAddress}`.toLowerCase()];
 
-        if (!token) {
+        if (!token && target === 'liquidity') {
           return null;
         }
 
-        const targetPath = ROUTE_LOOKUP[target]?.path;
-        navigate(
-          `${targetPath}/${token.lpSymbol
-            .replace(' LP', '')
-            .replace('-', '/')}/remove`,
-        );
+        const targetPath = ROUTE_LOOKUP['liquidity']?.path;
+
+        const fullPath =
+          target === 'liquidity'
+            ? `${targetPath}/${token.lpSymbol
+                .replace(' LP', '')
+                .replace('-', '/')}/remove`
+            : `${targetPath}/${concentratedPool?.tokens
+                ?.split(' ')
+                .join('/')}/remove/${concentratedPool?.positionId}`;
+
+        navigate(fullPath);
       },
     };
-    options.push(addLiquidityOption, farm, removeLiquidity);
+
+    if (target === 'concentrated-liquidity') {
+      // options.push(farm, removeLiquidity);
+      options.push(removeLiquidity);
+    } else {
+      options.push(addLiquidityOption, farm, removeLiquidity);
+    }
   }
 
   // FTMScan option
   const viewOnFtmScanOption = viewOnFtmScan(tokenAddress);
-  if (viewOnFtmScanOption && target !== 'liquidity')
+  if (
+    viewOnFtmScanOption &&
+    target !== 'liquidity' &&
+    target !== 'concentrated-liquidity'
+  )
     options.push(viewOnFtmScanOption);
 
   return options;

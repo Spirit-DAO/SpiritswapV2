@@ -137,7 +137,7 @@ export const getParaSwapRate: Swapper['getRate'] = async (
     amount: isFirtsInput ? srcAmount : destAmount,
     side: isFirtsInput ? SwapSide.SELL : SwapSide.BUY,
     network: CHAIN_ID.toString(),
-    includeDEXS: 'SpiritSwap,SpiritSwapV2',
+    includeDEXS: 'SpiritSwap,SpiritSwapV2,SpiritSwapV3',
     partner: 'spiritswap',
   };
 

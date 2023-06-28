@@ -14,4 +14,7 @@ export type FarmData = {
   farmAddress?: string;
   isGauge?: boolean;
   pid?: number;
+  isConcentrated?: boolean;
+  eternalFarming?: any | null;
+  eternalAvailable?: any | undefined;
 };

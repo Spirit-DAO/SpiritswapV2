@@ -1,18 +1,27 @@
 import { Farm } from 'app/pages/Farms/Farm';
 import { FarmTransaction } from 'app/pages/Farms/components/FarmTransaction';
-import { IFarm, IFarmTransaction } from 'app/interfaces/Farm';
+import {
+  IConcentratedFarm,
+  IFarm,
+  IFarmTransaction,
+} from 'app/interfaces/Farm';
 import { useFarmActions } from '../hooks/useFarmController';
 import {
   FarmTransactionStatus,
   FarmTransactionType,
 } from '../enums/farmTransaction';
 import {
+  approveConcentratedFarm,
   approveFarm,
   gaugeHarvest,
   harvest,
   harvest2,
+  harvestConcentratedFarm,
+  harvestMultipleFarms,
+  stakeConcentratedFarm,
   stakeGaugePoolToken,
   stakePoolToken,
+  unstakeConcentratedFarm,
   unstakeGaugePoolToken,
   unstakeGaugePoolTokenAll,
   unstakePoolToken,
@@ -20,8 +29,12 @@ import {
 import { transactionResponse } from 'utils/web3';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { useDisclosure } from '@chakra-ui/react';
-import { memo, useEffect, useState } from 'react';
+import { memo, useContext, useEffect, useState } from 'react';
 import { TokenList } from '../components/TokenList';
+import useWallets from 'app/hooks/useWallets';
+import { DataContext } from 'contexts/DataContext';
+import { getCircularReplacer } from 'app/utils';
+import { connect } from 'utils/web3';
 
 const MemorizeTokenList = memo(({ farm }: IFarm) => (
   <TokenList
@@ -34,6 +47,7 @@ const MemorizeTokenList = memo(({ farm }: IFarm) => (
     farmType={farm.type}
     lpAddress={farm.lpAddress}
     type={farm.type}
+    hideTypeIcons={Boolean(farm.concentrated)}
   />
 ));
 
@@ -49,15 +63,31 @@ export const FarmController = ({
   const [currentStatus, setCurrentStatus] = useState<any>();
   const { addToQueue } = Web3Monitoring();
   const { isOpen, onOpen: openFarm, onClose: closeFarm } = useDisclosure();
+  const { userDataWorker } = useContext(DataContext);
+
+  const { account } = useWallets();
+
+  const [selectedPosition, setSelectedConcentratedPosition] = useState<
+    string | undefined
+  >();
 
   const farmTrasactionData: IFarmTransaction = {
     farm: farm,
     amountStaked: `${farm.lpTokens}`,
     value: '0',
     moneyValue: '0', //TODO: Add a pricing quote for farm that can be passed to determine price per unit
-    onApproveTransaction: async () => {
+    onApproveTransaction: async (
+      positionId: string | undefined = undefined,
+    ) => {
       if (farm) {
-        const tx = await approveFarm(farm.lpAddress, farm.gaugeAddress, 250);
+        let tx;
+
+        if (farm.concentrated && positionId) {
+          tx = await approveConcentratedFarm(account, positionId);
+        } else {
+          tx = await approveFarm(farm.lpAddress, farm.gaugeAddress, 250);
+        }
+
         const response = transactionResponse('farm.approve', {
           operation: 'APPROVE',
           tx: tx,
@@ -79,7 +109,25 @@ export const FarmController = ({
 
       let tx;
 
-      if (farm.gaugeAddress) {
+      if (farm.concentrated) {
+        const _farm = farm as unknown as IConcentratedFarm;
+        tx = await stakeConcentratedFarm(
+          _farm.rewardToken.id,
+          _farm.bonusRewardToken.id,
+          _farm.pool.id,
+          _farm.startTime,
+          _farm.endTime,
+          _value,
+        );
+
+        const { provider } = await connect({});
+
+        userDataWorker.postMessage({
+          userAddress: account,
+          type: 'getV3Liquidity',
+          provider: JSON.stringify(provider, getCircularReplacer()),
+        });
+      } else if (farm.gaugeAddress) {
         tx = await stakeGaugePoolToken(farm?.gaugeAddress, _value);
       } else {
         tx = await stakePoolToken(farm.pid, _value);
@@ -94,7 +142,26 @@ export const FarmController = ({
       }
       let tx;
 
-      if (farm.gaugeAddress) {
+      if (farm.concentrated) {
+        const _farm = farm as unknown as IConcentratedFarm;
+        const stake = _farm.wallet?.find(
+          stake => String(stake.tokenId) === String(_value),
+        );
+
+        if (!stake) return null;
+
+        tx = await unstakeConcentratedFarm(
+          account,
+          _farm.rewardToken.id,
+          _farm.bonusRewardToken.id,
+          _farm.pool.id,
+          _farm.startTime,
+          _farm.endTime,
+          Number(stake.eternalFarming?.earned || 0),
+          Number(stake.eternalFarming?.bonusEarned || 0),
+          _value,
+        );
+      } else if (farm.gaugeAddress) {
         if (isMax) {
           tx = await unstakeGaugePoolTokenAll(farm.gaugeAddress);
         } else {
@@ -106,13 +173,31 @@ export const FarmController = ({
 
       return tx;
     },
-    onClaimTransaction: async () => {
+    onClaimTransaction: async (positions?: any[]) => {
       let tx;
       if (farm.gaugeAddress) {
         tx = await gaugeHarvest(farm?.gaugeAddress);
+      } else if (farm.concentrated && positions) {
+        const _farm = farm as unknown as IConcentratedFarm;
+
+        const txs = await Promise.all(
+          positions?.map(position =>
+            harvestConcentratedFarm(
+              account,
+              _farm.rewardToken.id,
+              _farm.bonusRewardToken.id,
+              _farm.pool.id,
+              _farm.startTime,
+              _farm.endTime,
+              position.tokenId,
+              true,
+            ),
+          ),
+        );
+
+        tx = await harvestMultipleFarms(txs);
       } else if (farm.rewards) {
         const { rewards } = farm;
-
         if (rewards && rewards.pid) {
           tx = await harvest2(rewards.pid, farm.lpAddress);
         }
@@ -148,7 +233,12 @@ export const FarmController = ({
       {(currentStatus === FarmTransactionStatus.DEFAULT || isOpen) && (
         <Farm
           farm={farm}
-          onWithdraw={onWithdrawHandler}
+          onWithdraw={(positionId: string) => {
+            if (positionId) {
+              setSelectedConcentratedPosition(positionId);
+            }
+            onWithdrawHandler();
+          }}
           onDeposit={onDepositHandler}
           onClaim={farmTrasactionData.onClaimTransaction}
           isTransitioning={isOpen}
@@ -164,6 +254,10 @@ export const FarmController = ({
           onCancelTransaction={onCancelTransaction}
           onOpen={onOpen}
           TokenList={MemorizeTokenList}
+          selectedPosition={selectedPosition}
+          onSelectPosition={positionId =>
+            setSelectedConcentratedPosition(positionId)
+          }
         />
       )}
 
@@ -173,6 +267,7 @@ export const FarmController = ({
           type={FarmTransactionType.WITHDRAW}
           onCancelTransaction={onCancelTransaction}
           TokenList={MemorizeTokenList}
+          selectedPosition={selectedPosition}
         />
       )}
     </>

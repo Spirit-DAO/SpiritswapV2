@@ -1,11 +1,11 @@
-import { IFarm } from 'app/interfaces/Farm';
+import { IConcentratedFarm, IFarm } from 'app/interfaces/Farm';
 
 export interface Props {
-  farm: IFarm;
+  farm: IFarm | IConcentratedFarm;
   isTransitioning: boolean;
   isOpen: boolean;
   TokenList: MemoExoticComponent<() => Element>;
   onWithdraw: (_amount: string) => Promise<any> | void;
   onDeposit: (_amount: string) => Promise<any> | void;
-  onClaim: () => any;
+  onClaim: (position?: any) => any;
 }

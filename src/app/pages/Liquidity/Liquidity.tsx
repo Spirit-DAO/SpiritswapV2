@@ -12,7 +12,7 @@ import {
   Skeleton,
   HStack,
 } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Token,
   TokenPool,
@@ -28,15 +28,17 @@ import {
   YourLiquidityWrapper,
   CollapseSection,
   StyledLiquiditySetting,
+  StyledConcentratedLiqudityLabel,
 } from './styles';
 import { Select } from 'app/components/Select';
 import { Slippage } from './components/Slippage';
-import tokens, { SPIRIT, FTM, USDC, FRAX } from 'constants/tokens';
+import tokens, { WFTM, SPIRIT, FTM, USDC, FRAX } from 'constants/tokens';
 import { ConfirmModal } from './components/ConfirmModal';
 import SpiritsBackground from './components/SpiritsBackground';
 import CollapseItem from './components/Collapse/Collapse';
 import { CardHeader } from 'app/components/CardHeader';
 import { LIQUIDITY } from 'constants/icons';
+import { LIQUIDITY as LIQUIDITY_ROUTE } from 'app/router/routes';
 import Settings from '../Swap/components/Settings';
 import {
   pairTradingData,
@@ -44,6 +46,7 @@ import {
   AddLiquidityTrade,
   AddLiquidityTradeV2,
   checkLpPairCreated,
+  AddLiquidityTradeV3,
 } from 'utils/web3/actions/liquidity';
 import { getLiquityPoolData as getPricingData } from 'utils/data/covalent';
 import { CovalentBalanceItem, tokenData } from 'utils/data';
@@ -78,6 +81,7 @@ import {
   ClassicPanel,
   StablePanel,
   WeightedPanel,
+  ConcentratedPanel,
 } from 'app/pages/Liquidity/components/Panels';
 import { ActionButton } from './components/ActionButton';
 import { Hint } from 'app/components/Hint';
@@ -99,6 +103,13 @@ import { selectFtmInfo } from 'store/general/selectors';
 import useWallets from 'app/hooks/useWallets';
 import { QuestionHelper } from 'app/components/QuestionHelper';
 import { DataContext } from 'contexts/DataContext';
+import { useV3DerivedMintInfo } from 'store/v3/mint/hooks';
+import { useCurrency } from 'app/hooks/v3/useCurrency';
+import ConcentratedCollapseItem from './components/ConcentratedCollapse/ConcentratedCollapse';
+import { RemoveConcentratedLiquidityPanel } from './components/RemoveConcentratedLiquidityPanel';
+import { Heading } from 'app/components/Typography';
+import { ConfirmModalConcentrated } from './components/ConfirmModalConcentrated';
+import { Switch } from 'app/components/Switch';
 
 // TODO: [DEV2-591] refactor liquidity component
 
@@ -106,11 +117,15 @@ const TOKEN_TYPE_CLASSIC_INDEX = 0;
 const TOKEN_TYPE_CLASSIC_LABEL = 'Variable';
 const TOKEN_TYPE_STABLE_INDEX = 1;
 const TOKEN_TYPE_STABLE_LABEL = 'Stable';
-const TOKEN_TYPE_WEIGHTED_INDEX = 2;
+const TOKEN_TYPE_CONCENTRATED_INDEX = 2;
+const TOKEN_TYPE_CONCENTRATED_LABEL = 'Concentrated Liquidity';
+const TOKEN_TYPE_WEIGHTED_INDEX = 3;
 const TOKEN_TYPE_WEIGHTED_LABEL = 'Weighted';
 
 export function LiquidityPage() {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   const pageTitle = `${t('common.name')} - ${t('common.menu.liquidity')}`;
   const { addToQueue } = Web3Monitoring();
@@ -118,21 +133,26 @@ export function LiquidityPage() {
   const translationPathHelper = 'liquidity.helperModal';
   const { handlers, states } = useSettings();
   const { showSuggestion } = useSuggestion();
-  const { token1, token2, type } = useParams();
-
+  const { token1, token2, type, positionId } = useParams();
   const { userDataWorker } = useContext(DataContext);
   const [attempt, setAttempt] = useState(false);
   const [zapDirectly, setZapDirectly] = useState(false);
   const { price: ftmPrice } = useAppSelector(selectFtmInfo);
-  const { account, isLoggedIn, walletLiquidity, login } = useWallets();
+  const { account, isLoggedIn, walletLiquidity, concentratedLiqudiity, login } =
+    useWallets();
   const ROUTER_ADDRESS = contracts.router[CHAIN_ID];
   const ROUTERV2_ADDRESS = contracts.routerV2[CHAIN_ID];
   const SOB_VAULT_ADDRESS = contracts.sobVault[CHAIN_ID];
   const WEIGHTED_VAULT_ADDRESS = contracts.wVault[CHAIN_ID];
+  const NONFUNGIBLE_POSITION_ADDRESS =
+    contracts.v3NonfungiblePositionManager[CHAIN_ID];
 
   const liquidityTypeFromFarm = () => {
     if (type === 'stable') {
       return TOKEN_TYPE_STABLE_INDEX;
+    }
+    if (type === 'concentrated') {
+      return TOKEN_TYPE_CONCENTRATED_INDEX;
     }
     return TOKEN_TYPE_CLASSIC_INDEX;
   };
@@ -183,6 +203,9 @@ export function LiquidityPage() {
   const [nonClassicTrade, setNonClassicTrade] =
     useState<AddLiquidityTradeV2 | null>(null);
 
+  const [concentratedLiquidityTrade, setConcentratedLiquidityTrade] =
+    useState<AddLiquidityTradeV3 | null>(null);
+
   const [pricingData, setPricingData] = useState<CovalentBalanceItem | null>(
     null,
   );
@@ -199,10 +222,15 @@ export function LiquidityPage() {
   const [showRemoveLiquidiy, setshowRemoveLiquidiy] = useState(false);
   const [generalInputState] = useState('0');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showConcentratedConfirmModal, setShowConcentratedConfirmModal] =
+    useState(false);
   const [LPTokenToRemove, setLPTokenToRemove] = useState<tokenData>();
+  const [concentratedPositionToRemove, setConcentratedPositionToRemove] =
+    useState<any>();
   const [pairNotCreated, setPairNotCreated] = useState<boolean>(false);
   const [poolData, setPoolData] = useState<any>({});
   const [altPoolData, setAltPoolData] = useState<any>({});
+  const [showClosed, setShowClosed] = useState(false);
 
   const { token: tokenOneBalance } = useTokenBalance(
     CHAIN_ID,
@@ -269,6 +297,22 @@ export function LiquidityPage() {
   const dispatch = useDispatch();
   const farmData = useAppSelector(selectFarmMasterData);
 
+  const baseCurrency = useCurrency(firstToken?.tokenSelected?.address);
+  const currencyB = useCurrency(secondToken?.tokenSelected?.address);
+
+  const quoteCurrency =
+    baseCurrency && currencyB && baseCurrency.equals(currencyB)
+      ? undefined
+      : currencyB;
+
+  const mintInfo = useV3DerivedMintInfo(
+    baseCurrency ?? undefined,
+    quoteCurrency ?? undefined,
+    100,
+    baseCurrency ?? undefined,
+    undefined,
+  );
+
   const [tokensNeedingApprove, setTokensNeedingApprove] = useState<
     TokenAmount[]
   >([]);
@@ -298,6 +342,8 @@ export function LiquidityPage() {
   const [tokenTypeFilter, setTokenTypeFilter] = useState(liquidityTypeFromFarm);
   const isStableSelected = tokenTypeFilter === TOKEN_TYPE_STABLE_INDEX;
   const isWeightedSelected = tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX;
+  const isConcentratedSelected =
+    tokenTypeFilter === TOKEN_TYPE_CONCENTRATED_INDEX;
 
   const [inputErrors, setInputErrors] = useState({
     [TOKEN_TYPE_CLASSIC_INDEX]: undefined,
@@ -323,7 +369,12 @@ export function LiquidityPage() {
 
   useEffect(() => {
     const init = () => {
-      if (matchedLpTokens && matchedLpTokens.length && walletLiquidity.length) {
+      if (
+        matchedLpTokens &&
+        matchedLpTokens.length &&
+        walletLiquidity &&
+        walletLiquidity.length
+      ) {
         let lpMatch;
 
         for (let x = 0; x < matchedLpTokens.length; x += 1) {
@@ -346,9 +397,26 @@ export function LiquidityPage() {
           setshowRemoveLiquidiy(true);
         }
       }
+
+      if (
+        positionId &&
+        window.location.href.includes('/remove') &&
+        concentratedLiqudiity &&
+        concentratedLiqudiity.length
+      ) {
+        const positionToRemove = concentratedLiqudiity.find(
+          position =>
+            !position.eternalFarming && position.tokenId === Number(positionId),
+        );
+
+        if (positionToRemove) {
+          setConcentratedPositionToRemove(positionToRemove);
+          setshowRemoveLiquidiy(true);
+        }
+      }
     };
     init();
-  }, [matchedLpTokens, walletLiquidity]);
+  }, [matchedLpTokens, walletLiquidity, positionId, concentratedLiqudiity]);
 
   useEffect(() => {
     if (tokenPoolSelected) {
@@ -427,8 +495,14 @@ export function LiquidityPage() {
     setshowRemoveLiquidiy(true);
   };
 
+  const showRemoveConcentratedLiquidity = (position: any) => {
+    setConcentratedPositionToRemove(position);
+    setshowRemoveLiquidiy(true);
+  };
+
   const hideRemoveLiquidity = (_reset = false) => {
     setshowRemoveLiquidiy(false);
+    navigate(`/${LIQUIDITY_ROUTE.path}`);
   };
 
   const { isLoading, loadingOff, loadingOn } = UseIsLoading();
@@ -495,17 +569,25 @@ export function LiquidityPage() {
           provider: JSON.stringify(provider, getCircularReplacer()),
         });
 
+        userDataWorker.postMessage({
+          userAddress: account,
+          type: 'getV3Liquidity',
+          provider: JSON.stringify(provider, getCircularReplacer()),
+        });
+
         loadingOff();
         resetPanel();
       }
     } catch (error) {
       console.error('ERROR EN LIQUIDITY');
       setShowConfirmModal(false);
+      setShowConcentratedConfirmModal(false);
     }
   };
 
   const handleCancelConfirmModal = () => {
     setShowConfirmModal(false);
+    setShowConcentratedConfirmModal(false);
   };
 
   const handleTokenTypeSelect = type => {
@@ -544,6 +626,7 @@ export function LiquidityPage() {
     setWeightedPoolSelected(undefined);
     setTokenPoolSelected(undefined);
     setNonClassicTrade(null);
+    setConcentratedLiquidityTrade(null);
   };
 
   const updatePricingData = async (_lpAddress: string) => {
@@ -574,7 +657,9 @@ export function LiquidityPage() {
     setAttempt(false);
     setLiquidityTrade(null);
     setNonClassicTrade(null);
+    setConcentratedLiquidityTrade(null);
     setShowConfirmModal(false);
+    setShowConcentratedConfirmModal(false);
     setshowRemoveLiquidiy(false);
     setWeightedPoolInputValue({});
     setTokensOfPoolInputValue({});
@@ -835,18 +920,42 @@ export function LiquidityPage() {
     if (!tokenSelected) {
       return null;
     }
+
     if (!type) {
       if (
-        tokenSelected.name !== firstToken.tokenSelected.name &&
-        tokenSelected.name !== secondToken.tokenSelected.name
-      )
+        tokenSelected.address !== firstToken.tokenSelected.address &&
+        tokenSelected.address !== secondToken.tokenSelected.address
+      ) {
+        if (isConcentratedSelected) {
+          if (
+            (tokenSelected.address === BASE_TOKEN_ADDRESS &&
+              secondToken.tokenSelected.address === WFTM.address) ||
+            (tokenSelected.address === WFTM.address &&
+              secondToken.tokenSelected.address === BASE_TOKEN_ADDRESS)
+          ) {
+            return null;
+          }
+        }
         setFirstToken({ ...firstToken, tokenSelected });
+      }
     } else {
       if (
-        tokenSelected.name !== firstToken.tokenSelected.name &&
-        tokenSelected.name !== secondToken.tokenSelected.name
-      )
+        tokenSelected.address !== firstToken.tokenSelected.address &&
+        tokenSelected.address !== secondToken.tokenSelected.address
+      ) {
+        if (isConcentratedSelected) {
+          if (
+            (tokenSelected.address === BASE_TOKEN_ADDRESS &&
+              firstToken.tokenSelected.address === WFTM.address) ||
+            (tokenSelected.address === WFTM.address &&
+              firstToken.tokenSelected.address === BASE_TOKEN_ADDRESS)
+          ) {
+            return null;
+          }
+        }
+
         setSecondToken({ ...secondToken, tokenSelected });
+      }
     }
     if (onClose) onClose();
   };
@@ -859,7 +968,30 @@ export function LiquidityPage() {
     : {};
 
   const selectedTokensWithValue = useCallback(() => {
-    if (!isWeightedSelected && liquidityTrade) {
+    if (isConcentratedSelected) {
+      return [
+        {
+          token: {
+            address: firstToken.tokenSelected.address,
+            symbol: firstToken.tokenSelected.symbol,
+            decimals: firstToken.tokenSelected.decimals,
+            name: firstToken.tokenSelected.name,
+            chainId: firstToken.tokenSelected.chainId,
+          } as Token,
+          amount: '2',
+        },
+        {
+          token: {
+            address: secondToken.tokenSelected.address,
+            symbol: secondToken.tokenSelected.symbol,
+            decimals: secondToken.tokenSelected.decimals,
+            name: secondToken.tokenSelected.name,
+            chainId: secondToken.tokenSelected.chainId,
+          } as Token,
+          amount: '2',
+        },
+      ];
+    } else if (!isWeightedSelected && liquidityTrade) {
       return [
         { token: liquidityTrade.tokenA, amount: liquidityTrade.amountA },
         { token: liquidityTrade.tokenB, amount: liquidityTrade.amountB },
@@ -889,7 +1021,10 @@ export function LiquidityPage() {
   }, [
     isStableSelected,
     isWeightedSelected,
+    isConcentratedSelected,
     liquidityTrade,
+    firstToken,
+    secondToken,
     tokenPoolSelected,
     weightedPoolSelected,
     tokensOfPoolInputValue,
@@ -926,6 +1061,10 @@ export function LiquidityPage() {
           approve_address = WEIGHTED_VAULT_ADDRESS;
         }
 
+        if (isConcentratedSelected) {
+          approve_address = NONFUNGIBLE_POSITION_ADDRESS;
+        }
+
         const approvedAddLiq = await checkAllowance(
           account,
           tokenWithAmount.token.address,
@@ -942,8 +1081,10 @@ export function LiquidityPage() {
       ROUTERV2_ADDRESS,
       SOB_VAULT_ADDRESS,
       WEIGHTED_VAULT_ADDRESS,
+      NONFUNGIBLE_POSITION_ADDRESS,
       account,
       isWeightedSelected,
+      isConcentratedSelected,
       isStableSelected,
     ],
   );
@@ -954,6 +1095,7 @@ export function LiquidityPage() {
         const tokenAllowance = await verifyAllowance(token);
         return tokenAllowance === false;
       }, selectedTokensWithValue());
+
       setTokensNeedingApprove(() => tokensToApprove);
     };
     if (isLoggedIn) {
@@ -971,6 +1113,10 @@ export function LiquidityPage() {
 
     if (isWeightedSelected) {
       approveAddress = WEIGHTED_VAULT_ADDRESS;
+    }
+
+    if (isConcentratedSelected) {
+      approveAddress = NONFUNGIBLE_POSITION_ADDRESS;
     }
 
     let stepNumber = 0;
@@ -1045,6 +1191,21 @@ export function LiquidityPage() {
         ...zapStep,
       ];
     }
+
+    if (tokenTypeFilter === TOKEN_TYPE_CONCENTRATED_INDEX) {
+      return [
+        ...approveSteps,
+        buildAddLiquidity(
+          stepNumber,
+          account,
+          concentratedLiquidityTrade,
+          false,
+          tokenTypeFilter,
+          false,
+        ),
+      ];
+    }
+
     const initialSteps = [
       ...approveSteps,
       buildAddLiquidity(
@@ -1059,7 +1220,7 @@ export function LiquidityPage() {
     ];
     return initialSteps;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, liquidityTrade, zapDirectly]);
+  }, [account, liquidityTrade, concentratedLiquidityTrade, zapDirectly]);
 
   const [steps, setSteps] = useState<any>([]);
   const [checkQuery, setCheckQuery] = useState(false);
@@ -1153,12 +1314,18 @@ export function LiquidityPage() {
     }
   };
 
-  const removeLiquidity = () => (
-    <RemoveLiquidityPanel
-      onCancel={hideRemoveLiquidity}
-      LpPair={LPTokenToRemove!}
-    />
-  );
+  const removeLiquidity = () =>
+    concentratedPositionToRemove ? (
+      <RemoveConcentratedLiquidityPanel
+        position={concentratedPositionToRemove}
+        onCancel={hideRemoveLiquidity}
+      />
+    ) : (
+      <RemoveLiquidityPanel
+        onCancel={hideRemoveLiquidity}
+        LpPair={LPTokenToRemove!}
+      />
+    );
 
   const confirmModal = () => (
     <ConfirmModal
@@ -1178,6 +1345,15 @@ export function LiquidityPage() {
       zapDirectly={zapDirectly}
       setZapDirectly={setZapDirectly}
       poolData={poolData}
+    />
+  );
+
+  const concentratedConfirmModal = () => (
+    <ConfirmModalConcentrated
+      onConfirm={handleConfirmAddLiquidity}
+      onCancel={handleCancelConfirmModal}
+      mintInfo={mintInfo}
+      isLoading={isLoading}
     />
   );
 
@@ -1220,6 +1396,7 @@ export function LiquidityPage() {
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
+
   return (
     <>
       <HelmetProvider>
@@ -1242,7 +1419,10 @@ export function LiquidityPage() {
               onClose={onClose}
               isOpen={isOpen}
               disabled={
-                !liquidityTrade && !isStableSelected && !isWeightedSelected
+                !liquidityTrade &&
+                !isStableSelected &&
+                !isWeightedSelected &&
+                !isConcentratedSelected
               }
               nextStep={() => void 0}
               notifications={notifications}
@@ -1251,6 +1431,8 @@ export function LiquidityPage() {
             <StyledLiquidityWrapper>
               {showConfirmModal ? (
                 confirmModal()
+              ) : showConcentratedConfirmModal ? (
+                concentratedConfirmModal()
               ) : showRemoveLiquidiy ? (
                 removeLiquidity()
               ) : (
@@ -1295,7 +1477,11 @@ export function LiquidityPage() {
                         labels={[
                           TOKEN_TYPE_CLASSIC_LABEL,
                           TOKEN_TYPE_STABLE_LABEL,
-                          //TOKEN_TYPE_WEIGHTED_LABEL,
+                          <StyledConcentratedLiqudityLabel>
+                            Concentrated Liquidity
+                          </StyledConcentratedLiqudityLabel>,
+                          // TOKEN_TYPE_CONCENTRATED_LABEL,
+                          // TOKEN_TYPE_WEIGHTED_LABEL,
                         ]}
                         selected={tokenTypeFilter}
                         onChange={handleTokenTypeSelect}
@@ -1441,6 +1627,64 @@ export function LiquidityPage() {
                             />
                           </WeightedPanel>
                         )}
+                        {tokenTypeFilter === TOKEN_TYPE_CONCENTRATED_INDEX && (
+                          <ConcentratedPanel
+                            firstToken={firstToken}
+                            secondToken={secondToken}
+                            ipLoading={ipLoading}
+                            opLoading={opLoading}
+                            lpTokenValue={checkInvalidValue(lpTokenValue)}
+                            liquidityTrade={liquidityTrade}
+                            handleChangeInput={handleChangeInput}
+                            handleChangeToken={handleChangeToken}
+                            canApproveFunds={canApproveFunds}
+                            errorMessage={classicPanelErrorMessage()}
+                            setCanApproveFunds={setCanApproveFunds}
+                          >
+                            <ActionButton
+                              isDisabled={Boolean(mintInfo.errorMessage)}
+                              handleOnClick={() => {
+                                if (!isLoggedIn) {
+                                  return onOpenConnect();
+                                }
+
+                                setFirstToken({
+                                  ...firstToken,
+                                  value: mintInfo.parsedAmounts.CURRENCY_A
+                                    ? mintInfo.parsedAmounts.CURRENCY_A.toSignificant(
+                                        5,
+                                      )
+                                    : '',
+                                });
+                                setSecondToken({
+                                  ...secondToken,
+                                  value: mintInfo.parsedAmounts.CURRENCY_B
+                                    ? mintInfo.parsedAmounts.CURRENCY_B.toSignificant(
+                                        5,
+                                      )
+                                    : '',
+                                });
+                                setConcentratedLiquidityTrade({
+                                  mintInfo,
+                                  slippage: states.slippage,
+                                  deadline: states.deadline,
+                                  account,
+                                });
+                                setAttempt(true);
+                                // if (canApproveFunds.canApprove)
+                                return setShowConcentratedConfirmModal(true);
+                              }}
+                              isLoggedIn={isLoggedIn}
+                              loading={ipLoading || opLoading}
+                              message={`${
+                                !isLoggedIn
+                                  ? t(`${translationPath}.connectWallet`)
+                                  : inputErrors[TOKEN_TYPE_CLASSIC_INDEX] ||
+                                    `${t(`${translationPath}.addLiquidity`)}`
+                              }`}
+                            />
+                          </ConcentratedPanel>
+                        )}
                       </Box>
                       {/* Trading Section End */}
 
@@ -1489,34 +1733,41 @@ export function LiquidityPage() {
                     />
                   </Flex>
                   {isLoggedIn && walletLiquidity ? (
-                    <Box maxH="460px" overflowY="scroll">
-                      <Accordion
-                        defaultIndex={[-1]}
-                        allowToggle
-                        variant="liquidity"
-                      >
-                        {walletLiquidity.length > 0 ? (
-                          liquidityItems?.map(pair => (
-                            <CollapseItem
-                              key={pair.address}
-                              userAddress={account}
-                              hideRemoveLiquidity={hideRemoveLiquidity}
-                              handleChangeToken={handleChangeToken}
-                              setLPToken={showRemoveLiquidity}
-                              pair={pair}
+                    <>
+                      <Box my={3}>
+                        <Heading level={5}>
+                          {t(`${translationPath}.lpTokens`)}
+                        </Heading>
+                      </Box>
+                      <Box maxH="460px" overflowY="scroll">
+                        <Accordion
+                          defaultIndex={[-1]}
+                          allowToggle
+                          variant="liquidity"
+                        >
+                          {walletLiquidity.length > 0 ? (
+                            liquidityItems?.map(pair => (
+                              <CollapseItem
+                                key={pair.address}
+                                userAddress={account}
+                                hideRemoveLiquidity={hideRemoveLiquidity}
+                                handleChangeToken={handleChangeToken}
+                                setLPToken={showRemoveLiquidity}
+                                pair={pair}
+                              />
+                            ))
+                          ) : (
+                            <Skeleton
+                              startColor="grayBorderBox"
+                              endColor="bgBoxLighter"
+                              w="full"
+                              h="170px"
+                              mb="spacing05"
                             />
-                          ))
-                        ) : (
-                          <Skeleton
-                            startColor="grayBorderBox"
-                            endColor="bgBoxLighter"
-                            w="full"
-                            h="170px"
-                            mb="spacing05"
-                          />
-                        )}
-                      </Accordion>
-                    </Box>
+                          )}
+                        </Accordion>
+                      </Box>
+                    </>
                   ) : !walletLiquidity ? (
                     <HStack py="3" justifyContent="center">
                       <Text fontSize="h3" color="grayDarker">
@@ -1547,6 +1798,66 @@ export function LiquidityPage() {
                       </Button>
                     </VStack>
                   )}
+                  {isLoggedIn && concentratedLiqudiity ? (
+                    <>
+                      <Flex my={3} align={'center'}>
+                        <Heading level={5}>
+                          {t(`${translationPath}.concentratedPositions`)}
+                        </Heading>
+                        <Switch
+                          label={'Show closed'}
+                          checked={showClosed}
+                          onChange={() => setShowClosed(v => !v)}
+                          ml={'auto'}
+                        />
+                      </Flex>
+                      <Box maxH="460px" overflowY="scroll">
+                        <Accordion
+                          defaultIndex={[-1]}
+                          allowToggle
+                          variant="liquidity"
+                        >
+                          {concentratedLiqudiity.length > 0 ? (
+                            concentratedLiqudiity?.map(position => (
+                              <ConcentratedCollapseItem
+                                key={position.tokenId}
+                                position={position}
+                                // userAddress={account}
+                                hideRemoveLiquidity={hideRemoveLiquidity}
+                                handleChangeToken={handleChangeToken}
+                                showClosed={showClosed}
+                                setLPToken={position => {
+                                  showRemoveConcentratedLiquidity(position);
+                                }}
+                              />
+                            ))
+                          ) : (
+                            <Skeleton
+                              startColor="grayBorderBox"
+                              endColor="bgBoxLighter"
+                              w="full"
+                              h="170px"
+                              mb="spacing05"
+                            />
+                          )}
+                        </Accordion>
+                      </Box>
+                    </>
+                  ) : isLoggedIn ? (
+                    <HStack py="3" justifyContent="center">
+                      <Text fontSize="h3" color="grayDarker">
+                        No V3 liquidity found
+                      </Text>
+                      <QuestionHelper
+                        title={'No V3 liquidity found'}
+                        text={[
+                          'You must supply liquidity to get V3 Positions.',
+                        ]}
+                        iconWidth="20px"
+                        iconMargin="0 0 5px 0"
+                      />
+                    </HStack>
+                  ) : null}
                 </CollapseSection>
               </YourLiquidityWrapper>
               {/* Your Liquidity End */}

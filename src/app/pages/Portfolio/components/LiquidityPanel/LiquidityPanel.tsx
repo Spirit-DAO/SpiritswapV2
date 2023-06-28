@@ -1,4 +1,10 @@
-import { ReactNode, useCallback, useState, ChangeEvent } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useState,
+  ChangeEvent,
+  useReducer,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Skeleton, useDisclosure } from '@chakra-ui/react';
 import { checkAddress, getSign } from 'app/utils';
@@ -39,6 +45,7 @@ import { selectFarmRewards } from 'store/user/selectors';
 import { balanceReturnData } from 'utils/data';
 import { selectLpPrices } from 'store/general/selectors';
 import { LIQUIDITY as LIQUIDITY_ROUTE, FARMS } from 'app/router/routes';
+import { ListConcentratedLiquidityItem } from '../ListConcentratedLiquidityItem';
 
 const LiquidityPanel = ({
   liquidityData,
@@ -48,6 +55,7 @@ const LiquidityPanel = ({
   const {
     farmList = [],
     stakeList = [],
+    v3LiquidityList = [],
     totalValue,
     diffAmount,
     diffPercent,
@@ -64,6 +72,15 @@ const LiquidityPanel = ({
   const [migrateSubIndex, setMigrateSubIndex] = useState<number>(-1);
   const lpTokensPrices = useAppSelector(selectLpPrices);
   const [query, setQuery] = useState<string>('');
+
+  const [concentratedTotalValue, updateConcentratedTotalValue] = useReducer(
+    (acc, { tokenId, value }: { tokenId: number; value: number }) => ({
+      ...acc,
+      [tokenId]: value,
+    }),
+    {},
+  );
+
   const isLoading =
     liquidityData.farmList !== null && !liquidityData.farmList?.length;
 
@@ -80,6 +97,7 @@ const LiquidityPanel = ({
 
   const farmData = farmList ? farmList : [];
   const stakeData = stakeList ? stakeList : [];
+  const concentratedData = v3LiquidityList ? v3LiquidityList : [];
 
   const farmListWV1 = [...farmData, ...stakeData].map(farm => {
     let rate = lpTokensPrices[farm.address.toLowerCase()];
@@ -131,6 +149,20 @@ const LiquidityPanel = ({
     _.orderBy(
       farmListWV1.filter(farm => !farm.staked),
       ['isRouterV2', 'usd'],
+      ['desc'],
+    ),
+    _.orderBy(
+      concentratedData.filter(
+        position => !position.onFarmingCenter && !position.isRemoved,
+      ),
+      ['liquidity'],
+      ['desc'],
+    ),
+    _.orderBy(
+      concentratedData.filter(
+        position => position.onFarmingCenter && !position.isRemoved,
+      ),
+      ['liquidity'],
       ['desc'],
     ),
   ];
@@ -225,23 +257,42 @@ const LiquidityPanel = ({
             },
           }}
         >
-          {list.map((farm, index) => (
-            <ListLiquidityItem
-              key={`farm-list-${farm.address}-${farm.name}`}
-              farmData={farm}
-              isV2={farm.isRouterV2}
-              isFarm={isFarm}
-              subindex={index}
-              options={TokenOptions(
-                farm.farmAddress ?? '',
-                farm.staked ? true : false,
-                'liquidity',
-              )}
-              setOpen={setOpenMigration}
-              setMigrateIndex={setMigrateIndex}
-              setMigrateSubIndex={setMigrateSubIndex}
-            />
-          ))}
+          {list.map((farm: any, index) =>
+            farm.isConcentrated ? (
+              <ListConcentratedLiquidityItem
+                key={`concentrated-list-${index}`}
+                positionDetails={farm}
+                handleConcentratedPositionTotalValue={
+                  updateConcentratedTotalValue
+                }
+                options={TokenOptions(
+                  farm.eternalAvailable ?? '',
+                  farm.eternalFarming ? true : false,
+                  'concentrated-liquidity',
+                  {
+                    tokens: farm.name,
+                    positionId: farm.tokenId,
+                  },
+                )}
+              />
+            ) : (
+              <ListLiquidityItem
+                key={`farm-list-${farm.address}-${farm.name}`}
+                farmData={farm}
+                isV2={farm.isRouterV2}
+                isFarm={isFarm}
+                subindex={index}
+                options={TokenOptions(
+                  farm.farmAddress ?? '',
+                  farm.staked ? true : false,
+                  'liquidity',
+                )}
+                setOpen={setOpenMigration}
+                setMigrateIndex={setMigrateIndex}
+                setMigrateSubIndex={setMigrateSubIndex}
+              />
+            ),
+          )}
         </List>
       )}
     </>
@@ -250,14 +301,19 @@ const LiquidityPanel = ({
   const renderStatus = (): ReactNode => {
     if (isLoading) return null;
 
-    let currentTotal = totalValue;
+    let currentTotal =
+      Number(totalValue.replace('$', '')) +
+      Object.values<number>(concentratedTotalValue).reduce(
+        (acc, v) => acc + v,
+        0,
+      );
 
-    if (currentTotal === '$0') {
+    if (currentTotal === 0) {
       let newTotal = 0;
       farmListWV1.forEach(lp => {
         newTotal += parseFloat(lp.usd) || 0;
       });
-      currentTotal = `$${newTotal.toFixed(2)}`;
+      currentTotal = newTotal;
     }
 
     return (
@@ -267,7 +323,7 @@ const LiquidityPanel = ({
             <Heading level={4}>
               {t(`${commonTranslationPath}.totalValue`)}
             </Heading>
-            <Heading level={2}>{currentTotal}</Heading>
+            <Heading level={2}>${currentTotal.toFixed(2)}</Heading>
           </Flex>
         )}
         {(diffAmount || diffPercent !== undefined) && (
@@ -369,8 +425,10 @@ const LiquidityPanel = ({
 
   const renderHarvestManager = (farms): ReactNode => {
     const farmsWithRewards = farms.filter(farm => +farm.earned > 0);
+
     return (
       <HarvestManager
+        // farmsWithRewards={farmsWithRewards.concat(positionsOnFarming)}
         farmsWithRewards={farmsWithRewards}
         isOpen={isOpen}
         onClose={onClose}
@@ -385,7 +443,7 @@ const LiquidityPanel = ({
         {subFarmLists.map((list, index: number) => (
           <div key={`liquidity-panel-sub-${index}`}>
             {renderLiquidityList(list, index)}
-            {!!index && farmList?.length ? renderStatus() : null}
+            {index === subFarmLists.length - 1 ? renderStatus() : null}
           </div>
         ))}
         {ALLOW_V1_V2_MIGRATION &&

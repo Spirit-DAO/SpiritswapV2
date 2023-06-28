@@ -25,6 +25,7 @@ import {
   getMasterChefPoolInfoWithMultiCall,
   getTokenUsdPrice,
   getTVL,
+  loadConcentratedFarmsList,
   loadFarmsList,
   saturateGauges,
 } from 'utils/data';
@@ -149,6 +150,13 @@ async function getFarms(provider, gaugesPromise) {
   self.postMessage({
     type: 'setFarmMasterData',
     payload: JSON.stringify(farmData, getCircularReplacer()),
+  });
+
+  loadConcentratedFarmsList().then(data => {
+    self.postMessage({
+      type: 'setConcentratedLiquidityFarms',
+      payload: data,
+    });
   });
 }
 

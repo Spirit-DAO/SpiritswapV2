@@ -3,6 +3,7 @@ import useLogin from 'app/connectors/EthersConnector/login';
 import { useAppSelector } from 'store/hooks';
 import {
   selectAddress,
+  selectConcentratedLiquidityWallet,
   selectedWeightedLiquidityWallet,
   selectIsLoggedIn,
   selectLiquidity,
@@ -30,6 +31,9 @@ const useWallets = () => {
   const sobWalletLiquidity = useAppSelector(selectSobLiquidityWallet);
   const weightedWalletLiquidity = useAppSelector(
     selectedWeightedLiquidityWallet,
+  );
+  const concentratedLiqudiity = useAppSelector(
+    selectConcentratedLiquidityWallet,
   );
 
   useEffect(() => {
@@ -67,6 +71,7 @@ const useWallets = () => {
     tokens,
     liquidity,
     walletLiquidity,
+    concentratedLiqudiity,
     sobWalletLiquidity,
     weightedWalletLiquidity,
     portfolioAmountValue,

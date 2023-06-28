@@ -18,4 +18,5 @@ export interface Props {
   isMax: boolean;
   lpApr: string;
   staked: boolean;
+  concentrated: boolean | undefined;
 }

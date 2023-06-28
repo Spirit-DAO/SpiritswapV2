@@ -1,4 +1,6 @@
 import contracts from './contracts';
+import JSBI from 'jsbi';
+import { toHex } from '../v3-sdk';
 import { JEFE, rainSPIRIT, wBOMB } from './tokens';
 
 export { NETWORK } from './networks';
@@ -16,7 +18,7 @@ export enum ConnectorNames {
 export const CHAIN_ID = 250; // I think this should be refactored
 export const DEFAULT_HANDLER = 'spiritswap';
 
-export const COVALENT_API_KEY = 'ckey_ce0907ce545344edb6d203df10e';
+export const COVALENT_API_KEY = 'ckey_d86797acadb64dc28689f380b74';
 
 export const GELATO_ADDRESS = '0x59e61b95f20e940ac777e88fa2dfa0a6a4c40fa0';
 export const GELATO_APPROVE_ADDRESS =
@@ -50,7 +52,7 @@ export const LIMIT_PRICE = 1;
 export const LIMIT_RECIEVE = 2;
 
 // URLS
-export const REACT_APP_NODE_1 = 'https://rpc.ankr.com/fantom';
+export const REACT_APP_NODE_1 = 'https://rpc.ftm.tools';
 
 export const REACT_APP_FACTORY_ADDRESS =
   '0xEF45d134b73241eDa7703fa787148D9C9F4950b0';
@@ -160,6 +162,24 @@ export const FTM_TOKEN_NULL_ADDRESS = {
 export const VARIABLE = 'Variable';
 export const STABLE = 'Stable';
 
+export const V3_POOL_INIT_CODE_HASH =
+  '0xbce37a54eab2fcd71913a0d40723e04238970e7fc1159bfd58ad5b79531697e7';
+
+export const BIG_INT_ZERO = JSBI.BigInt(0);
+
+export const GlobalConst = {
+  v3LiquidityRangeType: {
+    MANUAL_RANGE: '0',
+    GAMMA_RANGE: '1',
+  },
+};
+
+export const MaxUint128 = toHex(
+  JSBI.subtract(
+    JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(128)),
+    JSBI.BigInt(1),
+  ),
+);
 export const TOKENS_WITH_HIGH_SLIPPAGE = [
   wBOMB.address.toLowerCase(),
   JEFE.address.toLowerCase(),

@@ -27,12 +27,19 @@ ChartJS.register(
   zoomPlugin,
 );
 
-const Chart = ({ type, durationLabels, data, ...props }: Props) => {
+const Chart = ({
+  type,
+  durationLabels,
+  data,
+  customChartOptions = chartOptions,
+  customChartDataset = dataOptions,
+  ...props
+}: Props) => {
   const dataOption = {
-    ...dataOptions[type],
+    ...customChartDataset[type],
     datasets: [
       {
-        ...dataOptions[type].datasets[0],
+        ...customChartDataset[type].datasets[0],
         data: data,
       },
     ],
@@ -44,7 +51,11 @@ const Chart = ({ type, durationLabels, data, ...props }: Props) => {
 
   return (
     <Wrapper {...props}>
-      <ChartComponent width="30%" options={chartOptions} data={dataOption} />
+      <ChartComponent
+        width="30%"
+        options={customChartOptions}
+        data={dataOption}
+      />
     </Wrapper>
   );
 };
