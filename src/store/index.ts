@@ -14,6 +14,8 @@ import farms from './farms';
 import errors from './errors';
 import features from './features';
 import settings from './settings';
+import burnV3 from './v3/burn';
+import mintV3 from './v3/mint';
 
 export const JSONTransform = createTransform(
   (inboundState, key) => JSON.stringify(inboundState),
@@ -33,6 +35,8 @@ const reducers = combineReducers({
   errors,
   features,
   settings,
+  burnV3,
+  mintV3,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

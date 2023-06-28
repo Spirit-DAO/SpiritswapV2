@@ -10,6 +10,8 @@ export const handleFarmData = (data, index) => {
       return data.filter(farm => farm.type === 'stable');
     // case FarmType.ADMIN:
     //   return data.filter(farm => farm.type === 'admin');
+    case FarmType.CONCENTRATED:
+      return data.filter(farm => farm.type === 'concentrated');
 
     default:
       return data;
@@ -25,10 +27,18 @@ export const filterByState = (
   filterByStaked,
   filterByInactive,
   farmsStaked,
+  concentratedFarmsStaked,
 ) => {
   const lpFarmId = `${pool.lpAddress?.toLowerCase()}`;
+  const concentratedFarmsId = pool.id;
+  const hasConcentratedPositions = concentratedFarmsStaked.some(
+    stake => stake.eternalAvailable === concentratedFarmsId,
+  );
+
   const staked = farmsStaked[lpFarmId]
     ? parseFloat(farmsStaked[lpFarmId].amount) > 0
+    : hasConcentratedPositions
+    ? true
     : false;
 
   const inactive: boolean = !(parseFloat(pool.apr!) > 0);

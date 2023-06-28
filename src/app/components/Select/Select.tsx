@@ -28,6 +28,7 @@ const Select: FC<Props> = ({
           disabled: disabled,
           $last: index === labels.length - 1,
           onClick: () => clickHandler(index),
+          $component: typeof label === 'object',
         };
 
         if (typeof label === 'string') {
@@ -37,6 +38,7 @@ const Select: FC<Props> = ({
             </StyledHeading>
           );
         }
+
         return <StyledItem {...itemProps}>{label}</StyledItem>;
       })}
       {children}

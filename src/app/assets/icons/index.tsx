@@ -86,6 +86,7 @@ import { ReactComponent as CompoundIconImage } from 'app/assets/images/compound.
 import { ReactComponent as zokyoAudit } from 'app/assets/images/zokyoAudit.svg';
 import { ReactComponent as PeckShieldAudit } from 'app/assets/images/peckShieldAudit.svg';
 import { ReactComponent as ParaSwap } from 'app/assets/images/paraSwap.svg';
+import { ReactComponent as Algebra } from 'app/assets/images/algebra.svg';
 
 const { ci, grayDarker, danger, warning } = colors;
 const iconSize = {
@@ -111,6 +112,10 @@ export const PeckShiledAuditLogo = ({
 };
 export const ParaSwapLogo = ({ w = md, h = md, color = ci, ...rest }) => {
   return <Icon {...rest} as={ParaSwap} color={color} w={w} h={h} />;
+};
+
+export const AlgebraLogo = ({ w = md, h = md, color = ci, ...rest }) => {
+  return <Icon {...rest} as={Algebra} color={color} w={w} h={h} />;
 };
 
 export const SuggestionIcon = ({ w = md, h = md, color = ci, ...rest }) => {

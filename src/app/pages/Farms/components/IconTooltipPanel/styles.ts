@@ -9,6 +9,7 @@ export const StyledContainer = styled.div<{
   background: ${({ staked, theme }) =>
     staked ? theme.color.ciTrans15 : theme.color.bgBoxLighter};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
+  min-height: 108px;
 `;
 
 export const StyledRow = styled.div`

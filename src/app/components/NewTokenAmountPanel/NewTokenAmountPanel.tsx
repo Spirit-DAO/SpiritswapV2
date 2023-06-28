@@ -272,6 +272,9 @@ const NewTokenAmountPanel = ({
     return `≈ $${parseFloat(usd).toFixed(2)}`;
   };
 
+  const isTokenSelectorOnly =
+    !showBalance && !showInputInUSD && !showNumberInputField && !showPercentage;
+
   return (
     <Flex
       bg="bgBoxLighter"
@@ -331,6 +334,7 @@ const NewTokenAmountPanel = ({
             symbol={token.symbol}
             src={getSRC()}
             isSelectable={isSelectable}
+            isTokenSelectorOnly={isTokenSelectorOnly}
           />
         )}
         {poolPercentage && (

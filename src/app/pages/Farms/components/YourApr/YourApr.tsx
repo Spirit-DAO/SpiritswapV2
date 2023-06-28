@@ -14,13 +14,16 @@ const YourApr = ({
   ecosystem,
   isBoosted,
   isMax,
+  concentrated,
   farmUserData,
 }: Props) => {
   const { t } = useTranslation();
   label =
     label ||
     t(
-      ecosystem
+      concentrated
+        ? 'liquidity.common.APR'
+        : ecosystem
         ? 'liquidity.common.APR'
         : !isMax
         ? 'farms.common.yourApr'

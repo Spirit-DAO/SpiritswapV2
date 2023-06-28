@@ -10,6 +10,8 @@ export const selectSobLiquidityWallet = (state: RootState) =>
   state.user.sob_liquidity_wallet;
 export const selectedWeightedLiquidityWallet = (state: RootState) =>
   state.user.weighted_liquidity_wallet;
+export const selectConcentratedLiquidityWallet = (state: RootState) =>
+  state.user.liquidity_v3_wallet;
 export const selectFarmsStaked = (state: RootState) => state.user.farms_staked;
 export const selectTokensValue = (state: RootState) => state.user.tokens_value;
 export const selectWallet = (state: RootState) => state.user.wallet;

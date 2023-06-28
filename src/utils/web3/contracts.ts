@@ -12,6 +12,7 @@ import souschefABI from './abis/sousChef.json';
 import masterChefABI2 from './abis/masterchefV2.json';
 import gaugeABI from './abis/gauges.json';
 import erc20ABI from './abis/erc20.json';
+import erc20Bytes32ABI from './abis/erc20-bytes32.json';
 import inSpiritABI from './abis/inspirit.json';
 import inSpiritLPABI from './abis/inspiritLp.json';
 import feeDistributorABI from './abis/feeDistributor.json';
@@ -36,6 +37,15 @@ import WeightedPool2TokensABI from './abis/WeightedPool.json';
 import BeethovenMasterChefABI from './abis/temp/BeethovenxMasterChef.json';
 import LendAndBorrowABI from './abis/lendAndBorrow.json';
 import wrappedFTMABI from './abis/wrappedFTM.json';
+import V3AlgebraFactoryABI from './abis/v3/algebraFactory.json';
+import V3AlgebraPoolABI from './abis/v3/algebraPool.json';
+import V3AlgebraQuoterABI from './abis/v3/algebraQuoter.json';
+import V3NonfungiblePositionManagerABI from './abis/v3/nonfungiblePositionManager.json';
+import V3SwapRouterABI from './abis/v3/swapRouter.json';
+import V3EternalFarmingABI from './abis/v3/eternalFarming.json';
+import V3FarmingCenterABI from './abis/v3/farmingCenter.json';
+import V3MulticallABI from './abis/v3/multicall.json';
+
 import { connect } from './connection';
 import { Call, MulticallSingleResponse, Web3Provider } from './types';
 import { CONNECTIONS } from 'app/connectors/EthersConnector/login';
@@ -50,6 +60,7 @@ export const ABIS = {
   gauge: gaugeABI,
   souschef: souschefABI,
   erc20: erc20ABI,
+  erc20Bytes32: erc20Bytes32ABI,
   inspirit: inSpiritABI,
   inspiritLp: inSpiritLPABI,
   feedistributor: feeDistributorABI,
@@ -74,6 +85,14 @@ export const ABIS = {
   beetmasterchef: BeethovenMasterChefABI,
   lendAndBorrow: LendAndBorrowABI,
   wrappedFTM: wrappedFTMABI,
+  v3AlgebraFactory: V3AlgebraFactoryABI,
+  v3AlgebraPool: V3AlgebraPoolABI,
+  v3AlgebraQuoter: V3AlgebraQuoterABI,
+  v3NonfungiblePositionManager: V3NonfungiblePositionManagerABI,
+  v3SwapRouter: V3SwapRouterABI,
+  v3EternalFarming: V3EternalFarmingABI,
+  v3FarmingCenter: V3FarmingCenterABI,
+  v3Multicall: V3MulticallABI,
 };
 
 let multicallContract;
@@ -284,7 +303,12 @@ export async function MulticallV2(
         ABIS[_connectABI],
       );
       if (call.params) {
-        action = targetContract[call.name](call.params[0]);
+        const isArray = Array.isArray(call.params[0]);
+        if (isArray) {
+          action = targetContract[call.name](...call.params[0]);
+        } else {
+          action = targetContract[call.name](call.params[0]);
+        }
       }
     }
     finalCalls.push(action);

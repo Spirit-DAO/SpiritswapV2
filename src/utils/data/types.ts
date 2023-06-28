@@ -106,12 +106,14 @@ export interface tokenData {
   lpType?: string;
   type?: string;
   isRouterV2?: boolean;
+  isConcentrated?: boolean;
 }
 
 export interface balanceReturnData {
   tokenList?: Array<tokenData>;
   farmList?: Array<tokenData> | null;
   stakeList?: Array<tokenData>;
+  v3LiquidityList?: Array<any>;
   diffAmount: string;
   diffAmountValue?: number;
   diffPercent: string;
@@ -163,6 +165,8 @@ export interface FarmRewardInfo {
   lpAddress: string;
   gaugeAddress: string;
   earned: string;
+  isConcentrated?: boolean;
+  eternalFarming?: any;
 }
 
 export const instanceOfPool = (data: any): data is TokenPool => {

@@ -33,6 +33,13 @@ import { Multicall } from 'utils/web3';
 import { Call } from 'utils/data/types';
 import { allV1farms } from 'constants/farms';
 import contracts from 'constants/contracts';
+import { IDerivedMintInfo } from 'store/v3/mint/hooks';
+import { Currency, CurrencyAmount, Percent, WETH9 } from '../../../v3-sdk';
+import { NonfungiblePositionManager } from '../../../v3-sdk';
+
+import { SWAP_SLIPPAGE_TOLERANCE_INDEX_KEY } from 'constants/index';
+import { ExtendedEther } from '../../../v3-sdk/entities/ExtendedEther';
+import { algebraFarmingCenterContract } from './farm';
 
 const BATCH_SWAP_TYPE_IN = 0;
 const SWAP_FEE_PERCENTAGE = '150000000000000000';
@@ -813,6 +820,13 @@ export interface AddLiquidityTradeV2 {
   exactLiquidity?: string;
 }
 
+export interface AddLiquidityTradeV3 {
+  mintInfo: IDerivedMintInfo;
+  deadline: number;
+  slippage: string;
+  account: string;
+}
+
 export interface PairTradeData {
   buyToken: Token;
   sellToken: Token;
@@ -1501,4 +1515,170 @@ export const estimateRemoveLiquidity = async (
   result.set(tokenAmountB.token?.address, tokenAmountB);
 
   return result;
+};
+
+export const nonfungiblePositionManagerContract = async () => {
+  const _connector = getProvider();
+  let contract = 'v3NonfungiblePositionManager';
+
+  const nonfungiblePositionManagerContract = await Contract(
+    addresses[contract][CHAIN_ID],
+    contract,
+    _connector,
+    CHAIN_ID,
+  );
+
+  return nonfungiblePositionManagerContract;
+};
+
+export const addConcentratedLiquidity = async (
+  mintInfo: IDerivedMintInfo,
+  slippage: string,
+  deadline: string,
+  account: string,
+) => {
+  const contract = await nonfungiblePositionManagerContract();
+
+  // TODO
+  const allowedSlippage =
+    slippage === 'Auto'
+      ? mintInfo.outOfRange
+        ? new Percent('0')
+        : new Percent(50, 10_000)
+      : new Percent(50, 10_000);
+
+  let currencyA = mintInfo.currencies.CURRENCY_A;
+  let currencyB = mintInfo.currencies.CURRENCY_B;
+
+  // TODO
+
+  if (
+    currencyA?.wrapped.address.toLowerCase() ===
+    '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83'
+  ) {
+    currencyA = ExtendedEther.onChain(250);
+  }
+
+  if (
+    currencyB?.wrapped.address.toLowerCase() ===
+    '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83'
+  ) {
+    currencyB = ExtendedEther.onChain(250);
+  }
+
+  const inputSymbols = [currencyA?.symbol, currencyB?.symbol]
+    .toString()
+    .replace(/,/g, ' + ');
+
+  if (mintInfo.position) {
+    const useNative = currencyA?.isNative
+      ? currencyA
+      : currencyB?.isNative
+      ? currencyB
+      : undefined;
+
+    const { calldata, value } = NonfungiblePositionManager.addCallParameters(
+      mintInfo.position,
+      {
+        slippageTolerance: allowedSlippage,
+        recipient: account,
+        // deadline: deadline.toString(),
+        deadline: (Math.floor(Date.now() / 1000) + (20 ?? 0) * 60).toString(),
+        useNative,
+        createPool: mintInfo.noLiquidity,
+      },
+    );
+
+    const estimatedGas = await contract.estimateGas['multicall'](calldata, {
+      value,
+    });
+
+    const tx = await contract.multicall(calldata, {
+      gasLimit: estimatedGas,
+      value,
+    });
+
+    return transactionResponse('liquidity.add', {
+      tx,
+      operation: 'LIQUIDITY',
+      update: 'liquidity',
+      updateTarget: 'user',
+      inputSymbol: inputSymbols,
+    });
+  }
+};
+
+export const removeConcentratedLiquidity = async (
+  position: any,
+  positionId: string,
+  account: string,
+  liquidityPercentage: Percent,
+  feeValue0: CurrencyAmount<Currency>,
+  feeValue1: CurrencyAmount<Currency>,
+  slippage: string,
+  deadline: number,
+) => {
+  const contract = await nonfungiblePositionManagerContract();
+
+  const allowedSlippage = new Percent(50, 10_000);
+
+  const { calldata, value } = NonfungiblePositionManager.removeCallParameters(
+    position,
+    {
+      tokenId: positionId,
+      liquidityPercentage,
+      slippageTolerance: allowedSlippage,
+      deadline: (Math.floor(Date.now() / 1000) + (20 ?? 0) * 60).toString(),
+      collectOptions: {
+        expectedCurrencyOwed0: feeValue0,
+        expectedCurrencyOwed1: feeValue1,
+        recipient: account,
+      },
+    },
+  );
+
+  const estimatedGas = await contract.estimateGas['multicall'](calldata, {
+    value,
+  });
+
+  const tx = await contract.multicall(calldata, {
+    gasLimit: estimatedGas,
+    value,
+  });
+
+  return tx;
+};
+
+export const collectConcentratedLiquidityFees = async (
+  positionId: string,
+  account: string,
+  feeValue0: CurrencyAmount<Currency>,
+  feeValue1: CurrencyAmount<Currency>,
+  isOnFarming: boolean,
+) => {
+  let contract;
+
+  if (isOnFarming) {
+    contract = await algebraFarmingCenterContract();
+  } else {
+    contract = await nonfungiblePositionManagerContract();
+  }
+
+  const { calldata, value } = NonfungiblePositionManager.collectCallParameters({
+    tokenId: positionId,
+    expectedCurrencyOwed0: feeValue0,
+    expectedCurrencyOwed1: feeValue1,
+    recipient: account,
+  });
+
+  const estimatedGas = await contract.estimateGas['multicall'](calldata, {
+    value,
+  });
+
+  const tx = await contract.multicall(calldata, {
+    gasLimit: estimatedGas,
+    value,
+  });
+
+  return tx;
 };

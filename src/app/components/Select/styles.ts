@@ -27,6 +27,7 @@ export const SharedItemStyle = css<{
   $active: boolean;
   disabled: boolean;
   $last: boolean;
+  $component: boolean;
 }>`
   display: flex;
   flex: 1;
@@ -49,14 +50,14 @@ export const SharedItemStyle = css<{
   user-select: none;
 
   &:hover {
-    background: ${({ $active, disabled, theme }) =>
-      !$active && !disabled ? theme.color.grayBorderBox : ''};
+    background: ${({ $active, disabled, $component, theme }) =>
+      !$active && !disabled && !$component ? theme.color.grayBorderBox : ''};
   }
 `;
 
 export const StyledItem = styled.div`
   ${SharedItemStyle};
-  width: ${({ theme }) => theme.spacing.spacing05};
+  width: fit-content;
   padding: 0;
 `;
 
