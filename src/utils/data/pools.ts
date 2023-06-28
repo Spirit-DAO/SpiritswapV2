@@ -761,7 +761,6 @@ export const loadFarmsList = async (
     ...adminGauges,
     ...combineGauges,
   ];
-  console.log(combineGauges, 'here');
 
   // Here's where we call stable and weighted data
   const masterFarms: (IFarm | null)[] = await Promise.all(

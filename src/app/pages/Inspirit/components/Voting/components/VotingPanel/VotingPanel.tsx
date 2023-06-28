@@ -163,8 +163,6 @@ const VotingPanel = ({
     return { ...listFarm };
   });
 
-  console.log('finalSelectedFarms', finalSelectedFarms);
-
   const { pieChartData, pieChartOptions } = usePieChartData({
     farmsList: finalSelectedFarms,
   });
