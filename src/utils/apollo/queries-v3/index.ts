@@ -1,26 +1,27 @@
 import { gql } from '@apollo/client';
+import {
+  IEternalFarmingSubgraph,
+  IPoolSubgraph,
+  ITokenSubgraph,
+  IDepositSubgraph,
+  ITickSubgraph,
+} from 'app/interfaces/Farm';
 import { clientV3, farmingV3 } from '../client';
 
-// export const multiFetcher = async (items, fetcher, query, field) => {
-//   return Promise.allSettled(items.map(item => fetcher(query, {
-//       [field]: item
-//   }))).then(results => results.map(result => result.status === 'fulfilled' ? result.value : null))
-// }
-
-export const getPool = async (poolAddress: string) => {
+export const getPool = async (poolAddress: string | null) => {
   const {
     data: { pool },
   } = await clientV3.query({
     query: fetchPoolQuery,
     variables: {
-      poolId: poolAddress.toLowerCase(),
+      poolId: poolAddress?.toLowerCase(),
     },
   });
 
-  return pool;
+  return pool as IPoolSubgraph;
 };
 
-export const getToken = async (tokenAddress: string) => {
+export const getToken = async (tokenAddress: string | null) => {
   const {
     data: { token },
   } = await farmingV3.query({
@@ -29,7 +30,7 @@ export const getToken = async (tokenAddress: string) => {
       tokenId: tokenAddress,
     },
   });
-  return token;
+  return token as ITokenSubgraph;
 };
 
 export const getEternalFarmings = async () => {
@@ -38,10 +39,10 @@ export const getEternalFarmings = async () => {
   } = await farmingV3.query({
     query: fetchEternalFarmingsQuery,
   });
-  return eternalFarmings;
+  return eternalFarmings as IEternalFarmingSubgraph[];
 };
 
-export const getEternalFarming = async farmingId => {
+export const getEternalFarming = async (farmingId: string | undefined) => {
   const {
     data: { eternalFarming },
   } = await farmingV3.query({
@@ -51,10 +52,12 @@ export const getEternalFarming = async farmingId => {
     },
   });
 
-  return eternalFarming;
+  return eternalFarming as IEternalFarmingSubgraph;
 };
 
-export const getEternalFarmingFromPool = async poolAddress => {
+export const getEternalFarmingFromPool = async (
+  poolAddress: string | undefined,
+) => {
   const {
     data: { eternalFarmings },
   } = await farmingV3.query({
@@ -63,10 +66,10 @@ export const getEternalFarmingFromPool = async poolAddress => {
       poolAddress: poolAddress,
     },
   });
-  return eternalFarmings;
+  return eternalFarmings as IEternalFarmingSubgraph[];
 };
 
-export const getTransferredPositions = async account => {
+export const getTransferredPositions = async (account: string | undefined) => {
   const {
     data: { deposits },
   } = await farmingV3.query({
@@ -76,10 +79,12 @@ export const getTransferredPositions = async account => {
     },
   });
 
-  return deposits;
+  return deposits as IDepositSubgraph[];
 };
 
-export const getPositionsOnEternalFarming = async account => {
+export const getPositionsOnEternalFarming = async (
+  account: string | undefined,
+) => {
   const {
     data: { deposits },
   } = await farmingV3.query({
@@ -89,13 +94,13 @@ export const getPositionsOnEternalFarming = async account => {
     },
   });
 
-  return deposits;
+  return deposits as IDepositSubgraph[];
 };
 
 export const getTransferredPositionsForPool = async (
-  account,
-  poolId,
-  minRangeLength,
+  account: string,
+  poolId: string,
+  minRangeLength: number,
 ) => {
   const {
     data: { deposits },
@@ -108,7 +113,7 @@ export const getTransferredPositionsForPool = async (
     },
   });
 
-  return deposits;
+  return deposits as IDepositSubgraph[];
 };
 
 export const getAllV3Ticks = async (
@@ -132,7 +137,7 @@ export const getAllV3Ticks = async (
   });
 
   return {
-    data: ticks,
+    data: ticks as ITickSubgraph[],
     error,
     loading,
   };

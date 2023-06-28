@@ -470,8 +470,8 @@ export const harvestConcentratedFarm = async (
   rewardToken: string,
   bonusRewardToken: string,
   pool: string,
-  startTime: number,
-  endTime: number,
+  startTime: string,
+  endTime: string,
   positionId: string,
   returnCalldata: boolean = false,
 ) => {

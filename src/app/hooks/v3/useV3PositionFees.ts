@@ -26,7 +26,6 @@ export function useV3PositionFees(
   useEffect(() => {
     async function fetchProvider() {
       const provider = new Web3Provider(window.ethereum);
-      // const signer = await provider.getSigner();
       const contract = new Contract(
         contracts.v3NonfungiblePositionManager[CHAIN_ID],
         NonfungiblePositionManagerABI,

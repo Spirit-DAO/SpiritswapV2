@@ -1,6 +1,3 @@
-// import { TokenAmountCard } from "pages/NewAddLiquidity/components/TokenAmountCard";
-// import { TokenRatio } from "pages/NewAddLiquidity/components/TokenRatio";
-
 import { Currency, CurrencyAmount } from '../../../../../../v3-sdk';
 
 import { Field } from 'store/v3/mint/actions';
@@ -11,16 +8,7 @@ import {
 } from 'store/v3/mint/hooks';
 import { maxAmountSpend } from '../../../../../../v3-sdk/functions';
 
-// import { ApprovalState, useApproveCallback } from "hooks/useApproveCallback";
-
-// import { NONFUNGIBLE_POSITION_MANAGER_ADDRESSES } from "constants/addresses";
-
-import { Bound, updateCurrentStep } from 'store/v3/mint/actions';
-import { useEffect, useMemo } from 'react';
-import { tryParseAmount } from 'v3-sdk/functions';
-
-import { useAppDispatch } from 'store/hooks';
-import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 import { TokenAmountPanel } from 'app/components/NewTokenAmountPanel';
 import { Flex } from '@chakra-ui/react';
 import { StyledDisabledDeposit } from './styled';
@@ -48,8 +36,6 @@ export function EnterAmounts({
   additionalStep,
   backStep,
 }: IEnterAmounts) {
-  const { t } = useTranslation();
-
   const { independentField, typedValue } = useV3MintState();
 
   const { onFieldAInput, onFieldBInput } = useV3MintActionHandlers(

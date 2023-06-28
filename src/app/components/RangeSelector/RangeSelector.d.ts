@@ -1,5 +1,4 @@
 import { Price, Token, Currency } from '../../../v3-sdk';
-// import { IDervivedMintInfo } from 'hooks/v3'
 
 export interface Props {
   priceLower: Price<Token, Token> | undefined;

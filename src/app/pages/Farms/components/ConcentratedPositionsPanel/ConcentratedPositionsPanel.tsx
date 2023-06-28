@@ -1,5 +1,5 @@
-import { Box, List, Text, useRadioGroup } from '@chakra-ui/react';
-import { IConcentratedFarm } from 'app/interfaces/Farm';
+import { Box, List, useRadioGroup } from '@chakra-ui/react';
+import { IConcentratedFarm, IWalletV3 } from 'app/interfaces/Farm';
 import { useMemo } from 'react';
 import { FarmTransactionType } from '../../enums/farmTransaction';
 import { ConcentratedPositionsPanelItem } from '../ConcentratedPositionsPanelItem';
@@ -11,7 +11,7 @@ export default function ConcentratedPositionsPanel({
   preselectedPosition,
   onChange,
 }: {
-  wallet: any[] | undefined;
+  wallet: IWalletV3 | undefined;
   farm: IConcentratedFarm | undefined;
   type: FarmTransactionType;
   onChange: (value: string) => void;
@@ -28,12 +28,10 @@ export default function ConcentratedPositionsPanel({
   const positions = useMemo(() => {
     if (!wallet || !farm) return;
 
-    console.log('Wallet', wallet);
-
     const positionsForFarming = wallet.filter(position => {
       if (type === FarmTransactionType.DEPOSIT) {
         return (
-          position.rangeLength >= farm.rangeLength &&
+          Number(position.rangeLength) >= farm.rangeLength &&
           !position.onFarmingCenter &&
           position.eternalAvailable === farm.id &&
           !position.isRemoved
@@ -41,7 +39,7 @@ export default function ConcentratedPositionsPanel({
       } else {
         return (
           position.onFarmingCenter &&
-          position.pool.toLowerCase() === farm.pool.id.toLowerCase()
+          position.pool?.toLowerCase() === farm.pool.id.toLowerCase()
         );
       }
     });

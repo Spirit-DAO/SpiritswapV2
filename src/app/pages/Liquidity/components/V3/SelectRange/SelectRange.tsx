@@ -1,26 +1,17 @@
-// import { IPresetArgs, PresetRanges } from "pages/NewAddLiquidity/components/PresetRanges";
 import { RangeSelector } from 'app/components/RangeSelector';
 import { Currency } from '../../../../../../v3-sdk';
-import {
-  Bound,
-  updateCurrentStep,
-  updateSelectedPreset,
-} from 'store/v3/mint/actions';
+import { Bound, updateSelectedPreset } from 'store/v3/mint/actions';
 import {
   IDerivedMintInfo,
   useRangeHopCallbacks,
   useV3MintActionHandlers,
   useV3MintState,
 } from 'store/v3/mint/hooks';
-// import LiquidityChartRangeInput from "components/LiquidityChartRangeInput";
-// import useUSDCPrice, { useUSDCValue } from "hooks/useUSDCPrice";
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useAppDispatch } from 'store/hooks';
 import { useActivePreset } from 'store/v3/mint/hooks';
 import { Presets } from 'store/v3/mint';
-import { tryParseAmount } from '../../../../../../v3-sdk/functions';
 import { USDC, USDT, DAI } from 'constants/tokens';
-import { useTranslation } from 'react-i18next';
 import { RangePresets } from 'app/components/RangePresets';
 import { LiquidityRangeChart } from '../../LiquidityRangeChart';
 import { Box } from '@chakra-ui/react';

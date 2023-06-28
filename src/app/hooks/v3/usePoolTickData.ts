@@ -10,6 +10,7 @@ import {
 import JSBI from 'jsbi';
 import { getAllV3Ticks, getPool } from 'utils/apollo/queries-v3';
 import contracts from 'constants/contracts';
+import { ITickSubgraph } from 'app/interfaces/Farm';
 
 export function useInfoTickData() {
   const numSurroundingTicks = 300;
@@ -23,8 +24,8 @@ export function useInfoTickData() {
     tickIdxLowerBound: number,
     tickIdxUpperBound: number,
   ) {
-    let surroundingTicks: any[] = [];
-    let surroundingTicksResult: any[] = [];
+    let surroundingTicks: ITickSubgraph[] = [];
+    let surroundingTicksResult: ITickSubgraph[] = [];
 
     let skip = 0;
     do {
@@ -74,14 +75,13 @@ export function useInfoTickData() {
 
       const {
         tick: poolCurrentTick,
-        tickSpacing: poolTickSpacing,
         liquidity,
         token0: { id: token0Address, decimals: token0Decimals },
         token1: { id: token1Address, decimals: token1Decimals },
       } = pool;
 
       const poolCurrentTickIdx = parseInt(poolCurrentTick);
-      const tickSpacing = Number(poolTickSpacing) || 60;
+      const tickSpacing = 60;
 
       const activeTickIdx =
         Math.floor(poolCurrentTickIdx / tickSpacing) * tickSpacing;

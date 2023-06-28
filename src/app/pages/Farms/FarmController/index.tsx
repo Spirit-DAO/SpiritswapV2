@@ -110,7 +110,7 @@ export const FarmController = ({
       let tx;
 
       if (farm.concentrated) {
-        const _farm = farm as IConcentratedFarm;
+        const _farm = farm as unknown as IConcentratedFarm;
         tx = await stakeConcentratedFarm(
           _farm.rewardToken.id,
           _farm.bonusRewardToken.id,
@@ -143,10 +143,13 @@ export const FarmController = ({
       let tx;
 
       if (farm.concentrated) {
-        const _farm = farm as IConcentratedFarm;
+        const _farm = farm as unknown as IConcentratedFarm;
         const stake = _farm.wallet?.find(
           stake => String(stake.tokenId) === String(_value),
         );
+
+        if (!stake) return null;
+
         tx = await unstakeConcentratedFarm(
           account,
           _farm.rewardToken.id,
@@ -154,8 +157,8 @@ export const FarmController = ({
           _farm.pool.id,
           _farm.startTime,
           _farm.endTime,
-          stake.eternalFarming.earned,
-          stake.eternalFarming.bonusEarned,
+          Number(stake.eternalFarming?.earned || 0),
+          Number(stake.eternalFarming?.bonusEarned || 0),
           _value,
         );
       } else if (farm.gaugeAddress) {
@@ -175,7 +178,7 @@ export const FarmController = ({
       if (farm.gaugeAddress) {
         tx = await gaugeHarvest(farm?.gaugeAddress);
       } else if (farm.concentrated && positions) {
-        const _farm = farm as IConcentratedFarm;
+        const _farm = farm as unknown as IConcentratedFarm;
 
         const txs = await Promise.all(
           positions?.map(position =>

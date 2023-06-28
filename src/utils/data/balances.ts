@@ -36,7 +36,15 @@ import {
 } from 'utils/apollo/queries-v3';
 import { algebraFarmingCenterContract } from 'utils/web3/actions/farm';
 import BigNumber from 'bignumber.js';
-import { computePoolAddress, Token } from '../../v3-sdk';
+import { computePoolAddress, Position, Token } from '../../v3-sdk';
+import {
+  IEternalFarmingSubgraph,
+  IFarmingPool,
+  IFarmingRewardToken,
+  IPoolSubgraph,
+  IV3Position,
+  IV3TempPosition,
+} from 'app/interfaces/Farm';
 
 const FARMS = [...allFarms, ...unsupportedFarms];
 
@@ -663,12 +671,12 @@ export const getV3Balances = async (_address: string, provider?: any) => {
     return call;
   });
 
-  const farmingPositionResults: any[] = await MulticallV2(
+  const farmingPositionResults = (await MulticallV2(
     farmingPositionCalls,
     'v3NonfungiblePositionManager',
     CHAIN_ID,
     'rpc',
-  );
+  )) as Position[];
 
   const farmingsFromPosition = positionsOnFarming.map(
     position => position.eternalFarming,
@@ -680,34 +688,34 @@ export const getV3Balances = async (_address: string, provider?: any) => {
     results.map(res => (res.status === 'fulfilled' ? res.value : null)),
   );
 
-  const _pools = positionsOnFarming?.map(res => (res ? res.pool : null));
-  const _rewardTokens = eternalFarmingFromPositions?.map(res =>
+  const _pools = positionsOnFarming.map(res => (res ? res.pool : null));
+  const _rewardTokens = eternalFarmingFromPositions.map(res =>
     res ? res.rewardToken : null,
   );
-  const _bonusRewardTokens = eternalFarmingFromPositions?.map(res =>
+  const _bonusRewardTokens = eternalFarmingFromPositions.map(res =>
     res ? res.bonusRewardToken : null,
   );
 
-  const pools = await Promise.allSettled(
+  const pools = await Promise.allSettled<IPoolSubgraph>(
     _pools.map(pool => getPool(pool)),
   ).then(results =>
     results.map(res => (res.status === 'fulfilled' ? res.value : null)),
   );
-  const rewardTokens = await Promise.allSettled(
+  const rewardTokens = await Promise.allSettled<IFarmingRewardToken>(
     _rewardTokens.map(reward => getToken(reward)),
   ).then(results =>
     results.map(res => (res.status === 'fulfilled' ? res.value : null)),
   );
-  const bonusRewardTokens = await Promise.allSettled(
+  const bonusRewardTokens = await Promise.allSettled<IFarmingRewardToken>(
     _bonusRewardTokens.map(bonusReward => getToken(bonusReward)),
   ).then(results =>
     results.map(res => (res.status === 'fulfilled' ? res.value : null)),
   );
 
-  const farmingPositions: any[] = [];
+  const farmingPositions: Partial<IV3TempPosition>[] = [];
 
   for (let i = 0; i < eternalFarmingFromPositions.length; i++) {
-    let _position: any = {
+    let _position: Partial<IV3TempPosition> = {
       ...farmingPositionResults[i],
       id: positionsOnFarming[i].id,
       pool: pools[i],
@@ -722,7 +730,7 @@ export const getV3Balances = async (_address: string, provider?: any) => {
         startTime,
         endTime,
         id: eternalFarmingId,
-      } = eternalFarmingFromPositions[i];
+      } = eternalFarmingFromPositions[i] || {};
 
       let reward = 0,
         bonusReward = 0;
@@ -742,8 +750,8 @@ export const getV3Balances = async (_address: string, provider?: any) => {
         ..._position,
         eternalFarming: {
           id: eternalFarmingId,
-          rewardToken: rewardTokens[i],
-          bonusRewardToken: bonusRewardTokens[i],
+          rewardToken: rewardTokens[i] || undefined,
+          bonusRewardToken: bonusRewardTokens[i] || undefined,
           startTime: startTime,
           endTime: endTime,
           earned: formatUnits(reward.toString(), rewardTokens[i]?.decimals),
@@ -752,13 +760,11 @@ export const getV3Balances = async (_address: string, provider?: any) => {
             bonusRewardTokens[i]?.decimals,
           ),
           owner: _address,
-          pool: pools[i],
+          pool: pools[i] || undefined,
         },
         eternalAvailable: eternalFarmingId,
       };
     } else {
-      console.log('POSITIONS', _position.pool?.id);
-
       const farmingForPool = await getEternalFarmingFromPool(
         _position.pool?.id,
       );
@@ -772,7 +778,7 @@ export const getV3Balances = async (_address: string, provider?: any) => {
     farmingPositions.push(_position);
   }
 
-  const availableFarmings: any[] = [];
+  const availableFarmings: string[] = [];
 
   for (let i = 0; i < positionResults.length; i++) {
     const pool = computePoolAddress({
@@ -786,7 +792,7 @@ export const getV3Balances = async (_address: string, provider?: any) => {
     availableFarmings.push(availableFarming[0]?.id);
   }
 
-  const positions = farmingPositions
+  const positions: Partial<IV3Position>[] = farmingPositions
     .map(result => ({
       ...result,
       tokenId: Number(result.id),
@@ -815,22 +821,25 @@ export const getV3Balances = async (_address: string, provider?: any) => {
       tokensOwed1: result.tokensOwed1,
       tokenId: result.tokenId,
       isConcentrated: true,
-      rangeLength: result.tickUpper - result.tickLower,
+      rangeLength:
+        result.tickLower && result.tickUpper
+          ? result.tickUpper - result.tickLower
+          : 0,
       onFarmingCenter: result.onFarmingCenter,
       eternalFarming: result.eternalFarming,
       eternalAvailable: result.eternalAvailable,
       pool: computePoolAddress({
         poolDeployer: addresses.v3AlgebraPoolDeployer[250],
-        tokenA: new Token(250, result.token0, 18),
-        tokenB: new Token(250, result.token1, 18),
+        tokenA: new Token(250, result.token0 || '', 18),
+        tokenB: new Token(250, result.token1 || '', 18),
       }),
       name: `${
         tokens.find(
-          token => token.address.toLowerCase() === result.token0.toLowerCase(),
+          token => token.address.toLowerCase() === result.token0?.toLowerCase(),
         )?.symbol
       } ${
         tokens.find(
-          token => token.address.toLowerCase() === result.token1.toLowerCase(),
+          token => token.address.toLowerCase() === result.token1?.toLowerCase(),
         )?.symbol
       }`,
     }))
@@ -843,7 +852,7 @@ export const getV3Balances = async (_address: string, provider?: any) => {
 
   const [openedPositions, closedPositions] = positions.reduce(
     ([_opened, _closed]: [any, any], position) => {
-      if (Number(position.liquidity._hex) === 0) {
+      if (Number(position.liquidity?.toString()) === 0) {
         _closed.push(position);
       } else {
         _opened.push(position);

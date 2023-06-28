@@ -555,19 +555,19 @@ export const claimRewards = async ({
         text = `Claiming ${getRoundedSFs(
           formatAmount(
             _farm.eternalFarming.earned + _farm.eternalFarming.bonusEarned,
-            _farm.eternalFarming.rewardToken.decimals,
+            +_farm.eternalFarming.rewardToken.decimals,
           ),
         )}`;
       } else {
         text = `Claiming ${getRoundedSFs(
           formatAmount(
             _farm.eternalFarming.earned + _farm.eternalFarming.bonusEarned,
-            _farm.eternalFarming.rewardToken.decimals,
+            +_farm.eternalFarming.rewardToken.decimals,
           ),
         )} ${_farm.eternalFarming.rewardToken.symbol} and ${getRoundedSFs(
           formatAmount(
             _farm.eternalFarming.bonusEarned,
-            _farm.eternalFarming.bonusRewardToken.decimals,
+            +_farm.eternalFarming.bonusRewardToken.decimals,
           ),
         )} ${_farm.eternalFarming.bonusRewardToken.symbol}`;
       }

@@ -1,17 +1,12 @@
 import { Currency } from '../../../../../../v3-sdk';
-import { useEffect } from 'react';
-import { useAppDispatch } from 'store/hooks';
-import { updateCurrentStep } from 'store/v3/mint/actions';
 import { IDerivedMintInfo, useV3MintActionHandlers } from 'store/v3/mint/hooks';
 import {
   Box,
   Flex,
-  Input,
   NumberInput,
   NumberInputField,
   Text,
 } from '@chakra-ui/react';
-import { StartingPrice } from 'app/components/StartingPrice';
 
 interface IInitialPrice {
   currencyA: Currency | undefined;

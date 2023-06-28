@@ -259,11 +259,11 @@ export const Farm = ({
     if (!concentratedStakedPositions.length) return [0, 0];
 
     const earned = concentratedStakedPositions.reduce(
-      (acc, stake) => Number(stake.eternalFarming.earned) + acc,
+      (acc, stake) => Number(stake.eternalFarming?.earned) + acc,
       0,
     );
     const bonusEarned = concentratedStakedPositions.reduce(
-      (acc, stake) => Number(stake.eternalFarming.bonusEarned) + acc,
+      (acc, stake) => Number(stake.eternalFarming?.bonusEarned) + acc,
       0,
     );
 
@@ -381,8 +381,8 @@ export const Farm = ({
       if (farm.concentrated) {
         const _farm = farm as IConcentratedFarm;
 
-        const positionsToClaim = farm.wallet?.filter(
-          (position: any) => position?.eternalFarming?.id === farm.id,
+        const positionsToClaim = _farm.wallet?.filter(
+          (position: any) => position?.eternalFarming?.id === _farm.id,
         );
 
         const earned = positionsToClaim?.reduce(
@@ -504,7 +504,7 @@ export const Farm = ({
                         <Button
                           variant="secondary"
                           onClick={() =>
-                            handleConcentratedInput(position.tokenId)
+                            handleConcentratedInput(String(position.tokenId))
                           }
                           disabled={false}
                         >

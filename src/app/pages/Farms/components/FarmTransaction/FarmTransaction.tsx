@@ -23,7 +23,7 @@ import { selectLpPrices } from 'store/general/selectors';
 import { Props } from './FarmTransaction.d';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
 import { ConcentratedPositionsPanel } from '../ConcentratedPositionsPanel';
-import { IConcentratedFarm } from 'app/interfaces/Farm';
+import { IConcentratedFarm, IWalletV3 } from 'app/interfaces/Farm';
 
 const FarmTransaction = ({
   farm,
@@ -210,8 +210,6 @@ const FarmTransaction = ({
         status = await farmStatus(lpAddress, gaugeAddress, account);
       }
 
-      console.log('STATUS', status.toString());
-
       setLoadingText('Approve');
       if (status.toString() === '0') {
         const txApprove = await onApproveTransaction(
@@ -310,10 +308,10 @@ const FarmTransaction = ({
       case 'concentrated':
         return (
           <ConcentratedPositionsPanel
-            wallet={farm.wallet}
+            wallet={farm.wallet as IWalletV3}
             type={type}
             preselectedPosition={selectedPosition}
-            farm={farm as IConcentratedFarm}
+            farm={farm as unknown as IConcentratedFarm}
             onChange={handleConcentratedInput}
           />
         );

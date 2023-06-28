@@ -46,7 +46,6 @@ import { balanceReturnData } from 'utils/data';
 import { selectLpPrices } from 'store/general/selectors';
 import { LIQUIDITY as LIQUIDITY_ROUTE, FARMS } from 'app/router/routes';
 import { ListConcentratedLiquidityItem } from '../ListConcentratedLiquidityItem';
-import { useEternalFarmingRewards } from 'app/hooks/v3/useEternalFarmingsRewards';
 
 const LiquidityPanel = ({
   liquidityData,
@@ -84,8 +83,6 @@ const LiquidityPanel = ({
 
   const isLoading =
     liquidityData.farmList !== null && !liquidityData.farmList?.length;
-
-  // const { positionsOnFarming } = useEternalFarmingRewards();
 
   const onSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
@@ -205,10 +202,7 @@ const LiquidityPanel = ({
         variant="inverted"
         label={t(`${farmsTranslationPath}.claimRewards`)}
         icon={<SparklesIcon />}
-        disabled={
-          !farmsWithRewards || !farmsWithRewards.length
-          // && (!positionsOnFarming || !positionsOnFarming.length)
-        }
+        disabled={!farmsWithRewards || !farmsWithRewards.length}
         onClick={openHarvestManager}
       />
       <Button

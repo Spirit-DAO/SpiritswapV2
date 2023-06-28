@@ -1,17 +1,13 @@
-import { Box, Flex, HStack, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { TokenAmountPanel } from 'app/components/NewTokenAmountPanel';
 import { Token } from 'app/interfaces/General';
 import Heading from 'app/components/Typography/Heading';
 import PlusLogoGreen from '../../PlusLogoGreen';
-import { useTranslation } from 'react-i18next';
-import { RangePresets } from 'app/components/RangePresets';
 import {
-  useCurrentStep,
   useV3DerivedMintInfo,
   useV3MintActionHandlers,
   useV3MintState,
 } from 'store/v3/mint/hooks';
-import usePrevious from 'app/hooks/v3/usePrevious';
 import { useEffect, useMemo } from 'react';
 import { useCurrency } from 'app/hooks/v3/useCurrency';
 import { useAppDispatch } from 'store/hooks';
@@ -25,7 +21,6 @@ import {
 import { PoolState } from 'app/hooks/v3/usePools';
 import useWallets from 'app/hooks/useWallets';
 import { Percent } from '../../../../../../v3-sdk';
-import { getProvider } from 'app/connectors/EthersConnector/login';
 import { SelectRange } from '../../V3/SelectRange/SelectRange';
 import { EnterAmounts } from '../../V3/EnterAmounts/EnterAmounts';
 import { InitialPrice } from '../../V3/InitialPrice/InitiallPrice';
@@ -52,11 +47,7 @@ const ConcentratedPanel = ({
 }) => {
   const { account } = useWallets();
 
-  const { t } = useTranslation();
-
   const dispatch = useAppDispatch();
-
-  const currentStep = useCurrentStep();
 
   const baseCurrency = useCurrency(firstToken?.tokenSelected?.address);
   const currencyB = useCurrency(secondToken?.tokenSelected?.address);
@@ -73,26 +64,6 @@ const ConcentratedPanel = ({
     baseCurrency ?? undefined,
     undefined,
   );
-  // const prevDerivedMintInfo = usePrevious({ ...derivedMintInfo });
-
-  // const mintInfo = useMemo(() => {
-  //   if (
-  //     (!derivedMintInfo.pool ||
-  //       !derivedMintInfo.price ||
-  //       derivedMintInfo.noLiquidity) &&
-  //     prevDerivedMintInfo
-  //   ) {
-  //     return {
-  //       ...prevDerivedMintInfo,
-  //       pricesAtTicks: derivedMintInfo.pricesAtTicks,
-  //       ticks: derivedMintInfo.ticks,
-  //       parsedAmounts: derivedMintInfo.parsedAmounts,
-  //     };
-  //   }
-  //   return {
-  //     ...derivedMintInfo,
-  //   };
-  // }, [derivedMintInfo, baseCurrency, quoteCurrency]);
 
   const {
     onFieldAInput,
@@ -160,19 +131,6 @@ const ConcentratedPanel = ({
       : false;
   }, [mintInfo, startPriceTypedValue]);
 
-  const steps = useMemo(() => {
-    if (mintInfo.noLiquidity) {
-      return [stepPair, stepInitialPrice, stepRange, stepAmounts];
-    }
-
-    return [stepPair, stepRange, stepAmounts];
-  }, [stepPair, stepRange, stepAmounts, stepInitialPrice, mintInfo]);
-
-  const completedSteps = useMemo(() => {
-    return Array(currentStep).map((_, i) => i + 1);
-  }, [currentStep]);
-
-  // const allowedSlippage = useUserSlippageToleranceWithDefault(mintInfo.outOfRange ? ZERO_PERCENT : DEFAULT_ADD_IN_RANGE_SLIPPAGE_TOLERANCE);
   useEffect(() => {
     resetState();
     dispatch(updateCurrentStep({ currentStep: 0 }));
@@ -180,7 +138,6 @@ const ConcentratedPanel = ({
 
   useEffect(() => {
     return () => {
-      // resetState();
       dispatch(updateCurrentStep({ currentStep: 0 }));
     };
   }, []);

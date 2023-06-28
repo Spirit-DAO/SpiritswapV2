@@ -1,23 +1,11 @@
 import { Bound } from 'store/v3/mint/actions';
-// import {
-//   useInitialTokenPrice,
-// } from 'state/mint/v3/hooks';
 
 import { RangeSelectorPart } from '../RangeSelectorPart';
 
 import type { Props } from './RangeSelector.d';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Skeleton,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Grid, GridItem, Skeleton } from '@chakra-ui/react';
 import { Heading } from '../Typography';
 import { StyledCurrentPrice, StyledCurrentPriceWrapper } from './styled';
 
