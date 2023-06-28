@@ -24,7 +24,9 @@ const VotingPanel = ({
   cleanError,
   newBribeDisclosure,
 }) => {
+  const allFarms = useAppSelector(selectFarmMasterData);
   const [userOnly, setUserOnly] = useState(false);
+
   const [classicFarms, setclassicFarms] = useState<VotingFarms>({
     farms: [],
     userFarms: [],
@@ -34,7 +36,12 @@ const VotingPanel = ({
     userFarms: [],
   });
 
-  const [v2Farms, setV2Farms] = useState<VotingFarms>({
+  const [variableFarms, setVariableFarms] = useState<VotingFarms>({
+    farms: [],
+    userFarms: [],
+  });
+
+  const [combineFarms, setCombineFarms] = useState<VotingFarms>({
     farms: [],
     userFarms: [],
   });
@@ -54,12 +61,18 @@ const VotingPanel = ({
     userClassics,
     stables,
     userStables,
-    v2Classics,
-    userv2Classics,
+    variableClassics,
+    userVariableClassics,
+    combine,
+    userCombine,
   }) => {
     setclassicFarms({ farms: classics, userFarms: userClassics });
-    setV2Farms({ farms: v2Classics, userFarms: userv2Classics });
+    setVariableFarms({
+      farms: variableClassics,
+      userFarms: userVariableClassics,
+    });
     setStableFarms({ farms: stables, userFarms: userStables });
+    setCombineFarms({ farms: combine, userFarms: userCombine });
   };
 
   const handleSort = (by, direction) => {
@@ -85,10 +98,10 @@ const VotingPanel = ({
       );
     }
     if (farmType.index === 1) {
-      const filterInactivesFarms = v2Farms.farms.filter(
+      const filterInactivesFarms = variableFarms.farms.filter(
         farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
       );
-      const filterInactivesUserFarms = v2Farms.userFarms.filter(
+      const filterInactivesUserFarms = variableFarms.userFarms.filter(
         farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
       );
       setSelectedFarms(
@@ -99,18 +112,41 @@ const VotingPanel = ({
         ),
       );
     }
-  }, [farmType, userOnly, classicFarms, stableFarms, v2Farms]);
+    if (farmType.index === 2) {
+      // Combine farms
+      const filterInactivesFarms = combineFarms.farms.filter(
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
+      );
+      const filterInactivesUserFarms = combineFarms.userFarms.filter(
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
+      );
+      setSelectedFarms(
+        sortFn(
+          userOnly ? filterInactivesUserFarms : filterInactivesFarms,
+          sortBy,
+          sortDirection,
+        ),
+      );
+    }
+  }, [
+    farmType,
+    userOnly,
+    classicFarms,
+    stableFarms,
+    variableFarms,
+    sortBy,
+    sortDirection,
+    combineFarms.farms,
+    combineFarms.userFarms,
+  ]);
 
   const farmsSize = selectedFarms?.length;
-
-  const allFarms = useAppSelector(selectFarmMasterData);
 
   const farmsWithApr = allFarms.filter(farm => farm.apr !== '0');
 
   const finalSelectedFarms: BoostedFarm[] = selectedFarms.map(listFarm => {
     const find = farmsWithApr.find(
-      farmInAllFarmList =>
-        farmInAllFarmList.lpAddress === listFarm.fulldata.farmAddress,
+      farm => farm.lpAddress === listFarm.fulldata.farmAddress,
     );
     if (find) {
       const poolLiquidity = find.totalLiquidity || 0;
@@ -118,10 +154,16 @@ const VotingPanel = ({
       const liquidityPer10kInspirit: number =
         (poolLiquidity / listFarm.weight) * 10000;
 
+      if (liquidityPer10kInspirit === Infinity) {
+        return { ...listFarm, liquidityPer10kInspirit: 0 };
+      }
+
       return { ...listFarm, liquidityPer10kInspirit };
     }
     return { ...listFarm };
   });
+
+  console.log('finalSelectedFarms', finalSelectedFarms);
 
   const { pieChartData, pieChartOptions } = usePieChartData({
     farmsList: finalSelectedFarms,

@@ -14,7 +14,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from 'store/hooks';
 import {
   selectFarmsStaked,
-  selectLiquidityWallet,
   selectLockedInSpiritAmount,
 } from 'store/user/selectors';
 import FarmsData from './FarmsData';
@@ -49,7 +48,6 @@ const TokenTableV3 = ({
   const { account, isLoggedIn } = useWallets();
   const isMobile = useMobile();
   const translationPath = 'inSpirit.voting';
-
   const stakedFarms = useAppSelector(selectFarmsStaked);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
   const [searchValues, setSearchValues] = useState('');
@@ -61,7 +59,9 @@ const TokenTableV3 = ({
     setSearchValues(query);
   };
 
-  const { boostedV2, boostedStable } = useAppSelector(selectSaturatedGauges);
+  const { boostedVariable, boostedStable, boostedCombine } = useAppSelector(
+    selectSaturatedGauges,
+  );
 
   const toggleMobileTableFilters = () => {
     setShowMobileTableFilters(!showMobileTableFilters);
@@ -74,19 +74,29 @@ const TokenTableV3 = ({
 
   useEffect(() => {
     const getBoostedFarms = async () => {
-      const userBoostedV2 = getUserFarms(boostedV2, stakedFarms);
+      const userBoostedVariable = getUserFarms(boostedVariable, stakedFarms);
       const userBoostedStable = getUserFarms(boostedStable, stakedFarms);
+      const userBoostedCombine = getUserFarms(boostedCombine, stakedFarms);
 
       onUpdateFarm({
-        v2Classics: sortFn(boostedV2, 'yourVote', 'des'),
-        userv2Classics: sortFn(userBoostedV2, 'yourVote', 'des'),
+        variableClassics: sortFn(boostedVariable, 'yourVote', 'des'),
+        userVariableClassics: sortFn(userBoostedVariable, 'yourVote', 'des'),
         stables: sortFn(boostedStable, 'yourVote', 'des'),
         userStables: sortFn(userBoostedStable, 'yourVote', 'des'),
+        combine: sortFn(boostedCombine, 'yourVote', 'des'),
+        userCombine: sortFn(userBoostedCombine, 'yourVote', 'des'),
       });
     };
     getBoostedFarms();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValues, userOnly, farmType, account, boostedV2, boostedStable]);
+  }, [
+    searchValues,
+    userOnly,
+    farmType,
+    account,
+    boostedVariable,
+    boostedStable,
+  ]);
 
   const filteredBribes = useMemo(() => {
     if (searchValues) {

@@ -93,15 +93,20 @@ export const convertAmount = (
   value: string | number,
   style = 'currency',
 ): string => {
-  if (!value) return '';
+  let valueToUse = value;
+
+  if (!value) {
+    valueToUse = 0;
+  }
   const params = {
     style,
     currency: 'USD',
   };
-  if (typeof value === 'string') {
-    return Number(value).toLocaleString('en-US', params);
+
+  if (typeof valueToUse === 'string') {
+    return Number(valueToUse).toLocaleString('en-US', params);
   }
-  return value.toLocaleString('en-US', params);
+  return valueToUse.toLocaleString('en-US', params);
 };
 
 export function getSign(value: number | string): Sign {

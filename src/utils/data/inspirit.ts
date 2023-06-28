@@ -224,19 +224,22 @@ export const getUserInspiritBalances = async (userAddress: string) => {
 
 export const getUserVotingData = async (
   userAddress,
-  v2Gauges,
+  variableGauges,
   stableGauges,
   variableLps,
   stableLps,
+  combineGauges,
+  combieneLps,
 ) => {
-  const gaugeAddressV2 = addresses.variableProxy[CHAIN_ID];
+  const gaugeAddressVariable = addresses.variableProxy[CHAIN_ID];
   const gaugeAddressStable = addresses.stableProxy[CHAIN_ID];
+  const gaugeAddressCombine = addresses.combineProxy[CHAIN_ID];
 
-  const v2VotingCalls: Call[] = [];
-  const v2BribesCalls: Call[] = [];
-  const v2Rewards0Calls: Call[] = [];
-  const v2Rewards1Calls: Call[] = [];
-  const v2WeightsCalls: Call[] = [];
+  const variableVotingCalls: Call[] = [];
+  const variableBribesCalls: Call[] = [];
+  const variableRewards0Calls: Call[] = [];
+  const variableRewards1Calls: Call[] = [];
+  const variableWeightsCalls: Call[] = [];
 
   const stableVotingCalls: Call[] = [];
   const stableBribesCalls: Call[] = [];
@@ -244,32 +247,38 @@ export const getUserVotingData = async (
   const stableRewards1Calls: Call[] = [];
   const stableWeightsCalls: Call[] = [];
 
-  for (let i = 0; i < v2Gauges.length; i++) {
-    const gauge = v2Gauges[i];
+  const combineVotingCalls: Call[] = [];
+  const combineBribesCalls: Call[] = [];
+  const combineRewards0Calls: Call[] = [];
+  const combineRewards1Calls: Call[] = [];
+  const combineWeightsCalls: Call[] = [];
+
+  for (let i = 0; i < variableGauges.length; i++) {
+    const gauge = variableGauges[i];
     const lpAddress = variableLps[i];
 
-    v2VotingCalls.push({
-      address: gaugeAddressV2,
+    variableVotingCalls.push({
+      address: gaugeAddressVariable,
       name: 'votes',
       params: [userAddress, lpAddress],
     });
-    v2BribesCalls.push({
-      address: gaugeAddressV2,
+    variableBribesCalls.push({
+      address: gaugeAddressVariable,
       name: 'bribes',
       params: [gauge],
     });
-    v2Rewards0Calls.push({
+    variableRewards0Calls.push({
       address: lpAddress,
       name: 'token0',
       params: [],
     });
-    v2Rewards1Calls.push({
+    variableRewards1Calls.push({
       address: lpAddress,
       name: 'token1',
       params: [],
     });
-    v2WeightsCalls.push({
-      address: gaugeAddressV2,
+    variableWeightsCalls.push({
+      address: gaugeAddressVariable,
       name: 'weights',
       params: [lpAddress],
     });
@@ -303,40 +312,85 @@ export const getUserVotingData = async (
       params: [lpAddress],
     });
   }
+  for (let i = 0; i < combineGauges.length; i++) {
+    const gauge = combineGauges[i];
+    const lpAddress = combieneLps[i];
+
+    combineVotingCalls.push({
+      address: gaugeAddressCombine,
+      name: 'votes',
+      params: [userAddress, lpAddress],
+    });
+    combineBribesCalls.push({
+      address: gaugeAddressCombine,
+      name: 'bribes',
+      params: [gauge],
+    });
+    combineRewards0Calls.push({
+      address: lpAddress,
+      name: 'token0',
+      params: [],
+    });
+    combineRewards1Calls.push({
+      address: lpAddress,
+      name: 'token1',
+      params: [],
+    });
+    combineWeightsCalls.push({
+      address: gaugeAddressCombine,
+      name: 'weights',
+      params: [lpAddress],
+    });
+  }
 
   const [
-    v2Voting,
+    variableVoting,
     stableVoting,
-    v2Bribes,
+    combineVoting,
+    variableBribes,
     stableBribes,
-    V2Rewards0,
-    V2Rewards1,
+    combineBribes,
+    variableRewards0,
+    variableRewards1,
     StableRewards0,
     StableRewards1,
+    combineRewards0,
+    combineRewards1,
     stableWeights,
-    v2Weights,
+    variableWeights,
+    combineWeights,
   ] = await MultiCallArray(
     [
-      v2VotingCalls,
+      variableVotingCalls,
       stableVotingCalls,
-      v2BribesCalls,
+      combineVotingCalls,
+      variableBribesCalls,
       stableBribesCalls,
-      v2Rewards0Calls,
-      v2Rewards1Calls,
+      combineBribesCalls,
+      variableRewards0Calls,
+      variableRewards1Calls,
       stableRewards0Calls,
       stableRewards1Calls,
+      combineRewards0Calls,
+      combineRewards1Calls,
       stableWeightsCalls,
-      v2WeightsCalls,
+      variableWeightsCalls,
+      combineWeightsCalls,
     ],
     [
       'gaugeproxyV3',
       'stableproxy',
       'gaugeproxyV3',
+      'gaugeproxyV3',
       'stableproxy',
+      'gaugeproxyV3',
       'pair',
       'pair',
       'pair',
       'pair',
+      'pair',
+      'pair',
+      'gaugeproxyV3',
       'gaugeproxyV3',
       'gaugeproxyV3',
     ],
@@ -345,16 +399,24 @@ export const getUserVotingData = async (
   );
 
   return {
-    v2Voting,
+    variableVoting,
     stableVoting,
-    v2Bribes,
+    combineVoting,
+
+    variableBribes,
     stableBribes,
-    V2Rewards0,
-    V2Rewards1,
+    combineBribes,
+
+    variableRewards0,
+    variableRewards1,
     StableRewards0,
     StableRewards1,
+    combineRewards0,
+    combineRewards1,
+
     stableWeights,
-    v2Weights,
+    variableWeights,
+    combineWeights,
   };
 };
 
@@ -390,54 +452,68 @@ export const saturateGauges = async (
   const {
     variableGauges,
     stableGauges,
+    combineGauges,
     variableLps,
     stableLps,
+    combineLps,
     variableTokens,
     stableTokens,
+    combineTokens,
   } = await gaugesPromise;
 
   const {
-    v2Voting,
+    variableVoting,
     stableVoting,
-    v2Bribes,
+    combineVoting,
+
+    variableBribes,
     stableBribes,
+    combineBribes,
+
     StableRewards0,
     StableRewards1,
-    V2Rewards0,
-    V2Rewards1,
+    variableRewards0,
+    variableRewards1,
+    combineRewards0,
+    combineRewards1,
+
     stableWeights,
-    v2Weights,
+    variableWeights,
+    combineWeights,
   } = await getUserVotingData(
     userAddress,
     variableGauges,
     stableGauges,
     variableLps,
     stableLps,
+    combineGauges,
+    combineLps,
   );
 
-  const [v2Rewards, stableRewards] = await Promise.all([
-    checkRewardsTokens(v2Bribes),
+  const [variableRewards, stableRewards, combineRewards] = await Promise.all([
+    checkRewardsTokens(variableBribes),
     checkRewardsTokens(stableBribes),
+    checkRewardsTokens(combineBribes),
   ]);
 
   const {
-    newArray: bribesV2,
-    earns: earnsParamsV2,
-    rewardData: rewardDataParamsV2,
-    rewardDur: rewardDurParamsV2,
-    totalSupplys: totalSupplysParamsV2,
-    totalVotes: totalVotesV2,
-    totalWeight: totalWeightV2,
+    newArray: bribesVariable,
+    earns: earnsParamsVariable,
+    rewardData: rewardDataParamsVariable,
+    rewardDur: rewardDurParamsVariable,
+    totalSupplys: totalSupplysParamsVariable,
+    totalVotes: totalVotesVariable,
+    totalWeight: totalWeightVariable,
   } = getFormattedBribes(
     variableGauges,
-    v2Voting,
-    v2Bribes,
-    V2Rewards0,
-    V2Rewards1,
-    v2Weights,
+    variableVoting,
+    variableBribes,
+    variableRewards0,
+    variableRewards1,
+    variableWeights,
     userAddress,
     variableLps,
-    v2Rewards,
+    variableRewards,
   );
 
   const {
@@ -460,25 +536,47 @@ export const saturateGauges = async (
     stableRewards,
   );
 
-  const bribeV2Calls = [
-    ...earnsParamsV2,
-    ...rewardDataParamsV2,
-    ...rewardDurParamsV2,
-    ...totalSupplysParamsV2,
+  const {
+    newArray: bribesCombine,
+    earns: earnsParamsCombine,
+    rewardData: rewardDataParamsCombine,
+    rewardDur: rewardDurParamsCombine,
+    totalSupplys: totalSupplysParamsCombine,
+    totalVotes: totalVotesCombine,
+    totalWeight: totalWeightCombine,
+  } = getFormattedBribes(
+    combineGauges,
+    combineVoting,
+    combineBribes,
+    combineRewards0,
+    combineRewards1,
+    combineWeights,
+    userAddress,
+    combineLps,
+    combineRewards,
+  );
+
+  const bribeVariableCalls = [
+    ...earnsParamsVariable,
+    ...rewardDataParamsVariable,
+    ...rewardDurParamsVariable,
+    ...totalSupplysParamsVariable,
   ];
 
-  const bribesV2Size = {
-    earns: earnsParamsV2.length,
-    rewardData: rewardDataParamsV2.length,
-    rewardDur: rewardDurParamsV2.length,
-    ts: totalSupplysParamsV2.length,
+  const bribesVariableSize = {
+    earns: earnsParamsVariable.length,
+    rewardData: rewardDataParamsVariable.length,
+    rewardDur: rewardDurParamsVariable.length,
+    ts: totalSupplysParamsVariable.length,
   };
+
   const bribeStableCalls = [
     ...earnsParamsStable,
     ...rewardDataParamsStable,
     ...rewardDurParamsStable,
     ...totalSupplysParamsStable,
   ];
+
   const bribesStableSize = {
     earns: earnsParamsStable.length,
     rewardData: rewardDataParamsStable.length,
@@ -486,26 +584,52 @@ export const saturateGauges = async (
     ts: totalSupplysParamsStable.length,
   };
 
-  const [bribeV2Result, bribeStableResult] = await MultiCallArray(
-    [bribeV2Calls, bribeStableCalls],
-    ['bribe', 'bribe'],
-    CHAIN_ID,
-    'rpc',
-  );
+  const bribeCombineCalls = [
+    ...earnsParamsCombine,
+    ...rewardDataParamsCombine,
+    ...rewardDurParamsCombine,
+    ...totalSupplysParamsCombine,
+  ];
 
-  const [earnsV2, rewardDataV2, rewardDurV2, totalSupplysV2] =
-    getSplitBribesCallsV2(bribesV2Size, bribeV2Result);
+  const bribesCombineSize = {
+    earns: earnsParamsCombine.length,
+    rewardData: rewardDataParamsCombine.length,
+    rewardDur: rewardDurParamsCombine.length,
+    ts: totalSupplysParamsCombine.length,
+  };
+
+  const [bribeVariableResult, bribeStableResult, bribeCombineResult] =
+    await MultiCallArray(
+      [bribeVariableCalls, bribeStableCalls, bribeCombineCalls],
+      ['bribe', 'bribe', 'bribe'],
+      CHAIN_ID,
+      'rpc',
+    );
+
+  const [
+    earnsVariable,
+    rewardDataVariable,
+    rewardDurVariable,
+    totalSupplysVariable,
+  ] = getSplitBribesCallsV2(bribesVariableSize, bribeVariableResult);
 
   const [earnsStable, rewardDataStable, rewardDurStable, totalSupplysStable] =
     getSplitBribesCallsV2(bribesStableSize, bribeStableResult);
 
-  const bribesRewardsV2Promises = bribesV2.map((bribe, i) => {
+  const [
+    earnsCombine,
+    rewardDataCombine,
+    rewardDurCombine,
+    totalSupplysCombine,
+  ] = getSplitBribesCallsV2(bribesCombineSize, bribeCombineResult);
+
+  const bribesRewardsV2Promises = bribesVariable.map((bribe, i) => {
     return formatBribes(
       bribe,
-      rewardDurV2,
-      earnsV2,
-      rewardDataV2,
-      totalSupplysV2[i].response[0],
+      rewardDurVariable,
+      earnsVariable,
+      rewardDataVariable,
+      totalSupplysVariable[i].response[0],
     );
   });
 
@@ -519,26 +643,42 @@ export const saturateGauges = async (
     );
   });
 
-  const [bribesRewardsV2, bribesRewardsStable, mappedTokens] =
-    await Promise.all([
-      Promise.all(bribesRewardsV2Promises),
-      Promise.all(bribesRewardsStablePromises),
-      getMappedTokens('address'),
-    ]);
+  const bribesRewardsCombinePromises = bribesCombine.map((bribe, i) => {
+    return formatBribes(
+      bribe,
+      rewardDurCombine,
+      earnsCombine,
+      rewardDataCombine,
+      totalSupplysCombine[i].response[0],
+    );
+  });
 
-  let boostedV2, boostedStable;
+  const [
+    bribesRewardsVariable,
+    bribesRewardsStable,
+    bribesRewardsCombine,
+    mappedTokens,
+  ] = await Promise.all([
+    Promise.all(bribesRewardsV2Promises),
+    Promise.all(bribesRewardsStablePromises),
+    Promise.all(bribesRewardsCombinePromises),
+    getMappedTokens('address'),
+  ]);
+
+  let boostedVariable, boostedStable, boostedCombine;
   let totalRewards = 0;
-  if (totalSupplysV2.length > 0) {
+
+  if (totalSupplysVariable.length > 0) {
     let tokenIdx = 0;
-    boostedV2 = variableGauges.map((gauge, i) => {
+    boostedVariable = variableGauges.map((gauge, i) => {
       const lpAddress: string = variableLps[i];
       const farm = formatBoostedFarms(
         gauge,
-        v2Voting[i],
-        bribesRewardsV2,
-        totalVotesV2,
-        totalSupplysV2[i].response[0],
-        totalWeightV2,
+        variableVoting[i],
+        bribesRewardsVariable,
+        totalVotesVariable,
+        totalSupplysVariable[i].response[0],
+        totalWeightVariable,
         variableTokens,
         tokenIdx,
         mappedTokens,
@@ -581,7 +721,34 @@ export const saturateGauges = async (
     });
   }
 
-  return { boostedV2, boostedStable, totalRewards };
+  if (totalSupplysCombine.length > 0) {
+    let tokenIdx = 0;
+    boostedCombine = combineGauges.map((gauge, i) => {
+      const lpAddress: string = combineLps[i];
+
+      const farm = formatBoostedFarms(
+        gauge,
+        combineVoting[i],
+        bribesRewardsCombine,
+        totalVotesCombine,
+        totalSupplysCombine[i].response[0],
+        totalWeightCombine,
+        combineTokens,
+        tokenIdx,
+        mappedTokens,
+        lpAddress,
+      );
+      const { userRewardsEarnsUSD } = farm?.fulldata;
+      const rewardA = new BigNum(userRewardsEarnsUSD[0]);
+      const rewardB = new BigNum(userRewardsEarnsUSD[1]);
+      const totalFee = rewardA.plus(rewardB).toNumber();
+      totalRewards = totalRewards + totalFee;
+      tokenIdx += 2;
+      return farm;
+    });
+  }
+
+  return { boostedCombine, boostedStable, boostedVariable, totalRewards };
 };
 
 export const getBoostedFarms = async (

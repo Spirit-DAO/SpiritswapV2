@@ -48,7 +48,9 @@ function Voting() {
   }>({ index: 0, value: 'Stable' });
 
   let versionId = 1;
+
   if (selectedFarmType.index === 0) {
+    // check this
     versionId = 3;
   }
   if (selectedFarmType.index === 1) {
@@ -133,7 +135,7 @@ function Voting() {
         <Flex flexDir="column" marginY="spacing06">
           <Heading level={5}>{t(`${translationPath}.farmType.label`)}</Heading>
           <Select
-            labels={['Stable', 'Variable']}
+            labels={['Stable', 'Variable', 'Combine']}
             onChange={onChangeFarmType}
             selected={selectedFarmType.index}
           />
