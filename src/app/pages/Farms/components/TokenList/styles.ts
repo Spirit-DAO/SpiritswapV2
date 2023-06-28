@@ -12,7 +12,7 @@ export const StyledH3 = styled(Heading)`
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   color: ${({ theme }) => theme.colors.gray};
-  margin-bottom: ${({ theme }) => theme.space.spacing01};
+  margin-bottom: ${({ theme }) => theme.space.spacing03};
 `;
 
 export const StyledWrapper = styled.div`

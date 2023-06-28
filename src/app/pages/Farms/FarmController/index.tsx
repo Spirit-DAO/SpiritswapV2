@@ -44,7 +44,7 @@ const MemorizeTokenList = memo(({ farm }: IFarm) => (
     ecosystem={farm.ecosystem}
     apr={farm.apr}
     rewardToken={farm.rewardToken}
-    farmType={farm.type}
+    farmType={farm.label}
     lpAddress={farm.lpAddress}
     type={farm.type}
     hideTypeIcons={Boolean(farm.concentrated)}

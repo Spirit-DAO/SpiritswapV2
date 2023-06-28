@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { Heading } from 'app/components/Typography';
 import { ReactComponent as BarChart } from 'app/assets/images/bar-chart.svg';
 import { ReactComponent as Calculator } from 'app/assets/images/calculator.svg';
@@ -17,20 +16,17 @@ import { openInNewTab } from 'app/utils/redirectTab';
 
 const TokenList = ({
   tokens,
-  boosted,
   title,
-  ecosystem,
   hideTypeTitle,
   hideTypeIcons,
   invertTitleOrder,
   titleSmall,
+  farmType,
   apr,
   type,
   rewardToken,
-  farmType,
   lpAddress,
 }: Props) => {
-  const { t } = useTranslation();
   const roiCalculatorDisclosure = useDisclosure();
 
   const onCalculatorClick = () => {
@@ -52,13 +48,12 @@ const TokenList = ({
           display: 'flex',
           flexDirection: invertTitleOrder ? 'column-reverse' : 'column',
           gap: '5px',
-          padding: '5px',
         }}
       >
         <StyledHeader>
           <Flex direction="row" justifyContent="space-between" w="full">
             <Flex direction="column">
-              {!hideTypeTitle && <StyledH3 level={4}>{type}</StyledH3>}
+              {!hideTypeTitle && <StyledH3 level={5}>{farmType}</StyledH3>}
               <Heading
                 style={{
                   fontSize: titleSmall ? '17px' : '20px',

@@ -761,6 +761,7 @@ export const loadFarmsList = async (
     ...adminGauges,
     ...combineGauges,
   ];
+  console.log(combineGauges, 'here');
 
   // Here's where we call stable and weighted data
   const masterFarms: (IFarm | null)[] = await Promise.all(
@@ -830,6 +831,8 @@ export const loadFarmsList = async (
 
       const isIncative = inactiveFarms.includes(farm.lpSymbol.toUpperCase());
 
+      const label = farm.type === 'combine' ? 'V3' : farm.type;
+
       const lp: IFarm = {
         title: farm?.lpSymbol
           .replace('WFTM', 'FTM')
@@ -843,7 +846,7 @@ export const loadFarmsList = async (
           maxApy.toFormat(2) === 'NaN' || isIncative ? '0' : maxApy.toFormat(2),
         boosted: true,
         lpApr: '0',
-        label: farm.type || 'NMC',
+        label: label || 'NMC',
         rewardToken: farm?.rewardToken,
         totalLiquidity,
         totalSupply: farm.liquidityShare,
