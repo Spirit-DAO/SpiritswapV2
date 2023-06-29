@@ -41,7 +41,7 @@ import BigNumber from 'bignumber.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { Props } from './Farm.d';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
-import { LIQUIDITY, resolveRoutePath } from 'app/router/routes';
+import { LIQUIDITY } from 'app/router/routes';
 import { RetrieveConcentratedPosition } from '../components/RetrieveConcentratedPosition/RetrieveConcentratedPosition';
 
 export const Farm = ({
@@ -306,6 +306,7 @@ export const Farm = ({
 
       return earnedRewards;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [concentratedEarned, concentratedBonusEarned]);
 
   const hasConcenctratedRewards = concentratedEarned || concentratedBonusEarned;

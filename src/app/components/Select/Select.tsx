@@ -1,8 +1,8 @@
-import React, { FC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Props } from './Select.d';
 import { StyledContainer, StyledHeading, StyledItem } from './styles';
 
-const Select: FC<Props> = ({
+const Select = ({
   labels = [],
   selected = 0,
   disabled = false,
@@ -33,7 +33,17 @@ const Select: FC<Props> = ({
 
         if (typeof label === 'string') {
           return (
-            <StyledHeading level={4} {...itemProps}>
+            <StyledHeading
+              level={4}
+              style={
+                {
+                  // V3 migration
+                  // pointerEvents: label === 'Combine' ? 'none' : 'auto',
+                  // opacity: label === 'Combine' ? 0.5 : 1,
+                }
+              }
+              {...itemProps}
+            >
               {label}
             </StyledHeading>
           );

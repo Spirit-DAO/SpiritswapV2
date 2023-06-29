@@ -53,7 +53,17 @@ const TokenList = ({
         <StyledHeader>
           <Flex direction="row" justifyContent="space-between" w="full">
             <Flex direction="column">
-              {!hideTypeTitle && <StyledH3 level={5}>{farmType}</StyledH3>}
+              {type === 'combine' ? (
+                <span
+                  style={{
+                    fontSize: '16px',
+                    marginBottom: '10px',
+                    color: '#1D9384',
+                  }}
+                >
+                  New V3 farms 🔥
+                </span>
+              ) : null}
               <Heading
                 style={{
                   fontSize: titleSmall ? '17px' : '20px',

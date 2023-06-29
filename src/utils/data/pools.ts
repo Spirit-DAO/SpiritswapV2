@@ -828,9 +828,14 @@ export const loadFarmsList = async (
         .times(rate)
         .toNumber();
 
-      const isIncative = inactiveFarms.includes(farm.lpSymbol.toUpperCase());
-
       const label = farm.type === 'combine' ? 'V3' : farm.type;
+
+      ///// INACTIVE FARM LOGIC /////
+      // V3 MIGRATION
+      const IS_INACTIVE = inactiveFarms.includes(farm.lpSymbol.toUpperCase());
+
+      // enable this
+      // const IS_INACTIVE = farm.type === 'combine' ? false : true;
 
       const lp: IFarm = {
         title: farm?.lpSymbol
@@ -842,7 +847,9 @@ export const loadFarmsList = async (
         gaugeAddress: farm?.gaugeAddress,
         aprLabel: 'APY',
         apr:
-          maxApy.toFormat(2) === 'NaN' || isIncative ? '0' : maxApy.toFormat(2),
+          maxApy.toFormat(2) === 'NaN' || IS_INACTIVE
+            ? '0'
+            : maxApy.toFormat(2),
         boosted: true,
         lpApr: '0',
         label: label || 'NMC',
@@ -850,10 +857,10 @@ export const loadFarmsList = async (
         totalLiquidity,
         totalSupply: farm.liquidityShare,
         aprRange:
-          maxApy.toFormat(2) === 'NaN' || isIncative ? ['0', '0'] : AprRange,
+          maxApy.toFormat(2) === 'NaN' || IS_INACTIVE ? ['0', '0'] : AprRange,
         boostFactor: '1',
         yourApr: minApy.isFinite()
-          ? isIncative
+          ? IS_INACTIVE
             ? '0'
             : minApy?.toString()
           : '0',

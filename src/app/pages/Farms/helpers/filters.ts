@@ -40,7 +40,12 @@ export const filterByState = (
     ? true
     : false;
 
-  const inactive: boolean = !(parseFloat(pool.apr!) > 0);
+  let inactive = !(parseFloat(pool?.apr) > 0);
+
+  // V3 MIGRATION
+  // if (pool.type === 'combine') {
+  //   inactive = false;
+  // }
 
   const filterType = [filterByStaked, filterByInactive];
 
