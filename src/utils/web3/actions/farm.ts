@@ -16,7 +16,7 @@ export const gaugeContract = async (
   _farmGaugeAddress: string,
   _chainId = CHAIN_ID,
 ) => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const instance = await Contract(
     _farmGaugeAddress,
     'gauge',
@@ -28,7 +28,7 @@ export const gaugeContract = async (
 };
 
 export const factoryContract = async () => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const address_factory = contracts.factoryV2[250];
   const instance = await Contract(address_factory, 'factory', _connector);
 
@@ -49,13 +49,13 @@ export const gaugeContractProxy = async ({ version }) => {
     gaugeProxy = 'stableproxy';
   }
 
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const gaugeContract = await Contract(gauge, gaugeProxy, _connector, CHAIN_ID);
   return gaugeContract;
 };
 
 export const masterChefContract = async (_version = 0, _chainId = CHAIN_ID) => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const instance = await Contract(
     contracts.masterchef[CHAIN_ID],
     !_version ? 'masterchef' : 'masterchef2',
@@ -67,7 +67,7 @@ export const masterChefContract = async (_version = 0, _chainId = CHAIN_ID) => {
 };
 
 export const algebraFarmingCenterContract = async (_chainId = CHAIN_ID) => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const instance = await Contract(
     contracts.v3FarmingCenter[CHAIN_ID],
     'v3FarmingCenter',
@@ -84,7 +84,7 @@ export const externalMasterChef = async (
   _abi = 'beetmasterchef',
   _chainId = CHAIN_ID,
 ) => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const instance = await Contract(_address, _abi, _connector, _chainId);
 
   return instance;
@@ -276,7 +276,7 @@ export const addNewEcosystemFarm = async (
 
     const TWILIGHT_FARM_FACTORY = contracts.twilight_farm_factory[250];
     const twilightFactory = async () => {
-      const _connector = getProvider();
+      const _connector = await getProvider();
       const contract = await Contract(
         TWILIGHT_FARM_FACTORY,
         'twilightFarmFactory',
@@ -320,7 +320,7 @@ export const getEcosystemFarmAddress = async (
   account,
 ) => {
   const twilightFarm = async () => {
-    const _connector = getProvider();
+    const _connector = await getProvider();
     const contract = await Contract(
       ecosystemFarmAddress,
       'twilightFarm',
