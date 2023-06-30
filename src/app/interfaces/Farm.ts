@@ -208,7 +208,6 @@ export enum FarmType {
   CLASSIC,
   STABLE,
   CONCENTRATED,
-  COMBINE,
   ADMIN,
 }
 

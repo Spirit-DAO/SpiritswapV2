@@ -32,9 +32,6 @@ const contracts = {
   gaugeV3: {
     250: '0xfe1C8A68351B52E391e10106BD3bf2d0759AFf4e',
   },
-  combineProxy: {
-    250: '0x9E7A4F683E52bE88a927eB46771B21d62aaa2501',
-  },
   variableProxy: {
     250: '0xfe1C8A68351B52E391e10106BD3bf2d0759AFf4e',
   },

@@ -10,8 +10,6 @@ export const handleFarmData = (data, index) => {
       return data.filter(farm => farm.type === 'stable');
     case FarmType.CONCENTRATED:
       return data.filter(farm => farm.type === 'concentrated');
-    case FarmType.COMBINE:
-      return data.filter(farm => farm.type === 'combine');
     default:
       return data;
   }

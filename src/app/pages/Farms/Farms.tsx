@@ -143,7 +143,7 @@ export const Farms = () => {
       setHashRewards(rewardsMapping);
     };
 
-    if (rewards && rewards.length) updateCollectedRewards();
+    if (rewards && rewards.length > 0) updateCollectedRewards();
     else setHashRewards({});
   }, [rewards]);
 

@@ -1,12 +1,10 @@
 import { useState, useCallback } from 'react';
 import { useAppDispatch } from 'store/hooks';
 import { setAddress, resetUserStatistics } from 'store/user';
-
 import safeExecute from 'utils/safeExecute';
 import { connect } from 'utils/web3';
 import { ConnectorNames, NETWORK } from 'constants/index';
 import { setupNetwork } from 'utils/web3';
-// import WalletConnectProvider from '@walletconnect/web3-provider';
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 declare global {
@@ -15,11 +13,6 @@ declare global {
     clover: any;
   }
 }
-
-// export const walletConnectProvider = new WalletConnectProvider({
-//   rpc: { [CHAIN_ID]: `${REACT_APP_NODE_1}` },
-//   chainId: CHAIN_ID,
-// });
 
 export const CONNECTIONS = () => {
   if (self.window) {
