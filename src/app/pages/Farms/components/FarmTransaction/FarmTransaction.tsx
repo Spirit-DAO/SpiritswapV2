@@ -1,29 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Flex, List, Skeleton } from '@chakra-ui/react';
 import { FarmTransactionType } from 'app/pages/Farms/enums/farmTransaction';
 import { StyledHeading, StylesContainer } from './styles';
 import UseIsLoading from 'app/hooks/UseIsLoading';
-import { checkAddress } from 'app/utils';
+import { checkAddress, getCircularReplacer } from 'app/utils';
 import { concentratedFarmStatus, farmStatus } from 'utils/web3/actions/farm';
 import { TokenAmountPanel } from 'app/components/NewTokenAmountPanel';
 import { NON_ZERO, NOT_ENOUGH_FUNDS } from 'constants/errors';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
-import { transactionResponse } from 'utils/web3';
+import { connect, transactionResponse } from 'utils/web3';
 import { SuggestionsTypes } from 'app/hooks/Suggestions/Suggestion';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
-import {
-  selectFarmsStaked,
-  selectIsLoggedIn,
-  selectLiquidityWallet,
-} from 'store/user/selectors';
-import { setUserV3LiquidityWallet } from 'store/user';
+import { selectFarmsStaked, selectIsLoggedIn } from 'store/user/selectors';
 import useWallets from 'app/hooks/useWallets';
 import { selectLpPrices } from 'store/general/selectors';
 import { Props } from './FarmTransaction.d';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
 import { ConcentratedPositionsPanel } from '../ConcentratedPositionsPanel';
 import { IConcentratedFarm, IWalletV3 } from 'app/interfaces/Farm';
+import { DataContext } from 'contexts/DataContext';
 
 const FarmTransaction = ({
   farm,
@@ -54,6 +50,8 @@ const FarmTransaction = ({
     useState<string | undefined>(selectedPosition);
 
   const dispatch = useAppDispatch();
+
+  const { userDataWorker } = useContext(DataContext);
 
   useEffect(() => {}, [account]);
 
@@ -167,22 +165,18 @@ const FarmTransaction = ({
       setLoadingText('Withdrawing');
       await tx.wait();
 
-      if (farm.concentrated) {
-        const removedFromFarming = farm.wallet?.map((position: any) => {
-          if (position.tokenId === selectedConcentratedPosition) {
-            return {
-              ...position,
-              eternalFarming: null,
-            };
-          }
-          return position;
-        });
-
-        dispatch(setUserV3LiquidityWallet(removedFromFarming));
-      }
-
       loadingOff();
       onCancelTransaction && onCancelTransaction();
+
+      const { provider } = await connect({});
+
+      setTimeout(() => {
+        userDataWorker.postMessage({
+          userAddress: account,
+          type: 'getV3Liquidity',
+          provider: JSON.stringify(provider, getCircularReplacer()),
+        });
+      }, 5_000);
     } catch (error) {
       console.error(error);
       loadingOff();
@@ -252,34 +246,18 @@ const FarmTransaction = ({
       setLoadingText('Depositing');
       await tx.wait();
 
-      if (farm.concentrated) {
-        const populatedPositionsWithFarming = farm.wallet?.map(
-          (position: any) => {
-            if (position.tokenId === selectedConcentratedPosition) {
-              return {
-                ...position,
-                eternalFarming: {
-                  earned: 0,
-                  bonusEarned: 0,
-                  startTime: farm.startTime,
-                  endTime: farm.endTime,
-                  rewardToken: farm.rewardToken,
-                  bonusRewardToken: farm.bonusRewardToken,
-                  id: farm.id,
-                  owner: account,
-                  pool: farm.pool,
-                },
-              };
-            }
-            return position;
-          },
-        );
-
-        dispatch(setUserV3LiquidityWallet(populatedPositionsWithFarming));
-      }
-
       loadingOff();
       onCancelTransaction && onCancelTransaction();
+
+      const { provider } = await connect({});
+
+      setTimeout(() => {
+        userDataWorker.postMessage({
+          userAddress: account,
+          type: 'getV3Liquidity',
+          provider: JSON.stringify(provider, getCircularReplacer()),
+        });
+      }, 5_000);
     } catch (error) {
       console.error(error);
       loadingOff();

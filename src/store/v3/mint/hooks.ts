@@ -238,7 +238,7 @@ export function useV3DerivedMintInfo(
         ? CurrencyAmount.fromRawAmount(
             currencyA,
             parseUnits(
-              token0Balance.amount,
+              Number(token0Balance.amount).toFixed(token0Balance.decimals),
               token0Balance.decimals,
             ).toString() || 0,
           )
@@ -251,7 +251,7 @@ export function useV3DerivedMintInfo(
         ? CurrencyAmount.fromRawAmount(
             currencyB,
             parseUnits(
-              token1Balance.amount,
+              Number(token1Balance.amount).toFixed(token1Balance.decimals),
               token1Balance.decimals,
             ).toString() || 0,
           )
