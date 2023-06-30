@@ -56,16 +56,23 @@ const useLogin = () => {
 
   const updateLogin = useCallback(
     async (_signer, _login = false) => {
-      if (_login) {
-        setupNetwork();
-        const address = await _signer.getAddress();
-        dispatch(setAddress(address));
-        setLoggedIn(true);
-      } else {
-        dispatch(setAddress(null));
-        setLoggedIn(false);
-        localStorage.setItem('CONNECTOR', '');
-        dispatch(resetUserStatistics());
+      try {
+        if (_login) {
+          setupNetwork();
+          const address = await _signer.getAddress();
+
+          console.log('address', address);
+
+          dispatch(setAddress(address));
+          setLoggedIn(true);
+        } else {
+          dispatch(setAddress(null));
+          setLoggedIn(false);
+          localStorage.setItem('CONNECTOR', '');
+          dispatch(resetUserStatistics());
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     [dispatch, setLoggedIn],
