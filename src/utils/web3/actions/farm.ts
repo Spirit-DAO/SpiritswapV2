@@ -201,7 +201,7 @@ export const farmStatus = async (
   _gaugeAddress: string | undefined,
   account: string,
 ) => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const provider = await getProvider();
   const signer = await provider.getSigner();
   const lpContract = new ethers.Contract(_farmAddress, PAIR_ABI, signer);
 
@@ -244,7 +244,7 @@ export const createFarm = async (typeProxy: string, farmAddress: string) => {
     const tx = await contract.addGauge(farmAddress);
     return tx;
   } catch (error) {
-    throw '';
+    console.error(error);
   }
 };
 
@@ -253,7 +253,7 @@ export const approveFarm = async (
   _gaugeAddress: string | undefined,
   _chainId = CHAIN_ID,
 ) => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const provider = await getProvider();
   const signer = await provider.getSigner();
   const lpContract = new ethers.Contract(_farmAddress, PAIR_ABI, signer);
   const approve = await lpContract.approve(
@@ -375,7 +375,7 @@ export const approveConcentratedFarm = async (
   account: string,
   positionId: string,
 ) => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const provider = await getProvider();
   const signer = await provider.getSigner();
 
   const nonfungiblePositionManagerContract = new ethers.Contract(

@@ -60,9 +60,6 @@ const useLogin = () => {
         if (_login) {
           setupNetwork();
           const address = await _signer.getAddress();
-
-          console.log('address', address);
-
           dispatch(setAddress(address));
           setLoggedIn(true);
         } else {
