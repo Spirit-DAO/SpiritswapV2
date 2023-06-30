@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { NETWORK, CHAIN_ID, ConnectorNames } from 'constants/index';
+import { NETWORK, CHAIN_ID } from 'constants/index';
 import { CONNECTIONS } from 'app/connectors/EthersConnector/login';
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
@@ -63,9 +63,7 @@ export const connect = async ({
     try {
       if (_connection instanceof EthereumProvider) {
         if (_callback) {
-          await _connection.connect({
-            chains: [250],
-          });
+          await _connection.connect();
         }
       }
       return wallet(_connection, _chainId, _callback);
