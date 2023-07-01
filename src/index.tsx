@@ -7,15 +7,12 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import 'sanitize.css/sanitize.css';
 import './locales/i18n';
 import './theme/chakra/globalStyles.css';
-
 import EthersConnector from 'app/connectors/EthersConnector';
-
 import ThemeProvider from './theme';
 import { ChakraThemeProvider } from './theme/chakra';
 import { QueryClientProvider } from 'react-query';

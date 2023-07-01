@@ -7,10 +7,11 @@ export const v3FarmingCenterContract = async (
   _connector = getProvider(),
   _chainId = CHAIN_ID,
 ) => {
+  const connector = await _connector;
   const farmingCenterInstance = await Contract(
     addresses.v3FarmingCenter[CHAIN_ID],
     'v3FarmingCenter',
-    _connector,
+    connector,
     _chainId,
   );
 

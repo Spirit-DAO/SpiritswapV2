@@ -32,7 +32,7 @@ export const approve = async (
   _contract: string = 'erc20', // name of the ABI you are using. See the web3/contracts ABIS constant. Default is erc20
   _chainId = CHAIN_ID, // Chain you are working with
 ) => {
-  const _connector = getProvider(); // Approvals require signers and by default they are metamask
+  const _connector = await getProvider(); // Approvals require signers and by default they are metamask
 
   let amount = _approvedAmount;
 

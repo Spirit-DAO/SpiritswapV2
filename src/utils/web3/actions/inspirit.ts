@@ -17,7 +17,7 @@ export const getGaugeV2Contract = async (_provider = null) => {
   const gaugeV2Address = addresses.gaugeV3[CHAIN_ID];
 
   if (!_provider) {
-    const provider = getProvider();
+    const provider = await getProvider();
     return await Contract(gaugeV2Address, 'gaugeproxyV3', provider);
   }
 
@@ -32,7 +32,7 @@ export const getGaugeV2Contract = async (_provider = null) => {
 export const getGaugeStableContract = async (_provider = null) => {
   const gaugeStableAddress = addresses.stableProxy[CHAIN_ID];
   if (!_provider) {
-    const provider = getProvider();
+    const provider = await getProvider();
     return await Contract(gaugeStableAddress, 'stableproxy', provider);
   }
 
@@ -103,7 +103,7 @@ export const submitBribe = async (
   tokenAddress: string,
   amount: BigNumber,
 ) => {
-  const connector = getProvider();
+  const connector = await getProvider();
   const { signer } = await wallet(connector);
   const bribeContract = await getBribeContract(bribeAddress, signer);
   return await bribeContract.notifyRewardAmount(tokenAddress, amount, {
@@ -130,7 +130,7 @@ export const claimBribes = async (
 };
 
 export const feeDistributorContract = async () => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const feeDistributorContract = await Contract(
     addresses.feedistributor[CHAIN_ID],
     'feedistributor',
@@ -142,7 +142,7 @@ export const feeDistributorContract = async () => {
 };
 
 export const inspiritContract = async () => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const inspiritContract = await Contract(
     addresses.inspirit[CHAIN_ID],
     'inspirit',

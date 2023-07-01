@@ -151,7 +151,7 @@ export const useLiFi = ({
         return;
       }
       try {
-        const _connector = getProvider();
+        const _connector = await getProvider();
         const erc20 = await Contract(
           step.action.fromToken.address,
           'erc20',

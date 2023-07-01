@@ -7,13 +7,12 @@ import {
   memo,
 } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
-import { connect, Web3TxData } from 'utils/web3';
+import { Web3TxData } from 'utils/web3';
 import { useProgressToast } from 'app/hooks/Toasts/useProgressToast';
 import { useSuggestion } from 'app/hooks/Suggestions/useSuggestion';
 import { CHAIN_ID, NOTIFICATIONS_STATE } from 'constants/index';
-import { ethers } from 'ethers';
 import { DataContext } from 'contexts/DataContext';
-import useLogin from './login';
+import useLogin, { getProvider } from './login';
 import { resetUserStatistics } from 'store/user';
 import { useToast } from '@chakra-ui/react';
 import { WorkerCall } from 'types';
@@ -31,13 +30,20 @@ const EthersConnector = ({ children }) => {
 
   const account = useAppSelector(selectAddress);
 
-  const provider = window.ethereum
-    ? new ethers.providers.Web3Provider(window.ethereum, 'any')
-    : undefined;
+  const [provider, setProvider] = useState<any>();
 
   const pending = useAppSelector(selectPendingTransactions);
   const { dataWorker, userDataWorker } = useContext(DataContext);
   const [inQueue, setInQueue] = useState<{ [key: string]: Web3TxData }>({});
+
+  useEffect(() => {
+    const connectWallet = async () => {
+      const provider = await getProvider();
+      setProvider(provider);
+    };
+
+    connectWallet();
+  }, [account]);
 
   const page = useMemo(() => {
     const { pathname } = window.location;
@@ -63,17 +69,6 @@ const EthersConnector = ({ children }) => {
       home: ['updatePortfolioData'],
       swap: ['checkLimitOrders', 'checkAllowances'],
     };
-  }, []);
-
-  const initProvider = useCallback(async () => {
-    const { provider, signer } = await connect({});
-
-    let currentProvider = provider;
-    if (!provider) {
-      currentProvider = provider;
-    }
-
-    return { currentProvider, signer };
   }, []);
 
   const fetchAppData = useCallback(async () => {
@@ -151,8 +146,8 @@ const EthersConnector = ({ children }) => {
   }, [fetchAppData, fetchUserData]);
 
   useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', async () => {
+    if (provider) {
+      provider.on('accountsChanged', async () => {
         dispatch(resetUserStatistics());
         handleLogin();
         fetchUserData();
@@ -160,11 +155,11 @@ const EthersConnector = ({ children }) => {
     }
 
     return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', () => {});
+      if (provider) {
+        provider.removeListener('accountsChanged', () => {});
       }
     };
-  }, [dispatch, fetchUserData, handleLogin]);
+  }, [dispatch, fetchUserData, handleLogin, provider]);
 
   const removeFromQueue = (hash: string) => {
     const inQueueCopy = { ...inQueue };
@@ -249,9 +244,7 @@ const EthersConnector = ({ children }) => {
 
     Object.keys(inQueue).forEach(hash => {
       if (!hash) return;
-      const provider = window.ethereum
-        ? new ethers.providers.Web3Provider(window.ethereum, 'any')
-        : undefined;
+
       const receiptPromise = provider!.getTransactionReceipt(hash);
 
       const match = pending.find(
