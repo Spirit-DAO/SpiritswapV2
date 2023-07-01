@@ -22,7 +22,6 @@ export default function FarmControls({
   setSortType,
   debouncedResults,
 }) {
-  const translationPath = 'farms.common';
   const { t } = useTranslation();
   const isMobile = useMobile();
 
@@ -30,13 +29,7 @@ export default function FarmControls({
     <StyledFarmsControls>
       <Select
         selected={selectedTab}
-        labels={[
-          t(`${translationPath}.all`),
-          t(`${translationPath}.classicV2`),
-          t(`${translationPath}.stable`),
-          t(`${translationPath}.concentrated`),
-          'Combine',
-        ]}
+        labels={['All', 'Tradicional', 'Concentrated']}
         onChange={onFarmTabChange}
       />
 
@@ -75,19 +68,6 @@ export default function FarmControls({
               }
               checked={farmFilters.inactive}
             />
-            {/* {![FarmType.ECOSYSTEM, FarmType.WEIGHTED].includes(selectedTab) && (
-              <StyledSwitch
-                label={t('farms.filter.boosted')}
-                justify={{ base: 'space-between', md: 'initial' }}
-                onChange={() => {
-                  setFarmFilters(prevState => ({
-                    ...prevState,
-                    boosted: !farmFilters.boosted,
-                  }));
-                }}
-                checked={farmFilters.boosted}
-              />
-            )} */}
           </Flex>
         )}
         <HStack>

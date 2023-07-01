@@ -1477,9 +1477,7 @@ export function LiquidityPage() {
                         labels={[
                           TOKEN_TYPE_CLASSIC_LABEL,
                           TOKEN_TYPE_STABLE_LABEL,
-                          <StyledConcentratedLiqudityLabel>
-                            Concentrated Liquidity
-                          </StyledConcentratedLiqudityLabel>,
+                          'Concentrated Liquidity',
                           // TOKEN_TYPE_CONCENTRATED_LABEL,
                           // TOKEN_TYPE_WEIGHTED_LABEL,
                         ]}

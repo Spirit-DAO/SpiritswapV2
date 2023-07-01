@@ -5,8 +5,8 @@ import { Props } from './TokenList.d';
 import {
   StyledHeader,
   StyledWrapper,
-  StyledH3,
   StyledIconButton,
+  TypeText,
 } from './styles';
 import ImageLogo from 'app/components/ImageLogo';
 import { Flex } from '@chakra-ui/react';
@@ -41,6 +41,27 @@ const TokenList = ({
 
   const tokenSymbols = title.split('+');
 
+  const Version = () => {
+    const title = type === 'concentrated' ? 'V3' : 'V2';
+    const color = type === 'concentrated' ? '#1D9384' : 'white';
+
+    if (type === 'concentrated') {
+      return <TypeText text={title} />;
+    } else {
+      return (
+        <span
+          style={{
+            color: color,
+            fontSize: '18px',
+            fontWeight: 500,
+          }}
+        >
+          {title}
+        </span>
+      );
+    }
+  };
+
   return (
     <>
       <StyledWrapper
@@ -52,18 +73,7 @@ const TokenList = ({
       >
         <StyledHeader>
           <Flex direction="row" justifyContent="space-between" w="full">
-            <Flex direction="column">
-              {type === 'combine' ? (
-                <span
-                  style={{
-                    fontSize: '16px',
-                    marginBottom: '10px',
-                    color: '#1D9384',
-                  }}
-                >
-                  New V3 farms 🔥
-                </span>
-              ) : null}
+            <Flex gap="8px" w="100%" alignItems="center">
               <Heading
                 style={{
                   fontSize: titleSmall ? '17px' : '20px',
@@ -71,8 +81,19 @@ const TokenList = ({
                 }}
                 level={2}
               >
-                {title}
+                {title}{' '}
               </Heading>
+              {type === 'concentrated' &&
+              lpAddress === '0xcfc1cbe6d81675719341c3175a34e6762548f79d' ? (
+                <TypeText
+                  text="X2"
+                  disabledAnimation
+                  style={{
+                    marginRight: '10px',
+                  }}
+                />
+              ) : null}
+              <Version />
             </Flex>
             {!hideTypeIcons && (
               <Flex>
