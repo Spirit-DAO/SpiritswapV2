@@ -7,6 +7,8 @@ import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import 'jest-styled-components';
 import 'jest-canvas-mock';
+import { TextEncoder, TextDecoder } from 'util';
+Object.assign(global, { TextDecoder, TextEncoder });
 
 // @ts-ignore
 global.IS_REACT_ACT_ENVIRONMENT = true;

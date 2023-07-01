@@ -113,7 +113,7 @@ export const cancelLimitOrder = async (
   _chainId: ChainId = CHAIN_ID,
   _handler: Handler = DEFAULT_HANDLER,
 ) => {
-  const connector = getProvider();
+  const connector = await getProvider();
   const { signer } = await wallet(connector);
   const itf = limitOrdersItf(signer, _handler, _chainId);
   const order = _order;
@@ -170,7 +170,7 @@ export const getLimitOrders = async (
   if (_signer) {
     signer = _signer;
   } else {
-    const connector = getProvider();
+    const connector = await getProvider();
     ({ signer } = await wallet(connector));
   }
 

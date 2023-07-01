@@ -119,7 +119,7 @@ export const userEncoding = {
 };
 
 export const vaultContract = async (type: 'stable' | 'weighted' = 'stable') => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   let contract = 'sobVault';
 
   if (type === 'weighted') {
@@ -854,10 +854,11 @@ export const routerContract = async (
   _connector = getProvider(),
   _chainId = CHAIN_ID,
 ) => {
+  const connector = await _connector;
   const routerInstance = await Contract(
     addresses.router[CHAIN_ID],
     'router',
-    _connector,
+    connector,
     _chainId,
   );
 
@@ -868,10 +869,11 @@ export const routerV2Contract = async (
   _connector = getProvider(),
   _chainId = CHAIN_ID,
 ) => {
+  const connector = await _connector;
   const routerInstance = await Contract(
     addresses.routerV2[CHAIN_ID],
     'routerV2',
-    _connector,
+    connector,
     _chainId,
   );
 
@@ -886,7 +888,7 @@ export const pairContract = async (
   let connector = _connector;
 
   if (_connector === 'wallet') {
-    connector = getProvider();
+    connector = await getProvider();
   }
 
   const pairInstance = await Contract(
@@ -1518,7 +1520,7 @@ export const estimateRemoveLiquidity = async (
 };
 
 export const nonfungiblePositionManagerContract = async () => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   let contract = 'v3NonfungiblePositionManager';
 
   const nonfungiblePositionManagerContract = await Contract(

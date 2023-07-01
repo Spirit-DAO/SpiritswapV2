@@ -10,38 +10,15 @@ import {
 } from 'constants/index';
 import { farms, inactiveFarms } from 'constants/farms';
 import Contracts from 'constants/contracts';
-import addresses from 'constants/contracts';
 import { IFarm } from 'app/interfaces/Farm';
-import { getSplitCalls, formatFarmsCalls } from 'utils/data';
-import {
-  Multicall,
-  Call,
-  Contract,
-  nonfungiblePositionManagerContract,
-  MulticallV2,
-  MultiCallArray,
-} from 'utils/web3';
-import { FarmChainData } from './types';
-import {
-  request,
-  getHistoricalPortfolioValue,
-  getLiquidityPoolsDataV2,
-} from './covalent';
+import { Multicall, Call, Contract, MultiCallArray } from 'utils/web3';
+import { request, getLiquidityPoolsDataV2 } from './covalent';
 import { stableSobPools } from 'constants/sobpools';
 import { TokenAmount } from 'app/interfaces/General';
 import { checkAddress, GetVerifiedTokenFromAddres } from 'app/utils/methods';
 import { tokenData } from 'utils/data/types';
 import { weightedpools } from 'constants/weightedpools';
-import {
-  getEternalFarming,
-  getEternalFarmings,
-  getPool,
-  getToken,
-  getTransferredPositions,
-} from 'utils/apollo/queries-v3';
-import { algebraFarmingCenterContract } from 'utils/web3/actions/farm';
-import { getProvider } from 'app/connectors/EthersConnector/login';
-import { wallet } from 'utils/web3';
+import { getEternalFarmings, getPool, getToken } from 'utils/apollo/queries-v3';
 
 const FARMS = farms;
 

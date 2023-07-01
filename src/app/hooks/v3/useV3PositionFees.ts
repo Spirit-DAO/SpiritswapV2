@@ -8,6 +8,7 @@ import contracts from 'constants/contracts';
 import NonfungiblePositionManagerABI from 'utils/web3/abis/v3/nonfungiblePositionManager.json';
 import { CHAIN_ID } from 'constants/index';
 import { Web3Provider } from '@ethersproject/providers';
+import { getProvider } from 'app/connectors/EthersConnector/login';
 
 const MAX_UINT128 = BigNumber.from(2).pow(128).sub(1);
 
@@ -25,11 +26,12 @@ export function useV3PositionFees(
 
   useEffect(() => {
     async function fetchProvider() {
-      const provider = new Web3Provider(window.ethereum);
+      const provider = await getProvider();
+      const web3Provider = new Web3Provider(provider);
       const contract = new Contract(
         contracts.v3NonfungiblePositionManager[CHAIN_ID],
         NonfungiblePositionManagerABI,
-        provider,
+        web3Provider,
       );
       setPositionManager(contract);
     }

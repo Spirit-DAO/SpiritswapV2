@@ -7,10 +7,11 @@ export const v3AlgebraQuoterContract = async (
   _connector = getProvider(),
   _chainId = CHAIN_ID,
 ) => {
+  const connector = await _connector;
   const quoterInstance = await Contract(
     addresses.v3AlgebraQuoter[CHAIN_ID],
     'v3AlgebraQuoter',
-    _connector,
+    connector,
     _chainId,
   );
 

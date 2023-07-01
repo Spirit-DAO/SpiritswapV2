@@ -1,10 +1,7 @@
 import { ethers } from 'ethers';
 import { NETWORK, CHAIN_ID } from 'constants/index';
-import {
-  CONNECTIONS,
-  walletConnectProvider,
-} from 'app/connectors/EthersConnector/login';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+import { CONNECTIONS } from 'app/connectors/EthersConnector/login';
+import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 const providers = {};
 const signers = {};
@@ -15,15 +12,6 @@ export const wallet = async (
   _chainId = CHAIN_ID,
   _connect?: Function,
 ) => {
-  // TODO: Add network connection is chainId id is not connected
-  /*const { ethereum } = window;
-
-  if (!ethereum) {
-    return {
-      notInstalled: true,
-    };
-  } */
-
   const provider = new ethers.providers.Web3Provider(_connection, {
     name: NETWORK[_chainId].network,
     chainId: _chainId,
@@ -40,7 +28,7 @@ export const wallet = async (
   const signer = await provider.getSigner();
 
   if (_connect) {
-    if (![walletConnectProvider].includes(_connection)) {
+    if (![EthereumProvider].includes(_connection)) {
       await provider.send('eth_requestAccounts', []);
     }
     return _connect(signer);
@@ -68,10 +56,15 @@ export const connect = async ({
   _chainId?: number;
   rpcID?: number;
 }) => {
-  if (CONNECTIONS().includes(_connection)) {
+  if (
+    CONNECTIONS().includes(_connection) ||
+    _connection instanceof EthereumProvider
+  ) {
     try {
-      if (_connection instanceof WalletConnectProvider) {
-        await _connection.enable();
+      if (_connection instanceof EthereumProvider) {
+        if (_callback) {
+          await _connection.connect();
+        }
       }
       return wallet(_connection, _chainId, _callback);
     } catch (error) {}

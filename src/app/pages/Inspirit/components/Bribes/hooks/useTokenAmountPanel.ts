@@ -23,7 +23,7 @@ export const useTokenAmountPanel = ({
   useEffect(() => {
     if (!selectedToken) return;
     const calculateBribeLeftOver = async () => {
-      const connector = getProvider();
+      const connector = await getProvider();
       const { signer } = await wallet(connector);
       const bribeContract = await getBribeContract(selectedBribe, signer);
 

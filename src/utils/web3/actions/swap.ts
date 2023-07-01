@@ -1,7 +1,7 @@
 import { getProvider } from 'app/connectors/EthersConnector/login';
 import { Token } from 'app/interfaces/General';
 import { formatAmount } from 'app/utils';
-import { CHAIN_ID, TOKENS_WITH_HIGH_SLIPPAGE } from 'constants/index';
+import { TOKENS_WITH_HIGH_SLIPPAGE } from 'constants/index';
 import { JEFE, WFTM } from 'constants/tokens';
 import { BigNumber } from 'ethers';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
@@ -25,11 +25,11 @@ export const swapTransaction = async (
   },
   deadlineOffset?: number,
 ) => {
-  const _connection = getProvider();
-
+  const _connection = await getProvider();
   const { signer } = await connect({
     _connection,
   });
+
   const MIN_GAS_LIMIT = BigNumber.from('300000');
 
   if (quote.priceRoute) {
@@ -113,7 +113,7 @@ export const placeOrderLimit = async (
   _handler = undefined,
   _chainId = undefined,
 ) => {
-  const _connection = getProvider();
+  const _connection = await getProvider();
   const { signer } = await connect({ _connection });
   const inputAmount = parseUnits(_trade.inputAmount, _trade.inputDecimals);
   const outputAmount = parseUnits(_trade.minReturn, _trade.outputDecimals);
@@ -135,7 +135,7 @@ export const wrappedFTMaction = async (
   addToQueue,
 ) => {
   try {
-    const _connection = getProvider();
+    const _connection = await getProvider();
     const { signer } = await connect({ _connection });
     const contract = await Contract(
       WFTM.address,

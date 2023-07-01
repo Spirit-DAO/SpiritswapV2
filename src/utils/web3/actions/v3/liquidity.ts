@@ -7,10 +7,11 @@ export const v3NonfungiblePositionManagerContract = async (
   _connector = getProvider(),
   _chainId = CHAIN_ID,
 ) => {
+  const connector = await _connector;
   const nonfungiblePositionManagerInstance = await Contract(
     addresses.v3NonfungiblePositionManager[CHAIN_ID],
     'v3NonfungiblePositionManager',
-    _connector,
+    connector,
     _chainId,
   );
 
