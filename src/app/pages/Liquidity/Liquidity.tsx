@@ -110,7 +110,7 @@ const TOKEN_TYPE_VARIABLE_LABEL = 'Variable';
 const TOKEN_TYPE_STABLE_INDEX = 1;
 const TOKEN_TYPE_STABLE_LABEL = 'Stable';
 const TOKEN_TYPE_CONCENTRATED_INDEX = 2;
-const TOKEN_TYPE_CONCENTRATED_LABEL = 'Concentrated Liquidity';
+const TOKEN_TYPE_CONCENTRATED_LABEL = 'Concentrated';
 
 export function LiquidityPage() {
   const { t } = useTranslation();
