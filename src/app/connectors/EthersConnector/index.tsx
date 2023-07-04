@@ -19,6 +19,7 @@ import { WorkerCall } from 'types';
 import useWallets from 'app/hooks/useWallets';
 import getNotificationIcon from '../getNotificationIcon';
 import { selectAddress, selectPendingTransactions } from 'store/user/selectors';
+import { ethers } from 'ethers';
 
 const EthersConnector = ({ children }) => {
   const toast = useToast();
@@ -245,7 +246,11 @@ const EthersConnector = ({ children }) => {
     Object.keys(inQueue).forEach(hash => {
       if (!hash) return;
 
-      const receiptPromise = provider!.getTransactionReceipt(hash);
+      const newProvider = provider
+        ? new ethers.providers.Web3Provider(provider, 'any')
+        : undefined;
+
+      const receiptPromise = newProvider!.getTransactionReceipt(hash);
 
       const match = pending.find(
         transaction => `${transaction.hash}` === `${hash}`,

@@ -1,6 +1,6 @@
 import { FARMS } from 'constants/icons';
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Box, Button, HStack, useDisclosure } from '@chakra-ui/react';
+import { Box, HStack, useDisclosure } from '@chakra-ui/react';
 import { CardHeader } from 'app/components/CardHeader';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { IFarm, IFarmFilters } from 'app/interfaces/Farm';
@@ -37,7 +37,6 @@ import { ConnectWallet } from 'app/components/ConnectWallet';
 import { FarmCreateModal } from './components/FarmCreateModal';
 import { ethers } from 'ethers';
 import useWallets from 'app/hooks/useWallets';
-import useLogin from 'app/connectors/EthersConnector/login';
 import { FARMS as FARMS_ROUTE } from 'app/router/routes';
 import { useEternalFarmingRewards } from 'app/hooks/v3/useEternalFarmingsRewards';
 
@@ -50,7 +49,6 @@ export const Farms = () => {
   const { addToQueue } = Web3Monitoring();
   const { userLiquidity, userConcentratedLiquidity } = GetWalletBalance();
   const { account } = useWallets();
-  const { handleLogin } = useLogin();
   const pageTitle = `${t('common.name')} - ${t(`${translationPath}.title`)}`;
   const navigate = useNavigate();
   const [sortType, setSortType] = useState(0);
@@ -86,10 +84,10 @@ export const Farms = () => {
   const [farmFilters, setFarmFilters] =
     useState<IFarmFilters>(initialFarmFilters);
 
-  const onCreateFarm = () => {
-    if (!account) handleLogin();
-    farmCreate.onOpen();
-  };
+  // const onCreateFarm = () => {
+  //   if (!account) handleLogin();
+  //   farmCreate.onOpen();
+  // };
 
   // Function that runs when component receives a new farm address (creation ecofarm)
   useMemo(() => {
@@ -277,7 +275,6 @@ export const Farms = () => {
         />
         <HStack justifyContent="space-between" mt="10px">
           <FarmRewards rewards={collectedRewards} spiritPrice={spiritPrice} />
-          <Button onClick={onCreateFarm}>Create Farm</Button>
         </HStack>{' '}
         <div id="top" />
         {!address && (

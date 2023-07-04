@@ -14,9 +14,7 @@ function TWAPOrders({ showChart }: { showChart: boolean }) {
       <Orders
         dappTokens={tokens || []}
         account={account}
-        getProvider={async () => {
-          return await getProvider();
-        }}
+        getProvider={getProvider}
         getTokenImageUrl={getTokenImageUrl}
       />
     </LimitOrderContainer>

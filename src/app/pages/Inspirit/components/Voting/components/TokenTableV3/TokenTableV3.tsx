@@ -74,29 +74,16 @@ const TokenTableV3 = ({
 
   useEffect(() => {
     const getBoostedFarms = async () => {
-      const userBoostedVariable = getUserFarms(boostedVariable, stakedFarms);
-      const userBoostedStable = getUserFarms(boostedStable, stakedFarms);
       const userBoostedCombine = getUserFarms(boostedCombine, stakedFarms);
 
       onUpdateFarm({
-        variableClassics: sortFn(boostedVariable, 'yourVote', 'des'),
-        userVariableClassics: sortFn(userBoostedVariable, 'yourVote', 'des'),
-        stables: sortFn(boostedStable, 'yourVote', 'des'),
-        userStables: sortFn(userBoostedStable, 'yourVote', 'des'),
         combine: sortFn(boostedCombine, 'yourVote', 'des'),
         userCombine: sortFn(userBoostedCombine, 'yourVote', 'des'),
       });
     };
     getBoostedFarms();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    searchValues,
-    userOnly,
-    farmType,
-    account,
-    boostedVariable,
-    boostedStable,
-  ]);
+  }, [searchValues, userOnly, farmType, account]);
 
   const filteredBribes = useMemo(() => {
     if (searchValues) {

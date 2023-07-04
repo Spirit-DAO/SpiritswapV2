@@ -24,7 +24,6 @@ function Voting() {
   const { t } = useTranslation();
   const translationPath = 'inSpirit.voting';
   const translationPathHelper = 'inSpirit.modalHelper';
-  const [isStableData, setIsStableData] = useState(false);
   const { account } = useWallets();
   const { addToQueue } = Web3Monitoring();
   const [errorMessage, setErrorMessage] = useState('');
@@ -45,18 +44,10 @@ function Voting() {
   const [selectedFarmType, setSelectedFarmType] = useState<{
     index: number;
     value: string;
-  }>({ index: 0, value: 'Stable' });
+  }>({ index: 0, value: 'Combine' });
 
-  let versionId = 1;
-
-  if (selectedFarmType.index === 0) {
-    // check this
-    versionId = 3;
-  }
-  if (selectedFarmType.index === 1) {
-    versionId = 2;
-  }
-
+  // Version id 1 for combine farms
+  const VERSION_ID = 1;
   const handleVote = async (tableData: BoostedFarm[], newVotes) => {
     let votingWeight = 0;
 
@@ -75,7 +66,7 @@ function Voting() {
       }
     }
 
-    const canVote = await checkLastVotes(account, versionId);
+    const canVote = await checkLastVotes(account, VERSION_ID);
 
     if (!canVote) {
       setErrorMessage('You can only vote once in 7 days');
@@ -87,7 +78,7 @@ function Voting() {
         loadingOn();
         const response = await voteForBoostedDistributions({
           vaults,
-          version: versionId,
+          version: VERSION_ID,
         });
         await response.tx.wait();
         loadingOff();
@@ -101,7 +92,6 @@ function Voting() {
 
   const onChangeFarmType = selected => {
     setSelectedFarmType(selected);
-    setIsStableData(!isStableData);
   };
 
   return (
@@ -135,7 +125,7 @@ function Voting() {
         <Flex flexDir="column" marginY="spacing06">
           <Heading level={5}>{t(`${translationPath}.farmType.label`)}</Heading>
           <Select
-            labels={['Stable', 'Variable', 'Combine']}
+            labels={['Combine']}
             onChange={onChangeFarmType}
             selected={selectedFarmType.index}
           />

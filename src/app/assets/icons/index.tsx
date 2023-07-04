@@ -88,6 +88,10 @@ import { ReactComponent as PeckShieldAudit } from 'app/assets/images/peckShieldA
 import { ReactComponent as ParaSwap } from 'app/assets/images/paraSwap.svg';
 import { ReactComponent as Algebra } from 'app/assets/images/algebra.svg';
 
+import { ReactComponent as V3Icon } from 'app/assets/images/V3Icon.svg';
+import { ReactComponent as V2Icon } from 'app/assets/images/V2Icon.svg';
+import { ReactComponent as X2Icon } from 'app/assets/images/X2Icon.svg';
+
 const { ci, grayDarker, danger, warning } = colors;
 const iconSize = {
   xs: '12px',
@@ -97,6 +101,17 @@ const iconSize = {
 };
 
 const { md } = iconSize;
+
+export const V3IconBadge = ({ w = md, h = md, ...rest }) => {
+  return <Icon {...rest} as={V3Icon} w={w} h={h} />;
+};
+export const X2IconBadge = ({ w = md, h = md, ...rest }) => {
+  return <Icon {...rest} as={X2Icon} w={w} h={h} />;
+};
+
+export const V2IconBadge = ({ w = md, h = md, ...rest }) => {
+  return <Icon {...rest} as={V2Icon} w={w} h={h} />;
+};
 
 export const ZokyoAuditLogo = ({ w = md, h = md, color = ci, ...rest }) => {
   return <Icon {...rest} as={zokyoAudit} color={color} w={w} h={h} />;

@@ -27,6 +27,7 @@ const useGetTokensPrices = ({
       try {
         setLoadingPrices(true);
         const data = await getTokensDetails(tokenAddresses, chainId);
+        if (!data) return setTokensPrices({});
         let tokenObjectPrices = {};
         data?.forEach(token => {
           if (token.address === BASE_TOKEN_ADDRESS) {

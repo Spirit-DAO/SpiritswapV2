@@ -29,7 +29,7 @@ export default function FarmControls({
     <StyledFarmsControls>
       <Select
         selected={selectedTab}
-        labels={['All', 'Tradicional', 'Concentrated']}
+        labels={['All', 'Traditional', 'Concentrated']}
         onChange={onFarmTabChange}
       />
 

@@ -18357,7 +18357,7 @@ lodash@4.x, lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lo
 
 lodasync@1.0.7:
   version "1.0.7"
-  resolved "https://registry.npmjs.org/lodasync/-/lodasync-1.0.7.tgz"
+  resolved "https://registry.yarnpkg.com/lodasync/-/lodasync-1.0.7.tgz#18b991e28d76edf022b10a4d77c524c989514ac5"
   integrity sha512-XheMvF9kr8W4bEWp7GRYAyxrV9lsJT0CMsbev2+fKFONhTqCXVYa2KFH2YZbO1u6OD7iDRfMkNnabiAAFT56kw==
 
 log-symbols@3.0.0:

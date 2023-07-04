@@ -110,15 +110,16 @@ const NewTokenAmountPanel = ({
         token?.symbol !== 'FTM' ? [token?.address ?? ''] : [WFTM.address],
         token?.chainId ?? 1,
       );
-      tokensPrices.forEach(price => {
-        if (
-          price.address.toLowerCase() === token?.address.toLowerCase() ||
-          (token?.symbol === 'FTM' &&
-            price.address.toLowerCase() === WFTM.address.toLowerCase())
-        ) {
-          setTokenPrice(price.rate);
-        }
-      });
+      tokensPrices &&
+        tokensPrices.forEach(price => {
+          if (
+            price.address.toLowerCase() === token?.address.toLowerCase() ||
+            (token?.symbol === 'FTM' &&
+              price.address.toLowerCase() === WFTM.address.toLowerCase())
+          ) {
+            setTokenPrice(price.rate);
+          }
+        });
     };
 
     fetchTokenPrice();

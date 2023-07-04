@@ -6,7 +6,7 @@ export const handleFarmData = (data, index) => {
       return data;
     case FarmType.CONCENTRATED:
       return data.filter(farm => farm.type === 'concentrated');
-    case FarmType.TRADICIONAL:
+    case FarmType.TRADITIONAL:
       return data.filter(farm => farm.type !== 'concentrated');
     default:
       return data;

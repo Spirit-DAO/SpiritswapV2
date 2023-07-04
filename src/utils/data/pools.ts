@@ -829,7 +829,7 @@ export const loadFarmsList = async (
         .toNumber();
 
       //// INACTIVE FARMS LOGIC ////
-      const label = 'tradicional';
+      const label = 'traditional';
       const inactiveFarm = farm.type === 'combine' ? false : true;
 
       const lp: IFarm = {

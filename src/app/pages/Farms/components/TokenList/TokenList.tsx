@@ -2,17 +2,13 @@ import { Heading } from 'app/components/Typography';
 import { ReactComponent as BarChart } from 'app/assets/images/bar-chart.svg';
 import { ReactComponent as Calculator } from 'app/assets/images/calculator.svg';
 import { Props } from './TokenList.d';
-import {
-  StyledHeader,
-  StyledWrapper,
-  StyledIconButton,
-  TypeText,
-} from './styles';
+import { StyledHeader, StyledWrapper, StyledIconButton } from './styles';
 import ImageLogo from 'app/components/ImageLogo';
 import { Flex } from '@chakra-ui/react';
 import { ROICalculatorModal } from '../ROICalculatorModal';
 import { useDisclosure } from '@chakra-ui/react';
 import { openInNewTab } from 'app/utils/redirectTab';
+import { V2IconBadge, V3IconBadge, X2IconBadge } from 'app/assets/icons';
 
 const TokenList = ({
   tokens,
@@ -42,23 +38,10 @@ const TokenList = ({
   const tokenSymbols = title.split('+');
 
   const Version = () => {
-    const title = type === 'concentrated' ? 'V3' : 'V2';
-    const color = type === 'concentrated' ? '#1D9384' : 'white';
-
     if (type === 'concentrated') {
-      return <TypeText text={title} />;
+      return <V3IconBadge w="42px" h="100%" />;
     } else {
-      return (
-        <span
-          style={{
-            color: color,
-            fontSize: '18px',
-            fontWeight: 500,
-          }}
-        >
-          {title}
-        </span>
-      );
+      return <V2IconBadge w="35px" h="100%" />;
     }
   };
 
@@ -73,25 +56,20 @@ const TokenList = ({
       >
         <StyledHeader>
           <Flex direction="row" justifyContent="space-between" w="full">
-            <Flex gap="8px" w="100%" alignItems="center">
+            <Flex gap="5px" h="35px" w="100%" alignItems="center">
               <Heading
                 style={{
                   fontSize: titleSmall ? '17px' : '20px',
                   lineHeight: invertTitleOrder ? 1 : 'inherit',
+                  marginRight: '5px',
                 }}
-                level={2}
+                level={3}
               >
                 {title}{' '}
               </Heading>
               {type === 'concentrated' &&
               lpAddress === '0xcfc1cbe6d81675719341c3175a34e6762548f79d' ? (
-                <TypeText
-                  text="X2"
-                  disabledAnimation
-                  style={{
-                    marginRight: '10px',
-                  }}
-                />
+                <X2IconBadge w="35px" h="100%" />
               ) : null}
               <Version />
             </Flex>

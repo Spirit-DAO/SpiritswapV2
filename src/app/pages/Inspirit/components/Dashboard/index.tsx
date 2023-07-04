@@ -337,13 +337,7 @@ export default function Dashboard() {
               <Text color="grayDarker" fontSize="sm">
                 {t(`${translationPathHelper}.nextDistributionBlock`)}
               </Text>
-              <Text fontSize="xl">
-                {/* {moment
-                  .unix(+nextDistribution)
-                  .utc()
-                  .format('Do MMM YYYY')} */}
-                {' Every Friday (UTC)'}
-              </Text>
+              <Text fontSize="xl">{' Every Friday (UTC)'}</Text>
             </VStack>
             <VStack spacing={0}>
               <Time nextDistributionTimeStamp={nextDistribution} />

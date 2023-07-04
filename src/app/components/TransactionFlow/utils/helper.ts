@@ -69,7 +69,7 @@ export const buildAddLiquidity = (
     | AddLiquidityTradeV3
     | null,
   isV2?: boolean,
-  type?: number, // classic: 0, stable: 1, concentrated: 2, weighted: 3
+  type?: number, // varible: 0, stable: 1, concentrated: 2, weighted: 3
   isStable?: boolean,
 ): StepProps | {} => {
   let action: Function = addLiquidity;
@@ -91,12 +91,12 @@ export const buildAddLiquidity = (
     }
   }
 
-  if (type === 3) {
-    action = addWeightedLiquidity;
-    if (liquidityTrade) {
-      params = Object.values(liquidityTrade);
-    }
-  }
+  // if (type === 3) {
+  //   action = addWeightedLiquidity;
+  //   if (liquidityTrade) {
+  //     params = Object.values(liquidityTrade);
+  //   }
+  // }
 
   return {
     number,
