@@ -342,6 +342,11 @@ export const Farm = ({
     });
 
     infoPanelItems.push({
+      label: 'Total Reward Value',
+      value: `$${_farm.rewardsUSDValue.toFixed(3)}`,
+    });
+
+    infoPanelItems.push({
       label: 'Staked LP Positions',
       value: concentratedStakedPositions.length,
     });

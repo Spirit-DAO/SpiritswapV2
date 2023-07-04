@@ -20,6 +20,8 @@ import { useTokenBalance } from 'app/hooks/useTokenBalance';
 import { ConcentratedPositionsPanel } from '../ConcentratedPositionsPanel';
 import { IConcentratedFarm, IWalletV3 } from 'app/interfaces/Farm';
 import { DataContext } from 'contexts/DataContext';
+import { getV3Balances } from 'utils/data';
+import { setUserV3LiquidityWallet } from 'store/user';
 
 const FarmTransaction = ({
   farm,
@@ -170,12 +172,17 @@ const FarmTransaction = ({
 
       const { provider } = await connect({});
 
-      setTimeout(() => {
-        userDataWorker.postMessage({
-          userAddress: account,
-          type: 'getV3Liquidity',
-          provider: JSON.stringify(provider, getCircularReplacer()),
-        });
+      const updater = setInterval(async () => {
+        const { v3PositionsArray } = await getV3Balances(account, provider);
+        const position = v3PositionsArray?.find(
+          position =>
+            position.tokenId.toString() === selectedConcentratedPosition,
+        );
+
+        if (!position?.onFarmingCenter) {
+          clearInterval(updater);
+          dispatch(setUserV3LiquidityWallet(v3PositionsArray));
+        }
       }, 5_000);
     } catch (error) {
       console.error(error);
@@ -251,12 +258,17 @@ const FarmTransaction = ({
 
       const { provider } = await connect({});
 
-      setTimeout(() => {
-        userDataWorker.postMessage({
-          userAddress: account,
-          type: 'getV3Liquidity',
-          provider: JSON.stringify(provider, getCircularReplacer()),
-        });
+      const updater = setInterval(async () => {
+        const { v3PositionsArray } = await getV3Balances(account, provider);
+        const position = v3PositionsArray?.find(
+          position =>
+            position.tokenId.toString() === selectedConcentratedPosition,
+        );
+
+        if (position?.eternalFarming) {
+          clearInterval(updater);
+          dispatch(setUserV3LiquidityWallet(v3PositionsArray));
+        }
       }, 5_000);
     } catch (error) {
       console.error(error);
