@@ -51,7 +51,7 @@ const VotingPanel = ({
   };
 
   useEffect(() => {
-    if (farmType.value === 'Combine') {
+    if (farmType.value === 'Traditional') {
       // Combine farms
       const filterInactivesFarms = combineFarms.farms.filter(
         farm => !inactiveInspirit.includes(farm.name.toUpperCase()),

@@ -218,7 +218,6 @@ export const Farms = () => {
   };
 
   useEffect(() => {
-    // if (!address && farmMasterData && farmMasterData.length > 0) {
     if (!address && farmMasterData && farmMasterData.length > 0) {
       let result: any = farmMasterData;
 

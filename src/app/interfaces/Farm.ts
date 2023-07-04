@@ -207,7 +207,8 @@ export interface GaugeFarm {
 
 export enum FarmType {
   ALL,
-  TRADITIONAL,
+  VARIABLE,
+  STABLE,
   CONCENTRATED,
 }
 

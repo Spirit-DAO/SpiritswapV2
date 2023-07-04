@@ -44,7 +44,7 @@ function Voting() {
   const [selectedFarmType, setSelectedFarmType] = useState<{
     index: number;
     value: string;
-  }>({ index: 0, value: 'Combine' });
+  }>({ index: 0, value: 'Traditional' });
 
   // Version id 1 for combine farms
   const VERSION_ID = 1;
@@ -125,7 +125,7 @@ function Voting() {
         <Flex flexDir="column" marginY="spacing06">
           <Heading level={5}>{t(`${translationPath}.farmType.label`)}</Heading>
           <Select
-            labels={['Combine']}
+            labels={['Traditional']}
             onChange={onChangeFarmType}
             selected={selectedFarmType.index}
           />

@@ -59,9 +59,7 @@ const TokenTableV3 = ({
     setSearchValues(query);
   };
 
-  const { boostedVariable, boostedStable, boostedCombine } = useAppSelector(
-    selectSaturatedGauges,
-  );
+  const { boostedCombine } = useAppSelector(selectSaturatedGauges);
 
   const toggleMobileTableFilters = () => {
     setShowMobileTableFilters(!showMobileTableFilters);
