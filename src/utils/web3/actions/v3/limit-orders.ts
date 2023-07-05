@@ -7,10 +7,11 @@ export const v3LimitOrderManagerContract = async (
   _connector = getProvider(),
   _chainId = CHAIN_ID,
 ) => {
+  const connector = await _connector;
   const limitOrderManagerInstance = await Contract(
     addresses.v3LimitOrderManager[CHAIN_ID],
     'v3LimitOrderManager',
-    _connector,
+    connector,
     _chainId,
   );
 

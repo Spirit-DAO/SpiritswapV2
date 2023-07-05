@@ -3,9 +3,9 @@ import { useAppDispatch } from 'store/hooks';
 import { setAddress, resetUserStatistics } from 'store/user';
 import safeExecute from 'utils/safeExecute';
 import { connect } from 'utils/web3';
-import { ConnectorNames, CHAIN_ID, REACT_APP_NODE_1 } from 'constants/index';
+import { ConnectorNames, NETWORK } from 'constants/index';
 import { setupNetwork } from 'utils/web3';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 declare global {
   interface Window {
@@ -14,35 +14,39 @@ declare global {
   }
 }
 
-export const walletConnectProvider = new WalletConnectProvider({
-  rpc: { [CHAIN_ID]: `${REACT_APP_NODE_1}` },
-  chainId: CHAIN_ID,
-});
-
 export const CONNECTIONS = () => {
   if (self.window) {
-    return [window.ethereum, walletConnectProvider];
+    return [window.ethereum, 'walletconnect'];
   } else {
     return [];
   }
 };
 
-export const providersByConnectorName = connector => {
+export const providersByConnectorName = async connector => {
   if (!self.window) {
     return null;
   }
 
   if (connector === ConnectorNames.WalletConnect) {
+    const walletConnectProvider = await EthereumProvider.init({
+      projectId: 'dc6366545a484b88d4aa04399932a3a9',
+      chains: [250],
+      rpcMap: {
+        250: NETWORK[250].rpc[0],
+      },
+      showQrModal: true,
+    });
     return walletConnectProvider;
   } else {
     return window.ethereum;
   }
 };
 
-export const getProvider = () => {
+export const getProvider = async () => {
   const connector =
     localStorage.getItem('CONNECTOR') || ConnectorNames.Injected;
-  return providersByConnectorName(connector);
+
+  return await providersByConnectorName(connector);
 };
 
 const useLogin = () => {
@@ -52,19 +56,20 @@ const useLogin = () => {
 
   const updateLogin = useCallback(
     async (_signer, _login = false) => {
-      if (_login) {
-        setupNetwork();
-        const address = await _signer.getAddress();
-        dispatch(setAddress(address));
-        setLoggedIn(true);
-      } else {
-        if (walletConnectProvider.connected) {
-          walletConnectProvider.disconnect();
+      try {
+        if (_login) {
+          setupNetwork();
+          const address = await _signer.getAddress();
+          dispatch(setAddress(address));
+          setLoggedIn(true);
+        } else {
+          dispatch(setAddress(null));
+          setLoggedIn(false);
+          localStorage.setItem('CONNECTOR', '');
+          dispatch(resetUserStatistics());
         }
-        dispatch(setAddress(null));
-        setLoggedIn(false);
-        localStorage.setItem('CONNECTOR', '');
-        dispatch(resetUserStatistics());
+      } catch (error) {
+        console.log(error);
       }
     },
     [dispatch, setLoggedIn],
@@ -83,6 +88,15 @@ const useLogin = () => {
           localConnector = window.clover;
         }
         if (_connector === ConnectorNames.WalletConnect) {
+          const walletConnectProvider = await EthereumProvider.init({
+            projectId: 'dc6366545a484b88d4aa04399932a3a9',
+            chains: [250],
+            rpcMap: {
+              250: NETWORK[250].rpc[0],
+            },
+            showQrModal: true,
+          });
+
           localConnector = walletConnectProvider;
         }
 

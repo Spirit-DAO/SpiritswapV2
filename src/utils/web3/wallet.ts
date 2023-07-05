@@ -8,7 +8,7 @@ const { error } = console;
 // Adds a network on your wallet or switches to that network if the wallet is on a different network
 // Our default network is going to be Fantom
 export const setupNetwork = async (chainId = CHAIN_ID) => {
-  const provider = getProvider();
+  const provider = await getProvider();
   const chain = NETWORK[chainId];
 
   if (provider) {
@@ -104,7 +104,7 @@ export const eventNames = {
 };
 
 export const listenForWalletEvents = async (_callback: Function) => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const events = eventNames[_connector] || eventNames.default;
   const walletLocation = _connector;
 
@@ -122,7 +122,7 @@ export const listenForWalletEvents = async (_callback: Function) => {
 };
 
 export const removeWalletListeners = async (_callback = () => null) => {
-  const _connector = getProvider();
+  const _connector = await getProvider();
   const events = eventNames[_connector] || eventNames.default;
   const walletLocation = _connector;
 

@@ -4,7 +4,7 @@ import { Button, Flex, List, Skeleton } from '@chakra-ui/react';
 import { FarmTransactionType } from 'app/pages/Farms/enums/farmTransaction';
 import { StyledHeading, StylesContainer } from './styles';
 import UseIsLoading from 'app/hooks/UseIsLoading';
-import { checkAddress, getCircularReplacer } from 'app/utils';
+import { checkAddress } from 'app/utils';
 import { concentratedFarmStatus, farmStatus } from 'utils/web3/actions/farm';
 import { TokenAmountPanel } from 'app/components/NewTokenAmountPanel';
 import { NON_ZERO, NOT_ENOUGH_FUNDS } from 'constants/errors';
@@ -19,7 +19,6 @@ import { Props } from './FarmTransaction.d';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
 import { ConcentratedPositionsPanel } from '../ConcentratedPositionsPanel';
 import { IConcentratedFarm, IWalletV3 } from 'app/interfaces/Farm';
-import { DataContext } from 'contexts/DataContext';
 import { getV3Balances } from 'utils/data';
 import { setUserV3LiquidityWallet } from 'store/user';
 
@@ -52,8 +51,6 @@ const FarmTransaction = ({
     useState<string | undefined>(selectedPosition);
 
   const dispatch = useAppDispatch();
-
-  const { userDataWorker } = useContext(DataContext);
 
   useEffect(() => {}, [account]);
 

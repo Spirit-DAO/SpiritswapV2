@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useLogin from 'app/connectors/EthersConnector/login';
+import useLogin, { getProvider } from 'app/connectors/EthersConnector/login';
 import { useAppSelector } from 'store/hooks';
 import {
   selectAddress,
@@ -39,10 +39,10 @@ const useWallets = () => {
   useEffect(() => {
     const checkConnected = async () => {
       try {
-        const provider = new ethers.providers.Web3Provider(
-          window.ethereum as any,
-        );
+        const providerName = await getProvider();
+        const provider = new ethers.providers.Web3Provider(providerName);
         const wallets = await provider.listAccounts();
+
         if (wallets.length) {
           const criminalAddress = CRIMINAL_LIST.find(address =>
             checkAddress(address, wallets[0]),
@@ -63,6 +63,7 @@ const useWallets = () => {
   }, [account]);
 
   const portfolioAmountValue = useAppSelector(selectPortfolioValue);
+
   return {
     account: isConnected ? account : '',
     wallet,
