@@ -75,46 +75,38 @@ const TokenTableV3 = ({
   useEffect(() => {
     const getBoostedFarms = async () => {
       const userBoostedCombine = getUserFarms(boostedCombine, stakedFarms);
-
-      console.log('userBoostedCombine', userBoostedCombine);
-      console.log(boostedCombine, 'boostedCombine');
-
       const combineFarmsData = farms.filter(farm => farm.type === 'combine');
 
       let stableFarms: any = [];
       let variableFarms: any = [];
+      let userStableFarms: any = [];
+      let userVariableFarms: any = [];
 
-      boostedCombine.forEach(farm => {
+      boostedCombine?.forEach(farm => {
         const { fulldata } = farm;
         const farmData = combineFarmsData.find(
           combineFarm => combineFarm.gaugeAddress === fulldata.gaugeAddress,
         );
-        if (farmData.stable) {
-          stableFarms.push(farm);
-        } else {
-          variableFarms.push(farm);
-        }
+
+        if (farmData.stable) stableFarms.push(farm);
+        else variableFarms.push(farm);
       });
 
-      boostedCombine.forEach(farm => {
+      userBoostedCombine?.forEach(farm => {
         const { fulldata } = farm;
         const farmData = combineFarmsData.find(
-          combineFarm => combineFarm.gaugeAddress === fulldata.gaugeAddress,
+          combineFarm => combineFarm.lpAddress === fulldata.farmAddress,
         );
-        if (farmData.stable) {
-          stableFarms.push(farm);
-        } else {
-          variableFarms.push(farm);
-        }
-      });
 
-      console.log(userBoostedCombine, 'userBoostedCombine');
+        if (farmData.stable) userStableFarms.push(farm);
+        else userVariableFarms.push(farm);
+      });
 
       onUpdateFarm({
         variableCombine: sortFn(variableFarms, 'yourVote', 'des'),
-        userVariableCombine: sortFn(userBoostedCombine, 'yourVote', 'des'),
+        userVariableCombine: sortFn(userVariableFarms, 'yourVote', 'des'),
         stableCombine: sortFn(stableFarms, 'yourVote', 'des'),
-        userStableCombine: sortFn(userBoostedCombine, 'yourVote', 'des'),
+        userStableCombine: sortFn(userStableFarms, 'yourVote', 'des'),
       });
     };
     getBoostedFarms();

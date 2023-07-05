@@ -52,7 +52,14 @@ const VotingPanel = ({
     stableCombine,
     userStableCombine,
   }) => {
-    // setCombineFarms({ farms: combine, userFarms: userCombine });
+    setVariableCombineFarms({
+      farms: variableCombine,
+      userFarms: userVariableCombine,
+    });
+    setStableCombineFarms({
+      farms: stableCombine,
+      userFarms: userStableCombine,
+    });
   };
 
   const handleSort = (by, direction) => {
@@ -62,8 +69,8 @@ const VotingPanel = ({
   };
 
   useEffect(() => {
+    // Combine farms
     if (farmType.value === 'Variable') {
-      // Combine farms
       const filterInactivesFarms = variableCombineFarms.farms.filter(
         farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
       );
@@ -103,6 +110,7 @@ const VotingPanel = ({
     variableCombineFarms.userFarms,
     stableCombineFarms.farms,
     stableCombineFarms.userFarms,
+    variableCombineFarms,
   ]);
 
   const farmsSize = selectedFarms?.length;
