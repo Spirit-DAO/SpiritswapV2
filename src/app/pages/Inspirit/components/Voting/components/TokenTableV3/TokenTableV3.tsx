@@ -27,6 +27,7 @@ import { selectSaturatedGauges } from 'store/general/selectors';
 import useMobile from 'utils/isMobile';
 import { MobileTable } from '../MobileTable';
 import useWallets from 'app/hooks/useWallets';
+import { selectFarmMasterData } from 'store/farms/selectors';
 
 const TokenTableV3 = ({
   errorMessage,
@@ -50,6 +51,7 @@ const TokenTableV3 = ({
   const translationPath = 'inSpirit.voting';
   const stakedFarms = useAppSelector(selectFarmsStaked);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
+  const farms = useAppSelector(selectFarmMasterData);
   const [searchValues, setSearchValues] = useState('');
   const [showMobileTableFilters, setShowMobileTableFilters] =
     useState<boolean>(false);
@@ -74,9 +76,45 @@ const TokenTableV3 = ({
     const getBoostedFarms = async () => {
       const userBoostedCombine = getUserFarms(boostedCombine, stakedFarms);
 
+      console.log('userBoostedCombine', userBoostedCombine);
+      console.log(boostedCombine, 'boostedCombine');
+
+      const combineFarmsData = farms.filter(farm => farm.type === 'combine');
+
+      let stableFarms: any = [];
+      let variableFarms: any = [];
+
+      boostedCombine.forEach(farm => {
+        const { fulldata } = farm;
+        const farmData = combineFarmsData.find(
+          combineFarm => combineFarm.gaugeAddress === fulldata.gaugeAddress,
+        );
+        if (farmData.stable) {
+          stableFarms.push(farm);
+        } else {
+          variableFarms.push(farm);
+        }
+      });
+
+      boostedCombine.forEach(farm => {
+        const { fulldata } = farm;
+        const farmData = combineFarmsData.find(
+          combineFarm => combineFarm.gaugeAddress === fulldata.gaugeAddress,
+        );
+        if (farmData.stable) {
+          stableFarms.push(farm);
+        } else {
+          variableFarms.push(farm);
+        }
+      });
+
+      console.log(userBoostedCombine, 'userBoostedCombine');
+
       onUpdateFarm({
-        combine: sortFn(boostedCombine, 'yourVote', 'des'),
-        userCombine: sortFn(userBoostedCombine, 'yourVote', 'des'),
+        variableCombine: sortFn(variableFarms, 'yourVote', 'des'),
+        userVariableCombine: sortFn(userBoostedCombine, 'yourVote', 'des'),
+        stableCombine: sortFn(stableFarms, 'yourVote', 'des'),
+        userStableCombine: sortFn(userBoostedCombine, 'yourVote', 'des'),
       });
     };
     getBoostedFarms();
