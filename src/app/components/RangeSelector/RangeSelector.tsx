@@ -1,10 +1,7 @@
 import { Bound } from 'store/v3/mint/actions';
-
 import { RangeSelectorPart } from '../RangeSelectorPart';
-
 import type { Props } from './RangeSelector.d';
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Grid, GridItem, Skeleton } from '@chakra-ui/react';
 import { Heading } from '../Typography';
 import { StyledCurrentPrice, StyledCurrentPriceWrapper } from './styled';
@@ -26,8 +23,6 @@ export default function RangeSelector({
   isAfterPrice,
   mintInfo,
 }: Props) {
-  const { t } = useTranslation();
-
   const tokenA = (currencyA ?? undefined)?.wrapped;
   const tokenB = (currencyB ?? undefined)?.wrapped;
 

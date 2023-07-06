@@ -64,12 +64,17 @@ onmessage = ({ data: { type, isLoggedIn, network = CHAIN_ID } }) => {
         break;
       case 'getBoostedGauges':
         if (isLoggedIn) break;
-        saturateGauges(gaugesPromise, BASE_TOKEN_ADDRESS).then(data => {
-          self.postMessage({
-            type: 'setSaturatedGauges',
-            payload: data,
+        saturateGauges(gaugesPromise, BASE_TOKEN_ADDRESS)
+          .then(data => {
+            self.postMessage({
+              type: 'setSaturatedGauges',
+              payload: data,
+            });
+          })
+          .catch(err => {
+            console.error(err);
           });
-        });
+
         break;
     }
 

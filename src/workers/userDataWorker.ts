@@ -173,13 +173,17 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
     };
 
     const inSpiritData = async () => {
-      saturateGauges(gaugesPromise, userWalletAddress).then(data => {
-        self.postMessage({
-          type: 'setSaturatedGauges',
-          payload: data,
-          userWalletAddress,
+      saturateGauges(gaugesPromise, userWalletAddress)
+        .then(data => {
+          self.postMessage({
+            type: 'setSaturatedGauges',
+            payload: data,
+            userWalletAddress,
+          });
+        })
+        .catch(e => {
+          console.log('Error saturating gauges', e);
         });
-      });
 
       const [inspiritUserStatistics, boostedFarmVotes] = await Promise.all([
         getUserInspiritBalances(userWalletAddress),

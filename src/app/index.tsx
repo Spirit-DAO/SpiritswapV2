@@ -42,10 +42,8 @@ export function App() {
       <GlobalStyleProxy />
 
       <Layout>
-        <>
-          <Layers />
-          <SiteRouting />
-        </>
+        <Layers />
+        <SiteRouting />
       </Layout>
     </RootPathContext.Provider>
   );
