@@ -119,14 +119,6 @@ export const FarmController = ({
           _farm.endTime,
           _value,
         );
-
-        const { provider } = await connect({});
-
-        userDataWorker.postMessage({
-          userAddress: account,
-          type: 'getV3Liquidity',
-          provider: JSON.stringify(provider, getCircularReplacer()),
-        });
       } else if (farm.gaugeAddress) {
         tx = await stakeGaugePoolToken(farm?.gaugeAddress, _value);
       } else {

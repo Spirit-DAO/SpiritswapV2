@@ -311,50 +311,43 @@ export const Farm = ({
   const hasConcenctratedRewards = concentratedEarned || concentratedBonusEarned;
 
   if (farm.concentrated) {
-    // TODO
-
     const _farm = farm as IConcentratedFarm;
 
-    const rewardRate = formatUnits(
-      _farm.rewardRate,
+    const reward = formatUnits(
+      _farm.reward,
       Number(_farm.rewardToken.decimals),
     );
-    const bonusRewardRate = formatUnits(
-      _farm.bonusRewardRate,
+    const bonusReward = formatUnits(
+      _farm.bonusReward,
       Number(_farm.bonusRewardToken.decimals),
     );
 
-    const dailyRewardRate = Math.round(+rewardRate * 86_400);
-    const dailyBonusRewardRate = Math.round(+bonusRewardRate * 86_400);
-
-    if (_farm.rewardToken.id === _farm.bonusRewardToken.id) {
+    if (+reward) {
       infoPanelItems.push({
-        label: `${_farm.rewardToken.symbol} per day`,
-        value: Number(dailyRewardRate) + Number(dailyBonusRewardRate),
+        label: `${_farm.rewardToken.symbol} Reward Pool`,
+        value: compactifyValue(reward),
       });
-    } else {
-      if (dailyRewardRate) {
-        infoPanelItems.push({
-          label: `${_farm.rewardToken.symbol} per day`,
-          value: dailyRewardRate,
-        });
-      }
+    }
 
-      if (dailyBonusRewardRate) {
-        infoPanelItems.push({
-          label: `${_farm.bonusRewardToken.symbol} per day`,
-          value: dailyBonusRewardRate,
-        });
-      }
+    if (+bonusReward) {
+      infoPanelItems.push({
+        label: `${_farm.bonusRewardToken.symbol} Bonus Reward Pool`,
+        value: compactifyValue(bonusReward),
+      });
     }
 
     infoPanelItems.push({
-      label: 'TVL',
-      value: `$${_farm.tvl * ftmPrice}`,
+      label: 'Total Liquidity',
+      value: `$${(_farm.tvl * ftmPrice).toFixed(3)}`,
     });
 
     infoPanelItems.push({
-      label: 'Your Staked Positions',
+      label: 'Total Reward Value',
+      value: `$${_farm.rewardsUSDValue.toFixed(3)}`,
+    });
+
+    infoPanelItems.push({
+      label: 'Staked LP Positions',
       value: concentratedStakedPositions.length,
     });
   }
