@@ -176,6 +176,8 @@ export interface IConcentratedFarm extends Omit<IFarm, 'rewardToken'> {
   rewardRate: string;
   bonusRewardRate: string;
   wallet?: IWalletV3;
+  tvl: number;
+  rewardsUSDValue: number;
 }
 
 export interface IFarmTransaction {

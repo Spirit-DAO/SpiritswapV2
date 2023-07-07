@@ -32,7 +32,7 @@ export default function ConcentratedPositionsPanel({
       if (type === FarmTransactionType.DEPOSIT) {
         return (
           Number(position.rangeLength) >= farm.rangeLength &&
-          !position.onFarmingCenter &&
+          !position.eternalFarming &&
           position.eternalAvailable === farm.id &&
           !position.isRemoved
         );

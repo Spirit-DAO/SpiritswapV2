@@ -88,6 +88,8 @@ const ConcentratedPanel = ({
     dispatch(setInitialTokenPrice({ typedValue: '' }));
     dispatch(setInitialUSDPrices({ field: Field.CURRENCY_A, typedValue: '' }));
     dispatch(setInitialUSDPrices({ field: Field.CURRENCY_B, typedValue: '' }));
+    onFieldAInput('');
+    onFieldBInput('');
     onLeftRangeInput('');
     onRightRangeInput('');
     onStartPriceInput('');

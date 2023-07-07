@@ -12,7 +12,7 @@ import { farms, inactiveFarms } from 'constants/farms';
 import Contracts from 'constants/contracts';
 import { IFarm } from 'app/interfaces/Farm';
 import { Multicall, Call, Contract, MultiCallArray } from 'utils/web3';
-import { request, getLiquidityPoolsDataV2 } from './covalent';
+import { request, getLiquidityPoolsDataV2, getTokenUsdPrice } from './covalent';
 import { stableSobPools } from 'constants/sobpools';
 import { TokenAmount } from 'app/interfaces/General';
 import { checkAddress, GetVerifiedTokenFromAddres } from 'app/utils/methods';
@@ -776,50 +776,74 @@ export const loadConcentratedFarmsList = async () => {
     'https://api.algebra.finance/api/APR/eternalFarmings/?network=fantom-spirit',
   ).then(v => v.json());
 
-  return eternalFarmings.map((farming, index) => {
-    const rewardRate = formatUnits(
-      new BigNumber(farming.rewardRate).toString(),
-      rewardTokens[index].decimals,
-    );
-    const bonusRewardRate = formatUnits(
-      new BigNumber(farming.bonusRewardRate).toString(),
-      bonusRewardTokens[index].decimals,
-    );
+  return await Promise.all(
+    eternalFarmings.map(async (farming, index) => {
+      const rewardRate = formatUnits(
+        new BigNumber(farming.rewardRate).toString(),
+        rewardTokens[index].decimals,
+      );
+      const bonusRewardRate = formatUnits(
+        new BigNumber(farming.bonusRewardRate).toString(),
+        bonusRewardTokens[index].decimals,
+      );
 
-    const dailyRewardRate = Math.round(+rewardRate * 86_400);
-    const dailyBonusRewardRate = Math.round(+bonusRewardRate * 86_400);
+      const dailyRewardRate = Math.round(+rewardRate * 86_400);
+      const dailyBonusRewardRate = Math.round(+bonusRewardRate * 86_400);
 
-    const yourApr = aprs && aprs[farming.id] ? aprs[farming.id] : 0;
+      const yourApr = aprs && aprs[farming.id] ? aprs[farming.id] : 0;
 
-    return {
-      title:
-        `${pools[index]?.token0.symbol} + ${pools[index]?.token1.symbol}`.replace(
-          'WFTM',
-          'FTM',
-        ),
-      tokens: [pools[index]?.token0.symbol, pools[index]?.token1.symbol],
-      label: 'concentrated',
-      totalLiquidity: 0,
-      aprLabel: 'APR',
-      stable: false,
-      boosted: false,
-      concentrated: true,
-      type: 'concentrated',
-      ...farming,
-      rewardToken: rewardTokens[index],
-      bonusRewardToken: bonusRewardTokens[index],
-      dailyRewardRate,
-      dailyBonusRewardRate,
-      pool: pools[index],
-      valid: true,
-      lpAddress: pools[index]?.id,
-      aprRange: ['0', '1'],
-      rangeLength: farming.minRangeLength,
-      apr: '2',
-      yourApr: yourApr < 0 ? 0 : yourApr,
-      tvl: tvls && tvls[farming.id] ? Math.round(tvls[farming.id]) : 0,
-    };
-  });
+      let rewardAUSDValue = 0,
+        rewardBUSDValue = 0;
+
+      if (farming.rewardRate) {
+        const rewardPrice = await getTokenUsdPrice(farming.rewardToken);
+
+        rewardAUSDValue =
+          +formatUnits(farming.reward, rewardTokens[index].decimals) *
+          rewardPrice;
+      }
+
+      if (farming.bonusRewardRate) {
+        const bonusRewardPrice = await getTokenUsdPrice(
+          farming.bonusRewardToken,
+        );
+
+        rewardBUSDValue =
+          +formatUnits(farming.bonusReward, bonusRewardTokens[index].decimals) *
+          bonusRewardPrice;
+      }
+
+      return {
+        title:
+          `${pools[index]?.token0.symbol} + ${pools[index]?.token1.symbol}`.replace(
+            'WFTM',
+            'FTM',
+          ),
+        tokens: [pools[index]?.token0.symbol, pools[index]?.token1.symbol],
+        label: 'concentrated',
+        totalLiquidity: 0,
+        aprLabel: 'APR',
+        stable: false,
+        boosted: false,
+        concentrated: true,
+        type: 'concentrated',
+        ...farming,
+        rewardToken: rewardTokens[index],
+        bonusRewardToken: bonusRewardTokens[index],
+        dailyRewardRate,
+        dailyBonusRewardRate,
+        pool: pools[index],
+        valid: true,
+        lpAddress: pools[index]?.id,
+        aprRange: ['0', '1'],
+        rangeLength: farming.minRangeLength,
+        apr: '2',
+        yourApr: yourApr < 0 ? 0 : yourApr,
+        tvl: tvls && tvls[farming.id] ? Math.round(tvls[farming.id]) : 0,
+        rewardsUSDValue: rewardAUSDValue + rewardBUSDValue,
+      };
+    }),
+  );
 };
 
 // TODO: [DEV2-619] analyze from where to get soob pooled data
