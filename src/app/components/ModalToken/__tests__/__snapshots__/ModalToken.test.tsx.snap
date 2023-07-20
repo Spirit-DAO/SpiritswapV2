@@ -884,7 +884,7 @@ Object {
                         class="css-k008qs"
                       >
                         <img
-                          alt="WBTC logo"
+                          alt="MULTIWBTC logo"
                           class="chakra-image__placeholder css-dex8nh"
                           fallbackstrategy="onError"
                           src="/images/tokens/default.png"
@@ -909,7 +909,7 @@ Object {
                           <p
                             class="chakra-text css-ie7mb8"
                           >
-                            WBTC
+                            multiWBTC
                           </p>
                         </div>
                       </div>
@@ -935,7 +935,7 @@ Object {
                         class="css-k008qs"
                       >
                         <img
-                          alt="WETH logo"
+                          alt="MULTIWETH logo"
                           class="chakra-image__placeholder css-dex8nh"
                           fallbackstrategy="onError"
                           src="/images/tokens/default.png"
@@ -960,7 +960,7 @@ Object {
                           <p
                             class="chakra-text css-ie7mb8"
                           >
-                            WETH
+                            multiWETH
                           </p>
                         </div>
                       </div>
@@ -1943,7 +1943,7 @@ Object {
                       class="css-k008qs"
                     >
                       <img
-                        alt="WBTC logo"
+                        alt="MULTIWBTC logo"
                         class="chakra-image__placeholder css-dex8nh"
                         fallbackstrategy="onError"
                         src="/images/tokens/default.png"
@@ -1968,7 +1968,7 @@ Object {
                         <p
                           class="chakra-text css-ie7mb8"
                         >
-                          WBTC
+                          multiWBTC
                         </p>
                       </div>
                     </div>
@@ -1994,7 +1994,7 @@ Object {
                       class="css-k008qs"
                     >
                       <img
-                        alt="WETH logo"
+                        alt="MULTIWETH logo"
                         class="chakra-image__placeholder css-dex8nh"
                         fallbackstrategy="onError"
                         src="/images/tokens/default.png"
@@ -2019,7 +2019,7 @@ Object {
                         <p
                           class="chakra-text css-ie7mb8"
                         >
-                          WETH
+                          multiWETH
                         </p>
                       </div>
                     </div>
