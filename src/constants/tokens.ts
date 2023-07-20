@@ -25,8 +25,8 @@ export const FRAX = {
 };
 
 export const USDC = {
-  name: 'USD Coin',
-  symbol: 'USDC',
+  name: 'multiUSDC',
+  symbol: 'multiUSDC',
   address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
   chainId: 250,
   decimals: 6,
@@ -40,17 +40,17 @@ export const FUSD = {
   decimals: 18,
 };
 
-export const FUSDT = {
-  name: 'Frapped USDT',
-  symbol: 'fUSDT',
+export const USDT = {
+  name: 'multiUSDT',
+  symbol: 'multiUSDT',
   address: '0x049d68029688eabf473097a2fc38ef61633a3c7a',
   chainId: 250,
   decimals: 6,
 };
 
 export const DAI = {
-  name: 'Dai Stablecoin',
-  symbol: 'DAI',
+  name: 'multiDAI',
+  symbol: 'multiDAI',
   address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
   chainId: 250,
   decimals: 18,
@@ -75,14 +75,6 @@ export const USDN = {
 export const USDK = {
   name: 'USDK',
   symbol: 'USDK',
-  address: '0x0000000000000000000000000000000000000000',
-  chainId: 250,
-  decimals: 18,
-};
-
-export const USDT = {
-  name: 'USDT',
-  symbol: 'USDT',
   address: '0x0000000000000000000000000000000000000000',
   chainId: 250,
   decimals: 18,
@@ -184,18 +176,96 @@ export const rainSPIRIT = {
   decimals: 18,
 };
 
+const layerZeroTokens = [
+  {
+    name: 'lzUSDC',
+    symbol: 'lzUSDC',
+    address: '0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf',
+    chainId: 250,
+    decimals: 6,
+  },
+  {
+    name: 'lzWETH',
+    symbol: 'lzWETH',
+    decimals: 18,
+    address: '0x695921034f0387eAc4e11620EE91b1b15A6A09fE',
+    chainId: 250,
+  },
+  {
+    name: 'lzDAI',
+    symbol: 'lzDAI',
+    address: '0x91a40C733c97a6e1BF876EaF9ed8c08102eB491f',
+    chainId: 250,
+    decimals: 18,
+  },
+  {
+    name: 'lzUSDT',
+    symbol: 'lzUSDT',
+    address: '0xcc1b99dDAc1a33c201a742A1851662E87BC7f22C',
+    chainId: 250,
+    decimals: 6,
+  },
+  {
+    name: 'lzWBTC',
+    symbol: 'lzWBTC',
+    address: '0xf1648C50d2863f780c57849D812b4B7686031A3D',
+    chainId: 250,
+    decimals: 8,
+  },
+];
+
+const axelarTokens = [
+  {
+    name: 'axlUSDT',
+    symbol: 'axlUSDT',
+    address: '0xd226392C23fb3476274ED6759D4a478db3197d82',
+    chainId: 250,
+    decimals: 6,
+  },
+  {
+    name: 'axlWBTC',
+    symbol: 'axlWBTC',
+    address: '0x448d59B4302aB5d2dadf9611bED9457491926c8e',
+    chainId: 250,
+    decimals: 8,
+  },
+  {
+    name: 'axlWETH',
+    symbol: 'axlWETH',
+    address: '0xfe7eDa5F2c56160d406869A8aA4B2F365d544C7B',
+    chainId: 250,
+    decimals: 18,
+  },
+  {
+    name: 'axlUSDC',
+    symbol: 'axlUSDC',
+    address: '0x1B6382DBDEa11d97f24495C9A90b7c88469134a4',
+    chainId: 250,
+    decimals: 6,
+  },
+];
+
 export const tokens: Token[] = [
   FTM,
   SPIRIT,
   WFTM,
   JEFE,
   rainSPIRIT,
+  ...layerZeroTokens,
+  ...axelarTokens,
   {
-    name: 'Wrapped BTC',
-    symbol: 'WBTC',
+    name: 'multiWBTC',
+    symbol: 'multiWBTC',
     address: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
     chainId: 250,
     decimals: 8,
+  },
+  {
+    name: 'multiWETH',
+    symbol: 'multiWETH',
+    address: '0x74b23882a30290451A17c44f4F05243b6b58C76d',
+    chainId: 250,
+    decimals: 18,
   },
   {
     name: 'Rave Names',
@@ -204,13 +274,7 @@ export const tokens: Token[] = [
     chainId: 250,
     decimals: 18,
   },
-  {
-    name: 'Wrapped ETH',
-    symbol: 'WETH',
-    address: '0x74b23882a30290451A17c44f4F05243b6b58C76d',
-    chainId: 250,
-    decimals: 18,
-  },
+
   {
     name: 'Curve DAO',
     symbol: 'CRV',
@@ -681,14 +745,14 @@ export const tokens: Token[] = [
   FRAX,
   USDC,
   FUSD,
-  FUSDT,
+  USDT,
   DAI,
   CRE8R,
 ];
 
 // Common tokens lists
-export const FIRST_TOKEN_AMOUNT_PANEL = [FTM, USDC, FUSDT, MIM];
-export const SECOND_TOKEN_AMOUNT_PANEL = [SPIRIT, FTM, USDC, FUSDT];
-export const LIQUIDITY_TOKENS = [SPIRIT, FTM, USDC, FUSDT];
+export const FIRST_TOKEN_AMOUNT_PANEL = [FTM, USDC, USDT, MIM];
+export const SECOND_TOKEN_AMOUNT_PANEL = [SPIRIT, FTM, USDC, USDT];
+export const LIQUIDITY_TOKENS = [SPIRIT, FTM, USDC, USDT];
 
 export default tokens;
