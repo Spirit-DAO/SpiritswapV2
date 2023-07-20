@@ -26,7 +26,7 @@ export const FRAX = {
 
 export const USDC = {
   name: 'multiUSDC',
-  symbol: 'USDC',
+  symbol: 'multiUSDC',
   address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
   chainId: 250,
   decimals: 6,
@@ -40,9 +40,9 @@ export const FUSD = {
   decimals: 18,
 };
 
-export const FUSDT = {
-  name: 'multifUSDT',
-  symbol: 'fUSDT',
+export const USDT = {
+  name: 'multiUSDT',
+  symbol: 'multiUSDT',
   address: '0x049d68029688eabf473097a2fc38ef61633a3c7a',
   chainId: 250,
   decimals: 6,
@@ -50,7 +50,7 @@ export const FUSDT = {
 
 export const DAI = {
   name: 'multiDAI',
-  symbol: 'DAI',
+  symbol: 'multiDAI',
   address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
   chainId: 250,
   decimals: 18,
@@ -75,14 +75,6 @@ export const USDN = {
 export const USDK = {
   name: 'USDK',
   symbol: 'USDK',
-  address: '0x0000000000000000000000000000000000000000',
-  chainId: 250,
-  decimals: 18,
-};
-
-export const USDT = {
-  name: 'multiUSDT',
-  symbol: 'USDT',
   address: '0x0000000000000000000000000000000000000000',
   chainId: 250,
   decimals: 18,
@@ -263,14 +255,14 @@ export const tokens: Token[] = [
   ...axelarTokens,
   {
     name: 'multiWBTC',
-    symbol: 'WBTC',
+    symbol: 'multiWBTC',
     address: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
     chainId: 250,
     decimals: 8,
   },
   {
     name: 'multiWETH',
-    symbol: 'WETH',
+    symbol: 'multiWETH',
     address: '0x74b23882a30290451A17c44f4F05243b6b58C76d',
     chainId: 250,
     decimals: 18,
@@ -753,14 +745,14 @@ export const tokens: Token[] = [
   FRAX,
   USDC,
   FUSD,
-  FUSDT,
+  USDT,
   DAI,
   CRE8R,
 ];
 
 // Common tokens lists
-export const FIRST_TOKEN_AMOUNT_PANEL = [FTM, USDC, FUSDT, MIM];
-export const SECOND_TOKEN_AMOUNT_PANEL = [SPIRIT, FTM, USDC, FUSDT];
-export const LIQUIDITY_TOKENS = [SPIRIT, FTM, USDC, FUSDT];
+export const FIRST_TOKEN_AMOUNT_PANEL = [FTM, USDC, USDT, MIM];
+export const SECOND_TOKEN_AMOUNT_PANEL = [SPIRIT, FTM, USDC, USDT];
+export const LIQUIDITY_TOKENS = [SPIRIT, FTM, USDC, USDT];
 
 export default tokens;
