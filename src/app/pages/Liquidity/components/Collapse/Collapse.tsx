@@ -24,8 +24,6 @@ import { weightedpools } from 'constants/weightedpools';
 import { stableSobPools } from 'constants/sobpools';
 import { useTokenBalance } from 'app/hooks/useTokenBalance';
 import { CHAIN_ID } from 'constants/index';
-import { useEffect, useState } from 'react';
-import { getPooledData } from 'utils/web3/actions/liquidity';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
 import { useSelector } from 'react-redux';
 import { selectLpPrices } from 'store/general/selectors';
@@ -40,7 +38,6 @@ const CollapseItem = ({
   const { t } = useTranslation();
   const translationPath = 'liquidity.common';
   const navigate = useNavigate();
-  const [poolData, setPooldata] = useState({});
   const isMobile = useMobile();
   const { tokensPrices } = useGetTokensPrices({
     tokenAddresses: [pair.address],
