@@ -56,6 +56,7 @@ export interface CovalentBalanceItem {
   quote_rate_24h?: number;
   supports_erc: string[];
   type: string;
+  response: any;
 }
 
 export interface CovalentBalanceSummary {

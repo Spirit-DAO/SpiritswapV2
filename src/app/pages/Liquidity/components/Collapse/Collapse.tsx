@@ -68,21 +68,9 @@ const CollapseItem = ({
   const amount = +tokenWithBalance?.amount ?? pair?.amount;
   const usd = rate * amount || 0;
 
-  useEffect(() => {
-    const getPoolData = async () => {
-      const pooldata = await getPooledData(pair.address, pair.amount);
-
-      if (pooldata) {
-        setPooldata(pooldata);
-      }
-    };
-    getPoolData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pair.address]);
-
   let detailData;
   if (!pair.tokensAmounts) {
-    detailData = getDetailData(pair, poolData);
+    detailData = getDetailData(pair);
   } else {
     detailData = getSobDetailData(pair);
   }
