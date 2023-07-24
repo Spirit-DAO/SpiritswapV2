@@ -160,8 +160,6 @@ export const formatReturnData = (
 
   const symbol = () => {
     if (newTokensAddressesArray.includes(contractAddress.toLowerCase())) {
-      console.log(item);
-
       return tokens.find(
         token => token.address.toLowerCase() === contractAddress.toLowerCase(),
       )?.symbol;
