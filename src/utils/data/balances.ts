@@ -5,16 +5,15 @@ import addresses from 'constants/contracts';
 import Contracts from 'constants/contracts';
 import { tokens, WFTM } from 'constants/tokens';
 import { tokens as bridgeTokens } from 'constants/bridgeTokens';
-import { getMappedTokens } from 'utils/data';
 import {
   Contract,
   formatFrom,
   getNativeTokenBalance,
+  getPooledData,
   Multicall,
   MultiCallArray,
   MulticallSingleResponse,
   MulticallV2,
-  nonfungiblePositionManagerContract,
 } from 'utils/web3';
 import { Call, balanceReturnData, tokenData } from './types';
 import safeExecute from 'utils/safeExecute';
@@ -34,12 +33,8 @@ import {
   getToken,
   getTransferredPositions,
 } from 'utils/apollo/queries-v3';
-import { algebraFarmingCenterContract } from 'utils/web3/actions/farm';
-import BigNumber from 'bignumber.js';
 import { computePoolAddress, Position, Token } from '../../v3-sdk';
 import {
-  IEternalFarmingSubgraph,
-  IFarmingPool,
   IFarmingRewardToken,
   IPoolSubgraph,
   IV3Position,
@@ -75,39 +70,42 @@ export const getUserStakedBalance = async (
     params: [_user],
   }));
 
-  const [balances, mappedTokens] = await Promise.all([
-    Multicall(balanceCalls, 'gauge', undefined, undefined, _provider),
-    getMappedTokens('symbol'),
-  ]);
-
-  const parsedBalances: MulticallSingleResponse[] = balances?.map(
-    (balance, index) => {
-      const item = _v2Pools[index];
-      const [symbolToken0, symbolToken1] = item.contract_name
-        .replace('VolatileV1 AMM - ', '')
-        .replace('StableV1 AMM - ', '')
-        .split('/')
-        .map(t => t.toLowerCase());
-
-      const token0 = mappedTokens[symbolToken0]?.address || '';
-      const token1 =
-        symbolToken1 === 'mimatic'
-          ? mappedTokens['mai']?.address
-          : mappedTokens[symbolToken1]?.address || '';
-
-      return {
-        response: null,
-        call: {} as Call,
-        balance: formatFrom(balance.response[0]),
-        address: item.contract_address || '',
-        token0,
-        token1,
-        symbol: item.contract_name || '',
-      };
-    },
+  const balances = await Multicall(
+    balanceCalls,
+    'gauge',
+    undefined,
+    undefined,
+    _provider,
   );
 
-  return parsedBalances;
+  let response: MulticallSingleResponse[] = [];
+
+  const promises = balances?.map(async (balance, index) => {
+    const pair = _v2Pools[index];
+    const pooldata = await getPooledData(
+      pair.contract_address,
+      formatFrom(balance.response[0]),
+    );
+
+    const token0 = pooldata?.token0;
+    const token1 = pooldata?.token1;
+
+    return {
+      response: pooldata,
+      call: {} as Call,
+      balance: formatFrom(balance.response[0]),
+      address: pair.contract_address || '',
+      token0,
+      token1,
+      symbol: pair.contract_name || '',
+    };
+  });
+
+  await Promise.all(promises).then(results => {
+    response = results;
+  });
+
+  return response;
 };
 
 export const getIndividualLpBalance = async (
