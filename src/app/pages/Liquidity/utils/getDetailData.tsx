@@ -1,6 +1,5 @@
 import { tokens } from 'constants/tokens';
 import { formatAmount, getRoundedSFs } from 'app/utils';
-import { tokenData } from 'utils/data';
 
 export interface LiquidityDetailProps {
   detailTitle: string;
@@ -8,15 +7,14 @@ export interface LiquidityDetailProps {
   id?: number;
 }
 
-const getDetailData = (pairData: tokenData) => {
+const getDetailData = pairData => {
   let data: LiquidityDetailProps[] = [];
 
   if (!pairData) {
     return [];
   }
 
-  const { pooled0, pooled1, token0, token1, poolShare } =
-    pairData?.originalItem?.response;
+  const { pooled0, pooled1, token0, token1, poolShare } = pairData;
 
   const pairs = [token0, token1];
 

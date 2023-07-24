@@ -70,7 +70,7 @@ const CollapseItem = ({
 
   let detailData;
   if (!pair.tokensAmounts) {
-    detailData = getDetailData(pair);
+    detailData = getDetailData(pair.originalItem?.response);
   } else {
     detailData = getSobDetailData(pair);
   }
