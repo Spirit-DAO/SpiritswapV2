@@ -58,4 +58,4 @@ export default function ImageLogo({
 }
 
 export const getTokenImageUrl = (symbol?: string) =>
-  resolveRoutePath(`images/tokens/${symbol?.toUpperCase()}.png`);
+  resolveRoutePath(`images/tokens/${symbol}.png`);

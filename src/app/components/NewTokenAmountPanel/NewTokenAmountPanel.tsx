@@ -12,7 +12,7 @@ import {
   truncateTokenValue,
   validateInput,
 } from 'app/utils';
-
+import uniqBy from 'lodash/uniqBy';
 import {
   NumberInput,
   NumberInputField,
@@ -85,7 +85,7 @@ const NewTokenAmountPanel = ({
   const handleSelect = isSelectable ? onSelect : undefined;
   const { tokens: allTokens } = useTokens(chainID, bridge);
   if (!tokens) {
-    tokens = allTokens;
+    tokens = uniqBy(allTokens, 'address');
   }
   if (bridge && chainID) {
     const [USDC, USDT, DAI]: string[] = TOKENS_BRIDGE[chainID];
