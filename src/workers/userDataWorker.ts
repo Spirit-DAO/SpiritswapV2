@@ -1,4 +1,10 @@
-import { CHAIN_ID, FTM, HIDE_CHART_PORTFOLIO, NETWORK } from 'constants/index';
+import {
+  CHAIN_ID,
+  FTM,
+  HIDE_CHART_PORTFOLIO,
+  NETWORK,
+  tokens,
+} from 'constants/index';
 import addresses from 'constants/contracts';
 import {
   getBoostedFarmVotes,
@@ -210,17 +216,17 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
       const { lendAndBorrowData, borrowAPYValues, supplyAPYValues } =
         await getOlaFinanceData(userWalletAddress);
 
-      const mappedTokens = await getMappedTokens('address');
-
       lendAndBorrowData.forEach(data => {
         const addressUnderlying =
           data.underlying === UNIDEX_ETH_ADDRESS
             ? FTM.address
             : data.underlying;
 
-        const { symbol } = mappedTokens[addressUnderlying.toLowerCase()] || {
-          symbol: '',
-        };
+        const symbol =
+          tokens.find(
+            token =>
+              token.address.toLowerCase() === addressUnderlying.toLowerCase(),
+          )?.symbol || '';
         const decimalsToFormat = 18;
 
         // Borrow

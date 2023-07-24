@@ -132,7 +132,7 @@ Object {
               <p
                 class="chakra-text css-dv0alm"
               >
-                90
+                93
                  Tokens
               </p>
               <p
@@ -143,7 +143,7 @@ Object {
               <p
                 class="chakra-text css-dv0alm"
               >
-                90
+                93
                  Tokens
               </p>
               <div
@@ -157,7 +157,7 @@ Object {
                 <div
                   class="ReactVirtualized__Grid__innerScrollContainer"
                   role="rowgroup"
-                  style="width: auto; height: 4770px; max-width: 400px; max-height: 4770px; overflow: hidden; position: relative;"
+                  style="width: auto; height: 4929px; max-width: 400px; max-height: 4929px; overflow: hidden; position: relative;"
                 >
                   <div
                     class="css-34gjr3"
@@ -884,6 +884,159 @@ Object {
                         class="css-k008qs"
                       >
                         <img
+                          alt="MULTIUSDT logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          multiUSDT
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            multiUSDT
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 795px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="MULTIUSDC logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          multiUSDC
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            multiUSDC
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 848px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
+                          alt="MULTIDAI logo"
+                          class="chakra-image__placeholder css-dex8nh"
+                          fallbackstrategy="onError"
+                          src="/images/tokens/default.png"
+                        />
+                      </div>
+                      <div
+                        class="css-0"
+                      >
+                        <p
+                          class="chakra-text css-10rvbm3"
+                        >
+                          multiDAI
+                        </p>
+                        <div
+                          class="css-kqxjc4"
+                        >
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            0
+                          </p>
+                          <p
+                            class="chakra-text css-ie7mb8"
+                          >
+                            multiDAI
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-8hppig"
+                      >
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="css-34gjr3"
+                    style="height: 53px; left: 0px; position: absolute; top: 901px; width: 100%;"
+                  >
+                    <div
+                      class="css-70qvj9"
+                    >
+                      <div
+                        class="css-k008qs"
+                      >
+                        <img
                           alt="MULTIWBTC logo"
                           class="chakra-image__placeholder css-dex8nh"
                           fallbackstrategy="onError"
@@ -910,159 +1063,6 @@ Object {
                             class="chakra-text css-ie7mb8"
                           >
                             multiWBTC
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-8hppig"
-                      >
-                        $0
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 795px; width: 100%;"
-                  >
-                    <div
-                      class="css-70qvj9"
-                    >
-                      <div
-                        class="css-k008qs"
-                      >
-                        <img
-                          alt="MULTIWETH logo"
-                          class="chakra-image__placeholder css-dex8nh"
-                          fallbackstrategy="onError"
-                          src="/images/tokens/default.png"
-                        />
-                      </div>
-                      <div
-                        class="css-0"
-                      >
-                        <p
-                          class="chakra-text css-10rvbm3"
-                        >
-                          multiWETH
-                        </p>
-                        <div
-                          class="css-kqxjc4"
-                        >
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            0
-                          </p>
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            multiWETH
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-8hppig"
-                      >
-                        $0
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 848px; width: 100%;"
-                  >
-                    <div
-                      class="css-70qvj9"
-                    >
-                      <div
-                        class="css-k008qs"
-                      >
-                        <img
-                          alt="RAVE logo"
-                          class="chakra-image__placeholder css-dex8nh"
-                          fallbackstrategy="onError"
-                          src="/images/tokens/default.png"
-                        />
-                      </div>
-                      <div
-                        class="css-0"
-                      >
-                        <p
-                          class="chakra-text css-10rvbm3"
-                        >
-                          Rave Names
-                        </p>
-                        <div
-                          class="css-kqxjc4"
-                        >
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            0
-                          </p>
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            Rave
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-8hppig"
-                      >
-                        $0
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="css-34gjr3"
-                    style="height: 53px; left: 0px; position: absolute; top: 901px; width: 100%;"
-                  >
-                    <div
-                      class="css-70qvj9"
-                    >
-                      <div
-                        class="css-k008qs"
-                      >
-                        <img
-                          alt="CRV logo"
-                          class="chakra-image__placeholder css-dex8nh"
-                          fallbackstrategy="onError"
-                          src="/images/tokens/default.png"
-                        />
-                      </div>
-                      <div
-                        class="css-0"
-                      >
-                        <p
-                          class="chakra-text css-10rvbm3"
-                        >
-                          Curve DAO
-                        </p>
-                        <div
-                          class="css-kqxjc4"
-                        >
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            0
-                          </p>
-                          <p
-                            class="chakra-text css-ie7mb8"
-                          >
-                            CRV
                           </p>
                         </div>
                       </div>
@@ -1191,7 +1191,7 @@ Object {
             <p
               class="chakra-text css-dv0alm"
             >
-              90
+              93
                Tokens
             </p>
             <p
@@ -1202,7 +1202,7 @@ Object {
             <p
               class="chakra-text css-dv0alm"
             >
-              90
+              93
                Tokens
             </p>
             <div
@@ -1216,7 +1216,7 @@ Object {
               <div
                 class="ReactVirtualized__Grid__innerScrollContainer"
                 role="rowgroup"
-                style="width: auto; height: 4770px; max-width: 400px; max-height: 4770px; overflow: hidden; position: relative;"
+                style="width: auto; height: 4929px; max-width: 400px; max-height: 4929px; overflow: hidden; position: relative;"
               >
                 <div
                   class="css-34gjr3"
@@ -1943,6 +1943,159 @@ Object {
                       class="css-k008qs"
                     >
                       <img
+                        alt="MULTIUSDT logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        multiUSDT
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          multiUSDT
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 795px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="MULTIUSDC logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        multiUSDC
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          multiUSDC
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 848px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
+                        alt="MULTIDAI logo"
+                        class="chakra-image__placeholder css-dex8nh"
+                        fallbackstrategy="onError"
+                        src="/images/tokens/default.png"
+                      />
+                    </div>
+                    <div
+                      class="css-0"
+                    >
+                      <p
+                        class="chakra-text css-10rvbm3"
+                      >
+                        multiDAI
+                      </p>
+                      <div
+                        class="css-kqxjc4"
+                      >
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          0
+                        </p>
+                        <p
+                          class="chakra-text css-ie7mb8"
+                        >
+                          multiDAI
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="css-0"
+                  >
+                    <p
+                      class="chakra-text css-8hppig"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="css-34gjr3"
+                  style="height: 53px; left: 0px; position: absolute; top: 901px; width: 100%;"
+                >
+                  <div
+                    class="css-70qvj9"
+                  >
+                    <div
+                      class="css-k008qs"
+                    >
+                      <img
                         alt="MULTIWBTC logo"
                         class="chakra-image__placeholder css-dex8nh"
                         fallbackstrategy="onError"
@@ -1969,159 +2122,6 @@ Object {
                           class="chakra-text css-ie7mb8"
                         >
                           multiWBTC
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="css-0"
-                  >
-                    <p
-                      class="chakra-text css-8hppig"
-                    >
-                      $0
-                    </p>
-                  </div>
-                </div>
-                <div
-                  class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 795px; width: 100%;"
-                >
-                  <div
-                    class="css-70qvj9"
-                  >
-                    <div
-                      class="css-k008qs"
-                    >
-                      <img
-                        alt="MULTIWETH logo"
-                        class="chakra-image__placeholder css-dex8nh"
-                        fallbackstrategy="onError"
-                        src="/images/tokens/default.png"
-                      />
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-10rvbm3"
-                      >
-                        multiWETH
-                      </p>
-                      <div
-                        class="css-kqxjc4"
-                      >
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          0
-                        </p>
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          multiWETH
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="css-0"
-                  >
-                    <p
-                      class="chakra-text css-8hppig"
-                    >
-                      $0
-                    </p>
-                  </div>
-                </div>
-                <div
-                  class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 848px; width: 100%;"
-                >
-                  <div
-                    class="css-70qvj9"
-                  >
-                    <div
-                      class="css-k008qs"
-                    >
-                      <img
-                        alt="RAVE logo"
-                        class="chakra-image__placeholder css-dex8nh"
-                        fallbackstrategy="onError"
-                        src="/images/tokens/default.png"
-                      />
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-10rvbm3"
-                      >
-                        Rave Names
-                      </p>
-                      <div
-                        class="css-kqxjc4"
-                      >
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          0
-                        </p>
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          Rave
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="css-0"
-                  >
-                    <p
-                      class="chakra-text css-8hppig"
-                    >
-                      $0
-                    </p>
-                  </div>
-                </div>
-                <div
-                  class="css-34gjr3"
-                  style="height: 53px; left: 0px; position: absolute; top: 901px; width: 100%;"
-                >
-                  <div
-                    class="css-70qvj9"
-                  >
-                    <div
-                      class="css-k008qs"
-                    >
-                      <img
-                        alt="CRV logo"
-                        class="chakra-image__placeholder css-dex8nh"
-                        fallbackstrategy="onError"
-                        src="/images/tokens/default.png"
-                      />
-                    </div>
-                    <div
-                      class="css-0"
-                    >
-                      <p
-                        class="chakra-text css-10rvbm3"
-                      >
-                        Curve DAO
-                      </p>
-                      <div
-                        class="css-kqxjc4"
-                      >
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          0
-                        </p>
-                        <p
-                          class="chakra-text css-ie7mb8"
-                        >
-                          CRV
                         </p>
                       </div>
                     </div>

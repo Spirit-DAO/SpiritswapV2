@@ -10,6 +10,7 @@ import uniqBy from 'lodash/uniqBy';
 import {
   BASE_TOKEN_ADDRESS,
   COVALENT_BASE_TOKEN_ADDRESS,
+  newTokensAddressesArray,
   tokens,
 } from 'constants/index';
 import { checkAddress, checkInvalidValue } from 'app/utils';
@@ -150,6 +151,18 @@ export const formatReturnData = (
     item.contract_address = contractAddress;
   }
 
+  const symbol = () => {
+    if (newTokensAddressesArray.includes(contractAddress.toLowerCase())) {
+      return tokens.find(
+        token => token.address.toLowerCase() === contractAddress.toLowerCase(),
+      )?.symbol;
+    }
+
+    return contract_ticker_symbol
+      ? contract_ticker_symbol.replace('vAMM-', '')
+      : '';
+  };
+
   const title = contract_ticker_symbol
     ? `${contract_ticker_symbol
         .replace('-', '/')
@@ -158,7 +171,7 @@ export const formatReturnData = (
     : '';
 
   const tdata: tokenData = {
-    name: title,
+    name: symbol(),
     full_name: contract_name,
     title,
     tokens:
@@ -170,9 +183,7 @@ export const formatReturnData = (
           .split('/')) ||
       [],
     amount: formatFrom(item?.balance || 0, item?.contract_decimals),
-    symbol: contract_ticker_symbol
-      ? contract_ticker_symbol.replace('vAMM-', '')
-      : '',
+    symbol: symbol(),
     usd: item?.quote?.toFixed(2) || 0,
     usd_24: item?.quote_24h?.toFixed(2) || 0,
     rate: item?.quote_rate,
