@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { TokenSelection } from '../TokenSelection';
 import { ModalToken } from '../ModalToken';
 import { useLocation } from 'react-router-dom';
+import uniqBy from 'lodash/uniqBy';
 import {
   checkAddress,
   getRoundedSFs,
@@ -84,8 +85,9 @@ const NewTokenAmountPanel = ({
   const handleOpen = isSelectable ? onOpen : undefined;
   const handleSelect = isSelectable ? onSelect : undefined;
   const { tokens: allTokens } = useTokens(chainID, bridge);
+
   if (!tokens) {
-    tokens = allTokens;
+    tokens = uniqBy(allTokens, 'address');
   }
   if (bridge && chainID) {
     const [USDC, USDT, DAI]: string[] = TOKENS_BRIDGE[chainID];
