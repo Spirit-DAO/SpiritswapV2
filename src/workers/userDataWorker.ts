@@ -1,4 +1,10 @@
-import { CHAIN_ID, FTM, HIDE_CHART_PORTFOLIO, NETWORK } from 'constants/index';
+import {
+  CHAIN_ID,
+  FTM,
+  HIDE_CHART_PORTFOLIO,
+  NETWORK,
+  tokens,
+} from 'constants/index';
 import addresses from 'constants/contracts';
 import {
   getBoostedFarmVotes,
@@ -9,7 +15,6 @@ import {
   getMappedTokens,
   getPendingRewards,
   getStakedBalances,
-  getV3Balances,
   getTokenGroupStatistics,
   getUserBalances,
   getUserInspiritBalances,
@@ -105,8 +110,6 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
     const covalentRawDataPromise = getUserBalances(userWalletAddress);
 
     getStakedBalance(userWalletAddress, covalentRawDataPromise, provider);
-
-    getV3Liquidity(userWalletAddress, provider);
 
     const gaugesPromise = getGaugeBasicInfo(provider);
     const stakesAndLiquidity = async () => {
@@ -210,17 +213,18 @@ const updatePortfolioData = async (userWalletAddress, provider) => {
       const { lendAndBorrowData, borrowAPYValues, supplyAPYValues } =
         await getOlaFinanceData(userWalletAddress);
 
-      const mappedTokens = await getMappedTokens('address');
-
       lendAndBorrowData.forEach(data => {
         const addressUnderlying =
           data.underlying === UNIDEX_ETH_ADDRESS
             ? FTM.address
             : data.underlying;
 
-        const { symbol } = mappedTokens[addressUnderlying.toLowerCase()] || {
-          symbol: '',
-        };
+        const symbol =
+          tokens.find(
+            token =>
+              token.address.toLowerCase() === addressUnderlying.toLowerCase(),
+          )?.symbol || '';
+
         const decimalsToFormat = 18;
 
         // Borrow
@@ -360,23 +364,4 @@ const fetchIndividualLP = async (userWalletAddress, params, provider) => {
     payload: data,
     userWalletAddress,
   });
-};
-
-const getV3Liquidity = async (userWalletAddress, provider) => {
-  const stakesPromise = new Promise(async resolve => {
-    const { v3PositionsArray } = await getV3Balances(
-      userWalletAddress,
-      provider,
-    );
-
-    self.postMessage({
-      type: 'setV3LiquidityWallet',
-      payload: v3PositionsArray,
-      userWalletAddress,
-    });
-
-    resolve('');
-  });
-
-  await Promise.all([stakesPromise]);
 };

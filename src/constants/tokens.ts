@@ -24,34 +24,10 @@ export const FRAX = {
   decimals: 18,
 };
 
-export const USDC = {
-  name: 'multiUSDC',
-  symbol: 'multiUSDC',
-  address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
-  chainId: 250,
-  decimals: 6,
-};
-
 export const FUSD = {
   name: 'Fantom USD',
   symbol: 'fUSD',
   address: '0xad84341756bf337f5a0164515b1f6f993d194e1f',
-  chainId: 250,
-  decimals: 18,
-};
-
-export const USDT = {
-  name: 'multiUSDT',
-  symbol: 'multiUSDT',
-  address: '0x049d68029688eabf473097a2fc38ef61633a3c7a',
-  chainId: 250,
-  decimals: 6,
-};
-
-export const DAI = {
-  name: 'multiDAI',
-  symbol: 'multiDAI',
-  address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
   chainId: 250,
   decimals: 18,
 };
@@ -176,7 +152,7 @@ export const rainSPIRIT = {
   decimals: 18,
 };
 
-const layerZeroTokens = [
+export const layerZeroTokens = [
   {
     name: 'lzUSDC',
     symbol: 'lzUSDC',
@@ -214,7 +190,7 @@ const layerZeroTokens = [
   },
 ];
 
-const axelarTokens = [
+export const axelarTokens = [
   {
     name: 'axlUSDT',
     symbol: 'axlUSDT',
@@ -245,14 +221,34 @@ const axelarTokens = [
   },
 ];
 
-export const tokens: Token[] = [
-  FTM,
-  SPIRIT,
-  WFTM,
-  JEFE,
-  rainSPIRIT,
-  ...layerZeroTokens,
-  ...axelarTokens,
+export const USDC = {
+  name: 'multiUSDC',
+  symbol: 'multiUSDC',
+  address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
+  chainId: 250,
+  decimals: 6,
+};
+
+export const USDT = {
+  name: 'multiUSDT',
+  symbol: 'multiUSDT',
+  address: '0x049d68029688eabf473097a2fc38ef61633a3c7a',
+  chainId: 250,
+  decimals: 6,
+};
+
+export const DAI = {
+  name: 'multiDAI',
+  symbol: 'multiDAI',
+  address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
+  chainId: 250,
+  decimals: 18,
+};
+
+export const multiTokens = [
+  USDT,
+  USDC,
+  DAI,
   {
     name: 'multiWBTC',
     symbol: 'multiWBTC',
@@ -267,6 +263,23 @@ export const tokens: Token[] = [
     chainId: 250,
     decimals: 18,
   },
+];
+
+export const newTokensAddressesArray = [
+  ...multiTokens,
+  ...axelarTokens,
+  ...layerZeroTokens,
+].map(t => t.address.toLowerCase());
+
+export const tokens: Token[] = [
+  FTM,
+  SPIRIT,
+  WFTM,
+  JEFE,
+  rainSPIRIT,
+  ...layerZeroTokens,
+  ...axelarTokens,
+  ...multiTokens,
   {
     name: 'Rave Names',
     symbol: 'Rave',
