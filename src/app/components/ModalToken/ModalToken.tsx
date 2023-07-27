@@ -142,14 +142,10 @@ const ModalToken = ({
           }
         }
 
-        let tokenBalance: any = liFinacneBalance?.tokens?.find(balance =>
+        const tokenBalance = target?.find(balance =>
           checkAddress(balance.address, token.address),
         );
-        if (!tokenBalance) {
-          tokenBalance = target?.find(balance =>
-            checkAddress(balance.address, token.address),
-          );
-        }
+
         if (tokenBalance && tokenBalance.amount) {
           return {
             ...token,
