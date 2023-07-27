@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Props } from './NewTokenAmountPanel.d';
 import { PriceDiffIndicator } from '../PriceDiffIndicator';
 import { Percentages } from '../Percentages';
+import { LiFi } from 'config/lifi';
 import { useTranslation } from 'react-i18next';
 import { TokenSelection } from '../TokenSelection';
 import { ModalToken } from '../ModalToken';
@@ -28,12 +29,11 @@ import {
   LIQUIDITY_TOKENS,
   WFTM,
 } from 'constants/tokens';
-import { useTokenBalance } from 'app/hooks/useTokenBalance';
 import { getTokensDetails } from 'utils/data/covalent';
 import { useTokens } from 'app/hooks/useTokens';
 import { TOKENS_BRIDGE } from 'constants/bridgeTokens';
 import useLogin from 'app/connectors/EthersConnector/login';
-import { selectIsLoggedIn } from 'store/user/selectors';
+import { selectIsLoggedIn, selectTokens } from 'store/user/selectors';
 import { useAppSelector } from 'store/hooks';
 import { LIQUIDITY, BRIDGE, resolveRoutePath } from 'app/router/routes';
 
@@ -82,6 +82,7 @@ const NewTokenAmountPanel = ({
   const { onClose, isOpen, onOpen } = useDisclosure();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const handleOpen = isSelectable ? onOpen : undefined;
+  const tokensWithBalance = useAppSelector(selectTokens);
   const handleSelect = isSelectable ? onSelect : undefined;
   const { tokens: allTokens } = useTokens(chainID, bridge);
   if (!tokens) {
@@ -100,8 +101,19 @@ const NewTokenAmountPanel = ({
       tokens = filteredBridgeTokens;
     }
   }
-  const { token: fetchedTokenWithBalance, isLoading: isLoadingBalance } =
-    useTokenBalance(token?.chainId ?? 1, token?.address ?? '', context, token);
+
+  const [fetchedTokenWithBalance, setFetchedTokenWithBalance] =
+    useState<any>(null);
+
+  useEffect(() => {
+    const tokenWithBalance = tokensWithBalance?.tokenList?.find(
+      ({ address }) => {
+        return token?.address?.toLowerCase() === address.toLowerCase();
+      },
+    );
+
+    setFetchedTokenWithBalance(tokenWithBalance);
+  }, [token?.address, tokensWithBalance?.tokenList]);
 
   useEffect(() => {
     const fetchTokenPrice = async () => {
@@ -176,7 +188,7 @@ const NewTokenAmountPanel = ({
         balance: userBalance,
         usd: usdValue,
         trunBalance:
-          parseFloat(userBalance) < 0.001 && context === 'liquidity'
+          parseFloat(userBalance) < 0.001
             ? '<0.000001'
             : truncateTokenValue(+userBalance, +rate),
       };
@@ -382,18 +394,16 @@ const NewTokenAmountPanel = ({
             </Text>
             {showDiff ? <PriceDiffIndicator amount={priceDiff || 0} /> : null}
           </Flex>
-          <Skeleton isLoaded={!isLoadingBalance}>
-            <Text
-              as="div"
-              fontSize="sm"
-              color="gray"
-              mr="spacing04"
-              cursor={showCursorPointer()}
-              onClick={() => handleInput(balance)}
-            >
-              {amount}
-            </Text>
-          </Skeleton>
+          <Text
+            as="div"
+            fontSize="sm"
+            color="gray"
+            mr="spacing04"
+            cursor={showCursorPointer()}
+            onClick={() => handleInput(balance)}
+          >
+            {amount}
+          </Text>
         </Flex>
       ) : null}
       {isLoading
