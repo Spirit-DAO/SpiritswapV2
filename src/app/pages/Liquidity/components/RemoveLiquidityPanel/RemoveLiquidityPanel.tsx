@@ -18,7 +18,7 @@ import { ARROWBACK } from 'constants/icons';
 import { stableSobPools } from 'constants/sobpools';
 import NewTokenAmountPanel from 'app/components/NewTokenAmountPanel/NewTokenAmountPanel';
 import { Token } from 'app/interfaces/General';
-import { CHAIN_ID } from 'constants/index';
+import { CHAIN_ID, tokens } from 'constants/index';
 import contracts from 'constants/contracts';
 import { checkAllowance } from 'utils/web3/actions';
 import {
@@ -36,7 +36,6 @@ import { weightedpools } from 'constants/weightedpools';
 import { useAppSelector } from 'store/hooks';
 import { selectUserSettings } from 'store/settings/selectors';
 import useWallets from 'app/hooks/useWallets';
-import { getMappedTokens } from 'utils/data';
 
 const RemoveLiquidity = ({ onCancel, LpPair }: RemoveLiquidityProps) => {
   const { t } = useTranslation();
@@ -231,10 +230,16 @@ const RemoveLiquidity = ({ onCancel, LpPair }: RemoveLiquidityProps) => {
 
   useEffect(() => {
     const getTokens = async () => {
-      const mappedtokens = await getMappedTokens('symbol');
-      const tokenA = mappedtokens[LpPair.tokens[0].toLowerCase()];
-      const tokenB = mappedtokens[LpPair.tokens[1].toLowerCase()];
-      settokensList([tokenA, tokenB]);
+      const tokenA = tokens.find(
+        token => token.symbol.toLowerCase() === LpPair.tokens[0].toLowerCase(),
+      );
+      const tokenB = tokens.find(
+        token => token.symbol.toLowerCase() === LpPair.tokens[1].toLowerCase(),
+      );
+
+      if (tokenA && tokenB) {
+        settokensList([tokenA, tokenB]);
+      }
     };
     getTokens();
   }, [LpPair.tokens]);
@@ -362,28 +367,29 @@ const RemoveLiquidity = ({ onCancel, LpPair }: RemoveLiquidityProps) => {
           </Text>
           {tokensList?.map((token, index) => {
             const isTheLast = index === tokensList.length - 1;
+
             if (isTheLast)
               return (
                 <NewTokenAmountPanel
-                  key={token.address}
+                  key={token?.address}
                   context="token"
-                  inputValue={estimates.get(token.address)?.amount ?? ''}
+                  inputValue={estimates.get(token?.address)?.amount ?? ''}
                   token={token}
                   isSelectable={false}
                   showConfirm={true}
                 />
               );
             return (
-              <div key={token.symbol}>
+              <div key={token?.symbol}>
                 <NewTokenAmountPanel
-                  key={token.address}
+                  key={token?.address}
                   context="token"
-                  inputValue={estimates.get(token.address)?.amount ?? ''}
+                  inputValue={estimates.get(token?.address)?.amount ?? ''}
                   token={token}
                   isSelectable={false}
                   showConfirm={true}
                 />
-                <PlusLogoGreen key={token.symbol} />
+                <PlusLogoGreen key={token?.symbol} />
               </div>
             );
           })}
