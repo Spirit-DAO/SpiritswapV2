@@ -32,7 +32,6 @@ const Web3Monitoring = () => {
     type: string = 'none',
   ) => {
     const {
-      title,
       operation,
       tx,
       uniqueMessage,
@@ -46,7 +45,7 @@ const Web3Monitoring = () => {
       bridgeIndex,
     } = response;
 
-    const translationsPath = `notifications.${title}`;
+    const translationsPath = `notifications.${response?.title ?? ''}`;
     const isApprove = operation === 'APPROVE';
 
     const formattedInputValue = inputValue ? getRoundedSFs(inputValue) : '';
