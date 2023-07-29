@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import type { Props } from './NewTokenAmountPanel.d';
 import { PriceDiffIndicator } from '../PriceDiffIndicator';
 import { Percentages } from '../Percentages';
-import { LiFi } from 'config/lifi';
 import { useTranslation } from 'react-i18next';
 import { TokenSelection } from '../TokenSelection';
 import { ModalToken } from '../ModalToken';
@@ -36,6 +35,7 @@ import useLogin from 'app/connectors/EthersConnector/login';
 import { selectIsLoggedIn, selectTokens } from 'store/user/selectors';
 import { useAppSelector } from 'store/hooks';
 import { LIQUIDITY, BRIDGE, resolveRoutePath } from 'app/router/routes';
+import useWallets from 'app/hooks/useWallets';
 
 const NewTokenAmountPanel = ({
   token,
@@ -77,6 +77,7 @@ const NewTokenAmountPanel = ({
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const { handleLogin } = useLogin();
+  const { walletLiquidity } = useWallets();
   const [mustShowPercentage, setMustShowPercentage] = useState(showPercentage);
   const [tokenPrice, setTokenPrice] = useState(0.0);
   const { onClose, isOpen, onOpen } = useDisclosure();
@@ -106,14 +107,24 @@ const NewTokenAmountPanel = ({
     useState<any>(null);
 
   useEffect(() => {
-    const tokenWithBalance = tokensWithBalance?.tokenList?.find(
-      ({ address }) => {
+    let tokenWithBalance = null;
+    if (context === 'token') {
+      tokenWithBalance = tokensWithBalance?.tokenList?.find(({ address }) => {
         return token?.address?.toLowerCase() === address.toLowerCase();
-      },
-    );
+      });
 
-    setFetchedTokenWithBalance(tokenWithBalance);
-  }, [token?.address, tokensWithBalance?.tokenList]);
+      setFetchedTokenWithBalance(tokenWithBalance);
+      return;
+    }
+
+    if (context === 'liquidity') {
+      tokenWithBalance = walletLiquidity?.find(({ address }) => {
+        return token?.address?.toLowerCase() === address.toLowerCase();
+      });
+      setFetchedTokenWithBalance(tokenWithBalance);
+      return;
+    }
+  }, [context, token?.address, tokensWithBalance?.tokenList, walletLiquidity]);
 
   useEffect(() => {
     const fetchTokenPrice = async () => {

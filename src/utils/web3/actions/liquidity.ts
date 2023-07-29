@@ -1463,6 +1463,7 @@ export const removeLiquidity = async (
   );
 
   const methodName = methods[indexOfSuccessfulEstimation];
+
   const safeGasEstimate = safeGasEstimates[indexOfSuccessfulEstimation];
 
   const tx = await router[methodName](...args, {

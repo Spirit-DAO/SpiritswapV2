@@ -427,6 +427,7 @@ export const removeLiquidityTF = async ({
       updateStep(TransactionStatus.SUCCESS, response);
     }
   } catch (error) {
+    console.error('Error on remove Liquidity', error);
     updateStep(TransactionStatus.FAILED);
   }
 };
