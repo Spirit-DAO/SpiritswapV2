@@ -118,7 +118,7 @@ const NewTokenAmountPanel = ({
       return;
     }
 
-    if (context === 'liquidity') {
+    if (context === 'liquidity' || context === 'farm') {
       tokenWithBalance = walletLiquidity?.find(({ address }) => {
         return token?.address?.toLowerCase() === address.toLowerCase();
       });

@@ -4,7 +4,6 @@ import { Button, Flex, Skeleton } from '@chakra-ui/react';
 import { FarmTransactionType } from 'app/pages/Farms/enums/farmTransaction';
 import { StyledHeading, StylesContainer } from './styles';
 import UseIsLoading from 'app/hooks/UseIsLoading';
-import { checkAddress } from 'app/utils';
 import { farmStatus } from 'utils/web3/actions/farm';
 import { TokenAmountPanel } from 'app/components/NewTokenAmountPanel';
 import { NON_ZERO, NOT_ENOUGH_FUNDS } from 'constants/errors';
@@ -12,15 +11,10 @@ import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { transactionResponse } from 'utils/web3';
 import { SuggestionsTypes } from 'app/hooks/Suggestions/Suggestion';
 import { useAppSelector } from 'store/hooks';
-import {
-  selectFarmsStaked,
-  selectIsLoggedIn,
-  selectLiquidityWallet,
-} from 'store/user/selectors';
+import { selectFarmsStaked, selectIsLoggedIn } from 'store/user/selectors';
 import useWallets from 'app/hooks/useWallets';
 import { selectLpPrices } from 'store/general/selectors';
 import { Props } from './FarmTransaction.d';
-import { useTokenBalance } from 'app/hooks/useTokenBalance';
 
 const FarmTransaction = ({
   farm,
@@ -33,7 +27,7 @@ const FarmTransaction = ({
   TokenList,
 }: Props) => {
   const { t } = useTranslation();
-  const { account } = useWallets();
+  const { account, walletLiquidity } = useWallets();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { addToQueue } = Web3Monitoring();
   const [inputValue, setInputValue] = useState('');
@@ -45,6 +39,10 @@ const FarmTransaction = ({
   const [shouldTransition, setShouldTransition] = useState(true);
   const farmsStaked = useAppSelector(selectFarmsStaked);
   const lpPrices = useAppSelector(selectLpPrices);
+
+  const fetchedTokenBalance = walletLiquidity.find(
+    lp => lp.address.toLowerCase() === farm.lpAddress.toLowerCase(),
+  );
 
   useEffect(() => {}, [account]);
 
@@ -61,13 +59,6 @@ const FarmTransaction = ({
     chainId: 250,
     rate: lpPrices[lowerLp],
   });
-
-  const { token: fetchedTokenBalance } = useTokenBalance(
-    250,
-    lpAddress,
-    'liquidity',
-    token,
-  );
 
   const amount =
     isWithdraw && farmsStaked[lowerLp]
