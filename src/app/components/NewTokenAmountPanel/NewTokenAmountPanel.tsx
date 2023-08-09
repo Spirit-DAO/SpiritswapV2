@@ -33,7 +33,11 @@ import { getTokensDetails } from 'utils/data/covalent';
 import { useTokens } from 'app/hooks/useTokens';
 import { TOKENS_BRIDGE } from 'constants/bridgeTokens';
 import useLogin from 'app/connectors/EthersConnector/login';
-import { selectIsLoggedIn, selectTokens } from 'store/user/selectors';
+import {
+  selectFarmsStaked,
+  selectIsLoggedIn,
+  selectTokens,
+} from 'store/user/selectors';
 import { useAppSelector } from 'store/hooks';
 import { LIQUIDITY, BRIDGE, resolveRoutePath } from 'app/router/routes';
 import useWallets from 'app/hooks/useWallets';
@@ -83,6 +87,7 @@ const NewTokenAmountPanel = ({
   const [tokenPrice, setTokenPrice] = useState(0.0);
   const { onClose, isOpen, onOpen } = useDisclosure();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const farmsStaked = useAppSelector(selectFarmsStaked);
   const handleOpen = isSelectable ? onOpen : undefined;
   const tokensWithBalance = useAppSelector(selectTokens);
   const handleSelect = isSelectable ? onSelect : undefined;
@@ -118,14 +123,27 @@ const NewTokenAmountPanel = ({
       return;
     }
 
-    if (context === 'liquidity' || context === 'farm') {
+    if (context === 'farm') {
+      tokenWithBalance = farmsStaked[token?.address.toLowerCase() || ''];
+
+      setFetchedTokenWithBalance(tokenWithBalance);
+      return;
+    }
+
+    if (context === 'liquidity') {
       tokenWithBalance = walletLiquidity?.find(({ address }) => {
         return token?.address?.toLowerCase() === address.toLowerCase();
       });
       setFetchedTokenWithBalance(tokenWithBalance);
       return;
     }
-  }, [context, token?.address, tokensWithBalance?.tokenList, walletLiquidity]);
+  }, [
+    context,
+    farmsStaked,
+    token?.address,
+    tokensWithBalance?.tokenList,
+    walletLiquidity,
+  ]);
 
   useEffect(() => {
     const fetchTokenPrice = async () => {
