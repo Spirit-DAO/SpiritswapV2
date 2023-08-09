@@ -6,7 +6,6 @@ import { YourApr } from '../components/YourApr';
 import { IconButton } from 'app/components/IconButton';
 import { StyledContainer } from './styles';
 import { ReactComponent as SparklesIcon } from 'app/assets/images/sparkles.svg';
-import { BoostFactor } from '../components/BoostFactor';
 import Web3Monitoring from 'app/connectors/EthersConnector/transactions';
 import { transactionResponse } from 'utils/web3/actions/utils';
 import { checkAddress, formatNumber, getRoundedSFs } from 'app/utils';
@@ -22,7 +21,6 @@ import {
   AccordionPanel,
   Spinner,
   Skeleton,
-  Flex,
 } from '@chakra-ui/react';
 import { RetrieveTokens } from '../components/RetrieveTokens/RetrieveTokens';
 import {
@@ -41,7 +39,7 @@ import BigNumber from 'bignumber.js';
 import { formatUnits } from 'ethers/lib/utils';
 import { Props } from './Farm.d';
 import useGetTokensPrices from 'app/hooks/useGetTokensPrices';
-import { LIQUIDITY, resolveRoutePath } from 'app/router/routes';
+import { LIQUIDITY } from 'app/router/routes';
 import { RetrieveConcentratedPosition } from '../components/RetrieveConcentratedPosition/RetrieveConcentratedPosition';
 
 export const Farm = ({
@@ -306,6 +304,7 @@ export const Farm = ({
 
       return earnedRewards;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [concentratedEarned, concentratedBonusEarned]);
 
   const hasConcenctratedRewards = concentratedEarned || concentratedBonusEarned;

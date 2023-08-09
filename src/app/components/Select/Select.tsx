@@ -1,8 +1,8 @@
-import React, { FC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Props } from './Select.d';
 import { StyledContainer, StyledHeading, StyledItem } from './styles';
 
-const Select: FC<Props> = ({
+const Select = ({
   labels = [],
   selected = 0,
   disabled = false,

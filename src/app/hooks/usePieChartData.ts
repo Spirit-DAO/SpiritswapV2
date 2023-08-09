@@ -87,7 +87,6 @@ const usePieChartData = ({ farmsList }: { farmsList: BoostedFarm[] }) => {
       datasets: [
         {
           data,
-
           borderColor: ['white'],
           borderWidth: 1,
           hoverBorderWidth: 2,

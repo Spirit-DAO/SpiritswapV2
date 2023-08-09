@@ -1,5 +1,4 @@
 import { ModalToken } from 'app/components/ModalToken';
-import { getProvider } from 'app/connectors/EthersConnector/login';
 import { useTokens } from 'app/hooks/useTokens';
 import useWallets from 'app/hooks/useWallets';
 import { TWAP } from '@orbs-network/twap-ui-spiritswap';
@@ -29,7 +28,7 @@ function TWAPPanel({ gasPrice, panelProps }: TWAPPanelProps) {
         TokenSelectModal={ModalToken}
         dappTokens={tokens}
         account={account}
-        getProvider={getProvider}
+        getProvider={() => window.ethereum}
         getTokenImageUrl={getTokenImageUrl}
         onSrcTokenSelected={(token: Token) =>
           handleChangeToken(token, () => {}, 0)

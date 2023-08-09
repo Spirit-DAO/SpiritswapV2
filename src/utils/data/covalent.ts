@@ -194,6 +194,8 @@ export const getTokensDetails = async (
   const to = moment().format('YYYY-MM-DD');
   const from = moment().subtract(1, 'days').format('YYYY-MM-DD');
 
+  if (_addresses[0] === '') return [];
+
   const source = getApiUrl({
     apiName: 'covalent',
     pathName: 'historicalByAddress',

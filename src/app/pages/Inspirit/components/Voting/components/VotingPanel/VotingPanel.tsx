@@ -24,21 +24,18 @@ const VotingPanel = ({
   cleanError,
   newBribeDisclosure,
 }) => {
+  const allFarms = useAppSelector(selectFarmMasterData);
   const [userOnly, setUserOnly] = useState(false);
-  const [classicFarms, setclassicFarms] = useState<VotingFarms>({
+  const [variableCombineFarms, setVariableCombineFarms] = useState<VotingFarms>(
+    {
+      farms: [],
+      userFarms: [],
+    },
+  );
+  const [stableCombineFarms, setStableCombineFarms] = useState<VotingFarms>({
     farms: [],
     userFarms: [],
   });
-  const [stableFarms, setStableFarms] = useState<VotingFarms>({
-    farms: [],
-    userFarms: [],
-  });
-
-  const [v2Farms, setV2Farms] = useState<VotingFarms>({
-    farms: [],
-    userFarms: [],
-  });
-
   const [selectedFarms, setSelectedFarms] = useState<BoostedFarm[]>([]);
   const [sortBy, setSortBy] = useState();
   const [sortDirection, setSortDirection] = useState();
@@ -50,16 +47,19 @@ const VotingPanel = ({
   };
 
   const updatingFarm = ({
-    classics,
-    userClassics,
-    stables,
-    userStables,
-    v2Classics,
-    userv2Classics,
+    variableCombine,
+    userVariableCombine,
+    stableCombine,
+    userStableCombine,
   }) => {
-    setclassicFarms({ farms: classics, userFarms: userClassics });
-    setV2Farms({ farms: v2Classics, userFarms: userv2Classics });
-    setStableFarms({ farms: stables, userFarms: userStables });
+    setVariableCombineFarms({
+      farms: variableCombine,
+      userFarms: userVariableCombine,
+    });
+    setStableCombineFarms({
+      farms: stableCombine,
+      userFarms: userStableCombine,
+    });
   };
 
   const handleSort = (by, direction) => {
@@ -69,26 +69,12 @@ const VotingPanel = ({
   };
 
   useEffect(() => {
-    if (farmType.index === 0) {
-      const filterInactivesFarms = stableFarms.farms.filter(
+    // Combine farms
+    if (farmType.value === 'Variable') {
+      const filterInactivesFarms = variableCombineFarms.farms.filter(
         farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
       );
-      const filterInactivesUserFarms = stableFarms.userFarms.filter(
-        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
-      );
-      setSelectedFarms(
-        sortFn(
-          userOnly ? filterInactivesUserFarms : filterInactivesFarms,
-          sortBy,
-          sortDirection,
-        ),
-      );
-    }
-    if (farmType.index === 1) {
-      const filterInactivesFarms = v2Farms.farms.filter(
-        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
-      );
-      const filterInactivesUserFarms = v2Farms.userFarms.filter(
+      const filterInactivesUserFarms = variableCombineFarms.userFarms.filter(
         farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
       );
       setSelectedFarms(
@@ -99,24 +85,51 @@ const VotingPanel = ({
         ),
       );
     }
-  }, [farmType, userOnly, classicFarms, stableFarms, v2Farms]);
+    if (farmType.value === 'Stable') {
+      // Combine farms
+      const filterInactivesFarms = stableCombineFarms.farms.filter(
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
+      );
+      const filterInactivesUserFarms = stableCombineFarms.userFarms.filter(
+        farm => !inactiveInspirit.includes(farm.name.toUpperCase()),
+      );
+      setSelectedFarms(
+        sortFn(
+          userOnly ? filterInactivesUserFarms : filterInactivesFarms,
+          sortBy,
+          sortDirection,
+        ),
+      );
+    }
+  }, [
+    farmType,
+    userOnly,
+    sortBy,
+    sortDirection,
+    variableCombineFarms.farms,
+    variableCombineFarms.userFarms,
+    stableCombineFarms.farms,
+    stableCombineFarms.userFarms,
+    variableCombineFarms,
+  ]);
 
   const farmsSize = selectedFarms?.length;
-
-  const allFarms = useAppSelector(selectFarmMasterData);
 
   const farmsWithApr = allFarms.filter(farm => farm.apr !== '0');
 
   const finalSelectedFarms: BoostedFarm[] = selectedFarms.map(listFarm => {
     const find = farmsWithApr.find(
-      farmInAllFarmList =>
-        farmInAllFarmList.lpAddress === listFarm.fulldata.farmAddress,
+      farm => farm.lpAddress === listFarm.fulldata.farmAddress,
     );
     if (find) {
       const poolLiquidity = find.totalLiquidity || 0;
 
       const liquidityPer10kInspirit: number =
         (poolLiquidity / listFarm.weight) * 10000;
+
+      if (liquidityPer10kInspirit === Infinity) {
+        return { ...listFarm, liquidityPer10kInspirit: 0 };
+      }
 
       return { ...listFarm, liquidityPer10kInspirit };
     }

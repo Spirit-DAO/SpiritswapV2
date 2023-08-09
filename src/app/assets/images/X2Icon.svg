@@ -1,0 +1,24 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="44"
+  height="33"
+  viewBox="0 0 44 33"
+>
+  <defs>
+    <style>
+      .cls-3 {
+        fill: #74d5f5 !important;
+      }
+
+      .cls-2 {
+        font-size: 20px;
+        fill: #101726;
+        text-anchor: middle;
+        font-family: Jost;
+        font-weight: 500;
+      }
+    </style>
+  </defs>
+  <rect class="cls-3" width="44" height="33" rx="8" ry="8" />
+  <text id="X2" class="cls-2" x="21.636" y="24.323">2X</text>
+</svg>

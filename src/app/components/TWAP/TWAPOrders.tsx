@@ -1,7 +1,6 @@
 import { Orders } from '@orbs-network/twap-ui-spiritswap';
 import useWallets from 'app/hooks/useWallets';
 import { useTokens } from 'app/hooks/useTokens';
-import { getProvider } from 'app/connectors/EthersConnector/login';
 import { LimitOrderContainer } from 'app/pages/Swap/components/LimitOrders/styles';
 import { getTokenImageUrl } from '../ImageLogo';
 
@@ -14,9 +13,7 @@ function TWAPOrders({ showChart }: { showChart: boolean }) {
       <Orders
         dappTokens={tokens || []}
         account={account}
-        getProvider={async () => {
-          return await getProvider();
-        }}
+        getProvider={() => window.ethereum}
         getTokenImageUrl={getTokenImageUrl}
       />
     </LimitOrderContainer>

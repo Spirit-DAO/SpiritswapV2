@@ -45,7 +45,6 @@ import V3SwapRouterABI from './abis/v3/swapRouter.json';
 import V3EternalFarmingABI from './abis/v3/eternalFarming.json';
 import V3FarmingCenterABI from './abis/v3/farmingCenter.json';
 import V3MulticallABI from './abis/v3/multicall.json';
-
 import { connect } from './connection';
 import { Call, MulticallSingleResponse, Web3Provider } from './types';
 import { CONNECTIONS } from 'app/connectors/EthersConnector/login';

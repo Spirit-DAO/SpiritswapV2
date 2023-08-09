@@ -14,7 +14,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from 'store/hooks';
 import {
   selectFarmsStaked,
-  selectLiquidityWallet,
   selectLockedInSpiritAmount,
 } from 'store/user/selectors';
 import FarmsData from './FarmsData';
@@ -28,6 +27,7 @@ import { selectSaturatedGauges } from 'store/general/selectors';
 import useMobile from 'utils/isMobile';
 import { MobileTable } from '../MobileTable';
 import useWallets from 'app/hooks/useWallets';
+import { selectFarmMasterData } from 'store/farms/selectors';
 
 const TokenTableV3 = ({
   errorMessage,
@@ -49,9 +49,9 @@ const TokenTableV3 = ({
   const { account, isLoggedIn } = useWallets();
   const isMobile = useMobile();
   const translationPath = 'inSpirit.voting';
-
   const stakedFarms = useAppSelector(selectFarmsStaked);
   const lockedSpiritBalance = useAppSelector(selectLockedInSpiritAmount);
+  const farms = useAppSelector(selectFarmMasterData);
   const [searchValues, setSearchValues] = useState('');
   const [showMobileTableFilters, setShowMobileTableFilters] =
     useState<boolean>(false);
@@ -61,7 +61,7 @@ const TokenTableV3 = ({
     setSearchValues(query);
   };
 
-  const { boostedV2, boostedStable } = useAppSelector(selectSaturatedGauges);
+  const { boostedCombine } = useAppSelector(selectSaturatedGauges);
 
   const toggleMobileTableFilters = () => {
     setShowMobileTableFilters(!showMobileTableFilters);
@@ -74,19 +74,44 @@ const TokenTableV3 = ({
 
   useEffect(() => {
     const getBoostedFarms = async () => {
-      const userBoostedV2 = getUserFarms(boostedV2, stakedFarms);
-      const userBoostedStable = getUserFarms(boostedStable, stakedFarms);
+      const userBoostedCombine = getUserFarms(boostedCombine, stakedFarms);
+      const combineFarmsData = farms.filter(farm => farm.type === 'combine');
+
+      let stableFarms: any = [];
+      let variableFarms: any = [];
+      let userStableFarms: any = [];
+      let userVariableFarms: any = [];
+
+      boostedCombine?.forEach(farm => {
+        const { fulldata } = farm;
+        const farmData = combineFarmsData.find(
+          combineFarm => combineFarm.gaugeAddress === fulldata.gaugeAddress,
+        );
+
+        if (farmData.stable) stableFarms.push(farm);
+        else variableFarms.push(farm);
+      });
+
+      userBoostedCombine?.forEach(farm => {
+        const { fulldata } = farm;
+        const farmData = combineFarmsData.find(
+          combineFarm => combineFarm.lpAddress === fulldata.farmAddress,
+        );
+
+        if (farmData.stable) userStableFarms.push(farm);
+        else userVariableFarms.push(farm);
+      });
 
       onUpdateFarm({
-        v2Classics: sortFn(boostedV2, 'yourVote', 'des'),
-        userv2Classics: sortFn(userBoostedV2, 'yourVote', 'des'),
-        stables: sortFn(boostedStable, 'yourVote', 'des'),
-        userStables: sortFn(userBoostedStable, 'yourVote', 'des'),
+        variableCombine: sortFn(variableFarms, 'yourVote', 'des'),
+        userVariableCombine: sortFn(userVariableFarms, 'yourVote', 'des'),
+        stableCombine: sortFn(stableFarms, 'yourVote', 'des'),
+        userStableCombine: sortFn(userStableFarms, 'yourVote', 'des'),
       });
     };
     getBoostedFarms();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValues, userOnly, farmType, account, boostedV2, boostedStable]);
+  }, [searchValues, userOnly, farmType, account]);
 
   const filteredBribes = useMemo(() => {
     if (searchValues) {

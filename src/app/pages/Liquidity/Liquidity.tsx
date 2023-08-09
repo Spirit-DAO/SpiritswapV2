@@ -28,7 +28,6 @@ import {
   YourLiquidityWrapper,
   CollapseSection,
   StyledLiquiditySetting,
-  StyledConcentratedLiqudityLabel,
 } from './styles';
 import { Select } from 'app/components/Select';
 import { Slippage } from './components/Slippage';
@@ -60,11 +59,7 @@ import {
 } from 'app/utils';
 import UseIsLoading from 'app/hooks/UseIsLoading';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
-import {
-  checkAllowance,
-  queryJoinPool,
-  addSobLiquidity,
-} from 'utils/web3/actions';
+import { checkAllowance, addSobLiquidity } from 'utils/web3/actions';
 import {
   buildCheckAndApprove,
   buildAddLiquidity,
@@ -80,7 +75,6 @@ import pools from 'constants/farms';
 import {
   ClassicPanel,
   StablePanel,
-  WeightedPanel,
   ConcentratedPanel,
 } from 'app/pages/Liquidity/components/Panels';
 import { ActionButton } from './components/ActionButton';
@@ -111,16 +105,12 @@ import { Heading } from 'app/components/Typography';
 import { ConfirmModalConcentrated } from './components/ConfirmModalConcentrated';
 import { Switch } from 'app/components/Switch';
 
-// TODO: [DEV2-591] refactor liquidity component
-
-const TOKEN_TYPE_CLASSIC_INDEX = 0;
-const TOKEN_TYPE_CLASSIC_LABEL = 'Variable';
+const TOKEN_TYPE_VARIABLE_INDEX = 0;
+const TOKEN_TYPE_VARIABLE_LABEL = 'Variable';
 const TOKEN_TYPE_STABLE_INDEX = 1;
 const TOKEN_TYPE_STABLE_LABEL = 'Stable';
 const TOKEN_TYPE_CONCENTRATED_INDEX = 2;
-const TOKEN_TYPE_CONCENTRATED_LABEL = 'Concentrated Liquidity';
-const TOKEN_TYPE_WEIGHTED_INDEX = 3;
-const TOKEN_TYPE_WEIGHTED_LABEL = 'Weighted';
+const TOKEN_TYPE_CONCENTRATED_LABEL = 'Concentrated';
 
 export function LiquidityPage() {
   const { t } = useTranslation();
@@ -154,7 +144,7 @@ export function LiquidityPage() {
     if (type === 'concentrated') {
       return TOKEN_TYPE_CONCENTRATED_INDEX;
     }
-    return TOKEN_TYPE_CLASSIC_INDEX;
+    return TOKEN_TYPE_VARIABLE_INDEX;
   };
 
   const matchesToken = tokenParam => {
@@ -341,25 +331,8 @@ export function LiquidityPage() {
   } = useDisclosure();
   const [tokenTypeFilter, setTokenTypeFilter] = useState(liquidityTypeFromFarm);
   const isStableSelected = tokenTypeFilter === TOKEN_TYPE_STABLE_INDEX;
-  const isWeightedSelected = tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX;
   const isConcentratedSelected =
     tokenTypeFilter === TOKEN_TYPE_CONCENTRATED_INDEX;
-
-  const [inputErrors, setInputErrors] = useState({
-    [TOKEN_TYPE_CLASSIC_INDEX]: undefined,
-    [TOKEN_TYPE_STABLE_INDEX]: undefined,
-    [TOKEN_TYPE_WEIGHTED_INDEX]: undefined,
-  });
-
-  const updateInputError = (indexType, message) => {
-    setInputErrors({
-      ...inputErrors,
-      [indexType]: message,
-    });
-  };
-
-  const setWeightedInputError = message =>
-    updateInputError(TOKEN_TYPE_WEIGHTED_INDEX, message);
 
   // Handle behaviour when user logouts
   useEffect(() => {
@@ -991,19 +964,11 @@ export function LiquidityPage() {
           amount: '2',
         },
       ];
-    } else if (!isWeightedSelected && liquidityTrade) {
+    } else if (liquidityTrade) {
       return [
         { token: liquidityTrade.tokenA, amount: liquidityTrade.amountA },
         { token: liquidityTrade.tokenB, amount: liquidityTrade.amountB },
       ];
-    } else if (isWeightedSelected) {
-      const tps = weightedPoolSelected?.tokens as Token[];
-      if (tps) {
-        return tps.map(token => ({
-          token,
-          amount: weightedPoolInputValue[token.symbol] ?? '0',
-        }));
-      }
     } else {
       const tps = tokenPoolSelected?.tokens as Token[];
       if (tps) {
@@ -1020,7 +985,6 @@ export function LiquidityPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isStableSelected,
-    isWeightedSelected,
     isConcentratedSelected,
     liquidityTrade,
     firstToken,
@@ -1040,9 +1004,7 @@ export function LiquidityPage() {
     tokenPoolSelected,
   ]);
 
-  const liquidityToReceive = isWeightedSelected
-    ? nonClassicTrade?.liquidity || 0
-    : liquidityTrade?.liquidity || 0;
+  const liquidityToReceive = liquidityTrade?.liquidity || 0;
 
   const verifyAllowance = useCallback(
     async (tokenWithAmount: TokenAmount) => {
@@ -1056,10 +1018,6 @@ export function LiquidityPage() {
         );
 
         let approve_address = ROUTERV2_ADDRESS;
-
-        if (isWeightedSelected) {
-          approve_address = WEIGHTED_VAULT_ADDRESS;
-        }
 
         if (isConcentratedSelected) {
           approve_address = NONFUNGIBLE_POSITION_ADDRESS;
@@ -1083,7 +1041,6 @@ export function LiquidityPage() {
       WEIGHTED_VAULT_ADDRESS,
       NONFUNGIBLE_POSITION_ADDRESS,
       account,
-      isWeightedSelected,
       isConcentratedSelected,
       isStableSelected,
     ],
@@ -1110,10 +1067,6 @@ export function LiquidityPage() {
 
   const initialSteps = useCallback(() => {
     let approveAddress = ROUTERV2_ADDRESS;
-
-    if (isWeightedSelected) {
-      approveAddress = WEIGHTED_VAULT_ADDRESS;
-    }
 
     if (isConcentratedSelected) {
       approveAddress = NONFUNGIBLE_POSITION_ADDRESS;
@@ -1169,29 +1122,6 @@ export function LiquidityPage() {
       ];
     }
 
-    if (tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX) {
-      const tradeParams = {
-        pool: (tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX
-          ? weightedPoolSelected
-          : tokenPoolSelected) as SobTokenPool,
-        tokensWithValue: selectedTokensWithValue(),
-        account,
-      };
-
-      return [
-        ...approveSteps,
-        buildAddLiquidity(
-          stepNumber,
-          account,
-          tradeParams as AddLiquidityTradeV2,
-          true,
-          tokenTypeFilter,
-          false,
-        ),
-        ...zapStep,
-      ];
-    }
-
     if (tokenTypeFilter === TOKEN_TYPE_CONCENTRATED_INDEX) {
       return [
         ...approveSteps,
@@ -1241,15 +1171,6 @@ export function LiquidityPage() {
   useEffect(() => {
     const [action] = steps.filter(step => step?.type === 'liquidity');
     const [pool, tokensWithAmounts, account] = action?.params || [];
-    const queryJoin = async () => {
-      loadingOn();
-
-      if (action.params) {
-        const query = await queryJoinPool(pool, tokensWithAmounts, account);
-        setNonClassicTrade(query);
-        loadingOff();
-      }
-    };
 
     const queryBatchSwap = async () => {
       loadingOff();
@@ -1277,13 +1198,6 @@ export function LiquidityPage() {
 
     if (checkQuery && hasAllBalances && steps && steps.length) {
       if (
-        tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX &&
-        pool?.type === 'weighted'
-      ) {
-        queryJoin();
-      }
-
-      if (
         tokenTypeFilter === TOKEN_TYPE_STABLE_INDEX &&
         pool?.type === 'stable'
       ) {
@@ -1299,15 +1213,11 @@ export function LiquidityPage() {
     const poolsLabel = 'Pools';
     const defaultTitle = 'Add liquidity';
     switch (tokenTypeFilter) {
-      case TOKEN_TYPE_CLASSIC_INDEX:
+      case TOKEN_TYPE_VARIABLE_INDEX:
         return defaultTitle;
       case TOKEN_TYPE_STABLE_INDEX:
         return tokenPoolSelected
           ? `${TOKEN_TYPE_STABLE_LABEL} ${poolsLabel}`
-          : defaultTitle;
-      case TOKEN_TYPE_WEIGHTED_INDEX:
-        return weightedPoolSelected
-          ? `${TOKEN_TYPE_WEIGHTED_LABEL} ${poolsLabel}`
           : defaultTitle;
       default:
         return defaultTitle;
@@ -1335,12 +1245,7 @@ export function LiquidityPage() {
       tokensWithValue={selectedTokensWithValue()?.reverse()}
       price={liquidityToReceive || '0'}
       sharePool={liquidityTrade ? liquidityTrade.ownership : '-'}
-      isWeightedPool={tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX}
-      poolName={
-        tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX
-          ? weightedPoolSelected?.name
-          : liquidityTrade?.lpSymbol
-      }
+      poolName={liquidityTrade?.lpSymbol}
       isLoading={isLoading}
       zapDirectly={zapDirectly}
       setZapDirectly={setZapDirectly}
@@ -1419,10 +1324,7 @@ export function LiquidityPage() {
               onClose={onClose}
               isOpen={isOpen}
               disabled={
-                !liquidityTrade &&
-                !isStableSelected &&
-                !isWeightedSelected &&
-                !isConcentratedSelected
+                !liquidityTrade && !isStableSelected && !isConcentratedSelected
               }
               nextStep={() => void 0}
               notifications={notifications}
@@ -1475,20 +1377,16 @@ export function LiquidityPage() {
                       </Flex>
                       <Select
                         labels={[
-                          TOKEN_TYPE_CLASSIC_LABEL,
+                          TOKEN_TYPE_VARIABLE_LABEL,
                           TOKEN_TYPE_STABLE_LABEL,
-                          <StyledConcentratedLiqudityLabel>
-                            Concentrated Liquidity
-                          </StyledConcentratedLiqudityLabel>,
-                          // TOKEN_TYPE_CONCENTRATED_LABEL,
-                          // TOKEN_TYPE_WEIGHTED_LABEL,
+                          TOKEN_TYPE_CONCENTRATED_LABEL,
                         ]}
                         selected={tokenTypeFilter}
                         onChange={handleTokenTypeSelect}
                       />
 
                       <Box key="box1" mt="16px" w="100%">
-                        {tokenTypeFilter === TOKEN_TYPE_CLASSIC_INDEX && (
+                        {tokenTypeFilter === TOKEN_TYPE_VARIABLE_INDEX && (
                           <ClassicPanel
                             firstToken={firstToken}
                             secondToken={secondToken}
@@ -1543,8 +1441,7 @@ export function LiquidityPage() {
                               message={`${
                                 !isLoggedIn
                                   ? t(`${translationPath}.connectWallet`)
-                                  : inputErrors[TOKEN_TYPE_CLASSIC_INDEX] ||
-                                    `${t(`${translationPath}.addLiquidity`)}`
+                                  : `${t(`${translationPath}.addLiquidity`)}`
                               }`}
                             />
                           </ClassicPanel>
@@ -1587,46 +1484,12 @@ export function LiquidityPage() {
                               message={`${
                                 !isLoggedIn
                                   ? t(`${translationPath}.connectWallet`)
-                                  : inputErrors[TOKEN_TYPE_STABLE_INDEX] ||
-                                    `${t(`${translationPath}.addLiquidity`)}`
+                                  : `${t(`${translationPath}.addLiquidity`)}`
                               }`}
                             />
                           </StablePanel>
                         )}
-                        {tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX && (
-                          <WeightedPanel
-                            weightedPoolSelected={weightedPoolSelected}
-                            setWeightedPoolSelected={setWeightedPoolSelected}
-                            weightedPoolInputValue={weightedPoolInputValue}
-                            setWeightedPoolInputValue={
-                              setWeightedPoolInputValue
-                            }
-                            setInputError={setWeightedInputError}
-                            weightedLpAmountToReceive={liquidityToReceive}
-                            lpTokenValue={checkInvalidValue(lpTokenValue)}
-                          >
-                            {pairNotCreated && (
-                              <Box mt="16px">
-                                <Hint
-                                  message={t(
-                                    `${translationPath}.firstLiquidityProvider`,
-                                  )}
-                                  type="WARNING"
-                                />
-                              </Box>
-                            )}
-                            <ActionButton
-                              isLoggedIn={isLoggedIn}
-                              loading={false}
-                              handleOnClick={() => setShowConfirmModal(true)}
-                              isDisabled={
-                                !isLoggedIn ||
-                                inputErrors[TOKEN_TYPE_WEIGHTED_INDEX]
-                              }
-                              message={inputErrors[TOKEN_TYPE_WEIGHTED_INDEX]}
-                            />
-                          </WeightedPanel>
-                        )}
+
                         {tokenTypeFilter === TOKEN_TYPE_CONCENTRATED_INDEX && (
                           <ConcentratedPanel
                             firstToken={firstToken}
@@ -1679,8 +1542,7 @@ export function LiquidityPage() {
                               message={`${
                                 !isLoggedIn
                                   ? t(`${translationPath}.connectWallet`)
-                                  : inputErrors[TOKEN_TYPE_CLASSIC_INDEX] ||
-                                    `${t(`${translationPath}.addLiquidity`)}`
+                                  : `${t(`${translationPath}.addLiquidity`)}`
                               }`}
                             />
                           </ConcentratedPanel>
@@ -1692,10 +1554,8 @@ export function LiquidityPage() {
                       <Box key="box2" mt="16px">
                         {addLiquiditySlipArray.map(item => {
                           const displaySlippageData =
-                            tokenTypeFilter === TOKEN_TYPE_CLASSIC_INDEX ||
-                            tokenTypeFilter === TOKEN_TYPE_STABLE_INDEX ||
-                            (tokenTypeFilter === TOKEN_TYPE_WEIGHTED_INDEX &&
-                              weightedPoolSelected);
+                            tokenTypeFilter === TOKEN_TYPE_VARIABLE_INDEX ||
+                            tokenTypeFilter === TOKEN_TYPE_STABLE_INDEX;
 
                           if (displaySlippageData) {
                             return (

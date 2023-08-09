@@ -4,12 +4,21 @@ export const handleFarmData = (data, index) => {
   switch (index) {
     case 0:
       return data;
-    case FarmType.CLASSIC:
-      return data.filter(farm => farm.type === 'variable');
-    case FarmType.STABLE:
-      return data.filter(farm => farm.type === 'stable');
     case FarmType.CONCENTRATED:
       return data.filter(farm => farm.type === 'concentrated');
+    case FarmType.VARIABLE:
+      return data.filter(
+        farm =>
+          farm.type === 'variable' ||
+          (farm.type === 'combine' && farm.stable === false),
+      );
+    case FarmType.STABLE:
+      return data.filter(
+        farm =>
+          farm.type === 'stable' ||
+          (farm.type === 'combine' && farm.stable === true),
+      );
+
     default:
       return data;
   }
@@ -38,7 +47,13 @@ export const filterByState = (
     ? true
     : false;
 
-  const inactive: boolean = !(parseFloat(pool.apr!) > 0);
+  // V3 Migration
+  // once we make the migration to v3, filter by apr again
+
+  let inactive = !(parseFloat(pool?.apr) > 0);
+  if (pool.type === 'combine') {
+    inactive = false;
+  }
 
   const filterType = [filterByStaked, filterByInactive];
 

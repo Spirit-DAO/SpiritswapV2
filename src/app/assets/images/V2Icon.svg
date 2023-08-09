@@ -1,0 +1,37 @@
+<svg
+  id="Button_v2"
+  data-name="Button v2"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="44"
+  height="33"
+  viewBox="0 0 44 33"
+>
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient) !important;
+      }
+
+      .cls-2 {
+        font-size: 20px;
+        fill: #101726;
+        text-anchor: middle;
+        font-family: Jost;
+        font-weight: 500;
+      }
+    </style>
+    <linearGradient
+      id="linear-gradient"
+      x1="22"
+      y1="33"
+      x2="22"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#52d784" />
+      <stop offset="1" stop-color="#61d4dc" />
+    </linearGradient>
+  </defs>
+  <rect class="cls-1" width="44" height="33" rx="8" ry="8" />
+  <text id="V2" class="cls-2" x="21.635" y="24.323">V2</text>
+</svg>
