@@ -40,7 +40,7 @@ const FarmTransaction = ({
   const farmsStaked = useAppSelector(selectFarmsStaked);
   const lpPrices = useAppSelector(selectLpPrices);
 
-  const fetchedTokenBalance = walletLiquidity.find(
+  const fetchedTokenBalance = walletLiquidity?.find(
     lp => lp.address.toLowerCase() === farm.lpAddress.toLowerCase(),
   );
 
