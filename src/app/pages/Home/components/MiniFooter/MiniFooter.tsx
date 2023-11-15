@@ -48,13 +48,13 @@ export default function MiniFooter() {
           >
             <DiscordSvg />
           </a>
-          <a
+          {/* <a
             target="_blank"
             rel="noreferrer"
             href="https://twitter.com/Spirit_Swap"
           >
             <TwitterSvg />
-          </a>
+          </a> */}
           <a
             target="_blank"
             rel="noreferrer"

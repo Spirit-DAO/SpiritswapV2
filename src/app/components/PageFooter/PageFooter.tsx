@@ -79,14 +79,14 @@ export default function PageFooter() {
                 alignSelf={isMobile ? 'center' : 'left'}
                 color="white"
               >
-                <Link
+                {/* <Link
                   target="_blank"
                   rel="noreferrer"
                   href="https://twitter.com/Spirit_Swap"
                   _hover={{ color: 'ci' }}
                 >
                   <TwitterSvg />
-                </Link>
+                </Link> */}
                 <Link
                   target="_blank"
                   rel="noreferrer"
