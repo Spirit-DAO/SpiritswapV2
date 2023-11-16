@@ -71,7 +71,9 @@ interface BuildTxBody {
   slippage: number;
   userAddress: Address;
   receiver?: Address;
-  deadline?: number;
+	deadline?: number;
+	takeSurplus?: boolean;
+	partnerAddress?: Address;
 }
 
 const API_URL = 'https://apiv5.paraswap.io';
@@ -109,6 +111,8 @@ export const buildSwapForParaSwap: Swapper['buildSwap'] = async ({
     slippage,
     userAddress,
     deadline: deadline,
+    takeSurplus: true,
+    partnerAddress: '0x678AB5F14B978916267b4C9E1f546600e55904e3',
   };
 
   try {
