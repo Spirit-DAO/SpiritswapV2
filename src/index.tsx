@@ -22,6 +22,7 @@ import { QueryClientProvider } from 'react-query';
 import { queryClient } from 'config/queryClient';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { DataContextProvider } from 'contexts/DataContext';
+import { Analytics } from '@vercel/analytics/react';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 const root = createRoot(MOUNT_NODE);
@@ -44,6 +45,7 @@ root.render(
               <HelmetProvider>
                 <EthersConnector>
                   <App />
+                  <Analytics mode={'production'} />;
                 </EthersConnector>
               </HelmetProvider>
               <ReactQueryDevtools />
